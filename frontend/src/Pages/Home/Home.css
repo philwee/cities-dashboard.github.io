@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+
+.home{
+    background-color: E5E5E5;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Bebas Neue', cursive;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.purple-banner{
+    width: 100%;
+    height:20%;
+    background-color: #7C4DFF;
+    position: absolute;
+    top:0px;
+    left:0px;
+}
+
+.white-banner{
+    background-color: white;
+    width: 120%;
+    height:70%;
+    position:static;
+    
+}
+
+.title{
+    top: 230px;
+    left: 65px;
+    position: absolute;
+    width: 230px;
+    font-size:20px;
+    
+}
+
+.cities-logo{
+    background-image: url("../../../public/394.png");
+    background-image: no-repeat; 
+    background-position: center;
+    background-size: contain;
+    height: 20%;
+    width: 10%;
+    position: absolute;
+    top: 60px;
+    left: 70px;
+}
+
+.card{
+    margin-top: 300px;
+    margin-left: 50px;
+}

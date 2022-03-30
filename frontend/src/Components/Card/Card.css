@@ -1,0 +1,87 @@
+.card-container{
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px -5px;
+    transition: 0.35;
+    animation: ease-in-out;
+}
+
+.card-container:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 0px 15px 0px;
+}
+.image-container img{
+    overflow: hidden;
+    height: 200px;
+}
+
+.card-content{
+    margin: 1rem;
+    margin-top: 0,5rem;
+}
+
+h3,p{
+    margin:0;
+    padding: 0;
+}
+
+.card-title{
+    margin-bottom: 0.5 rem;
+}
+
+/* .btn{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-color: blueviolet;
+} */
+
+
+
+/* CSS */
+.buttonStyles {
+    margin: 10px 0px 10px 15px;
+    align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(133, 92, 248, 1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(133, 92, 248, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: 3rem;
+  padding: calc(.575rem - 1px) calc(1.2rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button:hover,
+.button:focus {
+  border-color: rgba(133, 92, 248, 0.85);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(133, 92, 248, 0.85);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(133, 92, 248, 0.85);
+  transform: translateY(0);
+}

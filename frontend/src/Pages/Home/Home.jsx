@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Card from '../../Components/Card/Card'
 import "./Home.css"
 
@@ -8,17 +8,17 @@ export default function Home() {
       <div className="projects">
           <Card 
               title='Project 1'
-              // imageUrl= "../../Components/Card/graph.png"
+              imageUrl= "../../Components/Card/graph.png"
               body='Researcher Name'
             />
           <Card 
             title='Project 2'
-            // imageUrl= './graph.png'
+            imageUrl= "../../Components/Card/graph.png"
             body='Researcher Name'
           />
           <Card 
             title='Project 3'
-            // imageUrl= './graph.png'
+            imageUrl= "../../Components/Card/graph.png"
             body='Researcher Name'
           />
       </div>

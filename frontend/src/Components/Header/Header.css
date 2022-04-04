@@ -44,6 +44,11 @@
     
 }
 
+.navLink{
+    text-decoration: none;
+    color: black;
+}
+
 ul{
     display: flex;
     width: 20rem;

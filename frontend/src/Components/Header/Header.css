@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+
+
+.pageHeader{
+    background-color: #e5e5e5;
+    width: 100%;
+    font-family: 'Bebas Neue', cursive;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.purpleBanner{
+    width: 100%;
+    height: 6.5rem;
+    z-index: -1;
+    background-color: #6C0EA9;
+}
+
+.citiesLogo{
+    background-image: url("../../../public/394.png");
+    background-image: no-repeat; 
+    background-position: center;
+    background-size: contain;
+    position: absolute;
+    width: 7rem;
+    height: 7rem;
+    top : 2rem;
+    left: 7rem;
+    z-index: 1;
+    box-shadow: 0px 0px 15px -5px;
+}
+
+.titleMenuBar{
+    width: 100%;
+    height: 10rem;
+    z-index: -1;
+    background-color: #FFFFFF;
+}
+
+.projectTitle{
+    position: absolute;
+    top: 10rem;
+    left: 7rem;
+    width: 13rem;
+    
+}
+
+ul{
+    display: flex;
+    width: 20rem;
+    position: absolute;
+    top: 14.5rem;
+    left: 4.5rem;
+   
+    list-style-type: none;
+}
+
+ul li{
+    margin-left: 2.5rem;
+    cursor: pointer;
+}
+
+ul li:hover{
+    border-bottom: 3px solid #7C4DFF;
+    transition: all ease-in-out 200ms;
+}
+
+ul li.active{
+    border-bottom: 3px solid #7C4DFF ;
+}
+
+@media only screen and (max-width:460px){
+    .citiesLogo{
+        left: 3rem;
+    }
+
+    .projectTitle{
+        left: 3rem;
+    }
+
+    ul{
+        left:0.5rem;
+    }
+}

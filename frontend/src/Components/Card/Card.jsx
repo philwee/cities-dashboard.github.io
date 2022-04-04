@@ -1,25 +1,28 @@
 import React from 'react';
 import './Card.css';
+import graphImg from './graph.png'
 
 
 function Card({title,imageUrl,body}){
     return (
-
-        <div className="card-container">
-            
-            <div className='card-content'>
-                <div className='card-title'>
+        <div className="cardContainer">
+            <div className="cardContents">
+            <div className='cardHeader'>
+                <div className='cardTitle'>
                     <h3>{title}</h3>
                 </div>
-                <div className='card-body'>
+                <div className='cardBody'>
                     <p>{body}</p>
                 </div>
             </div>
 
-            <div className='image-container'>
-                <img src={imageUrl} alt="" />
+            <div className='imageContainer'>
+                <img src={graphImg} alt="" />
             </div>
             <button className="buttonStyles">Details</button>
+
+            </div>
+            
         </div>
 
        

@@ -1,0 +1,52 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+
+p{
+    font-family: 'Bebas Neue', cursive;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+.carousel-card-container{
+    padding: 1.1rem 1.1rem;
+    width: 17rem ;
+    background-color:white;
+    height: 10rem;
+    display: inline-block;
+    border-radius: 2rem;
+    margin-left: 2rem;
+    border-color:#6C0EA9;
+    border-style: solid;
+  }
+  .carousel-card-container:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 20px -10px;
+    transform: scale(1.05);
+    transition: all ease-in-out 200ms;
+  }
+  
+  .carousel-card-contents{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .carousel-card-date p{
+      font-size: 0.7rem;
+      color:#BDBDBD;
+      /* font-family:Georgia, 'Times New Roman', Times, serif; */
+  }
+  
+  .carousel-card-imgContainer{
+    width: 10rem;
+    height: 6rem;
+
+  }
+  
+  .carousel-card-imgContainer img{
+    width: 100%;
+    height: 100%;
+    border: 2px solid #555;
+    border-radius: 1rem;
+}
+  
+
+  
+  

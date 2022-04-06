@@ -5,7 +5,7 @@
     background-color: #F6F6F6;
     font-family: 'Bebas Neue', cursive;
     font-family: 'IBM Plex Sans', sans-serif;
-    min-height: 63vh;
+    min-height: 70vh;
     
 }
 
@@ -17,7 +17,7 @@
     column-gap: 50px;
     row-gap: 50px;
     grid-template-columns: auto auto auto;
-    min-height: 63vh;
+    min-height: 70vh;
 }
 
 @media only screen and (max-width:1100px)  {

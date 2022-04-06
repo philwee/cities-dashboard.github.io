@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+
+p{
+    font-family: 'Bebas Neue', cursive;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+.carousel-container{
+    width: 100%;
+    height: 20rem;
+    background: #e6e6e6;
+    z-index: -1;
+}
+.carousel-title{
+    width: 12rem;
+    border-bottom: 3px solid #7C4DFF ;
+    text-align: center;
+    margin: 1.5rem;
+    display: inline-block;
+}
+.main-slider-container{
+    padding-left: 3rem;
+    padding-right: 3rem;
+    position:relative;
+    display: flex;
+    width: 100%;
+    height: 12rem;
+    align-items: center;
+}
+#slider{
+    width: 100%;
+    height: 100%;
+    padding-top: 1rem;
+    align-items: center;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+.slider::-webkit-scrollbar{
+    display: none;
+}
+.slider-icon.left, .slider-icon.right{
+    background-color: white;
+    border-radius: 100%;
+    position: absolute;
+    opacity: 0.7;
+}
+.slider-icon.left{
+    left: 0;
+}
+.slider-icon.right{
+    right: 0;
+}
+.slider-icon.left:hover, .slider-icon.right:hover{
+    opacity: 1;
+    transform: scale(1.05);
+    transition: all ease-in-out 200ms;
+}
+

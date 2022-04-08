@@ -12,7 +12,8 @@ p{
     height: 10rem;
     display: inline-block;
     border-radius: 2rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     border-color:#6C0EA9;
     border-style: solid;
   }

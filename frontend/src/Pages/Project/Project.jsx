@@ -59,26 +59,31 @@ export default function Project({setLinkChange}) {
                 </button>
             </div>
             <div className='tabContainer'>
-              {/* <div className="tabContents">
-                  <div className={toggleTab === 1 ? "content  active-content" : "content"}>
-                    <h2>Content 1</h2>
-                    <hr />
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-                      praesentium incidunt quia aspernatur quasi quidem facilis quo nihil
-                      vel voluptatum?
-                    </p>
+              <div className="tabContents">
+                  <div className={toggleTab === 1 ? "content  activeContent" : "content"}>
+                    <div className='daysSelect'>
+
+                    </div>
+                    <div className='graphCanvas'>
+
+                    </div>
+                    <div className='dlButton'>
+
+                    </div>
                   </div>
 
-                  <div className={toggleTab === 2 ? "content  active-content" : "content"}>
-                    <h2>Content 2</h2>
-                    <hr />
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-                      voluptatum qui adipisci.
-                    </p>
+                  <div className={toggleTab === 2 ? "content  activeContent" : "content"}>
+                    <div className='daysSelect'>
+
+                    </div>
+                    <div className='graphCanvas'>
+
+                    </div>
+                    <div className='dlButton'>
+
+                    </div>
                   </div>
-              </div> */}
+              </div>
             </div>
           </div>
           

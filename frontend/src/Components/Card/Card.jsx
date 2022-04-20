@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 function Card({title,imageUrl,body,LinkChange,setLinkChange}){
 
     const changeLinkContent = () => {
-		setLinkChange(!LinkChange);
+		setLinkChange(false);
 	}
 
     return (

@@ -18,7 +18,7 @@ function App() {
       </>
       <Routes>
         <Route path="/" element={<Home LinkChange={LinkChange} setLinkChange={setLinkChange}/>}></Route>
-        <Route path='/project' element={<Project/>}></Route>
+        <Route path='/project' element={<Project setLinkChange={setLinkChange}/>}></Route>
 
       </Routes>
 

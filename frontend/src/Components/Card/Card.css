@@ -4,6 +4,7 @@
   box-shadow: 0px 0px 15px -5px;
   height: 350px;
   border-radius: 7px;
+  background-color: #FFFFFF;
 }
 
 .cardContents{
@@ -55,13 +56,6 @@
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
-/* .buttonStyles:hover,
-.buttonStyles:focus {
-  border-color: rgba(133, 92, 248, 0.85);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(133, 92, 248, 0.85);
-} */
 
 .buttonStyles:hover {
   transform: translateY(-1px);

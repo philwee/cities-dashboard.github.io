@@ -25,36 +25,6 @@
     
 }
 
-.tabList{
-    width: auto;
-    height:3.5vh; 
-    margin: 1.3rem 0rem 0rem;
-    
-}
-
-.tabContainer{
-    background-color:#FFFFFF;
-    width:100%;
-    height:45vh; 
-    border-top: none;
-    box-shadow: 0px 5px 5px -5px;
-    border-radius: 0px 13px 13px 13px;
-}
-
-.content{
-    display: none;
-    width: 70%;
-}
-
-.activeContent{
-    display: block;
-}
-
-/* .daysSelect{
-
-} */
-
-
 .tabs{
     background-color: #E5E5E5 ;
     padding:0.3rem 0.2rem ;
@@ -65,6 +35,86 @@
     cursor: pointer;
     border: none;
 }
+
+.tabList{
+    width: auto;
+    height:3.5vh; 
+    margin: 1.3rem 0rem 0rem;
+    
+}
+
+.tabContainer{
+    padding: 1rem 0rem 1rem;
+    background-color:#FFFFFF;
+    width:100%;
+    height:53vh; 
+    border-top: none;
+    box-shadow: 0px 5px 5px -5px;
+    border-radius: 0px 13px 13px 13px;
+}
+
+.content{
+    display: none;
+    width: 100%;
+}
+
+.activeContent{
+    display: block;
+}
+
+.daysSelect{
+    width: 70%;
+    margin: 0 auto;
+    height: 4vh;
+}
+
+.graphCanvas{
+    width: 70%;
+    border: 1px solid black;
+    padding: 0rem 4rem 0rem ;
+    margin: 0.5rem auto;
+    border-radius: 40px;
+    height: 38vh;  
+   
+}
+
+.midGraph{
+    width: 90%;
+    margin: 0 auto;
+    height: 300px;
+    padding: 0.5rem 0rem 0.5rem;
+}
+
+.midGraph img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+.dlButton{
+    width:100% ;
+    height: 5vh;
+}
+
+.buttonDl{
+    display: block;
+    color: white;
+    font-size: 15px;
+    border-radius: 20px;
+    border: 1px solid black;
+    text-align: center;
+    text-decoration: none;
+    width: 10rem;
+    padding: 0.5rem 0.5rem;
+    background-color: #6C0EA9;
+}
+
+.linkButton{
+    text-decoration: none;
+}
+
+
 
 .activeTab{
     background-color: #FFFFFF;

@@ -57,13 +57,6 @@
   touch-action: manipulation;
 }
 
-/* .buttonStyles:hover,
-.buttonStyles:focus {
-  border-color: rgba(133, 92, 248, 0.85);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(133, 92, 248, 0.85);
-} */
-
 .buttonStyles:hover {
   transform: translateY(-1px);
 }

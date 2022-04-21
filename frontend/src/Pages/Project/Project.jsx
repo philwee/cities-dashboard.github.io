@@ -2,6 +2,9 @@ import './Project.css'
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
 import {BiChevronLeft,BiChevronRight} from 'react-icons/bi';
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import graphImg from './graph.png'
+
 
 export default function Project({setLinkChange}) {
 
@@ -62,25 +65,36 @@ export default function Project({setLinkChange}) {
               <div className="tabContents">
                   <div className={toggleTab === 1 ? "content  activeContent" : "content"}>
                     <div className='daysSelect'>
+                      <p>Last 30 days</p>
+                    
 
                     </div>
                     <div className='graphCanvas'>
-
+                      <div className='midGraph'>
+                        <img  src={graphImg} alt="" />
+                      </div>
+                      
                     </div>
                     <div className='dlButton'>
-
+                        <Link className='linkButton' to={'/project'} >
+                          <div className='buttonDl' > Download Raw Data </div>
+                        </Link>
                     </div>
                   </div>
 
                   <div className={toggleTab === 2 ? "content  activeContent" : "content"}>
                     <div className='daysSelect'>
-
+                      <p>Last 60 days</p>
                     </div>
                     <div className='graphCanvas'>
-
+                      <div className='midGraph'>
+                        <img  src={graphImg} alt="" />
+                      </div>
                     </div>
                     <div className='dlButton'>
-
+                        <Link className='linkButton' to={'/project'} >
+                          <div className='buttonDl' > Download Raw Data </div>
+                        </Link>
                     </div>
                   </div>
               </div>
@@ -123,3 +137,5 @@ export default function Project({setLinkChange}) {
    
   )
 }
+
+

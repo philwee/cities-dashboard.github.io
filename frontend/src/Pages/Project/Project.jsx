@@ -66,14 +66,11 @@ export default function Project({setLinkChange}) {
                   <div className={toggleTab === 1 ? "content  activeContent" : "content"}>
                     <div className='daysSelect'>
                       <p>Last 30 days</p>
-                    
-
                     </div>
                     <div className='graphCanvas'>
                       <div className='midGraph'>
                         <img  src={graphImg} alt="" />
                       </div>
-                      
                     </div>
                     <div className='dlButton'>
                         <Link className='linkButton' to={'/project'} >

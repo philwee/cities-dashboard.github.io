@@ -6,7 +6,7 @@ p{
     font-family: 'IBM Plex Sans', sans-serif;
 }
 .carousel-card-container{
-    padding: 1.1rem 0.0rem 1.1rem;
+    padding: 0.8rem 1.1rem 0.8rem;
     width: 17rem ;
     /* background-color:green; */
     height: 10rem;
@@ -19,6 +19,7 @@ p{
   }
 
   .carousel-card-imgContainer{
+    display: inline-block;
     width: 10rem;
     height: 6rem;
 
@@ -39,8 +40,7 @@ p{
   }
   
   .carousel-card-contents{
-    display: flex;
-    flex-direction: column;
+    margin-left: 0.5rem;
   }
 
   .carousel-card-date p{

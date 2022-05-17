@@ -15,6 +15,7 @@ export default function Home({LinkChange,setLinkChange}) {
       console.log("Returned");
     }
   })
+  
   return (
     <div className='home'>
       <div className="projects">

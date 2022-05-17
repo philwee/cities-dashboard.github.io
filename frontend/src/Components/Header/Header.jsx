@@ -30,7 +30,7 @@ export default function Header({LinkChange,setLinkChange}) {
                     <div className="menuBar">
                         <ul>
                             {LinkChange ? <Link className="navLink" to={'/'}><li className={underlineItem===1 ? 'active' :''} onClick={() => underlineFunc(1)}>HOME</li></Link> :
-                            <Link className="navLink" to={'/'} onClick={changeLinkContent}><li onClick={() => underlineFunc(1)}>BACK</li></Link> }
+                            <Link className="navLink" to={'/'} onClick={changeLinkContent}><li onClick={() => underlineFunc(1)}>HOME</li></Link> }
                             <Link className="navLink" to={'/about'}><li className={underlineItem===2 ? 'active' :''} onClick={() => underlineFunc(2)}>ABOUT</li></Link>
                             <Link  className="navLink" to={'/contact'}><li className={underlineItem===3 ? 'active' :''} onClick={() => underlineFunc(3)}>CONTACT</li></Link>
                         </ul>

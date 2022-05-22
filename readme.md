@@ -92,9 +92,7 @@ Now you should see a browser window running the app.
 ## Team Members
 
 [@princeampofo](https://github.com/princeampofo)
-
 [@mjk9913](https://github.com/mjk9913)    
-
 [@JenniferZheng0430](https://github.com/JenniferZheng0430)        
      
 

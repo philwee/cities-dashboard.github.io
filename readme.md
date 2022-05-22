@@ -87,7 +87,7 @@ Now you should see a browser window running the app.
     ![About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile2.png)
 
 - Contact Page
-    ![Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile3.png)
+    ![Contact Page](./screenshots/mobile3.png)
 
 ## Team Members
 

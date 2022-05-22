@@ -63,31 +63,31 @@ Now you should see a browser window running the app.
 ### Desktop view
 
 - Home Page
-    [Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop1.png)
+    ![Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop1.png)
 
 - Project Page
-    [Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop4.png)
+    ![Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop4.png)
 
 - About Page
-    [About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop2.png)
+    ![About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop2.png)
 
 - Contact Page
-    [Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop3.png)
+    ![Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop3.png)
 
 
 ### Mobile view
 
 - Home Page
-    [Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile1.png)
+    ![Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile1.png)
 
 - Project Page
-    [Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile4.png)
+    ![Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile4.png)
 
 - About Page
-    [About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile2.png)
+    ![About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile2.png)
 
 - Contact Page
-    [Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile3.png)
+    ![Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile3.png)
 
 ## Team Members
 

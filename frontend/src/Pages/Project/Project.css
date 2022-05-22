@@ -108,6 +108,7 @@
     width: 11rem;
     padding: 0.4rem 0.7rem;
     background-color: #6C0EA9;
+    border: none;
 }
 
 .buttonDl:hover{

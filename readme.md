@@ -1,7 +1,7 @@
 # CITIES VISUALISATION DASHBOARD
 
 - [CITIES Visualisation Dashnoard](#cities-visualisation-dashboard)
-    - [Description]
+    - [Description](#description)
         - [React Components](#react-components)
     - [Instructions to Build and Test Locally](#instructions-to-build-and-test-locally)
         - [Run Front-end](#run-front-end)
@@ -63,36 +63,37 @@ Now you should see a browser window running the app.
 ### Desktop view
 
 - Home Page
-    [Home Page](./screenshots/desktop1.png)
+    [Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop1.png)
 
 - Project Page
-    [Project Page](./screenshots/desktop4.png)
+    [Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop4.png)
 
 - About Page
-    [About Page](./screenshots/desktop2.png)
+    [About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop2.png)
 
 - Contact Page
-    [Contact Page](./screenshots/desktop3.png)
+    [Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/desktop3.png)
 
 
 ### Mobile view
 
 - Home Page
-    [Home Page](./screenshots/mobile1.png)
+    [Home Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile1.png)
 
 - Project Page
-    [Project Page](./screenshots/mobile4.png)
+    [Project Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile4.png)
 
 - About Page
-    [About Page](./screenshots/mobile2.png)
+    [About Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile2.png)
 
 - Contact Page
-    [Contact Page](./screenshots/mobile3.png)
+    [Contact Page](https://github.com/CITIES-Dashboard/Dashboard/screenshots/mobile3.png)
 
 ## Team Members
+
 [@princeampofo](https://github.com/princeampofo)
 [@mjk9913](https://github.com/mjk9913)    
-[@JenniferZheng0430]https://github.com/JenniferZheng0430)        
+[@JenniferZheng0430](https://github.com/JenniferZheng0430)        
      
 
 ## Contributing
@@ -100,10 +101,10 @@ Now you should see a browser window running the app.
 Anyone is welcome to dive in! Feel free to Open an issue or Pull Request. 
 
 In terms of more detailed contributing rule, read through 
-[CONTRIBUTING.md](./CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/CITIES-Dashboard/Dashboard/CONTRIBUTING.md).
 
 
 ## References
 - [React.js](https://reactjs.org/)
 - [CircleCI](https://circleci.com/)
--[React Icons](https://react-icons.github.io/react-icons/)
+- [React Icons](https://react-icons.github.io/react-icons/)

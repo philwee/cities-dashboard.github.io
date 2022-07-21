@@ -4,6 +4,7 @@ import {BiChevronLeft,BiChevronRight} from 'react-icons/bi';
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import graphImg from './graph.png'
+import lineImg from './graph2.png'
 
 
 export default function Project({setLinkChange}) {
@@ -45,20 +46,20 @@ export default function Project({setLinkChange}) {
         <div className='graphSection '>
           <div className='centerProjectItems1'>
             <p className='projectName'>
-              PROJECT NAME
+              FITNESS CENTER DATA
             </p>
             <div className="tabList">
                 <button
                   className={toggleTab === 1 ? "tabs activeTab" : "tabs"}
                   onClick={() => toggleFunc(1)}
                 >
-                  Basic
+                  5 Series Bar
                 </button>
                 <button
                   className={toggleTab === 2 ? "tabs activeTab" : "tabs"}
                   onClick={() => toggleFunc(2)}
                 >
-                  Detailed
+                  Line
                 </button>
             </div>
             <div className='tabContainer'>
@@ -85,7 +86,7 @@ export default function Project({setLinkChange}) {
                     </div>
                     <div className='graphCanvas'>
                       <div className='midGraph'>
-                        <img  src={graphImg} alt="" />
+                        <img  src={lineImg} alt="" />
                       </div>
                     </div>
                     <div className='dlButton'>

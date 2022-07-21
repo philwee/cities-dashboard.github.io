@@ -52,13 +52,13 @@ export default function Project({setLinkChange}) {
                   className={toggleTab === 1 ? "tabs activeTab" : "tabs"}
                   onClick={() => toggleFunc(1)}
                 >
-                  D2
+                  Basic
                 </button>
                 <button
                   className={toggleTab === 2 ? "tabs activeTab" : "tabs"}
                   onClick={() => toggleFunc(2)}
                 >
-                  Marketplace
+                  Detailed
                 </button>
             </div>
             <div className='tabContainer'>

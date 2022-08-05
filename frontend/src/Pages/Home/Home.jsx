@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 export default function Home({LinkChange,setLinkChange}) {
 
-  const cards =["FITNESS CENTER DATA","Project 2","Project 3","Project 4","Project 5","Project 6"];
+  const cards =["Fitness Center Membership","Project 2","Project 3","Project 4","Project 5","Project 6"];
 
   useEffect(() => {
     setLinkChange(true);

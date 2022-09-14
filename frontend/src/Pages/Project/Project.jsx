@@ -1,7 +1,7 @@
 import './Project.css';
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
 import graphImg from './graph.png';
 
@@ -14,17 +14,13 @@ export default function Project({ setLinkChange }) {
   };
 
   // for carousel
-  const slides = [1, 2, 3, 4, 5];
-
-  const slideLeft = () => {
-    const slider = document.getElementById('slider');
-    slider.scrollLeft -= 500;
-  };
-
-  const slideRight = () => {
-    const slider = document.getElementById('slider');
-    slider.scrollLeft += 500;
-  };
+  const slides = [
+    <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
+    <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
+    <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
+    <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
+    <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
+  ];
 
   // for link change(home -> back)
   useEffect(() => {
@@ -131,27 +127,7 @@ export default function Project({ setLinkChange }) {
           <div className="carousel-title">
             <p>OTHER AVAILABLE DATA</p>
           </div>
-          <div className="main-slider-container">
-            <BiChevronLeft
-              size={40}
-              className="slider-icon left"
-              onClick={slideLeft}
-            />
-            <div id="slider">
-              {slides.map((_slide, index) => (
-                <CarouselCard
-                  key={index}
-                  title="Project"
-                  date="Updated:Apr 5,2022"
-                />
-              ))}
-            </div>
-            <BiChevronRight
-              size={40}
-              className="slider-icon right"
-              onClick={slideRight}
-            />
-          </div>
+          <Carousel carouselData={slides} />
         </div>
       </div>
     </>

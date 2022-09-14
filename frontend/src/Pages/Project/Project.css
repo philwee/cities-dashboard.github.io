@@ -1,233 +1,227 @@
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap');
 
-
-
-.graphSection{
-    width: 100%;
-    background-color: #F6F6F6 ;
-    padding: 2rem 0rem 2rem 0rem;
+.graphSection {
+  width: 100%;
+  background-color: #f6f6f6;
+  padding: 2rem 0rem 2rem 0rem;
 }
 
-.centerProjectItems1{
-    max-width: 1250px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+.centerProjectItems1 {
+  max-width: 1250px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-.projectName{
-    display: inline-block;
-    border-bottom: 3px solid #7C4DFF ;
-    letter-spacing: 1px;
-    font-family: 'Bebas Neue', cursive;
-    font-family: 'IBM Plex Sans', sans-serif;
-    
+.projectName {
+  display: inline-block;
+  border-bottom: 3px solid #7c4dff;
+  letter-spacing: 1px;
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'IBM Plex Sans', sans-serif;
 }
 
-.tabs{
-    background-color: #E5E5E5 ;
-    padding:0.3rem 0.2rem ;
-    text-align: center;
-    height: inherit;
-    border-radius: 13px 13px 0px 0px;
-    min-width: 6.5rem; 
-    cursor: pointer;
-    border: none;
+.tabs {
+  background-color: #e5e5e5;
+  padding: 0.3rem 0.2rem;
+  text-align: center;
+  height: inherit;
+  border-radius: 13px 13px 0px 0px;
+  min-width: 6.5rem;
+  cursor: pointer;
+  border: none;
 }
 
-.tabList{
-    width: auto;
-    height:3.5vh; 
-    margin: 1.3rem 0rem 0rem;
-    
+.tabList {
+  width: auto;
+  height: 3.5vh;
+  margin: 1.3rem 0rem 0rem;
 }
 
-.tabContainer{
-    padding: 1rem 0rem 1rem;
-    background-color:#FFFFFF;
-    width:100%;
-    height:52vh; 
-    border-top: none;
-    box-shadow: 0px 5px 5px -5px;
-    border-radius: 0px 13px 13px 13px;
+.tabContainer {
+  padding: 1rem 0rem 1rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 52vh;
+  border-top: none;
+  box-shadow: 0px 5px 5px -5px;
+  border-radius: 0px 13px 13px 13px;
 }
 
-.content{
-    display: none;
-    width: 100%;
+.content {
+  display: none;
+  width: 100%;
 }
 
-.activeContent{
-    display: block;
+.activeContent {
+  display: block;
 }
 
-.daysSelect{
-    width: 70%;
-    margin: 0 auto;
-    height: 4vh;
+.daysSelect {
+  width: 70%;
+  margin: 0 auto;
+  height: 4vh;
 }
 
-.graphCanvas{
-    width: 70%;
-    border: 0.6px solid rgb(161, 160, 160);
-    margin: 0.5rem auto;
-    border-radius: 40px;
-    height: 38vh;  
-    display: flex;
-    align-items: center;
+.graphCanvas {
+  width: 70%;
+  border: 0.6px solid rgb(161, 160, 160);
+  margin: 0.5rem auto;
+  border-radius: 40px;
+  height: 38vh;
+  display: flex;
+  align-items: center;
 }
 
-.midGraph{
-    margin:0 auto;
-    width: 80%;
-    text-align: center;
-    height: 230px;
-    
+.midGraph {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+  height: 230px;
 }
 
-.midGraph img{
-    width: 100%;
-    height: inherit;
-    object-fit:fill;
+.midGraph img {
+  width: 100%;
+  height: inherit;
+  object-fit: fill;
 }
 
+.dlButton {
+  width: 70%;
+  margin-top: 0.8rem;
+  text-align: right;
+}
 
-.dlButton{
-    width:70% ;
+.buttonDl {
+  display: inline-block;
+  color: white;
+  font-size: 15px;
+  border-radius: 20px;
+  border: 1px solid black;
+  text-align: center;
+  text-decoration: none;
+  width: 11rem;
+  padding: 0.4rem 0.7rem;
+  background-color: #6c0ea9;
+  border: none;
+}
+
+.buttonDl:hover {
+  border: 1px solid white;
+}
+
+.linkButton {
+  text-decoration: none;
+}
+
+.activeTab {
+  background-color: #ffffff;
+  transform: translateZ(10px);
+  box-shadow: 0px -4px 8px -6px;
+}
+
+.centerProjectItems2 {
+  max-width: 1250px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.detailsContainer {
+  padding: 2rem 0rem 2rem 0rem;
+  width: 100%;
+}
+
+.detailsTitle {
+  border-bottom: 3px solid #7c4dff;
+  letter-spacing: 1px;
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'IBM Plex Sans', sans-serif;
+  display: inline-block;
+}
+
+.detailsContent {
+  padding: 1rem 0rem 1rem;
+  text-align: justify;
+  letter-spacing: 0.5px;
+}
+
+.carousel-container {
+  width: 100%;
+  height: auto;
+  z-index: -1;
+  background-color: #f6f6f6;
+}
+
+.centerProjectItems3 {
+  max-width: 1250px;
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.carousel-title {
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #7c4dff;
+  text-align: center;
+  margin: 0.1rem;
+  display: inline-block;
+}
+
+.main-slider-container {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+  height: 12rem;
+  align-items: center;
+}
+
+#slider {
+  width: 100%;
+  height: 100%;
+  padding-top: 1rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+#slider::-webkit-scrollbar {
+  display: none;
+}
+.slider-icon.left,
+.slider-icon.right {
+  background-color: white;
+  border-radius: 100%;
+  position: absolute;
+  opacity: 0.7;
+}
+.slider-icon.left {
+  left: 0;
+}
+.slider-icon.right {
+  right: 0;
+}
+.slider-icon.left:hover,
+.slider-icon.right:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  transition: all ease-in-out 200ms;
+}
+
+@media only screen and (max-width: 720px) {
+  .daysSelect {
+    width: 90%;
+  }
+  .graphCanvas {
+    width: 90%;
+    padding: 0rem 1rem 0rem;
+  }
+  .dlButton {
+    width: 90%;
     margin-top: 0.8rem;
     text-align: right;
-}
-
-.buttonDl{
-    display: inline-block;
-    color: white;
-    font-size: 15px;
-    border-radius: 20px;
-    border: 1px solid black;
-    text-align: center;
-    text-decoration: none;
-    width: 11rem;
-    padding: 0.4rem 0.7rem;
-    background-color: #6C0EA9;
-    border: none;
-}
-
-.buttonDl:hover{
-    border: 1px solid white;
-}
-
-.linkButton{
-    text-decoration: none;
-}
-
-.activeTab{
-    background-color: #FFFFFF;
-    transform: translateZ(10px);
-    box-shadow: 0px -4px 8px -6px;
-}
-
-.centerProjectItems2{
-    max-width: 1250px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-}
-
-.detailsContainer{
-    padding: 2rem 0rem 2rem 0rem;
-    width: 100%;
-}
-
-.detailsTitle{
-    border-bottom: 3px solid #7C4DFF ;
-    letter-spacing: 1px;
-    font-family: 'Bebas Neue', cursive;
-    font-family: 'IBM Plex Sans', sans-serif;
-    display: inline-block;
-}
-
-.detailsContent{
-    padding:1rem 0rem 1rem ;
-    text-align: justify;
-    letter-spacing: 0.5px;
-}
-
-
-.carousel-container{
-    width: 100%;
-    height: auto;
-    z-index: -1;
-    background-color: #F6F6F6 ;
-}
-
-.centerProjectItems3{
-    max-width: 1250px;
-    width: 100%;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-}
-
-.carousel-title{
-    font-family: 'Bebas Neue', cursive;
-    font-family: 'IBM Plex Sans', sans-serif;
-    letter-spacing: 1px;
-    border-bottom: 3px solid #7C4DFF ;
-    text-align: center;
-    margin: 0.1rem;
-    display: inline-block;
-}
-
-.main-slider-container{
-    padding-left: 3rem;
-    padding-right: 3rem;
-    position:relative;
-    display: flex;
-    width: 100%;
-    margin-top: 1rem;
-    height: 12rem;
-    align-items: center;
-    
-}
-
-#slider{
-    width: 100%;
-    height: 100%;
-    padding-top: 1rem;
-    white-space: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-}
-
-#slider::-webkit-scrollbar{
-    display: none;
-}
-.slider-icon.left, .slider-icon.right{
-    background-color: white;
-    border-radius: 100%;
-    position: absolute;
-    opacity: 0.7;
-}
-.slider-icon.left{
-    left: 0;
-}
-.slider-icon.right{
-    right: 0;
-}
-.slider-icon.left:hover, .slider-icon.right:hover{
-    opacity: 1;
-    transform: scale(1.05);
-    transition: all ease-in-out 200ms;
-}
-
-@media only screen and (max-width:720px)  {
-    .daysSelect{
-        width: 90%;
-    }
-    .graphCanvas{
-        width: 90%;
-        padding: 0rem 1rem 0rem ;  
-    }
-    .dlButton{
-        width:90% ;
-        margin-top: 0.8rem;
-        text-align: right;
-    }
+  }
 }

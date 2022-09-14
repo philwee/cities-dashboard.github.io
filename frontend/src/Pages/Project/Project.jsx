@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
 import graphImg from './graph.png';
+import graphImg2 from './graph2.png';
 
 export default function Project({ setLinkChange }) {
   // for tabs
@@ -83,7 +84,7 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <img src={graphImg} alt="" />
+                    <img src={graphImg2} alt="" />
                   </div>
                 </div>
                 <div className="dlButton">

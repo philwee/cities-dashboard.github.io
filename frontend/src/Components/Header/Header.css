@@ -1,88 +1,84 @@
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap');
 
-
-.pageHeader{
-    /* background-color:#F0ECE3; */
-    width: 100%;
-    font-family: 'Bebas Neue', cursive;
-    font-family: 'IBM Plex Sans', sans-serif;
+.pageHeader {
+  /* background-color:#F0ECE3; */
+  width: 100%;
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'IBM Plex Sans', sans-serif;
 }
 
-.purpleBanner{
-    width: 100%;
-    height: 11vh;
-    /* max-width: 1250px; */
-    z-index: -1;
-    background-color: #6C0EA9;
+.purpleBanner {
+  width: 100%;
+  height: 11vh;
+  /* max-width: 1250px; */
+  z-index: -1;
+  background-color: #6c0ea9;
 }
 
-.titleMenuBar{
-    width: 100%;
-    max-width: 1250px;
-    height: 11rem;
-    z-index: -1;
-    background-color: #FFFFFF;
+.titleMenuBar {
+  width: 100%;
+  max-width: 1250px;
+  height: 11rem;
+  z-index: -1;
+  background-color: #ffffff;
 }
 
-.centerLogoMenuBar{
-    display: flex;
-    padding-left: 1.5rem;
-    flex-direction: column;
-    max-width: 1250px;
-    width: 100%;
-    margin: 0 auto;
+.centerLogoMenuBar {
+  display: flex;
+  padding-left: 1.5rem;
+  flex-direction: column;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.citiesLogo{
-    background-image: url("../../../public/394.png");
-    background-image: no-repeat; 
-    background-position: center;
-    background-size: contain;
-    position: absolute;
-    width: 7rem;
-    height: 7rem;
-    top : 2rem;
-    z-index: 1;
-    box-shadow: 0px 0px 15px -5px;
+.citiesLogo {
+  background-image: url('../../../public/394.png');
+  background-image: no-repeat;
+  background-position: center;
+  background-size: contain;
+  position: absolute;
+  width: 7rem;
+  height: 7rem;
+  top: 2rem;
+  z-index: 1;
+  box-shadow: 0px 0px 15px -5px;
 }
 
-
-
-.projectTitle{
-    position: absolute;
-    top: 10rem;
-    width: 13rem;
-    
+.projectTitle {
+  position: absolute;
+  top: 10rem;
+  width: 13rem;
 }
 
-.menuBar{
-    position: absolute;
-    top: 14.5rem;
-    width:auto ;
-    height: auto;
+.menuBar {
+  position: absolute;
+  top: 14.5rem;
+  width: auto;
+  height: auto;
 }
 
-.navLink{
-    text-decoration: none;
-    color: black;
+.navLink {
+  text-decoration: none;
+  color: black;
 }
 
-ul{
-    display: flex;
-    width: 12rem;
-    margin-left: -1.5rem;
-    list-style-type: none;
+ul {
+  display: flex;
+  width: 15rem;
+  margin-left: -0.8rem;
+  list-style-type: none;
 }
 
-ul li{
-    cursor: pointer;
+ul li {
+  cursor: pointer;
 }
 
-ul li:hover{
-    border-bottom: 3px solid #57068c;
-    transition: all ease-in-out 100ms;
+ul li:hover {
+  border-bottom: 3px solid #57068c;
+  transition: all ease-in-out 100ms;
 }
 
-ul li.active{
-    border-bottom: 3px solid #57068c ;
+ul li.active {
+  border-bottom: 3px solid #57068c;
 }

@@ -73,7 +73,6 @@ export default function Project({ setLinkChange }) {
                   </Link>
                 </div>
               </div>
-
               <div
                 className={
                   toggleTab === 2 ? 'content  activeContent' : 'content'

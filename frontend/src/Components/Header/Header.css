@@ -69,8 +69,8 @@
 
 ul{
     display: flex;
-    width: 18rem;
-    margin-left: -1.2rem;
+    width: 12rem;
+    margin-left: -1.5rem;
     list-style-type: none;
 }
 
@@ -79,10 +79,10 @@ ul li{
 }
 
 ul li:hover{
-    border-bottom: 3px solid #7C4DFF;
+    border-bottom: 3px solid #57068c;
     transition: all ease-in-out 100ms;
 }
 
 ul li.active{
-    border-bottom: 3px solid #7C4DFF ;
+    border-bottom: 3px solid #57068c ;
 }

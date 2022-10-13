@@ -46,14 +46,6 @@ export default function Header({ LinkChange, setLinkChange }) {
                   ABOUT
                 </li>
               </Link>
-              <Link className="navLink" to="/contact">
-                <li
-                  className={underlineItem === 3 ? 'active' : ''}
-                  onClick={() => underlineFunc(3)}
-                >
-                  CONTACT
-                </li>
-              </Link>
             </ul>
           </div>
         </div>

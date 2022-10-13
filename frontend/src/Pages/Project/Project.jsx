@@ -1,16 +1,23 @@
+/* eslint-disable no-unused-vars */
 import './Project.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
+import BarChart from '../../Graphs/BarChart/BarChart';
 import ColumnChart from '../../Graphs/BarChart/ColumnChart';
 
 export default function Project({ setLinkChange }) {
   // for tabs
   const [toggleTab, setToggleTab] = useState(1);
+  const [changeChart, setCHangeChart] = useState(true);
 
   const toggleFunc = (index) => {
     setToggleTab(index);
+  };
+
+  const changeFunc = () => {
+    setCHangeChart((prevT) => !prevT);
   };
 
   // for carousel
@@ -67,13 +74,19 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <ColumnChart toggleTab={toggleTab} />
+                    <ColumnChart toggleTab={changeChart} />
                   </div>
-                </div>
-                <div className="dlButton">
-                  <Link className="linkButton" to="/project">
-                    <div className="buttonDl"> Download Raw Data </div>
-                  </Link>
+                  <div className="stackedButton">
+                    <Link className="linkButton" to="/project">
+                      <button
+                        type="button"
+                        className="buttonStacked"
+                        onClick={() => changeFunc()}
+                      >
+                        {changeChart ? 'Unstacked' : 'Stacked'}
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div
@@ -86,15 +99,17 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <ColumnChart toggleTab={toggleTab} />
+                    <BarChart />
                   </div>
                 </div>
-                <div className="dlButton">
-                  <Link className="linkButton" to="/project">
-                    <div className="buttonDl"> Download Raw Data </div>
-                  </Link>
-                </div>
               </div>
+            </div>
+            <div className="dlButton">
+              <Link className="linkButton" to="/project">
+                <button type="button" className="buttonDl">
+                  Download Raw Data
+                </button>
+              </Link>
             </div>
           </div>
         </div>

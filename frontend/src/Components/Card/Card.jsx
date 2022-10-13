@@ -1,8 +1,7 @@
 import './Card.css';
 import { Link } from 'react-router-dom';
-import graphImg from './graph.png';
 
-export default function Card({ title, body, setLinkChange }) {
+export default function Card({ title, body, graphType, setLinkChange }) {
   const changeLinkContent = () => {
     setLinkChange(false);
   };
@@ -18,10 +17,7 @@ export default function Card({ title, body, setLinkChange }) {
             <p>{body}</p>
           </div>
         </div>
-
-        <div className="imageContainer">
-          <img src={graphImg} alt="" />
-        </div>
+        <div className="graphContainer">{graphType}</div>
         <Link to="/project" onClick={changeLinkContent}>
           <button type="button" className="buttonStyles">
             Details

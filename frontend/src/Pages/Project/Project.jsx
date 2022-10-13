@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
-import graphImg from './graph.png';
-import graphImg2 from './graph2.png';
+import ColumnChart from '../../Graphs/BarChart/ColumnChart';
 
 export default function Project({ setLinkChange }) {
   // for tabs
@@ -25,10 +24,13 @@ export default function Project({ setLinkChange }) {
 
   // for link change(home -> back)
   useEffect(() => {
-    setLinkChange(false);
+    let linkState = false;
+    if (!linkState) {
+      setLinkChange(false);
+    }
 
     return () => {
-      console.log('Returned');
+      linkState = true;
     };
   });
 
@@ -65,7 +67,7 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <img src={graphImg} alt="" />
+                    <ColumnChart toggleTab={toggleTab} />
                   </div>
                 </div>
                 <div className="dlButton">
@@ -84,7 +86,7 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <img src={graphImg2} alt="" />
+                    <ColumnChart toggleTab={toggleTab} />
                   </div>
                 </div>
                 <div className="dlButton">

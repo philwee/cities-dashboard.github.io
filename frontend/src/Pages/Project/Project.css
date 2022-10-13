@@ -63,10 +63,9 @@
 }
 
 .graphCanvas {
-  width: 70%;
-  border: 0.6px solid rgb(161, 160, 160);
+  width: 90%;
+  /* border: 0.6px solid rgb(161, 160, 160); */
   margin: 0.5rem auto;
-  border-radius: 40px;
   height: 38vh;
   display: flex;
   align-items: center;
@@ -74,19 +73,13 @@
 
 .midGraph {
   margin: 0 auto;
-  width: 80%;
-  text-align: center;
-  height: 230px;
-}
-
-.midGraph img {
   width: 100%;
-  height: inherit;
-  object-fit: fill;
+  text-align: center;
+  height: 100%;
 }
 
 .dlButton {
-  width: 70%;
+  width: 90%;
   margin-top: 0.8rem;
   text-align: right;
 }
@@ -215,10 +208,10 @@
   .daysSelect {
     width: 90%;
   }
-  .graphCanvas {
+  /* .graphCanvas {
     width: 90%;
     padding: 0rem 1rem 0rem;
-  }
+  } */
   .dlButton {
     width: 90%;
     margin-top: 0.8rem;

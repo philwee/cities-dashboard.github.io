@@ -1,11 +1,11 @@
 import './CarouselCard.css';
-import graphImg from './graph.png';
+import BarChart from '../../Graphs/BarChart/BarChart';
 
 export default function CarouselCard({ title, date }) {
   return (
     <div className="carousel-card-container">
-      <div className="carousel-card-imgContainer">
-        <img src={graphImg} alt="" />
+      <div className="carousel-card-graphContainer">
+        <BarChart />
       </div>
       <div className="carousel-card-contents">
         <div className="carousel-card-title">

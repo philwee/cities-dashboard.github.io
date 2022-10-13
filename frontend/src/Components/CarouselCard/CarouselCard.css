@@ -1,56 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap');
 
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap");
-
-p{
-    font-family: 'Bebas Neue', cursive;
-    font-family: 'IBM Plex Sans', sans-serif;
+p {
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'IBM Plex Sans', sans-serif;
 }
-.carousel-card-container{
-    padding: 0.8rem 1.1rem 0.8rem;
-    width: 17rem ;
-    /* background-color:green; */
-    height: 10rem;
-    display: inline-block;
-    border-radius: 2rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    border-color:#6C0EA9;
-    border-style: solid;
-  }
-
-  .carousel-card-imgContainer{
-    display: inline-block;
-    width: 10rem;
-    height: 6rem;
-
-  }
-  
-  .carousel-card-imgContainer img{
-    width: 100%;
-    height: 100%;
-    border: 2px solid #555;
-    border-radius: 1rem;
+.carousel-card-container {
+  padding: 0.8rem 1.1rem 0.8rem;
+  width: 17rem;
+  /* background-color:green; */
+  height: 10rem;
+  display: inline-block;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-color: #6c0ea9;
+  border-style: solid;
 }
-  
-  .carousel-card-container:hover{
-    cursor: pointer;
-    box-shadow: 0px 0px 20px -10px;
-    transform: scale(1.05);
-    transition: all ease-in-out 200ms;
-  }
-  
-  .carousel-card-contents{
-    margin-left: 0.5rem;
-  }
 
-  .carousel-card-date p{
-      font-size: 0.7rem;
-      color:#BDBDBD;
-      /* font-family:Georgia, 'Times New Roman', Times, serif; */
-  }
-  
-  
-  
+.carousel-card-graphContainer {
+  display: inline-block;
+  width: 100%;
+  height: 6.2rem;
+}
 
-  
-  
+.carousel-card-container:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 20px -10px;
+  transform: scale(1.05);
+  transition: all ease-in-out 200ms;
+}
+
+.carousel-card-title {
+  font-size: 0.9rem;
+}
+.carousel-card-date p {
+  font-size: 0.7rem;
+  color: #bdbdbd;
+  /* font-family:Georgia, 'Times New Roman', Times, serif; */
+}

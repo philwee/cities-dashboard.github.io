@@ -27,13 +27,13 @@ const views = {
   columns: [
     0,
     1,
-    { role: 'tooltip', sourceColumn: 13 },
+    { role: 'tooltip', type: 'string', p: { html: true }, sourceColumn: 13 },
     2,
-    { role: 'tooltip', sourceColumn: 14 },
+    { role: 'tooltip', type: 'string', p: { html: true }, sourceColumn: 14 },
     3,
-    { role: 'tooltip', sourceColumn: 15 },
+    { role: 'tooltip', type: 'string', p: { html: true }, sourceColumn: 15 },
     4,
-    { role: 'tooltip', sourceColumn: 16 },
+    { role: 'tooltip', type: 'string', p: { html: true }, sourceColumn: 16 },
   ],
 };
 
@@ -63,7 +63,7 @@ export default function ColumnChart({ toggleTab }) {
       title: 'Year',
     },
     isStacked: chartType,
-    tooltip: { isHtml: false },
+    tooltip: { isHtml: true },
     focusTarget: 'datum',
     animation: {
       startup: true,

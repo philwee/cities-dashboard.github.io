@@ -81,6 +81,7 @@ export default function ColumnChart({ toggleTab }) {
       spreadSheetUrl="https://docs.google.com/spreadsheets/d/1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk"
       spreadSheetQueryParameters={{
         headers: 1,
+        gid: 337720664
       }}
       options={options}
       chartEvents={chartEvents}

@@ -78,32 +78,47 @@ export default function Project({ setLinkChange }) {
                   <div className="midGraph">
                     {/* <ColumnChart toggleTab={changeChart} /> */}
                     <ChartComponent chartData={{
-                      "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-                      "gid": 337720664,
-                      "headers": 1,
-                      "columns": [
-                        0,
-                        6,
-                        {
-                          calc: "stringify",
-                          type: "string",
-                          role: "annotation",
-                          sourceColumn: 6
-                        },
-                        7,
-                        8,
-                        {
-                          calc: "stringify",
-                          type: "string",
-                          role: "annotation",
-                          sourceColumn: 8
-                        },
-                        9
-                      ],
-                      "chartType": "ColumnChart",
-                      "isStacked": true,
-                      "vAxisFormat": "#.##%"
-                    }} />
+                                  "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
+                                  "title": "Daily Food Waste by Meal (kg), with 95% Confidence Interval",
+                                  "subtitle": "",
+                                  "gid": 1107716679,
+                                  "headers": 1,
+                                  "chartType": "LineChart",
+                                  "columns": [
+                                      0,
+                                      1,
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 2
+                                      },
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 3
+                                      },
+                                      4,
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 5
+                                      },
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 6
+                                      },
+                                      7,
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 8
+                                      },
+                                      {
+                                          "role": "interval",
+                                          "sourceColumn": 9
+                                      }
+                                  ],
+                                  "intervals": {
+                                      "style": "area"
+                                  }
+                              
+                }} />
                   </div>
                   <div className="stackedButton">
                     <Link className="linkButton" to="/project">

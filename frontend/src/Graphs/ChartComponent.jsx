@@ -11,7 +11,7 @@ export default function ChartComponent({chartData}) {
       title: chartData.vAxisTitle,
     },
     hAxis: {
-      format: '',
+      format: chartData.hAxisFormat,
       title: chartData.hAxisTitle,
     },
     animation: {
@@ -24,7 +24,8 @@ export default function ChartComponent({chartData}) {
     seriesType: chartData.seriesType,
     series: chartData.series,
     intervals: chartData.intervals,
-    curveType: chartData.curveType ?? "function"
+    curveType: chartData.curveType ?? "function",
+    colors: chartData.colors
   };
 
   const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}`;

@@ -38,9 +38,6 @@ export default function About() {
             <div className="aboutText">
               The CITIES dashboad is an ongoing initiative...
             </div>
-            <div>
-              <iframe width="1000" height="1000" seamless frameBorder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQaQgIMTiS8MtIZ3fLpZ6-VYhdVaKRa6DakNbcVX3EIg0-g7LEKJV6Cpt1clc-mOeYZtY-o_qXKzxbU/pubchart?oid=1627404773&amp;format=interactive"></iframe>
-            </div>
           </div>
         </div>
       </div>

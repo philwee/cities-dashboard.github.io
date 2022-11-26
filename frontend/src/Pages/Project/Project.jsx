@@ -6,6 +6,8 @@ import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
 import BarChart from '../../Graphs/BarChart/BarChart';
 import ColumnChart from '../../Graphs/BarChart/ColumnChart';
+import ChartComponent from '../../Graphs/ChartComponent';
+import HeatMap from '../../Graphs/HeatMap';
 
 export default function Project({ setLinkChange }) {
   // for tabs
@@ -74,7 +76,34 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <ColumnChart toggleTab={changeChart} />
+                    {/* <ColumnChart toggleTab={changeChart} /> */}
+                    <ChartComponent chartData={{
+                      "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
+                      "gid": 337720664,
+                      "headers": 1,
+                      "columns": [
+                        0,
+                        6,
+                        {
+                          calc: "stringify",
+                          type: "string",
+                          role: "annotation",
+                          sourceColumn: 6
+                        },
+                        7,
+                        8,
+                        {
+                          calc: "stringify",
+                          type: "string",
+                          role: "annotation",
+                          sourceColumn: 8
+                        },
+                        9
+                      ],
+                      "chartType": "ColumnChart",
+                      "isStacked": true,
+                      "vAxisFormat": "#.##%"
+                    }} />
                   </div>
                   <div className="stackedButton">
                     <Link className="linkButton" to="/project">
@@ -99,7 +128,7 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <BarChart />
+                    <HeatMap sheetLink={'2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC/pubhtml?gid=1398234006'} />
                   </div>
                 </div>
               </div>

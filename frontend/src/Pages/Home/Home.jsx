@@ -1,3 +1,5 @@
+// disable eslint for this file
+/* eslint-disable */
 import { useEffect } from 'react';
 import Card from '../../Components/Card/Card';
 import BarChart from '../../Graphs/BarChart/BarChart';
@@ -7,7 +9,7 @@ import './Home.css';
 export default function Home({ LinkChange, setLinkChange }) {
   const cards = [
     { name: 'Project 1', graph: <BarChart /> },
-    { name: 'Project 2', graph: <ColumnChart /> },
+    { name: 'Project 2', graph: <BarChart /> },
     { name: 'Project 3', graph: <BarChart /> },
     { name: 'Project 4', graph: <BarChart /> },
     { name: 'Project 5', graph: <BarChart /> },

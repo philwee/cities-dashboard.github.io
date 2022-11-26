@@ -1,3 +1,5 @@
+// disable eslint for this file
+/* eslint-disable */
 /* eslint-disable no-unused-vars */
 import './Project.css';
 import { useState, useEffect } from 'react';
@@ -74,7 +76,7 @@ export default function Project({ setLinkChange }) {
                 </div>
                 <div className="graphCanvas">
                   <div className="midGraph">
-                    <ColumnChart toggleTab={changeChart} />
+                    <BarChart />
                   </div>
                   <div className="stackedButton">
                     <Link className="linkButton" to="/project">

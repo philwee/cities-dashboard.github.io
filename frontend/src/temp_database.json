@@ -105,6 +105,92 @@
                     "intervals": {
                         "style": "area"
                     }
+                },
+                {
+                    "title": "Facilities Check-in Per Week Day, Normalized to the Max Value of Each Year",
+                    "subtitle": "",
+                    "gid": 654076094,
+                    "headers": 1,
+                    "columns": [
+                        0,
+                        1,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 9
+                        },
+                        2,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 10
+                        },
+                        3,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 11
+                        },
+                        4,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 12
+                        },
+                        5,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 13
+                        },
+                        6,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 14
+                        },
+                        7,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 15
+                        },
+                        {
+                            "role": "annotation",
+                            "sourceColumn": 16
+                        }
+                    ],
+                    "chartType": "ColumnChart",
+                    "vAxisFormat": "#.##%",
+                    "vAxisMin": "0"
+                },
+                {
+                    "title": "Heat Map",
+                    "subtitle": "",
+                    "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
+                    "gid": 1398234006,
+                    "chartType": "HeatMap"
+                },
+                {
+                    "title": "Total Monthly Facilities Check-in, Historical",
+                    "subtitle": "",
+                    "gid": 1045014031,
+                    "headers": 1,
+                    "columns": [
+                        0,
+                        1,
+                        {
+                            "role": "annotation",
+                            "type": "string",
+                            "sourceColumn": 2
+                        },
+                        3,
+                        {
+                            "role": "annotation",
+                            "type": "string",
+                            "sourceColumn": 4
+                        },
+                        5,
+                        {
+                            "role": "annotation",
+                            "type": "string",
+                            "sourceColumn": 6
+                        }
+                    ],
+                    "chartType": "LineChart"
                 }
             ]
         },

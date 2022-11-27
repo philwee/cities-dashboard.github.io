@@ -1,7 +1,13 @@
 import { Chart } from 'react-google-charts';
+import HeatMap from './HeatMap';
 
 export default function ChartComponent({chartData}) {
+  // Case HeatMap
+  if (chartData.chartType == "HeatMap") {
+    return(<HeatMap publishedSheetId={chartData.publishedSheetId} gid={chartData.gid} />)
+  }
 
+  // All the other chart types using React-Google-Chart wrapper
   const options = {
     theme: 'material',
     chartArea: { width: '70%' },
@@ -9,6 +15,9 @@ export default function ChartComponent({chartData}) {
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
       title: chartData.vAxisTitle,
+      viewWindow: {
+        min: chartData.vAxisMin
+      }
     },
     hAxis: {
       format: chartData.hAxisFormat,

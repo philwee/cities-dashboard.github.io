@@ -21,7 +21,7 @@ export default function Header({ LinkChange, setLinkChange }) {
       <div className="titleMenuBar">
         <div className="centerLogoMenuBar">
           <div className="citiesLogo" />
-          <div className="projectTitle">CITIES RESEARCH CENTER DASHBOARD</div>
+          <div className="projectTitle">CITIES DASHBOARD</div>
           <div className="menuBar">
             <ul>
               {LinkChange ? (

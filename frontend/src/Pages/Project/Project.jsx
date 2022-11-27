@@ -78,11 +78,24 @@ export default function Project({ setLinkChange }) {
                   <div className="midGraph">
                     {/* <ColumnChart toggleTab={changeChart} /> */}
                     <ChartComponent chartData={{
-                    "title": "Heat Map",
+                                  "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
+
+                    "title": "Daily Food Waste (kg), Historical",
                     "subtitle": "",
-                    "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-                    "gid": 1398234006,
-                    "chartType": "HeatMap"
+                    "gid": 1952244844,
+                    "headers": 1,
+                    "chartType": "Calendar",
+                    "columns": [
+                        0,
+                        5,
+                        {
+                          "role":"tooltip",
+                          "sourceColumn": 8
+                        }
+                    ],
+                    "colorAxis": {
+                      colors: ["#ffffff","#57068c"]
+                    }
                 }} />
                   </div>
                   <div className="stackedButton">

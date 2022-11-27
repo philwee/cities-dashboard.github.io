@@ -34,8 +34,24 @@ export default function ChartComponent({chartData}) {
     series: chartData.series,
     intervals: chartData.intervals,
     curveType: chartData.curveType ?? "function",
-    colors: chartData.colors
+    colors: chartData.colors,
+    colorAxis: chartData.colorAxis,
+    tooltip: {
+      isHtml: false
+    },
+    calendar: {
+      cellSize: scaleCalendar(5, 20)
+    },
+    noDataPattern: {
+      backgroundColor: 'none',
+      color: 'none'
+    }
   };
+
+  function scaleCalendar(min, max) {
+    var cellSize = window.innerWidth / 100;
+    return Math.min(Math.max(cellSize, min), max);
+}
 
   const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}`;
   

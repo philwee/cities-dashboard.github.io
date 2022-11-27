@@ -202,7 +202,28 @@
             "onwerContact": "nyuad.dining@nyu.edu",
             "charts": [
                 {
-                    "title": "Daily Food Waste (kg), with 95% Confidence Interval",
+                    "title": "Daily Food Waste (kg), Historical",
+                    "subtitle": "",
+                    "gid": 1952244844,
+                    "headers": 1,
+                    "chartType": "Calendar",
+                    "columns": [
+                        0,
+                        5,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 8
+                        }
+                    ],
+                    "colorAxis": {
+                        "colors": [
+                            "#ffffff",
+                            "#57068c"
+                        ]
+                    }
+                },
+                {
+                    "title": "Daily Food Waste (kg) Per Month, with 95% Confidence Interval",
                     "subtitle": "",
                     "gid": 1034106646,
                     "headers": 1,
@@ -333,19 +354,6 @@
                     "chartType": "ColumnChart",
                     "isStacked": true,
                     "vAxisFormat": "#.##%"
-                },
-                {
-                    "title": "Daily Food Waste (kg), Historical",
-                    "subtitle": "",
-                    "gid": 1952244844,
-                    "headers": 1,
-                    "chartType": "AnnotationChart",
-                    "columns": [
-                        0,
-                        2,
-                        3,
-                        4
-                    ]
                 }
             ]
         }

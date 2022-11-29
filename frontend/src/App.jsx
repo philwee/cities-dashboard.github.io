@@ -26,11 +26,11 @@ function App() {
             main: '#57068c',
             contrastText: '#000'
           },
-          typography: {
-            fontFamily: '"IBM Plex Sans", sans-serif !important'
-          },
-          customBackground: '#242424',
+          customBackground: '#121212',
           mode: 'dark'
+        },
+        typography: {
+          fontFamily: '"IBM Plex Sans", sans-serif !important'
         }
       }
         : {
@@ -40,11 +40,11 @@ function App() {
               main: '#57068c',
               contrastText: '#fff'
             },
-            typography: {
-              fontFamily: '"IBM Plex Sans", sans-serif !important'
-            },
             customBackground: '#f6f6f6',
             mode: 'light'
+          },
+          typography: {
+            fontFamily: '"IBM Plex Sans", sans-serif !important'
           }
         }
       ),

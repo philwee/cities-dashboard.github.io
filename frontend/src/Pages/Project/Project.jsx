@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from '../../Components/Carousel/Carousel';
 import CarouselCard from '../../Components/CarouselCard/CarouselCard';
-import BarChart from '../../Graphs/BarChart/BarChart';
-import ColumnChart from '../../Graphs/BarChart/ColumnChart';
 import ChartComponent from '../../Graphs/ChartComponent';
-import HeatMap from '../../Graphs/HeatMap';
 
 export default function Project({ setLinkChange }) {
   // for tabs

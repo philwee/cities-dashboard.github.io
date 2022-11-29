@@ -3,8 +3,7 @@ import {
   AiFillTwitterCircle,
   AiFillLinkedin,
   AiFillInstagram,
-  AiFillFacebook,
-  AiFillMail
+  AiFillFacebook
 } from 'react-icons/ai';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -49,7 +48,7 @@ export function SocialHandleGrid(){
 export default function About() {
   return (
     <Container maxWidth="md" sx={{ p: 4 }}>
-      <Paper elevation={4} sx={{ p: 4 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
         <Container maxWidth="xs" sx={{ pb: 4 }}>
           <Grid justifyContent="center" container>
             <Grid item xs={12} sx={{ textAlign: 'center', pb: 2 }}>

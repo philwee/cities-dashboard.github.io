@@ -1,6 +1,5 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
@@ -16,7 +15,7 @@ export default function Footer(){
         <Paper elevation={0} square >
             <Container>
                 <Grid container justify='center' align='center' sx={{p: 5}}>
-                    <Grid>
+                    <Grid item xs='12'>
                         <Typography variant='body1' fontWeight='bold' gutterBottom>
                             Center for Interacting Urban Networks<br />- {getYear()} -
                         </Typography>

@@ -16,8 +16,6 @@
   display: inline-block;
   border-bottom: 3px solid #7c4dff;
   letter-spacing: 1px;
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .tabs {
@@ -144,8 +142,6 @@
 .detailsTitle {
   border-bottom: 3px solid #7c4dff;
   letter-spacing: 1px;
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
   display: inline-block;
 }
 
@@ -169,8 +165,6 @@
 }
 
 .carousel-title {
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
   letter-spacing: 1px;
   border-bottom: 3px solid #7c4dff;
   text-align: center;

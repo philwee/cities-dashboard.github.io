@@ -10,6 +10,7 @@ import Header from './Components/Header/Header';
 import Home from './Pages/Home/Home';
 import Project from './Pages/Project/Project';
 import About from './Pages/About/About';
+import Footer from './Components/Header/Footer';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
             />
             <Route path="/about" element={<About />} />
           </Routes>
+          <Footer />
         </Box>
       </ThemeProvider>  
     </BrowserRouter>

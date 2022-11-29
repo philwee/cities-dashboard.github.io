@@ -1,6 +1,7 @@
 .navLink {
   cursor: pointer;
   color: black;
+  margin: 0 1rem;
 }
 
 .navLink:hover {

@@ -19,30 +19,46 @@ function App() {
 
   const theme = useMemo(
     () =>
-      createTheme({
+      createTheme(prefersDarkMode ? {
+        // palette values for dark mode
         palette: {
           primary: {
-            light: '#57068c', // NYU purple color
-            main: '#893ebd',
-            dark: '#24005e',
-            contrastText: '#fff',
+            main: '#57068c',
+            contrastText: '#000'
           },
-          background: {
-            gray: '#f6f6f6'
+          typography: {
+            fontFamily: '"IBM Plex Sans", sans-serif !important'
           },
-          mode: prefersDarkMode ? 'dark' : 'light'
-        },
-        typography: {
-          fontFamily: '"IBM Plex Sans", sans-serif !important'
+          customBackground: '#242424',
+          mode: 'dark'
         }
-      }),
+      }
+        : {
+          palette: {
+            // palette values for light mode
+            primary: {
+              main: '#57068c',
+              contrastText: '#fff'
+            },
+            typography: {
+              fontFamily: '"IBM Plex Sans", sans-serif !important'
+            },
+            customBackground: '#f6f6f6',
+            mode: 'light'
+          }
+        }
+      ),
     [prefersDarkMode],
   );
+
+  console.log(theme);
+
+
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <Box sx={{ width: '100vw', minHeight: '100vh', backgroundColor: 'background.gray' }}>
+        <Box sx={{ width: '100vw', minHeight: '100vh', backgroundColor: 'customBackground' }}>
           <Header LinkChange={LinkChange} setLinkChange={setLinkChange} />
           <Routes>
             <Route
@@ -59,7 +75,7 @@ function App() {
           </Routes>
           <Footer />
         </Box>
-      </ThemeProvider>  
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

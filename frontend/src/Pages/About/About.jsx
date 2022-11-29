@@ -52,7 +52,7 @@ export default function About() {
       <Paper elevation={4} sx={{ p: 4 }}>
         <Container maxWidth="xs" sx={{ pb: 4 }}>
           <Grid justifyContent="center" container>
-            <Grid item xs={12} sx={{ textAlign: 'center' }}>
+            <Grid item xs={12} sx={{ textAlign: 'center', pb: 2 }}>
               <img style={{ maxWidth: '100%' }} src={citiesLogo} />
             </Grid>
             <SocialHandleGrid />

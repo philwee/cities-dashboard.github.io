@@ -13,11 +13,11 @@ function getYear(){
 
 export default function Footer(){
     return(
-        <Paper elevation={5} square >
+        <Paper elevation={0} square >
             <Container>
                 <Grid container justify='center' align='center' sx={{p: 5}}>
                     <Grid>
-                        <Typography variant='h6' fontWeight='semibold' gutterBottom>
+                        <Typography variant='body1' fontWeight='bold' gutterBottom>
                             Center for Interacting Urban Networks<br />- {getYear()} -
                         </Typography>
                         <Container maxWidth='xs'>

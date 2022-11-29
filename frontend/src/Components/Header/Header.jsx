@@ -27,7 +27,7 @@ export default function Header({ LinkChange, setLinkChange }) {
 
   return (
     <Paper elevation={0} square>
-      <Box sx={{ backgroundColor: 'primary.light', height: '10vh' }} />
+      <Box sx={{ backgroundColor: 'primary.main', height: '10vh' }} />
       <Container sx={{pb: 3}}>
         <Paper elevation={4} sx={{ width: '12vh', height: '12vh', ml: 0, mt: '-6vh', mb: 3 }}>
           <img style={{ width: '100%' }} src={citiesLogo} />

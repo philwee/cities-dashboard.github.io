@@ -1,0 +1,113 @@
+{
+    "all_project": [
+        {
+            "title": "Athletics FABS Membership",
+            "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
+            "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br>FABS memberships allow access to and reservations of several Athletic facilities, such as:<br><ul><li>Fitness center</li><li>Women-only gym</li><li>Faculty pool</li><li>50m pool</li><li>400m track</li><li>Indoor track</li><li>...</li></ul><br>While FABS allows for 9 different account types, this dataset categorizes into 4 distinct demographic groups: <ul><li>Undegraduate (student)</li><li>Graduate student and alumni</li><li>Staff affliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
+            "owner": "Athletics Office",
+            "onwerContact": "nyuad.athletics@nyu.edu",
+            "charts": [
+                {
+                    "title": "Number of Unique FABS Memberships",
+                    "subtitle": "As the university continues to expand over the year, the number of registrations has exhibited a clear upward trend. However, there was a significant decrease of staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22",
+                    "gid": 337720664,
+                    "headers": 1,
+                    "columns": [
+                        0,
+                        1,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 17
+                        },
+                        2,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 18
+                        },
+                        3,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 19
+                        },
+                        4,
+                        {
+                            "role": "tooltip",
+                            "sourceColumn": 20
+                        }
+                    ],
+                    "chartType": "ColumnChart"
+                },
+                {
+                    "title": "Percentage of Demographic Groups in FABS",
+                    "subtitle": "Undergraduate students have remained the largest group of Fitness Facilitiy users in recent years.",
+                    "gid": 337720664,
+                    "headers": 1,
+                    "columns": [
+                        0,
+                        6,
+                        {
+                            "calc": "stringify",
+                            "type": "string",
+                            "role": "annotation",
+                            "sourceColumn": 6
+                        },
+                        7,
+                        8,
+                        {
+                            "calc": "stringify",
+                            "type": "string",
+                            "role": "annotation",
+                            "sourceColumn": 8
+                        },
+                        9
+                    ],
+                    "chartType": "ColumnChart",
+                    "isStacked": true,
+                    "vAxisFormat": "#.##%"
+                }
+            ]
+        },
+        {
+            "title": "Athletic Facilities Check-in",
+            "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
+            "description": "placeholder",
+            "owner": "Athletics Office",
+            "onwerContact": "nyuad.athletics@nyu.edu",
+            "charts": [
+                {
+                    "query": "SELECT A, B, C, D, F, I, J",
+                    "title": "Average Number of Facilities Check-in Throughout the Years",
+                    "subtitle": "",
+                    "gid": 947338007,
+                    "headers": 1,
+                    "chartType": "ComboChart",
+                    "sheetID": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
+                    "seriesType": "bars",
+                    "columns": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        {
+                            "role": "interval",
+                            "sourceColumn": 5
+                        },
+                        {
+                            "role": "interval",
+                            "sourceColumn": 6
+                        }
+                    ],
+                    "series": {
+                        "3": {
+                            "type": "line"
+                        }
+                    },
+                    "intervals": {
+                        "style": "area"
+                    }
+                }
+            ]
+        }
+    ]
+}

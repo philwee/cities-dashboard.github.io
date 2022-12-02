@@ -22,8 +22,6 @@ app.use(express.urlencoded({ limit: '10mb', extended: true })); // decode url-en
 
 //code goes here
 
-const routes = require('./routes/dataRoutes');
-
 app.use('/api', routes);
 
 // export the app object so it can be used in other modules

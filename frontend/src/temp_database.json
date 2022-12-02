@@ -201,24 +201,6 @@
     "onwerContact": "nyuad.dining@nyu.edu",
     "charts": [
       {
-        "title": "Daily Food Waste (kg), Historical",
-        "subtitle": "",
-        "gid": 1952244844,
-        "headers": 1,
-        "chartType": "Calendar",
-        "columns": [
-          0,
-          5,
-          {
-            "role": "tooltip",
-            "sourceColumn": 8
-          }
-        ],
-        "colorAxis": {
-          "colors": ["#ffffff", "#57068c"]
-        }
-      },
-      {
         "title": "Daily Food Waste (kg) Per Month, with 95% Confidence Interval",
         "subtitle": "",
         "gid": 1034106646,
@@ -244,8 +226,31 @@
         "intervals": {
           "style": "area"
         },
-        "colors": ["#57068c"],
+        "colors": [
+          "#57068c"
+        ],
         "legend": "none"
+      },
+      {
+        "title": "Daily Food Waste (kg), Historical",
+        "subtitle": "",
+        "gid": 1952244844,
+        "headers": 1,
+        "chartType": "Calendar",
+        "columns": [
+          0,
+          5,
+          {
+            "role": "tooltip",
+            "sourceColumn": 8
+          }
+        ],
+        "colorAxis": {
+          "colors": [
+            "#ffffff",
+            "#57068c"
+          ]
+        }
       },
       {
         "title": "Daily Food Waste by Meal (kg), with 95% Confidence Interval",
@@ -350,5 +355,29 @@
         "vAxisFormat": "#.##%"
       }
     ]
+  },
+  {
+    "title": "Air Quality",
+    "sheetId": "",
+    "description": "placeholder",
+    "owner": "NYUADAir",
+    "onwerContact": "cities.nyuad@nyu.edu",
+    "charts": []
+  },
+  {
+    "title": "Paper Printing",
+    "sheetId": "",
+    "description": "placeholder",
+    "owner": "Office of Sustainability and Stewardship",
+    "onwerContact": "",
+    "charts": []
+  },
+  {
+    "title": "Student Population",
+    "sheetId": "",
+    "description": "placeholder",
+    "owner": "Institutional Research",
+    "onwerContact": "",
+    "charts": []
   }
 ]

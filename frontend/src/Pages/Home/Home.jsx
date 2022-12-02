@@ -1,19 +1,37 @@
 // disable eslint for this file
 /* eslint-disable */
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
-import Card from '../../Components/Card/Card';
 import data from '../../temp_database.json';
 import ChartComponent from '../../Graphs/ChartComponent';
-import './Home.css';
+
+import { Card, CardContent, CardMedia, CardActionArea, Divider} from '@mui/material';
+
+function ComingSoonBanner(){
+  return(
+    <Grid container height={'100%'} justifyContent="center" alignItems="center" >
+      <Grid item>
+        <Typography variant="h5" color="text.secondary">
+          Coming Soon
+        </Typography>
+      </Grid>
+    </Grid>
+  );
+}
 
 export default function Home({ LinkChange, setLinkChange }) {
   // useState for home page data
   const [homeData, setHomeData] = useState([]);
+
+  const changeLinkContent = () => {
+    setLinkChange(false);
+  };
+
   // fetch data if homePageData is empty
   useEffect(() => {
     if (homeData.length === 0) {
@@ -21,18 +39,23 @@ export default function Home({ LinkChange, setLinkChange }) {
       data.map((item) => {
         setHomeData((prev) => [
           ...prev,
-          {
+          (item.charts.length != 0) ? {
             name: item.title,
             owner: item.owner,
+            isEmpty: false,
             graph: (
               <ChartComponent
                 chartData={{
                   homePage: true,
                   sheetId: item.sheetId,
-                  ...item.charts[1],
+                  ...item.charts[0],
                 }}
               />
-            ),
+            )} : {
+            name: item.title,
+            owner: item.owner,
+            isEmpty: true,
+            graph: (<ComingSoonBanner/>)
           },
         ]);
       });
@@ -52,8 +75,6 @@ export default function Home({ LinkChange, setLinkChange }) {
       <Grid
         container
         direction="row"
-        justifyContent="center"
-        alignItems="center"
         spacing={4}
       >
         <Grid item xs={12}>
@@ -64,14 +85,32 @@ export default function Home({ LinkChange, setLinkChange }) {
 
         {homeData.map((element, index) => (
           <Grid item xs={12} sm={6} md={4}>
-            <Card
+            {/* <Card
               title={element.name}
               key={index}
               graphType={element.graph}
               owner={element.owner}
               LinkChange={LinkChange}
               setLinkChange={setLinkChange}
-            />
+            /> */}
+            <Card key={index} elevation={2}>
+              <CardActionArea component={Link} to="/project" onClick={changeLinkContent} disabled={element.isEmpty}>
+                <CardMedia
+                  children={element.graph}
+                  height={'auto'}
+                  sx={{ aspectRatio: '4/3' }}
+                />
+                <Divider />
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {element.name}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {element.owner}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
           </Grid>
         ))}
       </Grid>

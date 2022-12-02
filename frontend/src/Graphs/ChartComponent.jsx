@@ -18,7 +18,7 @@ export default function ChartComponent({ chartData }) {
   // All the other chart types using React-Google-Chart wrapper
   const options = {
     theme: 'material',
-    chartArea: { width: '70%' },
+    chartArea: { width: '80%' },
     title: chartData.homePage ? null : chartData.title,
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
@@ -35,6 +35,7 @@ export default function ChartComponent({ chartData }) {
       startup: true,
       easing: 'inAndOut',
     },
+    width: '100%',
     height: '100%',
     legend: chartData.legend ?? 'bottom',
     isStacked: chartData.isStacked ?? false,

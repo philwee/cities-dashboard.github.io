@@ -17,7 +17,7 @@ export default function Footer() {
     <Paper elevation={0} square>
       <Container>
         <Grid container justify="center" align="center" sx={{ p: 5 }}>
-          <Grid item xs="12">
+          <Grid item xs={12}>
             <Typography variant="body1" fontWeight="bold" gutterBottom>
               Center for Interacting Urban Networks
               <br />- {getYear()} -

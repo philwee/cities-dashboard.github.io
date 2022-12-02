@@ -1,7 +1,7 @@
 import './Card.css';
 import { Link } from 'react-router-dom';
 
-export default function Card({ title, body, graphType, setLinkChange }) {
+export default function Card({ title, owner, graphType, setLinkChange }) {
   const changeLinkContent = () => {
     setLinkChange(false);
   };
@@ -14,7 +14,7 @@ export default function Card({ title, body, graphType, setLinkChange }) {
             <h3>{title}</h3>
           </div>
           <div className="cardBody">
-            <p>{body}</p>
+            <p>{owner}</p>
           </div>
         </div>
         <div className="graphContainer">{graphType}</div>

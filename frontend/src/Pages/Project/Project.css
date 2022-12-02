@@ -16,8 +16,6 @@
   display: inline-block;
   border-bottom: 3px solid #7c4dff;
   letter-spacing: 1px;
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .tabs {
@@ -142,14 +140,14 @@
 }
 
 .detailsTitle {
+  color: white;
   border-bottom: 3px solid #7c4dff;
   letter-spacing: 1px;
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
   display: inline-block;
 }
 
 .detailsContent {
+  color: white;
   padding: 1rem 0rem 1rem;
   text-align: justify;
   letter-spacing: 0.5px;
@@ -169,8 +167,6 @@
 }
 
 .carousel-title {
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
   letter-spacing: 1px;
   border-bottom: 3px solid #7c4dff;
   text-align: center;

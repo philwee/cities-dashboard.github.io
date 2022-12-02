@@ -1,9 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400&display=swap');
 
-p {
-  font-family: 'Bebas Neue', cursive;
-  font-family: 'IBM Plex Sans', sans-serif;
-}
 .carousel-card-container {
   padding: 0.8rem 1.1rem 0.8rem;
   width: 17rem;
@@ -36,5 +31,4 @@ p {
 .carousel-card-date p {
   font-size: 0.7rem;
   color: #bdbdbd;
-  /* font-family:Georgia, 'Times New Roman', Times, serif; */
 }

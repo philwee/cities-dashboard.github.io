@@ -1,8 +1,37 @@
+// disable eslint for this file
+/* eslint-disable */
+
 import { Chart } from 'react-google-charts';
 
 function createCustomToolTip(columnToolTipData) {
   return `<p>${columnToolTipData}</p>`;
 }
+
+const views = {
+  columns: [
+    0,
+    1,
+    {
+      role: 'tooltip',
+      sourceColumn: 17,
+    },
+    2,
+    {
+      role: 'tooltip',
+      sourceColumn: 18,
+    },
+    3,
+    {
+      role: 'tooltip',
+      sourceColumn: 19,
+    },
+    4,
+    {
+      role: 'tooltip',
+      sourceColumn: 20,
+    },
+  ],
+};
 
 const data = [
   [

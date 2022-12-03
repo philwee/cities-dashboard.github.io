@@ -1,5 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
+import { useEffect, useContext } from 'react';
+import { LinkContext } from '../../LinkContext';
 import './About.css';
 import {
   AiFillTwitterCircle,
@@ -63,11 +65,13 @@ export function SocialHandleGrid() {
   );
 }
 
-export default function About({LinkChange, setLinkChange}) {
-  const changeLinkContent = () => {
-    setLinkChange(false);
-  };
-  
+export default function About() {
+  const [_, setUnderlineLink] = useContext(LinkContext);
+
+  useEffect(() => {
+    setUnderlineLink('about');
+  });
+
   return (
     <Container maxWidth="md" sx={{ p: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
@@ -79,7 +83,7 @@ export default function About({LinkChange, setLinkChange}) {
             <SocialHandleGrid />
           </Grid>
         </Container>
-        <UnderlinedTitle text='the center' />
+        <UnderlinedTitle text="the center" />
         <Typography variant="body1" gutterBottom sx={{ mb: 4 }}>
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
           interdisciplinary research center dedicated to advance urban science
@@ -87,7 +91,7 @@ export default function About({LinkChange, setLinkChange}) {
           real-world solutions for the benefit of society. Our ultimate goal is
           to foster sustainable, resilient, and equitable cities.
         </Typography>
-        <UnderlinedTitle text='the project' />
+        <UnderlinedTitle text="the project" />
         <Typography variant="body1" gutterBottom>
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and

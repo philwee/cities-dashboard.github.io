@@ -1,11 +1,7 @@
 import './Card.css';
 import { Link } from 'react-router-dom';
 
-export default function Card({ title, owner, graphType, setLinkChange }) {
-  const changeLinkContent = () => {
-    setLinkChange(false);
-  };
-
+export default function Card({ title, owner, graphType }) {
   return (
     <div className="cardContainer">
       <div className="cardContents">
@@ -18,7 +14,7 @@ export default function Card({ title, owner, graphType, setLinkChange }) {
           </div>
         </div>
         <div className="graphContainer">{graphType}</div>
-        <Link to="/project" onClick={changeLinkContent}>
+        <Link to="/project">
           <button type="button" className="buttonStyles">
             Details
           </button>

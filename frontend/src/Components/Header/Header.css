@@ -1,17 +1,18 @@
 .navLink {
   cursor: pointer;
   color: gray;
-  margin: 0 1rem;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
 .navLink:hover {
-  border-bottom: 3px solid #57068c;
-  transition: all ease-in-out 100ms;
+  text-decoration: underline 3px #57068c;
+  text-underline-offset: 4px;
+  transition: all ease-in-out 500ms;
 }
 .active {
-  border-bottom: 3px solid #57068c;
+  text-decoration: underline 3px #57068c;
+  text-underline-offset: 4px;
 }

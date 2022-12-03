@@ -4,6 +4,9 @@
 import { Chart } from 'react-google-charts';
 import HeatMap from './HeatMap';
 
+import './ChartComponent.css';
+
+
 export default function ChartComponent({ chartData }) {
   // Case HeatMap
   if (chartData.chartType == 'HeatMap') {
@@ -18,8 +21,8 @@ export default function ChartComponent({ chartData }) {
   // All the other chart types using React-Google-Chart wrapper
   const options = {
     theme: 'material',
-    chartArea: { width: '80%' },
-    title: chartData.homePage ? null : chartData.title,
+    backgroundColor: { fill: 'transparent' },
+    chartArea: { width: '80%', height: '80%' },
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
       title: chartData.vAxisTitle,
@@ -58,7 +61,7 @@ export default function ChartComponent({ chartData }) {
   };
 
   function scaleCalendar(min, max) {
-    var cellSize = window.innerWidth / 100;
+    var cellSize = window.innerWidth / 70;
     return Math.min(Math.max(cellSize, min), max);
   }
 

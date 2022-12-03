@@ -1,9 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import { Grid, Typography, Container, Paper } from '@mui/material';
+
 
 import { SocialHandleGrid } from '../../Pages/About/About';
 

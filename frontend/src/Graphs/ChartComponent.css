@@ -1,0 +1,4 @@
+/* Make all texts in the graph white if in dark mode */
+.dark-mode text{
+    fill: #ffffff;
+}

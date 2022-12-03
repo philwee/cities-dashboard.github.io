@@ -29,7 +29,11 @@ function App() {
                   main: '#57068c',
                   contrastText: '#000',
                 },
+              background: {
+                default: "#555555"
+              },
                 customBackground: '#121212',
+                customAlternateBackground: '#00000',
                 mode: 'dark',
               },
               typography: {
@@ -44,6 +48,7 @@ function App() {
                   contrastText: '#fff',
                 },
                 customBackground: '#f6f6f6',
+                customAlternateBackground: '#ffffff',
                 mode: 'light',
               },
               typography: {
@@ -53,8 +58,6 @@ function App() {
       ),
     [prefersDarkMode]
   );
-
-  console.log(theme);
 
   return (
     <BrowserRouter>
@@ -71,12 +74,12 @@ function App() {
             <Route
               path="/"
               element={
-                <Home LinkChange={LinkChange} setLinkChange={setLinkChange} />
+                <Home LinkChange={LinkChange} setLinkChange={setLinkChange} prefersDarkMode={prefersDarkMode} />
               }
             />
             <Route
               path="/project"
-              element={<Project setLinkChange={setLinkChange} />}
+              element={<Project setLinkChange={setLinkChange} prefersDarkMode={prefersDarkMode}/>}
             />
             <Route path="/about" element={<About />} />
           </Routes>

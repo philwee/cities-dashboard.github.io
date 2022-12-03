@@ -3,14 +3,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-
 import data from '../../temp_database.json';
 import ChartComponent from '../../Graphs/ChartComponent';
 
-import { Card, CardContent, CardMedia, CardActionArea, Divider} from '@mui/material';
+import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider} from '@mui/material';
 
 function ComingSoonBanner(){
   return(
@@ -24,7 +20,7 @@ function ComingSoonBanner(){
   );
 }
 
-export default function Home({ LinkChange, setLinkChange }) {
+export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
   // useState for home page data
   const [homeData, setHomeData] = useState([]);
 
@@ -46,7 +42,6 @@ export default function Home({ LinkChange, setLinkChange }) {
             graph: (
               <ChartComponent
                 chartData={{
-                  homePage: true,
                   sheetId: item.sheetId,
                   ...item.charts[0],
                 }}
@@ -95,11 +90,14 @@ export default function Home({ LinkChange, setLinkChange }) {
             /> */}
             <Card key={index} elevation={2}>
               <CardActionArea component={Link} to="/project" onClick={changeLinkContent} disabled={element.isEmpty}>
-                <CardMedia
-                  children={element.graph}
-                  height={'auto'}
-                  sx={{ aspectRatio: '4/3' }}
-                />
+                <Box className={prefersDarkMode ? 'dark-mode' : ''}>
+                  <CardMedia
+                    children={element.graph}
+                    height={'auto'}
+                    sx={{ aspectRatio: '4/3' }}
+                  />
+                </Box>
+                
                 <Divider />
                 <CardContent>
                   <Typography variant="h6" component="div">

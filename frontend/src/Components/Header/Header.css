@@ -4,6 +4,10 @@
   margin: 0 1rem;
 }
 
+a{
+  text-decoration: none;
+}
+
 .navLink:hover {
   border-bottom: 3px solid #57068c;
   transition: all ease-in-out 100ms;

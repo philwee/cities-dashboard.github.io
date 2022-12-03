@@ -7,10 +7,9 @@ import {
   AiFillInstagram,
   AiFillFacebook,
 } from 'react-icons/ai';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { Grid, Typography, Container, Paper } from '@mui/material';
+
+import UnderlinedTitle from '../../Components/UnderlinedTitle';
 
 import citiesLogo from '../../cities-logo.png';
 
@@ -64,7 +63,11 @@ export function SocialHandleGrid() {
   );
 }
 
-export default function About() {
+export default function About({LinkChange, setLinkChange}) {
+  const changeLinkContent = () => {
+    setLinkChange(false);
+  };
+  
   return (
     <Container maxWidth="md" sx={{ p: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
@@ -76,9 +79,7 @@ export default function About() {
             <SocialHandleGrid />
           </Grid>
         </Container>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-          THE CENTER
-        </Typography>
+        <UnderlinedTitle text='the center' />
         <Typography variant="body1" gutterBottom sx={{ mb: 4 }}>
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
           interdisciplinary research center dedicated to advance urban science
@@ -86,9 +87,7 @@ export default function About() {
           real-world solutions for the benefit of society. Our ultimate goal is
           to foster sustainable, resilient, and equitable cities.
         </Typography>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-          THE PROJECT
-        </Typography>
+        <UnderlinedTitle text='the project' />
         <Typography variant="body1" gutterBottom>
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and

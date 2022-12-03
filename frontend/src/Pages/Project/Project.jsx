@@ -1,17 +1,12 @@
 // disable eslint for this file
 /* eslint-disable */
 /* eslint-disable no-unused-vars */
-import './Project.css';
 import { useEffect, useContext } from 'react';
-import { LinkContext } from '../../LinkContext';
-// import { Link } from 'react-router-dom';
-
-// import Carousel from '../../Components/Carousel/Carousel';
-// import CarouselCard from '../../Components/CarouselCard/CarouselCard';
+import { LinkContext } from '../../ContextProviders/LinkContext';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
-
 import { Box, Typography, Container, Divider } from '@mui/material';
+import './Project.css';
 
 const sampleData = {
   title: 'Food Waste',

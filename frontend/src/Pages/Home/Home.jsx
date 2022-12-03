@@ -1,11 +1,8 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkContext } from '../../LinkContext';
-
-import data from '../../temp_database.json';
-import ChartComponent from '../../Graphs/ChartComponent';
+import { LinkContext, DataContext } from '../../ContextProviders/LinkContext';
 
 import {
   Box,
@@ -34,43 +31,10 @@ function ComingSoonBanner() {
 export default function Home({ prefersDarkMode }) {
   // useState for home page data
   const [_, setUnderlineLink] = useContext(LinkContext);
+  const [homeData] = useContext(DataContext);
 
   useEffect(() => {
     setUnderlineLink('home');
-  });
-
-  const [homeData, setHomeData] = useState([]);
-
-  // fetch data if homePageData is empty
-  useEffect(() => {
-    if (homeData.length === 0) {
-      // loop through temp_database.json
-      data.map((item) => {
-        setHomeData((prev) => [
-          ...prev,
-          item.charts.length != 0
-            ? {
-                name: item.title,
-                owner: item.owner,
-                isEmpty: false,
-                graph: (
-                  <ChartComponent
-                    chartData={{
-                      sheetId: item.sheetId,
-                      ...item.charts[0],
-                    }}
-                  />
-                ),
-              }
-            : {
-                name: item.title,
-                owner: item.owner,
-                isEmpty: true,
-                graph: <ComingSoonBanner />,
-              },
-        ]);
-      });
-    }
   });
 
   return (
@@ -84,18 +48,10 @@ export default function Home({ prefersDarkMode }) {
 
         {homeData.map((element, index) => (
           <Grid key={index} item xs={12} sm={6} md={4}>
-            {/* <Card
-              title={element.name}
-              key={index}
-              graphType={element.graph}
-              owner={element.owner}
-              LinkChange={LinkChange}
-              setLinkChange={setLinkChange}
-            /> */}
             <Card elevation={2}>
               <CardActionArea
                 component={Link}
-                to="/project"
+                to={`/project/${element.id}`}
                 disabled={element.isEmpty}
               >
                 <Box className={prefersDarkMode ? 'dark-mode' : ''}>

@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkContext } from '../../LinkContext';
+import { LinkContext } from '../../ContextProviders/LinkContext';
 
 import { Box, Typography, Container, Paper } from '@mui/material';
 

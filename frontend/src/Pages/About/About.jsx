@@ -1,7 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
 import { useEffect, useContext } from 'react';
-import { LinkContext } from '../../LinkContext';
+import { LinkContext } from '../../ContextProviders/LinkContext';
 import './About.css';
 import {
   AiFillTwitterCircle,

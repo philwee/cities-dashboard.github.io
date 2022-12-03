@@ -1,16 +1,27 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { LinkContext } from '../../LinkContext';
 
 import data from '../../temp_database.json';
 import ChartComponent from '../../Graphs/ChartComponent';
 
-import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider} from '@mui/material';
+import {
+  Box,
+  Grid,
+  Typography,
+  Container,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActionArea,
+  Divider,
+} from '@mui/material';
 
-function ComingSoonBanner(){
-  return(
-    <Grid container height={'100%'} justifyContent="center" alignItems="center" >
+function ComingSoonBanner() {
+  return (
+    <Grid container height={'100%'} justifyContent="center" alignItems="center">
       <Grid item>
         <Typography variant="h5" color="text.secondary">
           Coming Soon
@@ -20,13 +31,15 @@ function ComingSoonBanner(){
   );
 }
 
-export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
+export default function Home({ prefersDarkMode }) {
   // useState for home page data
-  const [homeData, setHomeData] = useState([]);
+  const [_, setUnderlineLink] = useContext(LinkContext);
 
-  const changeLinkContent = () => {
-    setLinkChange(false);
-  };
+  useEffect(() => {
+    setUnderlineLink('home');
+  });
+
+  const [homeData, setHomeData] = useState([]);
 
   // fetch data if homePageData is empty
   useEffect(() => {
@@ -35,43 +48,34 @@ export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
       data.map((item) => {
         setHomeData((prev) => [
           ...prev,
-          (item.charts.length != 0) ? {
-            name: item.title,
-            owner: item.owner,
-            isEmpty: false,
-            graph: (
-              <ChartComponent
-                chartData={{
-                  sheetId: item.sheetId,
-                  ...item.charts[0],
-                }}
-              />
-            )} : {
-            name: item.title,
-            owner: item.owner,
-            isEmpty: true,
-            graph: (<ComingSoonBanner/>)
-          },
+          item.charts.length != 0
+            ? {
+                name: item.title,
+                owner: item.owner,
+                isEmpty: false,
+                graph: (
+                  <ChartComponent
+                    chartData={{
+                      sheetId: item.sheetId,
+                      ...item.charts[0],
+                    }}
+                  />
+                ),
+              }
+            : {
+                name: item.title,
+                owner: item.owner,
+                isEmpty: true,
+                graph: <ComingSoonBanner />,
+              },
         ]);
       });
     }
   });
 
-  useEffect(() => {
-    setLinkChange(true);
-
-    return () => {
-      console.log('Returned');
-    };
-  });
-
   return (
     <Container sx={{ pt: 4, pb: 4 }}>
-      <Grid
-        container
-        direction="row"
-        spacing={4}
-      >
+      <Grid container direction="row" spacing={4}>
         <Grid item xs={12}>
           <Typography variant="h4" sx={{ color: 'text.primary' }}>
             All Projects
@@ -79,7 +83,7 @@ export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
         </Grid>
 
         {homeData.map((element, index) => (
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid key={index} item xs={12} sm={6} md={4}>
             {/* <Card
               title={element.name}
               key={index}
@@ -88,8 +92,12 @@ export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
               LinkChange={LinkChange}
               setLinkChange={setLinkChange}
             /> */}
-            <Card key={index} elevation={2}>
-              <CardActionArea component={Link} to="/project" onClick={changeLinkContent} disabled={element.isEmpty}>
+            <Card elevation={2}>
+              <CardActionArea
+                component={Link}
+                to="/project"
+                disabled={element.isEmpty}
+              >
                 <Box className={prefersDarkMode ? 'dark-mode' : ''}>
                   <CardMedia
                     children={element.graph}
@@ -97,7 +105,7 @@ export default function Home({ LinkChange, setLinkChange, prefersDarkMode }) {
                     sx={{ aspectRatio: '4/3' }}
                   />
                 </Box>
-                
+
                 <Divider />
                 <CardContent>
                   <Typography variant="h6" component="div">

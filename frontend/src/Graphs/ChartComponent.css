@@ -2,3 +2,8 @@
 .dark-mode text{
     fill: #ffffff;
 }
+
+/* Invert tooltip background */
+.google-visualization-tooltip path{
+    fill: #121212;
+}

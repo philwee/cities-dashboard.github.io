@@ -5,6 +5,9 @@ export default function HeatMap({ publishedSheetId, gid }) {
   const embedLink = `https://docs.google.com/spreadsheets/d/e/${publishedSheetId}/pubhtml?gid=${gid}&amp;single=false&amp;widget=false&amp;headers=false`;
 
   return (
-    <iframe style={{ width: '100%', border: 'none' }} src={embedLink}></iframe>
+    <iframe
+      style={{ width: '100%', height: '100%', border: 'none' }}
+      src={embedLink}
+    ></iframe>
   );
 }

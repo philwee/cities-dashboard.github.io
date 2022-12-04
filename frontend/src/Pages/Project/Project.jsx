@@ -1,185 +1,32 @@
 // disable eslint for this file
 /* eslint-disable */
-/* eslint-disable no-unused-vars */
-import { useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
+import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
 import { Box, Typography, Container, Divider } from '@mui/material';
+import data from '../../temp_database.json';
 import './Project.css';
-
-const sampleData = {
-  title: 'Food Waste',
-  sheetId: '1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U',
-  description:
-    'This dataset visualizes the amount of food waste incurred from dining activities across different on-campus outlets (Dining Halls D1, D2, and the Marketplace). Past data visualizations in the Dining Hall D2, such as the green calendar-styled monthly food waste counter at the entrance, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...',
-  owner: 'NYUAD Dining',
-  onwerContact: 'nyuad.dining@nyu.edu',
-  charts: [
-    {
-      title: 'Daily Food Waste (kg) Per Month, with 95% Confidence Interval',
-      subtitle:
-        'Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>',
-      gid: 1034106646,
-      headers: 1,
-      chartType: 'LineChart',
-      columns: [
-        0,
-        1,
-        {
-          role: 'interval',
-          sourceColumn: 2,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 3,
-        },
-        {
-          role: 'annotation',
-          type: 'string',
-          sourceColumn: 4,
-        },
-      ],
-      intervals: {
-        style: 'area',
-      },
-      colors: ['#57068c'],
-      legend: 'none',
-    },
-    {
-      title: 'Daily Food Waste (kg), Historical',
-      subtitle:
-        'Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>',
-      gid: 1952244844,
-      headers: 1,
-      chartType: 'Calendar',
-      columns: [
-        0,
-        5,
-        {
-          role: 'tooltip',
-          sourceColumn: 8,
-        },
-      ],
-      colorAxis: {
-        colors: ['#ffffff', '#57068c'],
-      },
-    },
-    {
-      title: 'Daily Food Waste by Meal (kg), with 95% Confidence Interval',
-      subtitle:
-        'Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>',
-      gid: 1107716679,
-      headers: 1,
-      chartType: 'LineChart',
-      columns: [
-        0,
-        1,
-        {
-          role: 'interval',
-          sourceColumn: 2,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 3,
-        },
-        4,
-        {
-          role: 'interval',
-          sourceColumn: 5,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 6,
-        },
-        7,
-        {
-          role: 'interval',
-          sourceColumn: 8,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 9,
-        },
-      ],
-      intervals: {
-        style: 'area',
-      },
-    },
-    {
-      query: 'SELECT * OFFSET 1',
-      title:
-        'Food Waste (kg) per Day of the Week, with 95% Confidence Interval',
-      subtitle:
-        'Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>',
-      gid: 171773137,
-      headers: 2,
-      chartType: 'ColumnChart',
-      columns: [
-        0,
-        4,
-        {
-          role: 'interval',
-          sourceColumn: 5,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 6,
-        },
-        7,
-        {
-          role: 'interval',
-          sourceColumn: 8,
-        },
-        {
-          role: 'interval',
-          sourceColumn: 9,
-        },
-      ],
-    },
-    {
-      title: 'Food Waste By Meal, Percentage',
-      subtitle:
-        'Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>',
-      gid: 387300968,
-      headers: 1,
-      columns: [
-        0,
-        4,
-        {
-          calc: 'stringify',
-          type: 'string',
-          role: 'annotation',
-          sourceColumn: 4,
-        },
-        5,
-        {
-          calc: 'stringify',
-          type: 'string',
-          role: 'annotation',
-          sourceColumn: 5,
-        },
-        6,
-        {
-          calc: 'stringify',
-          type: 'string',
-          role: 'annotation',
-          sourceColumn: 6,
-        },
-      ],
-      chartType: 'ColumnChart',
-      isStacked: true,
-      vAxisFormat: '#.##%',
-    },
-  ],
-};
 
 export default function Project({ prefersDarkMode }) {
   const [_, setUnderlineLink] = useContext(LinkContext);
+  let { id } = useParams();
+  const [project, setProject] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // loop through all projects and find the one with the matching id
+    data.map((p) => {
+      if (p.id === id) {
+        setProject({ ...p });
+        setLoading(true);
+      }
+    });
+
     setUnderlineLink('project');
-  });
+  }, [id, setUnderlineLink]);
 
   // for tabs
   // const [toggleTab, setToggleTab] = useState(1);
@@ -205,73 +52,79 @@ export default function Project({ prefersDarkMode }) {
   // for link change(home -> back)
 
   return (
-    <Box>
-      <Box>
-        <Container sx={{ pt: 4, pb: 4 }}>
-          <UnderlinedTitle text={sampleData.title} />
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            {sampleData.description}
-          </Typography>
-          <br />
-          <Typography
-            variant="body1"
-            color="text.primary"
-            sx={{ fontWeight: 'medium' }}
-          >
-            Dataset Owner:
-          </Typography>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            {sampleData.owner}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="text.primary"
-            sx={{ fontWeight: 'medium' }}
-          >
-            Contact:
-          </Typography>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            {sampleData.onwerContact}
-          </Typography>
-        </Container>
-      </Box>
+    <>
+      {loading && (
+        <Box>
+          <Box>
+            <Container sx={{ pt: 4, pb: 4 }}>
+              <UnderlinedTitle text={project.title} />
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                {parse(project.description)}
+              </Typography>
+              <br />
+              <Typography
+                variant="body1"
+                color="text.primary"
+                sx={{ fontWeight: 'medium' }}
+              >
+                Dataset Owner:
+              </Typography>
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                {project.owner}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="text.primary"
+                sx={{ fontWeight: 'medium' }}
+              >
+                Contact:
+              </Typography>
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                {project.onwerContact}
+              </Typography>
+            </Container>
+          </Box>
 
-      {sampleData.charts.map((element, index) => (
-        <Box
-          key={index}
-          backgroundColor={index % 2 == 0 ? 'customAlternateBackground' : ''}
-        >
-          <Container sx={{ pt: 4, pb: 4 }}>
-            <Typography variant="h6" color="text.primary">
-              {index + 1}. {element.title}
-            </Typography>
+          {project.charts.map((element, index) => (
             <Box
-              height={'80vw'}
-              maxHeight={400}
-              className={prefersDarkMode ? 'dark-mode' : ''}
+              key={index}
+              backgroundColor={
+                index % 2 == 0 ? 'customAlternateBackground' : ''
+              }
             >
-              <ChartComponent
-                chartData={{
-                  sheetId: sampleData.sheetId,
-                  ...element,
-                }}
-              />
+              <Container sx={{ pt: 4, pb: 4 }}>
+                <Typography variant="h6" color="text.primary">
+                  {index + 1}. {element.title}
+                </Typography>
+                <Box
+                  height={'80vw'}
+                  maxHeight={400}
+                  className={prefersDarkMode ? 'dark-mode' : ''}
+                >
+                  <ChartComponent
+                    chartData={{
+                      sheetId: project.sheetId,
+                      ...element,
+                    }}
+                  />
+                </Box>
+
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  gutterBottom
+                  sx={{ pt: 2 }}
+                >
+                  {element.subtitle}
+                </Typography>
+              </Container>
             </Box>
+          ))}
 
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              gutterBottom
-              sx={{ pt: 2 }}
-            >
-              {element.subtitle}
-            </Typography>
-          </Container>
+          {project.charts.length % 2 != 0 ? <Divider /> : <></>}
         </Box>
-      ))}
-
-      {sampleData.charts.length % 2 != 0 ? <Divider /> : <></>}
-    </Box>
+      )}
+    </>
 
     // <div className="graphSection ">
     //   <div className="centerProjectItems1">

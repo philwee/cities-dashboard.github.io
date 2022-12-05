@@ -41,7 +41,7 @@ export const DataProvider = (props) => {
         item.charts.length != 0
           ? {
               id: item.id,
-              name: item.title,
+              title: item.title,
               owner: item.owner,
               isEmpty: false,
               graph: (

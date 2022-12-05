@@ -27,7 +27,7 @@ export default function Header() {
           <Typography variant="h3" sx={{ fontWeight: 'medium' }}>
             CITIES DASHBOARD
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" color='text.secondary'>
             Spearheading sustainability and well-being data visualization at NYU
             Abu Dhabi
           </Typography>
@@ -41,6 +41,7 @@ export default function Header() {
               }
               variant="body1"
               sx={{ fontWeight: 'medium' }}
+              color='text.secondary'
             >
               HOME
             </Typography>
@@ -54,6 +55,7 @@ export default function Header() {
               }
               variant="body1"
               sx={{ fontWeight: 'medium' }}
+              color='text.secondary'
             >
               ABOUT
             </Typography>

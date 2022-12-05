@@ -115,7 +115,7 @@ export default function Project({ prefersDarkMode }) {
                   gutterBottom
                   sx={{ pt: 2 }}
                 >
-                  {element.subtitle}
+                  {parse(element.subtitle)}
                 </Typography>
               </Container>
             </Box>

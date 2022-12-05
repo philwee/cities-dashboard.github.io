@@ -22,7 +22,7 @@ export default function ChartComponent({ chartData }) {
   const options = {
     theme: 'material',
     backgroundColor: { fill: 'transparent' },
-    chartArea: { width: '80%', height: '80%' },
+    chartArea: { width: '80%', height: '70%' },
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
       title: chartData.vAxisTitle,
@@ -33,10 +33,6 @@ export default function ChartComponent({ chartData }) {
     hAxis: {
       format: chartData.hAxisFormat,
       title: chartData.hAxisTitle,
-    },
-    animation: {
-      startup: true,
-      easing: 'inAndOut',
     },
     width: '100%',
     height: '100%',

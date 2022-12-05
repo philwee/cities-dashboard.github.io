@@ -16,6 +16,8 @@ import {
   Divider,
 } from '@mui/material';
 
+import UnderlinedTitle from '../../Components/UnderlinedTitle';
+
 function ComingSoonBanner() {
   return (
     <Grid container height={'100%'} justifyContent="center" alignItems="center">
@@ -41,9 +43,7 @@ export default function Home({ prefersDarkMode }) {
     <Container sx={{ pt: 4, pb: 4 }}>
       <Grid container direction="row" spacing={4}>
         <Grid item xs={12}>
-          <Typography variant="h4" sx={{ color: 'text.primary' }}>
-            All Projects
-          </Typography>
+          <UnderlinedTitle text={'all projects'} />
         </Grid>
 
         {homeData.map((element, index) => (
@@ -64,8 +64,8 @@ export default function Home({ prefersDarkMode }) {
 
                 <Divider />
                 <CardContent>
-                  <Typography variant="h6" component="div">
-                    {element.name}
+                  <Typography variant="h6" component="div" color="text.primary">
+                    {element.title}
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
                     {element.owner}

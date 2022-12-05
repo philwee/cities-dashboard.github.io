@@ -4,6 +4,9 @@ import { React, useState } from 'react'
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress} from '@mui/material/';
 import HeatMap from './HeatMap';
+import parse from 'html-react-parser';
+
+
 
 import './ChartComponent.css';
 
@@ -56,6 +59,8 @@ export default function ChartComponent({ chartData }) {
       backgroundColor: 'none',
       color: 'none',
     },
+    tooltip: { isHtml: true, trigger: "visible" }
+
   };
 
   const chartEvents = [

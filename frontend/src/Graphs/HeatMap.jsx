@@ -3,6 +3,8 @@
 import { React, useState } from 'react'
 import { Box, Stack, Tabs, Tab } from '@mui/material/';
 
+import './ChartComponent.css';
+
 function TabPanel(props) {
   const { iframeIndex, value, embedLink, height } = props;
 
@@ -13,6 +15,7 @@ function TabPanel(props) {
       hidden={value !== iframeIndex}
     >
       <iframe
+      className="heat-map-iframe"
         style={{ width: '100%', height: "100%", height: height, border: 'none' }}
         src={embedLink}
       ></iframe>
@@ -37,6 +40,7 @@ export default function HeatMap({ chartData }) {
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile
+        sx={{mb: 2}}
       >
           {chartData.gids.map((gid, index) => (
             <Tab

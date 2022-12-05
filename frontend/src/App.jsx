@@ -25,7 +25,7 @@ function App() {
               // palette values for dark mode
               palette: {
                 primary: {
-                  main: '#57068c',
+                  main: '#893ebd', // lighter nyu purple
                   contrastText: '#000',
                 },
                 background: {
@@ -43,7 +43,7 @@ function App() {
               palette: {
                 // palette values for light mode
                 primary: {
-                  main: '#57068c',
+                  main: '#57068c', // nyu purple
                   contrastText: '#fff',
                 },
                 customBackground: '#f6f6f6',

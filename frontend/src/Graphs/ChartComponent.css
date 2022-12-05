@@ -7,3 +7,8 @@
 .dark-mode .google-visualization-tooltip path{
     fill: #121212;
 }
+
+/* Invert iframe */
+.dark-mode .heat-map-iframe{
+    filter: invert();
+}

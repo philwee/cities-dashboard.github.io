@@ -97,8 +97,8 @@ export default function Project({ prefersDarkMode }) {
                   {index + 1}. {element.title}
                 </Typography>
                 <Box
-                  height={'80vw'}
-                  maxHeight={400}
+                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
                   className={prefersDarkMode ? 'dark-mode' : ''}
                 >
                   <ChartComponent
@@ -113,7 +113,7 @@ export default function Project({ prefersDarkMode }) {
                   variant="body1"
                   color="text.secondary"
                   gutterBottom
-                  sx={{ pt: 2 }}
+                  sx={{ mt: 2 }}
                 >
                   {parse(element.subtitle)}
                 </Typography>

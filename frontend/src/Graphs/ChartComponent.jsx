@@ -1,24 +1,26 @@
 // disable eslint for this file
 /* eslint-disable */
-
+import { React, useState } from 'react'
 import { Chart } from 'react-google-charts';
+import { Box, CircularProgress} from '@mui/material/';
 import HeatMap from './HeatMap';
 
 import './ChartComponent.css';
 
-
 export default function ChartComponent({ chartData }) {
+  // Show CircleProgress or not
+  let [circleProgress, displayCircleProgress] = useState(true);
+
   // Case HeatMap
   if (chartData.chartType == 'HeatMap') {
     return (
       <HeatMap
-        publishedSheetId={chartData.publishedSheetId}
-        gid={chartData.gid}
+        chartData={chartData}
       />
     );
   }
 
-  // All the other chart types using React-Google-Chart wrapper
+  // Case: all the other chart types using React-Google-Chart wrapper
   const options = {
     theme: 'material',
     backgroundColor: { fill: 'transparent' },
@@ -56,6 +58,15 @@ export default function ChartComponent({ chartData }) {
     },
   };
 
+  const chartEvents = [
+    {
+      eventName: 'ready',
+      callback: ({ chartWrapper }) => {
+        circleProgress = displayCircleProgress(false);
+      },
+    },
+  ];
+
   function scaleCalendar(min, max) {
     var cellSize = window.innerWidth / 70;
     return Math.min(Math.max(cellSize, min), max);
@@ -64,18 +75,23 @@ export default function ChartComponent({ chartData }) {
   const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}`;
 
   return (
-    <Chart
-      chartType={chartData.chartType}
-      chartWrapperParams={{
-        view: { columns: chartData.columns },
-      }}
-      spreadSheetUrl={url}
-      spreadSheetQueryParameters={{
-        headers: chartData.headers,
-        gid: chartData.gid,
-        query: chartData.query,
-      }}
-      options={options}
-    />
+    <Box position={'relative'} width='100%' height='100%'>
+      {circleProgress && <CircularProgress sx={{display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto'}}/>}
+      <Chart
+        chartType={chartData.chartType}
+        chartWrapperParams={{
+          view: { columns: chartData.columns },
+        }}
+        spreadSheetUrl={url}
+        spreadSheetQueryParameters={{
+          headers: chartData.headers,
+          gid: chartData.gid,
+          query: chartData.query,
+        }}
+        options={options}
+        chartEvents={chartEvents}
+      />
+    </Box>
+      
   );
 }

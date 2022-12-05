@@ -54,7 +54,7 @@ export const DataProvider = (props) => {
               ),
             }
           : {
-              name: item.title,
+              title: item.title,
               owner: item.owner,
               isEmpty: true,
               graph: <ComingSoonBanner />,

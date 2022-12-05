@@ -13,7 +13,7 @@ function TabPanel(props) {
       hidden={value !== iframeIndex}
     >
       <iframe
-        style={{ display: 'block', width: '100%', height: "100%", maxWidth: '450px', height: height, border: 'none' }}
+        style={{ width: '100%', height: "100%", height: height, border: 'none' }}
         src={embedLink}
       ></iframe>
 
@@ -30,20 +30,23 @@ export default function HeatMap({ chartData }) {
   };
 
   return (
-    <Stack width="100%" height="100%">
+    <Box width="100%" height="100%" maxWidth={450}>
       <Tabs
         value={indexValue}
         onChange={handleChange}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
       >
-        {chartData.gids.map((gid, index) => (
-          <Tab
-            key={index}
-            value={index}
-            label={chartData.sheetTitles[index]}
-          />
-        ))}
+          {chartData.gids.map((gid, index) => (
+            <Tab
+              key={index}
+              value={index}
+              label={chartData.sheetTitles[index]}
+            />
+          ))}
       </Tabs>
-      <Box width="100%" height="100%">
+      <Box height="100%">
         {chartData.gids.map((gid, index) => (
           <TabPanel
             key={index}
@@ -54,7 +57,7 @@ export default function HeatMap({ chartData }) {
           />
         ))}
       </Box>
-    </Stack>
+    </Box>
 
   );
 }

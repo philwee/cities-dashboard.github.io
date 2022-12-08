@@ -6,8 +6,6 @@ import { Box, CircularProgress} from '@mui/material/';
 import HeatMap from './HeatMap';
 import parse from 'html-react-parser';
 
-
-
 import './ChartComponent.css';
 
 export default function ChartComponent({ chartData }) {
@@ -50,17 +48,15 @@ export default function ChartComponent({ chartData }) {
     colors: chartData.colors,
     colorAxis: chartData.colorAxis,
     tooltip: {
-      isHtml: false,
+      isHtml: true,
     },
     calendar: {
-      cellSize: scaleCalendar(5, 20),
+      cellSize: scaleCalendar(5, 20) // calculate cell size for calendar chart
     },
     noDataPattern: {
       backgroundColor: 'none',
       color: 'none',
-    },
-    tooltip: { isHtml: true, trigger: "visible" }
-
+    }
   };
 
   const chartEvents = [
@@ -73,14 +69,20 @@ export default function ChartComponent({ chartData }) {
   ];
 
   function scaleCalendar(min, max) {
-    var cellSize = window.innerWidth / 70;
+    var cellSize = window.innerWidth / 58;
     return Math.min(Math.max(cellSize, min), max);
   }
 
   const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}`;
 
   return (
-    <Box position={'relative'} width='100%' height='100%'>
+    <Box
+    position={'relative'}
+    className={chartData.chartType}
+    marginLeft={chartData.chartType == 'Calendar' ? '-1rem' : ''}
+    height={chartData.chartType == 'HeatMap' ? '' : '80vw'}
+    maxHeight={chartData.chartType == 'HeatMap' ? '' : 400}
+    width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}>
       {circleProgress && <CircularProgress sx={{display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto'}}/>}
       <Chart
         chartType={chartData.chartType}

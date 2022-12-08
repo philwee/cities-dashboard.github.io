@@ -1,3 +1,20 @@
+*{
+    font-family: sans-serif !important;
+}
+
+.google-visualization-tooltip text, .google-visualization-tooltip span{
+    font-size: 0.85rem !important;
+}
+
+.google-visualization-tooltip{
+    width: unset !important;
+    height: unset !important;
+}
+
+.Calendar .google-visualization-tooltip{
+    padding: 0.5rem !important;
+}
+
 /* Make all texts in the graph white if in dark mode */
 .dark-mode text{
     fill: #ffffff;

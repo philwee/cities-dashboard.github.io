@@ -92,23 +92,16 @@ export default function Project({ prefersDarkMode }) {
                 index % 2 == 0 ? 'customAlternateBackground' : ''
               }
             >
-              <Container sx={{ pt: 4, pb: 4 }}>
+              <Container sx={{ pt: 4, pb: 4 }} className={prefersDarkMode ? 'dark-mode' : ''}>
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
                 </Typography>
-                <Box
-                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
-                  className={prefersDarkMode ? 'dark-mode' : ''}
-                >
                   <ChartComponent
                     chartData={{
                       sheetId: project.sheetId,
                       ...element,
                     }}
                   />
-                </Box>
-
                 <Typography
                   variant="body1"
                   color="text.secondary"

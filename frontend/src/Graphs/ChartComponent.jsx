@@ -80,8 +80,7 @@ export default function ChartComponent({ chartData }) {
     position={'relative'}
     className={chartData.chartType}
     marginLeft={chartData.chartType == 'Calendar' ? '-1rem' : ''}
-    height={chartData.chartType == 'HeatMap' ? '' : '80vw'}
-    maxHeight={chartData.chartType == 'HeatMap' ? '' : 400}
+    height={'100%'}
     width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}>
       {circleProgress && <CircularProgress sx={{display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto'}}/>}
       <Chart
@@ -99,6 +98,5 @@ export default function ChartComponent({ chartData }) {
         chartEvents={chartEvents}
       />
     </Box>
-      
   );
 }

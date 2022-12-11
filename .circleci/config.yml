@@ -16,7 +16,6 @@ jobs:
       - run: |
           cd frontend
           npm install # install all dependencies listed in package.json
-          npm run build # have react build the stand-alone front-end code
   deploy-react-js:
     docker:
       - image: cimg/node:16.13.0 # latest stable node at the time of writing
@@ -29,6 +28,7 @@ jobs:
       - run: |
           cd frontend
           npm install # install all dependencies listed in package.json
+          npm run build # have react build the stand-alone front-end code
           git config --global user.email $user@nyu.edu
           git config --global user.name $name
           npm run deploy  # deploy app to github pages
@@ -37,5 +37,4 @@ jobs:
 workflows:
   build-frontend:
     jobs:
-      - build-react-js
       - deploy-react-js

@@ -73,14 +73,14 @@ function App() {
               <Header />
               <Routes>
                 <Route
-                  path="/"
+                  path="/Dashboard"
                   element={<Home prefersDarkMode={prefersDarkMode} />}
                 />
                 <Route
-                  path="/project/:id"
+                  path="Dashboard/project/:id"
                   element={<Project prefersDarkMode={prefersDarkMode} />}
                 />
-                <Route path="/about" element={<About />} />
+                <Route path="Dashboard/about" element={<About />} />
               </Routes>
               <Footer />
             </Box>

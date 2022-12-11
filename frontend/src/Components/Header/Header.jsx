@@ -27,35 +27,35 @@ export default function Header() {
           <Typography variant="h3" sx={{ fontWeight: 'medium' }}>
             CITIES DASHBOARD
           </Typography>
-          <Typography variant="body1" color='text.secondary'>
+          <Typography variant="body1" color="text.secondary">
             Spearheading sustainability and well-being data visualization at NYU
             Abu Dhabi
           </Typography>
         </Box>
 
         <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/">
+          <Link to="/Dashboard">
             <Typography
               className={
                 underlineLink === 'home' ? 'navLink active' : 'navLink'
               }
               variant="body1"
               sx={{ fontWeight: 'medium' }}
-              color='text.secondary'
+              color="text.secondary"
             >
               HOME
             </Typography>
           </Link>
         </Box>
         <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/about">
+          <Link to="/Dashboard/about">
             <Typography
               className={
                 underlineLink === 'about' ? 'navLink active' : 'navLink'
               }
               variant="body1"
               sx={{ fontWeight: 'medium' }}
-              color='text.secondary'
+              color="text.secondary"
             >
               ABOUT
             </Typography>

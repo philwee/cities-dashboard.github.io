@@ -31,6 +31,7 @@ jobs:
           npm run build # have react build the stand-alone front-end code
           git config --global user.email $USER@nyu.edu
           git config --global user.name $CIRCLE_USERNAME
+          git remote set-url origin https://$CIRCLE_USERNAME:$GH_TOKEN@github.com/princeampofo/CITIES-Dashboard/Dashboard
           npm run deploy  # deploy app to github pages
 
 # Orchestrate our job run sequence

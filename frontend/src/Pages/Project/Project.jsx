@@ -9,6 +9,7 @@ import UnderlinedTitle from '../../Components/UnderlinedTitle';
 import { Box, Typography, Container, Divider } from '@mui/material';
 import data from '../../temp_database.json';
 import './Project.css';
+import { elementType } from 'prop-types';
 
 export default function Project({ prefersDarkMode }) {
   const [_, setUnderlineLink] = useContext(LinkContext);
@@ -92,15 +93,12 @@ export default function Project({ prefersDarkMode }) {
                 index % 2 == 0 ? 'customAlternateBackground' : ''
               }
             >
-              <Container sx={{ pt: 4, pb: 4 }}>
+              <Container sx={{ pt: 4, pb: 4 }} className={prefersDarkMode ? 'dark-mode' : ''}>
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
                 </Typography>
-                <Box
-                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
-                  className={prefersDarkMode ? 'dark-mode' : ''}
-                >
+                <Box height={element.chartType == 'HeatMap' ? '' : '80vw'}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}>
                   <ChartComponent
                     chartData={{
                       sheetId: project.sheetId,
@@ -108,7 +106,7 @@ export default function Project({ prefersDarkMode }) {
                     }}
                   />
                 </Box>
-
+                  
                 <Typography
                   variant="body1"
                   color="text.secondary"

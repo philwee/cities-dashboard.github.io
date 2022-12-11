@@ -112,6 +112,15 @@
         "subtitle": "While the level of fitness activities exhibits a strong diurnal variation, it remains more stable throughout the days of the week. The off-peak days have stayed the same despite the weekend change policy in 2022 (Fri-Sat to Sat-Sun), namely the second day of the weekend and the first work day of the week. On these days, attendance is usually a quarter less compared to the busiest day.",
         "gid": 654076094,
         "headers": 1,
+        "colors": [
+          "33658a",
+          "86bbd8",
+          "758e4f",
+          "f6ae2d",
+          "f26419",
+          "ad343e",
+          "474747"
+        ],
         "columns": [
           0,
           1,

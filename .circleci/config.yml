@@ -29,6 +29,8 @@ jobs:
       - run: |
           cd frontend
           npm install # install all dependencies listed in package.json
+          git config --global user.email $user@nyu.edu
+          git config --global user.name $name
           npm run deploy  # deploy app to github pages
 
 # Orchestrate our job run sequence

@@ -26,10 +26,10 @@ jobs:
       - checkout
       - run: echo "this is the deploy react.js job"
       - run: |
-          cd frontend
-          npm install # install all dependencies listed in package.json
-          npm run build # have react build the stand-alone front-end code
-          echo ${APP}
+          # cd frontend
+          # npm install # install all dependencies listed in package.json
+          # npm run build # have react build the stand-alone front-end code
+          echo $USER
           # git config --global user.email $user@nyu.edu
           # git config --global user.name $name
           # npm run deploy  # deploy app to github pages

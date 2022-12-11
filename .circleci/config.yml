@@ -26,13 +26,12 @@ jobs:
       - checkout
       - run: echo "this is the deploy react.js job"
       - run: |
-          # cd frontend
-          # npm install # install all dependencies listed in package.json
-          # npm run build # have react build the stand-alone front-end code
-          echo $USER
-          # git config --global user.email $user@nyu.edu
-          # git config --global user.name $name
-          # npm run deploy  # deploy app to github pages
+          cd frontend
+          npm install # install all dependencies listed in package.json
+          npm run build # have react build the stand-alone front-end code
+          git config --global user.email $USER@nyu.edu
+          git config --global user.name $CIRCLE_USERNAME
+          npm run deploy  # deploy app to github pages
 
 # Orchestrate our job run sequence
 workflows:

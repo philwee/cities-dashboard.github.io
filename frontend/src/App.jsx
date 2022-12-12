@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { React, useMemo } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { LinkProvider, DataProvider } from './ContextProviders/LinkContext';
 import { Box } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -85,7 +85,14 @@ function App() {
                     element={<Project prefersDarkMode={prefersDarkMode} />}
                   />
                   <Route path="/about" element={<About />} />
-                  <Route path="*" element={<FourOhFour />} />
+                  <Route
+                    path={window.location.pathname}
+                    element={<FourOhFour />}
+                  />
+                  <Route
+                    path="*"
+                    element={<Navigate replace to={window.location.pathname} />}
+                  />
                 </Routes>
               </Box>
               <Footer />

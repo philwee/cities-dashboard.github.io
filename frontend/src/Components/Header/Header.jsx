@@ -14,7 +14,7 @@ export default function Header() {
   const [underlineLink] = useContext(LinkContext);
 
   return (
-    <Paper elevation={0} square>
+    <Paper elevation={0} square sx={{m: 0}}>
       <Box sx={{ backgroundColor: 'primary.main', height: '10vh' }} />
       <Container sx={{ pb: 3 }}>
         <Paper

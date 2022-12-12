@@ -55,7 +55,7 @@ export default function Project({ prefersDarkMode }) {
   return (
     <>
       {loading && (
-        <Box>
+        <Box width='100%'>
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
               <UnderlinedTitle text={project.title} />
@@ -123,6 +123,9 @@ export default function Project({ prefersDarkMode }) {
         </Box>
       )}
     </>
+  );
+}
+
 
     // <div className="graphSection ">
     //   <div className="centerProjectItems1">
@@ -215,13 +218,11 @@ export default function Project({ prefersDarkMode }) {
     //   </div>
     // </div>
 
-    /* <div className="carousel-container">
-      <div className="centerProjectItems3">
-        <div className="carousel-title">
-          <p>OTHER AVAILABLE DATA</p>
-        </div>
-        <Carousel carouselData={slides} />
-      </div>
-    </div> */
-  );
-}
+/* <div className="carousel-container">
+  <div className="centerProjectItems3">
+    <div className="carousel-title">
+      <p>OTHER AVAILABLE DATA</p>
+    </div>
+    <Carousel carouselData={slides} />
+  </div>
+</div> */

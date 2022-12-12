@@ -51,7 +51,7 @@ export default function Home({ prefersDarkMode }) {
             <Card elevation={2}>
               <CardActionArea
                 component={Link}
-                to={`project/${element.id}`}
+                to={`/project/${element.id}`}
                 disabled={element.isEmpty}
               >
                 <Box className={prefersDarkMode ? 'dark-mode' : ''}>

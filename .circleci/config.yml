@@ -16,6 +16,7 @@ jobs:
       - run: |
           cd frontend
           npm install # install all dependencies listed in package.json
+          npm run build # have react build the stand-alone front-end code
   deploy-react-js:
     docker:
       - image: cimg/node:16.13.0 # latest stable node at the time of writing
@@ -28,14 +29,14 @@ jobs:
       - run: |
           cd frontend
           npm install # install all dependencies listed in package.json
-          npm run build # have react build the stand-alone front-end code
           git config --global user.email $USER@nyu.edu
           git config --global user.name $CIRCLE_USERNAME
-          git remote set-url origin https://$CIRCLE_USERNAME:$GH_TOKEN@github.com/CITIES-Dashboard/Dashboard
+          git remote set-url origin https://$CIRCLE_USERNAME:$GH_TOKEN@github.com/CITIES-Dashboard/cities-dashboard.github.io
           npm run deploy  # deploy app to github pages
 
 # Orchestrate our job run sequence
 workflows:
   build-frontend:
     jobs:
+      - build-react-js
       - deploy-react-js

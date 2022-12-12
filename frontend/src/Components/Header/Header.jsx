@@ -34,7 +34,7 @@ export default function Header() {
         </Box>
 
         <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/Dashboard">
+          <Link to="/">
             <Typography
               className={
                 underlineLink === 'home' ? 'navLink active' : 'navLink'
@@ -48,7 +48,7 @@ export default function Header() {
           </Link>
         </Box>
         <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/Dashboard/about">
+          <Link to="/about">
             <Typography
               className={
                 underlineLink === 'about' ? 'navLink active' : 'navLink'

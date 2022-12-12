@@ -16,7 +16,7 @@ export default function FourOhFour() {
             <Typography variant='h5' color='text.secondary' gutterBottom>
                 Either you're lost or we're still developing this project
             </Typography>
-            <Button component={Link} to="/Dashboard" variant="contained" sx={{ mt: 3 }}>
+            <Button component={Link} to="/" variant="contained" sx={{ mt: 3 }}>
                 <Typography>
                     Return home
                 </Typography>

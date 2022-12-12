@@ -77,14 +77,14 @@ function App() {
               <Box flex={1} display='flex' width='100%'>
                 <Routes>
                   <Route
-                    path="/Dashboard"
+                    path="/"
                     element={<Home prefersDarkMode={prefersDarkMode} />}
                   />
                   <Route
-                    path="Dashboard/project/:id"
+                    path="/project/:id"
                     element={<Project prefersDarkMode={prefersDarkMode} />}
                   />
-                  <Route path="Dashboard/about" element={<About />} />
+                  <Route path="/about" element={<About />} />
                   <Route path='*' element={<FourOhFour />} />
                 </Routes>
               </Box>

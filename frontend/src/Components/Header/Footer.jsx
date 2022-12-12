@@ -12,7 +12,7 @@ function getYear() {
 
 export default function Footer() {
   return (
-    <Paper elevation={0} square>
+    <Paper elevation={0} square sx={{ m: 0 }}>
       <Container>
         <Grid container justify="center" align="center" sx={{ p: 5 }}>
           <Grid item xs={12}>

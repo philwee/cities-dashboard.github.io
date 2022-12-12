@@ -9,7 +9,6 @@ import UnderlinedTitle from '../../Components/UnderlinedTitle';
 import { Box, Typography, Container, Divider } from '@mui/material';
 import data from '../../temp_database.json';
 import './Project.css';
-import { elementType } from 'prop-types';
 
 export default function Project({ prefersDarkMode }) {
   const [_, setUnderlineLink] = useContext(LinkContext);
@@ -55,7 +54,7 @@ export default function Project({ prefersDarkMode }) {
   return (
     <>
       {loading && (
-        <Box>
+        <Box width="100%">
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
               <UnderlinedTitle text={project.title} />
@@ -93,12 +92,17 @@ export default function Project({ prefersDarkMode }) {
                 index % 2 == 0 ? 'customAlternateBackground' : ''
               }
             >
-              <Container sx={{ pt: 4, pb: 4 }} className={prefersDarkMode ? 'dark-mode' : ''}>
+              <Container
+                sx={{ pt: 4, pb: 4 }}
+                className={prefersDarkMode ? 'dark-mode' : ''}
+              >
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
                 </Typography>
-                <Box height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}>
+                <Box
+                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
+                >
                   <ChartComponent
                     chartData={{
                       sheetId: project.sheetId,
@@ -106,7 +110,7 @@ export default function Project({ prefersDarkMode }) {
                     }}
                   />
                 </Box>
-                  
+
                 <Typography
                   variant="body1"
                   color="text.secondary"
@@ -123,105 +127,105 @@ export default function Project({ prefersDarkMode }) {
         </Box>
       )}
     </>
-
-    // <div className="graphSection ">
-    //   <div className="centerProjectItems1">
-    //     <p className="projectName">PROJECT NAME</p>
-    //     <div className="tabList">
-    //       <button
-    //         type="button"
-    //         className={toggleTab === 1 ? 'tabs activeTab' : 'tabs'}
-    //         onClick={() => toggleFunc(1)}
-    //       >
-    //         D2
-    //       </button>
-    //       <button
-    //         type="button"
-    //         className={toggleTab === 2 ? 'tabs activeTab' : 'tabs'}
-    //         onClick={() => toggleFunc(2)}
-    //       >
-    //         Marketplace
-    //       </button>
-    //     </div>
-    //     <div className="tabContainer">
-    //       <div className="tabContents">
-    //         <div
-    //           className={
-    //             toggleTab === 1 ? 'content  activeContent' : 'content'
-    //           }
-    //         >
-    //           <div className="daysSelect">
-    //             <p>Last 30 days</p>
-    //           </div>
-    //           <div className="graphCanvas">
-    //             <div className="midGraph">
-    //               {/* <ColumnChart toggleTab={changeChart} /> */}
-    //               <ChartComponent
-    //                 chartData={{
-    //                   sheetId: '1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U',
-    //                   title: 'Daily Food Waste (kg), Historical',
-    //                   subtitle: '',
-    //                   gid: 1952244844,
-    //                   headers: 1,
-    //                   chartType: 'ColumnChart',
-    //                   columns: [
-    //                     0,
-    //                     5,
-    //                     {
-    //                       role: 'tooltip',
-    //                       sourceColumn: 8,
-    //                     },
-    //                   ],
-    //                   colorAxis: {
-    //                     colors: ['#ffffff', '#57068c'],
-    //                   },
-    //                 }}
-    //               />
-    //             </div>
-    //             <div className="stackedButton">
-    //               <Link className="linkButton" to="/project">
-    //                 <button
-    //                   type="button"
-    //                   className="buttonStacked"
-    //                   onClick={() => changeFunc()}
-    //                 >
-    //                   {changeChart ? 'Unstacked' : 'Stacked'}
-    //                 </button>
-    //               </Link>
-    //             </div>
-    //           </div>
-    //         </div>
-    //         <div
-    //           className={
-    //             toggleTab === 2 ? 'content  activeContent' : 'content'
-    //           }
-    //         >
-    //           <div className="daysSelect">
-    //             <p>Last 60 days</p>
-    //           </div>
-    //           <div className="graphCanvas">
-    //             <div className="midGraph"></div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="dlButton">
-    //         <Link className="linkButton" to="/project">
-    //           <button type="button" className="buttonDl">
-    //             Download Raw Data
-    //           </button>
-    //         </Link>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
-    /* <div className="carousel-container">
-      <div className="centerProjectItems3">
-        <div className="carousel-title">
-          <p>OTHER AVAILABLE DATA</p>
-        </div>
-        <Carousel carouselData={slides} />
-      </div>
-    </div> */
   );
 }
+
+// <div className="graphSection ">
+//   <div className="centerProjectItems1">
+//     <p className="projectName">PROJECT NAME</p>
+//     <div className="tabList">
+//       <button
+//         type="button"
+//         className={toggleTab === 1 ? 'tabs activeTab' : 'tabs'}
+//         onClick={() => toggleFunc(1)}
+//       >
+//         D2
+//       </button>
+//       <button
+//         type="button"
+//         className={toggleTab === 2 ? 'tabs activeTab' : 'tabs'}
+//         onClick={() => toggleFunc(2)}
+//       >
+//         Marketplace
+//       </button>
+//     </div>
+//     <div className="tabContainer">
+//       <div className="tabContents">
+//         <div
+//           className={
+//             toggleTab === 1 ? 'content  activeContent' : 'content'
+//           }
+//         >
+//           <div className="daysSelect">
+//             <p>Last 30 days</p>
+//           </div>
+//           <div className="graphCanvas">
+//             <div className="midGraph">
+//               {/* <ColumnChart toggleTab={changeChart} /> */}
+//               <ChartComponent
+//                 chartData={{
+//                   sheetId: '1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U',
+//                   title: 'Daily Food Waste (kg), Historical',
+//                   subtitle: '',
+//                   gid: 1952244844,
+//                   headers: 1,
+//                   chartType: 'ColumnChart',
+//                   columns: [
+//                     0,
+//                     5,
+//                     {
+//                       role: 'tooltip',
+//                       sourceColumn: 8,
+//                     },
+//                   ],
+//                   colorAxis: {
+//                     colors: ['#ffffff', '#57068c'],
+//                   },
+//                 }}
+//               />
+//             </div>
+//             <div className="stackedButton">
+//               <Link className="linkButton" to="/project">
+//                 <button
+//                   type="button"
+//                   className="buttonStacked"
+//                   onClick={() => changeFunc()}
+//                 >
+//                   {changeChart ? 'Unstacked' : 'Stacked'}
+//                 </button>
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//         <div
+//           className={
+//             toggleTab === 2 ? 'content  activeContent' : 'content'
+//           }
+//         >
+//           <div className="daysSelect">
+//             <p>Last 60 days</p>
+//           </div>
+//           <div className="graphCanvas">
+//             <div className="midGraph"></div>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="dlButton">
+//         <Link className="linkButton" to="/project">
+//           <button type="button" className="buttonDl">
+//             Download Raw Data
+//           </button>
+//         </Link>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
+/* <div className="carousel-container">
+  <div className="centerProjectItems3">
+    <div className="carousel-title">
+      <p>OTHER AVAILABLE DATA</p>
+    </div>
+    <Carousel carouselData={slides} />
+  </div>
+</div> */

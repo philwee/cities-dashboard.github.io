@@ -4,7 +4,7 @@
 import { React, useMemo } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LinkProvider, DataProvider } from './ContextProviders/LinkContext';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -13,6 +13,7 @@ import Home from './Pages/Home/Home';
 import Project from './Pages/Project/Project';
 import About from './Pages/About/About';
 import Footer from './Components/Header/Footer';
+import FourOhFour from './Pages/404';
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -65,23 +66,28 @@ function App() {
           <ThemeProvider theme={theme}>
             <Box
               sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 width: '100vw',
                 minHeight: '100vh',
                 backgroundColor: 'customBackground',
               }}
             >
               <Header />
-              <Routes>
-                <Route
-                  path="/"
-                  element={<Home prefersDarkMode={prefersDarkMode} />}
-                />
-                <Route
-                  path="/project/:id"
-                  element={<Project prefersDarkMode={prefersDarkMode} />}
-                />
-                <Route path="/about" element={<About />} />
-              </Routes>
+              <Box flex={1} display="flex" width="100%">
+                <Routes>
+                  <Route
+                    path="/"
+                    element={<Home prefersDarkMode={prefersDarkMode} />}
+                  />
+                  <Route
+                    path="/project/:id"
+                    element={<Project prefersDarkMode={prefersDarkMode} />}
+                  />
+                  <Route path="/about" element={<About />} />
+                  <Route path="*" element={<FourOhFour />} />
+                </Routes>
+              </Box>
               <Footer />
             </Box>
           </ThemeProvider>

@@ -33,7 +33,7 @@ function App() {
                   default: '#555555',
                 },
                 customBackground: '#121212',
-                customAlternateBackground: '#00000',
+                customAlternateBackground: '#000000',
                 mode: 'dark',
               },
               typography: {
@@ -85,14 +85,8 @@ function App() {
                     element={<Project prefersDarkMode={prefersDarkMode} />}
                   />
                   <Route path="/about" element={<About />} />
-                  <Route
-                    path={window.location.pathname}
-                    element={<FourOhFour />}
-                  />
-                  <Route
-                    path="*"
-                    element={<Navigate replace to={window.location.pathname} />}
-                  />
+                  <Route path="/404" element={<FourOhFour />} />
+                  <Route path="*" element={<Navigate replace to="/404" />} />
                 </Routes>
               </Box>
               <Footer />

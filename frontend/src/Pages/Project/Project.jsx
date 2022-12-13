@@ -6,9 +6,22 @@ import { LinkContext } from '../../ContextProviders/LinkContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
-import { Box, Typography, Container, Divider } from '@mui/material';
+import { Box, Typography, Container, Divider, Button } from '@mui/material';
 import data from '../../temp_database.json';
 import './Project.css';
+
+import { MdDownload } from 'react-icons/md'
+
+// Download button: download raw dataset
+function DownloadButton({ project }){
+  const rawDataLink = `https://docs.google.com/spreadsheets/u/1/d/${project.sheetId}/gviz/tq?tqx=out:csv&gid=${project.gidRawData}${project.rawDataQuery == null ? '' : `&tq=${project.rawDataQuery}`}`;
+  return(
+    <Button disabled={project.gidRawData == null ? true : false} variant='contained' href={rawDataLink}>
+      <MdDownload />&nbsp;
+      {project.gidRawData == null ? 'COMING SOON' : 'RAW DATASET'}
+    </Button>
+  );
+}
 
 export default function Project({ prefersDarkMode }) {
   const [_, setUnderlineLink] = useContext(LinkContext);
@@ -82,6 +95,8 @@ export default function Project({ prefersDarkMode }) {
               <Typography variant="body1" color="text.secondary" gutterBottom>
                 {project.onwerContact}
               </Typography>
+              <br/>
+              <DownloadButton project={project} />
             </Container>
           </Box>
 

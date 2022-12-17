@@ -236,7 +236,7 @@
     "id": "food-waste",
     "title": "Food Waste",
     "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
-    "description": "This dataset visualizes the amount of food waste incurred from dining activities across different on-campus outlets (Dining Halls D1, D2, and the Marketplace). Past data visualizations in the Dining Hall D2, such as the green calendar-styled monthly food waste counter at the entrance, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...",
+    "description": "This dataset visualizes food waste across on-campus dining outlets (Dining Halls D1, D2, and the Marketplace). The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations in the Dining Hall D2, such as the green calendar-styled monthly food waste counter at the entrance, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...",
     "owner": "NYUAD Dining",
     "onwerContact": "nyuad.dining@nyu.edu",
     "gidRawData": 1952244844,

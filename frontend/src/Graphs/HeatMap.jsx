@@ -1,7 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
 import { React, useState } from 'react'
-import { Box, Stack, Tabs, Tab } from '@mui/material/';
+import { Box, Tabs, Tab } from '@mui/material/';
 
 import './ChartComponent.css';
 

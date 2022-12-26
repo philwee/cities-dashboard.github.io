@@ -116,7 +116,7 @@ export default function Project({ prefersDarkMode }) {
                 </Typography>
                 <Box
                   height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 500}
                 >
                   <ChartComponent
                     chartData={{
@@ -132,7 +132,7 @@ export default function Project({ prefersDarkMode }) {
                   gutterBottom
                   sx={{ mt: 2 }}
                 >
-                  {parse(element.subtitle)}
+                  {element.subtitle && parse(element.subtitle)}
                 </Typography>
               </Container>
             </Box>

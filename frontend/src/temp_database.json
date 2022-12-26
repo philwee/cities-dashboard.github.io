@@ -401,11 +401,258 @@
   {
     "id": "air-quality",
     "title": "Air Quality",
-    "sheetId": "",
+    "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
     "description": "placeholder",
-    "owner": "NYUADAir",
+    "owner": "NYUADAir - CITIES",
     "onwerContact": "cities.nyuad@nyu.edu",
-    "charts": []
+    "charts": [
+      {
+        "title": "Hourly Historical",
+        "subtitle": "",
+        "gid": 184715989,
+        "headers": 1,
+        "vAxisTitle": "US Air Quality Index (AQI)",
+        "chartType": "ComboChart",
+        "seriesType": "area",
+        "lineWidth": 0,
+        "enableInteractivity": false,
+        "areaOpacity": 1,
+        "vAxisMin": "0",
+        "hAxisFormat": "MMM dd, HH:mm",
+        "series": {
+          "0": {
+            "lineWidth": 2,
+            "type": "line",
+            "color": "#333333",
+            "enableInteractivity": true
+          },
+          "1": {
+            "lineWidth": 2,
+            "type": "line",
+            "color": "#333333",
+            "enableInteractivity": true,
+            "lineDashStyle": [
+              1,
+              2
+            ]
+          },
+          "2": {
+            "lineWidth": 2,
+            "type": "line",
+            "color": "#333333",
+            "enableInteractivity": true,
+            "lineDashStyle": [
+              7,
+              3
+            ]
+          },
+          "3": {
+            "visibleInLegend": false,
+            "color": "#662000"
+          },
+          "4": {
+            "visibleInLegend": false,
+            "color": "#9B51E0"
+          },
+          "5": {
+            "visibleInLegend": false,
+            "color": "EB5757"
+          },
+          "6": {
+            "visibleInLegend": false,
+            "color": "#F2994A"
+          },
+          "7": {
+            "visibleInLegend": false,
+            "color": "#F2C94C"
+          },
+          "8": {
+            "visibleInLegend": false,
+            "color": "#219653"
+          }
+        }
+      },
+      {
+        "title": "Daily Air Quality Index of PM2.5, Historical",
+        "subtitle": "",
+        "gid": 584789045,
+        "headers": 1,
+        "chartType": "Calendar",
+        "columns": [
+          0,
+          2
+        ],
+        "colorAxis": {
+          "minValue": 0,
+          "maxValue": 500,
+          "colors": [
+            "#219653",
+            "#219653",
+            "#F2C94C",
+            "#F2C94C",
+            "#F2994A",
+            "#F2994A",
+            "#EB5757",
+            "#EB5757",
+            "#9B51E0",
+            "#662000"
+          ],
+          "values": [
+            0,
+            50,
+            51,
+            100,
+            101,
+            150,
+            151,
+            200,
+            201,
+            500
+          ]
+        },
+        "legend": {
+          "position": "none"
+        }
+      },
+      {
+        "query": "SELECT * OFFSET 1",
+        "title": "Daily Concentration of PM2.5 by Day of the Week, with 95% Confidence Interval",
+        "subtitle": "",
+        "gid": [
+          803236520,
+          803236520
+        ],
+        "headers": 2,
+        "columns": [
+          0,
+          1,
+          {
+            "role": "interval",
+            "sourceColumn": 2
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 3
+          },
+          4,
+          {
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 6
+          }
+        ],
+        "chartType": "ColumnChart",
+        "vAxisMin": "0"
+      },
+      {
+        "title": "by Month",
+        "subtitle": "",
+        "gid": 1889357231,
+        "headers": 3,
+        "columns": [
+          0,
+          2,
+          3,
+          4,
+          5,
+          1
+        ],
+        "chartType": "ColumnChart",
+        "isStacked": "percent",
+        "vAxisFormat": "#%",
+        "colors": [
+          "#219653",
+          "#F2C94C",
+          "#F2994A",
+          "#EB5757",
+          "#999999"
+        ]
+      },
+      {
+        "title": "Average by Hour",
+        "subtitle": "",
+        "gid": 1768452772,
+        "headers": 2,
+        "colors": [
+          "#9f95a6"
+        ],
+        "lineWidth": 0.5,
+        "series": {
+          "12": {
+            "lineWidth": 2,
+            "color": "#57068c"
+          }
+        },
+        "legend": {
+          "position": "none"
+        },
+        "chartType": "LineChart"
+      },
+      {
+        "query": "SELECT A, B, L",
+        "title": "Correlation",
+        "subtitle": "",
+        "gid": 584789045,
+        "headers": 1,
+        "hAxisMin": "0",
+        "vAxisMin": "0",
+        "pointSize": 1,
+        "trendlines": [
+          {
+            "type": "linear",
+            "visibleInLegend": true,
+            "color": "#57068c",
+            "opacity": 1,
+            "showR2": true,
+            "enableInteractivity": false
+          }
+        ],
+        "columns": [
+          1,
+          2,
+          {
+            "role": "tooltip",
+            "sourceColumn": 0
+          }
+        ],
+        "series": {
+          "0": {
+            "color": "#9f95a6",
+            "visibleInLegend": false
+          }
+        },
+        "chartType": "ScatterChart"
+      },
+      {
+        "query": "SELECT A, B",
+        "title": "GeoChart",
+        "subtitle": "",
+        "gid": 1488995786,
+        "headers": 1,
+        "chartType": "GeoChart",
+        "colorAxis": {
+          "minValue": 0,
+          "maxValue": 150.4,
+          "colors": [
+            "#219653",
+            "#F2C94C",
+            "#F2994A",
+            "#EB5757",
+            "#9B51E0"
+          ],
+          "values": [
+            0,
+            12,
+            35.4,
+            55.4,
+            150.4
+          ]
+        }
+      }
+    ]
   },
   {
     "id": "student-population",

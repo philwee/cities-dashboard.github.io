@@ -172,16 +172,8 @@
         "title": "Heat Map for the Average Hourly Number of Check-in, by Day of the Week",
         "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each hour.",
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "gids": [
-          1445127203,
-          1422276445,
-          1398234006
-        ],
-        "sheetTitles": [
-          "2020",
-          "2021",
-          "2022"
-        ],
+        "gids": [1445127203, 1422276445, 1398234006],
+        "sheetTitles": ["2020", "2021", "2022"],
         "height": "830px",
         "chartType": "HeatMap"
       },
@@ -189,16 +181,8 @@
         "title": "Heat Map for the Total Monthly Number of Check-in, by Day of the Week",
         "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each month.",
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "gids": [
-          1255989326,
-          1644929856,
-          782978538
-        ],
-        "sheetTitles": [
-          "2020",
-          "2021",
-          "2022"
-        ],
+        "gids": [1255989326, 1644929856, 782978538],
+        "sheetTitles": ["2020", "2021", "2022"],
         "height": "670px",
         "chartType": "HeatMap"
       },
@@ -268,9 +252,7 @@
         "intervals": {
           "style": "area"
         },
-        "colors": [
-          "#57068c"
-        ],
+        "colors": ["#57068c"],
         "legend": "none"
       },
       {
@@ -288,10 +270,7 @@
           }
         ],
         "colorAxis": {
-          "colors": [
-            "#ffffff",
-            "#57068c"
-          ]
+          "colors": ["#ffffff", "#57068c"]
         }
       },
       {
@@ -431,20 +410,14 @@
             "type": "line",
             "color": "#333333",
             "enableInteractivity": true,
-            "lineDashStyle": [
-              1,
-              2
-            ]
+            "lineDashStyle": [1, 2]
           },
           "2": {
             "lineWidth": 2,
             "type": "line",
             "color": "#333333",
             "enableInteractivity": true,
-            "lineDashStyle": [
-              7,
-              3
-            ]
+            "lineDashStyle": [7, 3]
           },
           "3": {
             "visibleInLegend": false,
@@ -478,10 +451,7 @@
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
-        "columns": [
-          0,
-          2
-        ],
+        "columns": [0, 2],
         "colorAxis": {
           "minValue": 0,
           "maxValue": 500,
@@ -497,18 +467,7 @@
             "#9B51E0",
             "#662000"
           ],
-          "values": [
-            0,
-            50,
-            51,
-            100,
-            101,
-            150,
-            151,
-            200,
-            201,
-            500
-          ]
+          "values": [0, 50, 51, 100, 101, 150, 151, 200, 201, 500]
         },
         "legend": {
           "position": "none"
@@ -518,10 +477,7 @@
         "query": "SELECT * OFFSET 1",
         "title": "Daily Concentration of PM2.5 by Day of the Week, with 95% Confidence Interval",
         "subtitle": "",
-        "gid": [
-          803236520,
-          803236520
-        ],
+        "gid": [803236520, 835066434],
         "headers": 2,
         "columns": [
           0,
@@ -552,33 +508,18 @@
         "subtitle": "",
         "gid": 1889357231,
         "headers": 3,
-        "columns": [
-          0,
-          2,
-          3,
-          4,
-          5,
-          1
-        ],
+        "columns": [0, 2, 3, 4, 5, 1],
         "chartType": "ColumnChart",
         "isStacked": "percent",
         "vAxisFormat": "#%",
-        "colors": [
-          "#219653",
-          "#F2C94C",
-          "#F2994A",
-          "#EB5757",
-          "#999999"
-        ]
+        "colors": ["#219653", "#F2C94C", "#F2994A", "#EB5757", "#999999"]
       },
       {
         "title": "Average by Hour",
         "subtitle": "",
         "gid": 1768452772,
         "headers": 2,
-        "colors": [
-          "#9f95a6"
-        ],
+        "colors": ["#9f95a6"],
         "lineWidth": 0.5,
         "series": {
           "12": {
@@ -636,20 +577,8 @@
         "colorAxis": {
           "minValue": 0,
           "maxValue": 150.4,
-          "colors": [
-            "#219653",
-            "#F2C94C",
-            "#F2994A",
-            "#EB5757",
-            "#9B51E0"
-          ],
-          "values": [
-            0,
-            12,
-            35.4,
-            55.4,
-            150.4
-          ]
+          "colors": ["#219653", "#F2C94C", "#F2994A", "#EB5757", "#9B51E0"],
+          "values": [0, 12, 35.4, 55.4, 150.4]
         }
       }
     ]

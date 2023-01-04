@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.77915cdb.css",
+    "main.js": "/static/js/main.00c9bb16.js",
+    "static/media/cities-logo.png": "/static/media/cities-logo.cb03e6f19c651b2b6b9b.png",
+    "index.html": "/index.html",
+    "main.77915cdb.css.map": "/static/css/main.77915cdb.css.map",
+    "main.00c9bb16.js.map": "/static/js/main.00c9bb16.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.77915cdb.css",
+    "static/js/main.00c9bb16.js"
+  ]
+}

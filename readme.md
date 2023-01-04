@@ -22,14 +22,6 @@ The front-end of this app was built with React.js.There are three react componen
 
   The header component is at the top of the page. It consists of CITIES logo , a title and a menu bar.
 
-- Card:
-
-  Theses are the cards found on the home page which contains a graph and buttion that opens a page where one can see more info about that particular graph.
-
-- CarouselCard:
-
-  These are the cards that are rendered in the carousel.The carousel can be found on the project page.
-
 ## Instructions to Build and Test Locally
 
 ### Run Back-end

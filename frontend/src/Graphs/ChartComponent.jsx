@@ -17,7 +17,11 @@ function InnerChart({ chartData, chartIndex }) {
         height={chartData.height}
         width={'100%'}
       >
-        <HeatMap publishedSheetId={chartData.publishedSheetId} gid={chartData.gid || chartData.subcharts[chartIndex].gid || null} height={chartData.height} />
+        <HeatMap
+          publishedSheetId={chartData.publishedSheetId}
+          gid={chartData.gid || chartData.subcharts[chartIndex].gid || null}
+          height={chartData.height}
+        />
       </Box>
     );
   }
@@ -37,7 +41,7 @@ function InnerChart({ chartData, chartIndex }) {
         italic: false,
       },
       ticks: chartData.vAxisTicks,
-      direction: chartData.vAxisDirection
+      direction: chartData.vAxisDirection,
     },
     hAxis: {
       format: chartData.hAxisFormat,
@@ -117,22 +121,33 @@ function InnerChart({ chartData, chartIndex }) {
       <Chart
         chartType={chartData.chartType}
         chartWrapperParams={{
-          view: { columns: chartData.columns || chartData.subcharts[chartIndex].columns || null },
+          view: {
+            columns:
+              chartData.columns ||
+              chartData.subcharts[chartIndex].columns ||
+              null,
+          },
         }}
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
         spreadSheetQueryParameters={
-          (chartIndex == null) ?
-            {
-              headers: chartData.headers,
-              query: chartData.query,
-              gid: chartData.gid
-            } :
-            {
-              headers: chartData.headers || chartData.subcharts[chartIndex].headers || null,
-              query: chartData.query || chartData.subcharts[chartIndex].query || null,
-              gid: chartData.gid || chartData.subcharts[chartIndex].gid || null
-            }
-
+          chartIndex == null
+            ? {
+                headers: chartData.headers,
+                query: chartData.query,
+                gid: chartData.gid,
+              }
+            : {
+                headers:
+                  chartData.headers ||
+                  chartData.subcharts[chartIndex].headers ||
+                  null,
+                query:
+                  chartData.query ||
+                  chartData.subcharts[chartIndex].query ||
+                  null,
+                gid:
+                  chartData.gid || chartData.subcharts[chartIndex].gid || null,
+              }
         }
         options={options}
         chartEvents={chartEvents}
@@ -164,19 +179,33 @@ export default function ChartComponent({ chartData }) {
     };
 
     return (
-      <Box maxWidth={chartData.maxWidth? chartData.maxWidth : "100%"} height="100%">
-        <Tabs
-          value={indexValue}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
+      <Box
+        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
+        height="100%"
+      >
+        {chartData.homePage ? (
+          ''
+        ) : (
+          <Tabs
+            value={indexValue}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            allowScrollButtonsMobile
+          >
+            {chartData.subcharts.map((element, index) => (
+              <Tab
+                key={index}
+                value={index}
+                label={chartData.subcharts[index].subchartTitle}
+              />
+            ))}
+          </Tabs>
+        )}
+        <Box
+          position="relative"
+          height={chartData.height ? chartData.height : '100%'}
         >
-          {chartData.subcharts.map((element, index) => (
-            <Tab key={index} value={index} label={chartData.subcharts[index].subchartTitle} />
-          ))}
-        </Tabs>
-        <Box position="relative" height={chartData.height? chartData.height : "100%"}>
           {chartData.subcharts.map((element, index) => (
             <Box
               key={index}
@@ -188,7 +217,12 @@ export default function ChartComponent({ chartData }) {
               left={0}
               visibility={indexValue === index ? 'visible' : 'hidden'}
             >
-              <InnerChart chartData={chartData} chartIndex={index} />
+              {useMemo(
+                () => (
+                  <InnerChart chartData={chartData} chartIndex={index} />
+                ),
+                []
+              )}
             </Box>
           ))}
         </Box>

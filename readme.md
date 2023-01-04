@@ -50,33 +50,6 @@ npm start
 
 Now you should see a browser window running the app.
 
-<!-- ## Screenshots
-
-### Desktop view
-
-- Home Page
-    ![Home Page](./screenshots/desktop1.png)
-
-- Project Page
-    ![Project Page](./screenshots/desktop4.png)
-
-- About Page
-    ![About Page](./screenshots/desktop2.png)
-
-<!-- ### Mobile view
-
-- Home Page
-    ![Home Page](./screenshots/mobile1.png)
-
-- Project Page
-    ![Project Page](./screenshots/mobile4.png)
-
-- About Page
-    ![About Page](./screenshots/mobile2.png)
-
-- Contact Page
-    ![Contact Page](./screenshots/mobile3.png) -->
-
 ## Team Members
 
 [@princeampofo](https://github.com/princeampofo)  

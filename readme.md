@@ -63,9 +63,6 @@ Now you should see a browser window running the app.
 - About Page
     ![About Page](./screenshots/desktop2.png)
 
-- Contact Page
-    ![Contact Page](./screenshots/desktop3.png) -->
-
 <!-- ### Mobile view
 
 - Home Page

@@ -8,6 +8,19 @@ import HeatMap from './HeatMap';
 import './ChartComponent.css';
 
 function InnerChart({ chartData, chartIndex }) {
+  // Case: HeatMap
+  if (chartData.chartType == 'HeatMap') {
+    return (
+      <Box
+        position={'relative'}
+        className={chartData.chartType}
+        height={chartData.height}
+        width={'100%'}
+      >
+        <HeatMap publishedSheetId={chartData.publishedSheetId} gid={chartData.gid || chartData.subcharts[chartIndex].gid || null} height={chartData.height} />
+      </Box>
+    );
+  }
   // Show CircleProgress or not
   let [circleProgress, displayCircleProgress] = useState(true);
   const options = {
@@ -23,6 +36,8 @@ function InnerChart({ chartData, chartIndex }) {
       titleTextStyle: {
         italic: false,
       },
+      ticks: chartData.vAxisTicks,
+      direction: chartData.vAxisDirection
     },
     hAxis: {
       format: chartData.hAxisFormat,
@@ -45,6 +60,8 @@ function InnerChart({ chartData, chartIndex }) {
     curveType: chartData.curveType ?? 'function',
     colors: chartData.colors,
     colorAxis: chartData.colorAxis,
+    defaultColor: chartData.defaultColor,
+    datalessRegionColor: chartData.datalessRegionColor,
     areaOpacity: chartData.areaOpacity,
     tooltip: {
       isHtml: true,
@@ -100,16 +117,23 @@ function InnerChart({ chartData, chartIndex }) {
       <Chart
         chartType={chartData.chartType}
         chartWrapperParams={{
-          view: { columns: chartData.columns },
+          view: { columns: chartData.columns || chartData.subcharts[chartIndex].columns || null },
         }}
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
-        spreadSheetQueryParameters={{
-          headers: chartData.headers,
-          gid: Array.isArray(chartData.gid)
-            ? chartData.gid[chartIndex]
-            : chartData.gid,
-          query: chartData.query,
-        }}
+        spreadSheetQueryParameters={
+          (chartIndex == null) ?
+            {
+              headers: chartData.headers,
+              query: chartData.query,
+              gid: chartData.gid
+            } :
+            {
+              headers: chartData.headers || chartData.subcharts[chartIndex].headers || null,
+              query: chartData.query || chartData.subcharts[chartIndex].query || null,
+              gid: chartData.gid || chartData.subcharts[chartIndex].gid || null
+            }
+
+        }
         options={options}
         chartEvents={chartEvents}
         width={'100%'}
@@ -119,27 +143,19 @@ function InnerChart({ chartData, chartIndex }) {
 }
 
 export default function ChartComponent({ chartData }) {
-  // Case HeatMap
-  if (chartData.chartType == 'HeatMap') {
-    return <HeatMap chartData={chartData} />;
-  }
-
   // Case WebsiteEmbed
-  else if (chartData.chartType == 'WebsiteEmbed') {
-    return (
-      <iframe
-        src="https://nyuadair.com/historical#historical-graph-wrapper"
-        width="100%"
-        height="100%"
-      ></iframe>
-    );
-  }
+  // if (chartData.chartType == 'WebsiteEmbed') {
+  //   return (
+  //     <iframe
+  //       src="https://nyuadair.com/historical#historical-graph-wrapper"
+  //       width="100%"
+  //       height="100%"
+  //     ></iframe>
+  //   );
+  // }
 
-  // All the other chart types using React-Google-Chart wrapper
-  // If there are multiple charts
-  if (Array.isArray(chartData.gid)) {
-    const array = chartData.gid;
-
+  // Check if there are multiple subcharts
+  if (chartData.subcharts) {
     // Props for tab panels (multiple data visualizations in the same chart area, navigate with tab panels)
     const [indexValue, setIndexValue] = useState(0); // start with the first elem
 
@@ -148,27 +164,25 @@ export default function ChartComponent({ chartData }) {
     };
 
     return (
-      <Box width="100%" height="100%">
+      <Box maxWidth={chartData.maxWidth? chartData.maxWidth : "100%"} height="100%">
         <Tabs
           value={indexValue}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
-          sx={{ mb: 2 }}
         >
-          {array.map((element, index) => (
-            <Tab key={index} value={index} label={array[index]} />
+          {chartData.subcharts.map((element, index) => (
+            <Tab key={index} value={index} label={chartData.subcharts[index].subchartTitle} />
           ))}
         </Tabs>
-        <Box position="relative" height="100%">
-          {array.map((element, index) => (
+        <Box position="relative" height={chartData.height? chartData.height : "100%"}>
+          {chartData.subcharts.map((element, index) => (
             <Box
               key={index}
               height="100%"
               width="100%"
               role="tabpanel"
-              paddingBottom={4}
               position="absolute"
               top={0}
               left={0}

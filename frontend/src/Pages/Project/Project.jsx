@@ -115,8 +115,8 @@ export default function Project({ prefersDarkMode }) {
                   {index + 1}. {element.title}
                 </Typography>
                 <Box
-                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 500}
+                  height={element.chartType == 'HeatMap' ? '' : '60vw'}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 600}
                 >
                   <ChartComponent
                     chartData={{

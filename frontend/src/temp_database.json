@@ -172,8 +172,21 @@
         "title": "Heat Map for the Average Hourly Number of Check-in, by Day of the Week",
         "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each hour.",
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "gids": [1445127203, 1422276445, 1398234006],
-        "sheetTitles": ["2020", "2021", "2022"],
+        "subcharts": [
+          {
+            "gid": 1398234006,
+            "subchartTitle": "2022"
+          },
+          {
+            "gid": 1445127203,
+            "subchartTitle": "2020"
+          },
+          {
+            "gid": 1422276445,
+            "subchartTitle": "2021"
+          }
+        ],
+        "maxWidth": "411px",
         "height": "830px",
         "chartType": "HeatMap"
       },
@@ -181,8 +194,21 @@
         "title": "Heat Map for the Total Monthly Number of Check-in, by Day of the Week",
         "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each month.",
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "gids": [1255989326, 1644929856, 782978538],
-        "sheetTitles": ["2020", "2021", "2022"],
+        "subcharts": [
+          {
+            "gid": 782978538,
+            "subchartTitle": "2022"
+          },
+          {
+            "gid": 1255989326,
+            "subchartTitle": "2020"
+          },
+          {
+            "gid": 1644929856,
+            "subchartTitle": "2021"
+          }
+        ],
+        "maxWidth": "411px",
         "height": "670px",
         "chartType": "HeatMap"
       },
@@ -252,7 +278,9 @@
         "intervals": {
           "style": "area"
         },
-        "colors": ["#57068c"],
+        "colors": [
+          "#57068c"
+        ],
         "legend": "none"
       },
       {
@@ -270,7 +298,10 @@
           }
         ],
         "colorAxis": {
-          "colors": ["#ffffff", "#57068c"]
+          "colors": [
+            "#ffffff",
+            "#57068c"
+          ]
         }
       },
       {
@@ -386,9 +417,55 @@
     "onwerContact": "cities.nyuad@nyu.edu",
     "charts": [
       {
-        "title": "Hourly Historical",
+        "title": "Historical",
+        "subcharts": [
+          {
+            "gid": 184715989,
+            "subchartTitle": "Last Week"
+          },
+          {
+            "gid": 2066975752,
+            "subchartTitle": "All Time",
+            "query": "SELECT A, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y",
+            "columns": [
+              0,
+              1,
+              {
+                "role": "interval",
+                "sourceColumn": 2
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 3
+              },
+              4,
+              {
+                "role": "interval",
+                "sourceColumn": 5
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 6
+              },
+              7,
+              {
+                "role": "interval",
+                "sourceColumn": 8
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 9
+              },
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ]
+          }
+        ],
         "subtitle": "",
-        "gid": 184715989,
         "headers": 1,
         "vAxisTitle": "US Air Quality Index (AQI)",
         "chartType": "ComboChart",
@@ -410,14 +487,20 @@
             "type": "line",
             "color": "#333333",
             "enableInteractivity": true,
-            "lineDashStyle": [1, 2]
+            "lineDashStyle": [
+              1,
+              2
+            ]
           },
           "2": {
             "lineWidth": 2,
             "type": "line",
             "color": "#333333",
             "enableInteractivity": true,
-            "lineDashStyle": [7, 3]
+            "lineDashStyle": [
+              7,
+              3
+            ]
           },
           "3": {
             "visibleInLegend": false,
@@ -429,7 +512,7 @@
           },
           "5": {
             "visibleInLegend": false,
-            "color": "EB5757"
+            "color": "#EB5757"
           },
           "6": {
             "visibleInLegend": false,
@@ -443,15 +526,38 @@
             "visibleInLegend": false,
             "color": "#219653"
           }
-        }
+        },
+        "intervals": {
+          "style": "area"
+        },
+        "vAxisTicks": [
+          0,
+          50,
+          100,
+          150,
+          200
+        ]
       },
       {
         "title": "Daily Air Quality Index of PM2.5, Historical",
+        "subcharts": [
+          {
+            "query": "SELECT A, C",
+            "subchartTitle": "Outdoor"
+          },
+          {
+            "query": "SELECT A, H",
+            "subchartTitle": "Campus Center"
+          },
+          {
+            "query": "SELECT A, M",
+            "subchartTitle": "Dining Hall D2"
+          }
+        ],
         "subtitle": "",
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
-        "columns": [0, 2],
         "colorAxis": {
           "minValue": 0,
           "maxValue": 500,
@@ -467,7 +573,18 @@
             "#9B51E0",
             "#662000"
           ],
-          "values": [0, 50, 51, 100, 101, 150, 151, 200, 201, 500]
+          "values": [
+            0,
+            50,
+            51,
+            100,
+            101,
+            150,
+            151,
+            200,
+            201,
+            500
+          ]
         },
         "legend": {
           "position": "none"
@@ -476,8 +593,21 @@
       {
         "query": "SELECT * OFFSET 1",
         "title": "Daily Concentration of PM2.5 by Day of the Week, with 95% Confidence Interval",
+        "subcharts": [
+          {
+            "gid": 803236520,
+            "subchartTitle": "Outdoor"
+          },
+          {
+            "gid": 835066434,
+            "subchartTitle": "Campus Center"
+          },
+          {
+            "gid": 1646757274,
+            "subchartTitle": "Dining Hall D2"
+          }
+        ],
         "subtitle": "",
-        "gid": [803236520, 835066434],
         "headers": 2,
         "columns": [
           0,
@@ -498,6 +628,15 @@
           {
             "role": "interval",
             "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 9
           }
         ],
         "chartType": "ColumnChart",
@@ -505,21 +644,57 @@
       },
       {
         "title": "by Month",
+        "subcharts": [
+          {
+            "gid": 354322334,
+            "subchartTitle": "Outdoor"
+          },
+          {
+            "gid": 719182390,
+            "subchartTitle": "Campus Center"
+          },
+          {
+            "gid": 2110383587,
+            "subchartTitle": "Dining Hall D2"
+          }
+        ],
         "subtitle": "",
-        "gid": 1889357231,
-        "headers": 3,
-        "columns": [0, 2, 3, 4, 5, 1],
+        "headers": 1,
         "chartType": "ColumnChart",
         "isStacked": "percent",
         "vAxisFormat": "#%",
-        "colors": ["#219653", "#F2C94C", "#F2994A", "#EB5757", "#999999"]
+        "vAxisDirection": -1,
+        "colors": [
+          "transparent",
+          "#219653",
+          "#F2C94C",
+          "#F2994A",
+          "#EB5757",
+          "#9B51E0",
+          "#662000"
+        ]
       },
       {
         "title": "Average by Hour",
+        "subcharts": [
+          {
+            "gid": 1768452772,
+            "subchartTitle": "Outdoor"
+          },
+          {
+            "gid": 916513168,
+            "subchartTitle": "Campus Center"
+          },
+          {
+            "gid": 1406231328,
+            "subchartTitle": "Dining Hall D2"
+          }
+        ],
         "subtitle": "",
-        "gid": 1768452772,
         "headers": 2,
-        "colors": ["#9f95a6"],
+        "colors": [
+          "#9f95a6"
+        ],
         "lineWidth": 0.5,
         "series": {
           "12": {
@@ -533,14 +708,35 @@
         "chartType": "LineChart"
       },
       {
-        "query": "SELECT A, B, L",
         "title": "Correlation",
+        "subcharts": [
+          {
+            "query": "SELECT A, B, G",
+            "subchartTitle": "Outdoor - Campus Center"
+          },
+          {
+            "query": "SELECT A, B, L",
+            "subchartTitle": "Outdoor - Dining Hall D2"
+          },
+          {
+            "query": "SELECT A, G, L",
+            "subchartTitle": "Campus Center - Dining Hall D2"
+          }
+        ],
         "subtitle": "",
         "gid": 584789045,
         "headers": 1,
         "hAxisMin": "0",
         "vAxisMin": "0",
         "pointSize": 1,
+        "columns": [
+          1,
+          2,
+          {
+            "role": "tooltip",
+            "sourceColumn": 0
+          }
+        ],
         "trendlines": [
           {
             "type": "linear",
@@ -549,14 +745,6 @@
             "opacity": 1,
             "showR2": true,
             "enableInteractivity": false
-          }
-        ],
-        "columns": [
-          1,
-          2,
-          {
-            "role": "tooltip",
-            "sourceColumn": 0
           }
         ],
         "series": {
@@ -568,17 +756,48 @@
         "chartType": "ScatterChart"
       },
       {
-        "query": "SELECT A, B",
         "title": "GeoChart",
+        "subcharts": [
+          {
+            "query": "SELECT A, B",
+            "subchartTitle": "2021"
+          },
+          {
+            "query": "SELECT A, C",
+            "subchartTitle": "2020"
+          },
+          {
+            "query": "SELECT A, D",
+            "subchartTitle": "2019"
+          },
+          {
+            "query": "SELECT A, E",
+            "subchartTitle": "2018"
+          }
+        ],
         "subtitle": "",
         "gid": 1488995786,
         "headers": 1,
         "chartType": "GeoChart",
+        "defaultColor": "transparent",
+        "datalessRegionColor": "transparent",
         "colorAxis": {
           "minValue": 0,
           "maxValue": 150.4,
-          "colors": ["#219653", "#F2C94C", "#F2994A", "#EB5757", "#9B51E0"],
-          "values": [0, 12, 35.4, 55.4, 150.4]
+          "colors": [
+            "#219653",
+            "#F2C94C",
+            "#F2994A",
+            "#EB5757",
+            "#9B51E0"
+          ],
+          "values": [
+            0,
+            12,
+            35.4,
+            55.4,
+            150.4
+          ]
         }
       }
     ]

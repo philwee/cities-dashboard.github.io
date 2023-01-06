@@ -81,6 +81,9 @@ function InnerChart({ chartData, chartIndex }) {
     pointSize: chartData.pointSize,
     trendlines: chartData.trendlines,
     region: chartData.region,
+    frozenColumns: chartData.frozenColumns,
+    sortAscending: chartData.sortAscending,
+    sortColumn: chartData.sortColumn
   };
 
   const chartEvents = [
@@ -124,8 +127,8 @@ function InnerChart({ chartData, chartIndex }) {
           view: {
             columns:
               chartData.columns ||
-              chartData.subcharts[chartIndex].columns ||
-              null,
+              (chartData.subcharts && chartData.subcharts[chartIndex].columns || null) ||
+              null
           },
         }}
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}

@@ -26,6 +26,11 @@
 }
 
 /* Invert iframe */
-.dark-mode .heat-map-iframe{
-    filter: invert();
+.dark-mode .heat-map-iframe, .dark-mode .Table {
+    filter: invert(0.9);
+}
+
+/* Deactivate pointer event in table chart */
+.Table thead{
+    pointer-events: none;
 }

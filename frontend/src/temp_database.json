@@ -6,7 +6,12 @@
     "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 9 different account types, this dataset categorizes into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undegraduate (student)</li><li>Graduate student and alumni</li><li>Staff affliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
     "owner": "Athletics Office",
     "onwerContact": "nyuad.athletics@nyu.edu",
-    "gidRawData": "560722866",
+    "rawDataTables": [
+      {
+        "gid": 560722866,
+        "headers": 1
+      }
+    ],
     "charts": [
       {
         "title": "Number of Unique FABS Memberships",
@@ -75,6 +80,20 @@
     "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track... This dataset serves as a proxy on estimating the fitness level and physical activity of the community. Temporal data visualizations also allow us to avoid peak times in indoor spaces and spread our exercises more evenly throughout a day or a week.",
     "owner": "Athletics Office",
     "onwerContact": "nyuad.athletics@nyu.edu",
+    "rawDataTables": [
+      {
+        "gid": 1993454060,
+        "headers": 1
+      },
+      {
+        "gid": 948552227,
+        "headers": 1
+      },
+      {
+        "gid": 30903651,
+        "headers": 1
+      }
+    ],
     "charts": [
       {
         "query": "SELECT A, B, C, D, F, I, J",
@@ -249,8 +268,14 @@
     "description": "This dataset visualizes food waste across on-campus dining outlets (Dining Halls D1, D2, and the Marketplace). The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations in the Dining Hall D2, such as the green calendar-styled monthly food waste counter at the entrance, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...",
     "owner": "NYUAD Dining",
     "onwerContact": "nyuad.dining@nyu.edu",
-    "gidRawData": 1952244844,
-    "rawDataQuery": "SELECT A, B, C, D, E, F",
+    "rawDataTables": [
+      {
+        "gid": 1952244844,
+        "headers": 1,
+        "query": "SELECT A, B, C, D, E, F ORDER BY A DESC LIMIT 10",
+        "sortColumn": 0
+      }
+    ],
     "charts": [
       {
         "title": "Daily Food Waste (kg) Per Month, with 95% Confidence Interval",
@@ -415,6 +440,14 @@
     "description": "placeholder",
     "owner": "NYUADAir - CITIES",
     "onwerContact": "cities.nyuad@nyu.edu",
+    "rawDataTables": [
+      {
+        "gid": 584789045,
+        "headers": 1,
+        "query": "SELECT A, B, C, D, G, H, I, L, M, N ORDER BY A DESC LIMIT 10",
+        "sortColumn": 0
+      }
+    ],
     "charts": [
       {
         "title": "Historical",
@@ -628,15 +661,6 @@
           {
             "role": "interval",
             "sourceColumn": 6
-          },
-          7,
-          {
-            "role": "interval",
-            "sourceColumn": 8
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 9
           }
         ],
         "chartType": "ColumnChart",

@@ -38,5 +38,5 @@ jobs:
 workflows:
   build-frontend:
     jobs:
-      - build-react-js
-# - deploy-react-js
+      # - build-react-js
+      - deploy-react-js

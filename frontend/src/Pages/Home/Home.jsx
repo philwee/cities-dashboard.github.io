@@ -2,7 +2,8 @@
 /* eslint-disable */
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkContext, DataContext } from '../../ContextProviders/LinkContext';
+import { LinkContext } from '../../ContextProviders/LinkContext';
+import { DataContext } from '../../ContextProviders/DataContext';
 
 import {
   Box,
@@ -17,18 +18,6 @@ import {
 } from '@mui/material';
 
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
-
-function ComingSoonBanner() {
-  return (
-    <Grid container height={'100%'} justifyContent="center" alignItems="center">
-      <Grid item>
-        <Typography variant="h5" color="text.secondary">
-          Coming Soon
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-}
 
 export default function Home({ prefersDarkMode }) {
   // useState for home page data

@@ -10,16 +10,19 @@ import { Box, Typography, Container, Divider, Button } from '@mui/material';
 import data from '../../temp_database.json';
 import './Project.css';
 
-import { MdDownload } from 'react-icons/md'
+import { MdLink } from 'react-icons/md'
 
 // Download button: download raw dataset
-function DownloadButton({ project }){
-  const rawDataLink = `https://docs.google.com/spreadsheets/u/1/d/${project.sheetId}/gviz/tq?tqx=out:csv&gid=${project.gidRawData}${project.rawDataQuery == null ? '' : `&tq=${project.rawDataQuery}`}`;
-  return(
-    <Button disabled={project.gidRawData == null ? true : false} variant='contained' href={rawDataLink}>
-      <MdDownload />&nbsp;
-      {project.gidRawData == null ? 'COMING SOON' : 'RAW DATASET'}
-    </Button>
+function DownloadButton({ project }) {
+  const isDisabled = project.sheetId == null ? true : false;
+  return (
+    <a href={isDisabled ? '' : `https://docs.google.com/spreadsheets/d/${project.sheetId}`} target="_blank" rel="noreferrer">
+      <Button disabled={isDisabled} variant='contained' >
+        <MdLink />&nbsp;
+        {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
+      </Button>
+    </a>
+
   );
 }
 
@@ -95,8 +98,29 @@ export default function Project({ prefersDarkMode }) {
               <Typography variant="body1" color="text.secondary" gutterBottom>
                 {project.onwerContact}
               </Typography>
-              <br/>
+              <br />
               <DownloadButton project={project} />
+              <br />
+              <br />
+              <Typography
+                variant="body1"
+                color="text.primary"
+                sx={{ fontWeight: 'medium' }}
+              >
+                Sample Data:
+              </Typography>
+              {project.rawDataTables.map((element, index) => (
+                <Box sx={{ pt: 1 }} className={prefersDarkMode ? 'dark-mode' : ''}
+                >
+                  <ChartComponent chartData={{
+                    chartType: "Table",
+                    sortAscending: true,
+                    frozenColumns: 1,
+                    sheetId: project.sheetId,
+                    ...element
+                  }} />
+                </Box>
+              ))}
             </Container>
           </Box>
 
@@ -115,8 +139,8 @@ export default function Project({ prefersDarkMode }) {
                   {index + 1}. {element.title}
                 </Typography>
                 <Box
-                  height={element.chartType == 'HeatMap' ? '' : '80vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 400}
+                  height={element.chartType == 'HeatMap' ? '' : '60vw'}
+                  maxHeight={element.chartType == 'HeatMap' ? '' : 600}
                 >
                   <ChartComponent
                     chartData={{
@@ -132,7 +156,7 @@ export default function Project({ prefersDarkMode }) {
                   gutterBottom
                   sx={{ mt: 2 }}
                 >
-                  {parse(element.subtitle)}
+                  {element.subtitle && parse(element.subtitle)}
                 </Typography>
               </Container>
             </Box>

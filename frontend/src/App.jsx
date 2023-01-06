@@ -3,7 +3,8 @@
 
 import { React, useMemo } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { LinkProvider, DataProvider } from './ContextProviders/LinkContext';
+import { LinkProvider } from './ContextProviders/LinkContext';
+import { DataProvider } from './ContextProviders/DataContext';
 import { Box } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';

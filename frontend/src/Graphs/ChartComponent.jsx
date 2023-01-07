@@ -30,10 +30,12 @@ function InnerChart({ chartData, chartIndex }) {
   const options = {
     theme: 'material',
     backgroundColor: { fill: chartData.backgroundColorFill ?? 'transparent' },
-    chartArea: { width: '80%', height: '70%' },
+    chartArea: { width: '80%', height: '65%' },
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
-      title: chartData.vAxisTitle,
+      title: chartData.vAxisTitle ||
+      (chartData.subcharts && chartData.subcharts[chartIndex].vAxisTitle || null) ||
+      null,
       viewWindow: {
         min: chartData.vAxisMin,
       },
@@ -44,8 +46,12 @@ function InnerChart({ chartData, chartIndex }) {
       direction: chartData.vAxisDirection,
     },
     hAxis: {
-      format: chartData.hAxisFormat,
-      title: chartData.hAxisTitle,
+      format: chartData.hAxisFormat ||
+      (chartData.subcharts && chartData.subcharts[chartIndex].hAxisFormat || null) ||
+      null,
+      title: chartData.hAxisTitle ||
+      (chartData.subcharts && chartData.subcharts[chartIndex].hAxisTitle || null) ||
+      null,
       viewWindow: {
         min: chartData.hAxisMin,
       },

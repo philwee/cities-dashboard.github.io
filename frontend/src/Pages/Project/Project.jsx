@@ -74,6 +74,7 @@ export default function Project({ prefersDarkMode }) {
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
               <UnderlinedTitle text={project.title} />
+              <br/><br/>
               <Typography variant="body1" color="text.secondary" gutterBottom>
                 {parse(project.description)}
               </Typography>
@@ -110,7 +111,7 @@ export default function Project({ prefersDarkMode }) {
                 Sample Data:
               </Typography>
               {project.rawDataTables.map((element, index) => (
-                <Box sx={{ pt: 1 }} className={prefersDarkMode ? 'dark-mode' : ''}
+                <Box key={index} sx={{ pt: 1 }} className={prefersDarkMode ? 'dark-mode' : ''}
                 >
                   <ChartComponent chartData={{
                     chartType: "Table",

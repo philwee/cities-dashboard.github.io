@@ -15,7 +15,7 @@ import UnderlinedTitle from '../../Components/UnderlinedTitle';
 
 import citiesLogo from '../../cities-logo.png';
 
-function SocialHandle({ url, icon }) {
+export function SocialHandle({ url, icon }) {
   return (
     <a className="iconLink" href={url} target="_blank" rel="noreferrer">
       {icon}
@@ -73,9 +73,9 @@ export default function About() {
   });
 
   return (
-    <Container maxWidth="md" sx={{ p: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Container maxWidth="xs" sx={{ pb: 4 }}>
+    <Container maxWidth="md" sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <Container maxWidth="xs" sx={{ pb: 3 }}>
           <Grid justifyContent="center" container>
             <Grid item xs={12} sx={{ textAlign: 'center', pb: 2 }}>
               <img style={{ maxWidth: '100%' }} src={citiesLogo} />
@@ -84,7 +84,9 @@ export default function About() {
           </Grid>
         </Container>
         <UnderlinedTitle text="the center" />
-        <Typography variant="body1" gutterBottom sx={{ mb: 4 }} color='text.secondary'>
+        <br/>
+        <br/>
+        <Typography variant="body1" gutterBottom sx={{ mb: 3 }} color='text.secondary'>
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
           interdisciplinary research center dedicated to advance urban science
           and promote cutting-edge research that is translated into practical,
@@ -92,6 +94,8 @@ export default function About() {
           to foster sustainable, resilient, and equitable cities.
         </Typography>
         <UnderlinedTitle text="the project" />
+        <br/>
+        <br/>
         <Typography variant="body1" gutterBottom color='text.secondary'>
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and

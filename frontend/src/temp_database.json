@@ -437,7 +437,7 @@
     "id": "air-quality",
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
-    "description": "placeholder",
+    "description": "NYUADAir was originally a part of a student <a href='https://nyuadair.com/' target='_blank' rel='noopener noreferrer'>Capstone project</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus complex to the community. The air quality network consists of 3 stations: an outdoor station situated in between A1 and A2 building, an indoor station in the Campus Center, and another indoor station in the East Dining Hall D2. Recognizing the potential of this project to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES has committed to support the air quality network for the past few years.",
     "owner": "NYUADAir - CITIES",
     "onwerContact": "cities.nyuad@nyu.edu",
     "rawDataTables": [
@@ -450,15 +450,16 @@
     ],
     "charts": [
       {
-        "title": "Historical",
+        "title": "Historical Snapshots of Air Quality Index",
         "subcharts": [
           {
             "gid": 184715989,
-            "subchartTitle": "Last Week"
+            "subchartTitle": "Last Week",
+            "hAxisFormat": "MMM dd, HH:mm"
           },
           {
             "gid": 2066975752,
-            "subchartTitle": "All Time",
+            "subchartTitle": "Monthly",
             "query": "SELECT A, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y",
             "columns": [
               0,
@@ -507,7 +508,6 @@
         "enableInteractivity": false,
         "areaOpacity": 1,
         "vAxisMin": "0",
-        "hAxisFormat": "MMM dd, HH:mm",
         "series": {
           "0": {
             "lineWidth": 2,
@@ -572,7 +572,7 @@
         ]
       },
       {
-        "title": "Daily Air Quality Index of PM2.5, Historical",
+        "title": "Daily Air Quality Index, All Time",
         "subcharts": [
           {
             "query": "SELECT A, C",
@@ -624,8 +624,39 @@
         }
       },
       {
+        "title": "Percentage of Daily Air Quality Categories by Month",
+        "subcharts": [
+          {
+            "gid": 354322334,
+            "subchartTitle": "Outdoor"
+          },
+          {
+            "gid": 719182390,
+            "subchartTitle": "Campus Center"
+          },
+          {
+            "gid": 2110383587,
+            "subchartTitle": "Dining Hall D2"
+          }
+        ],
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "isStacked": "percent",
+        "vAxisFormat": "#%",
+        "colors": [
+          "#bbbbbb",
+          "#219653",
+          "#F2C94C",
+          "#F2994A",
+          "#EB5757",
+          "#9B51E0",
+          "#662000"
+        ]
+      },
+      {
         "query": "SELECT * OFFSET 1",
-        "title": "Daily Concentration of PM2.5 by Day of the Week, with 95% Confidence Interval",
+        "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 95% Confidence Interval",
         "subcharts": [
           {
             "gid": 803236520,
@@ -640,6 +671,7 @@
             "subchartTitle": "Dining Hall D2"
           }
         ],
+        "vAxisTitle": "PM2.5 Concentration (µg/m3)",
         "subtitle": "",
         "headers": 2,
         "columns": [
@@ -667,39 +699,7 @@
         "vAxisMin": "0"
       },
       {
-        "title": "by Month",
-        "subcharts": [
-          {
-            "gid": 354322334,
-            "subchartTitle": "Outdoor"
-          },
-          {
-            "gid": 719182390,
-            "subchartTitle": "Campus Center"
-          },
-          {
-            "gid": 2110383587,
-            "subchartTitle": "Dining Hall D2"
-          }
-        ],
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "isStacked": "percent",
-        "vAxisFormat": "#%",
-        "vAxisDirection": -1,
-        "colors": [
-          "transparent",
-          "#219653",
-          "#F2C94C",
-          "#F2994A",
-          "#EB5757",
-          "#9B51E0",
-          "#662000"
-        ]
-      },
-      {
-        "title": "Average by Hour",
+        "title": "Hourly Average PM2.5 Concentration (µg/m3) by Month",
         "subcharts": [
           {
             "gid": 1768452772,
@@ -714,7 +714,8 @@
             "subchartTitle": "Dining Hall D2"
           }
         ],
-        "subtitle": "",
+        "subtitle": "The above graphs show the hourly PM2.5 concentration (µg/m3) throughout a day, on average. Each thin line represents the hourly average concentration for a calendar month <i>(hover on the line to see which month it is)</i>, while the highlighted line represents the all-time-averaged hourly concentration.<br>Here are some clear trends:<ul><li>Outdoor dust concentration often peaks in the early morning, followed by a sharp drop until noon and a gradual build-up throughout the night</li><li>Inside the Campus Center, PM2.5 levels stay relatively constant throughout the day, with a small increase during the morning rush hours</li><li>In the Dining Hall, the concentration gradually builds up throughout the day, hitting bigger peaks after each meal (breakfast, lunch, and dinner) with small troughs in-between meals.</li><li>For those with a sharp eye for <b>anomalies</b>, it is instantly clear that an influx of students <b>every September</b> causes a remarkable deterioration of the air quality during lunch. During the past two Ramadans (May 2020 and Apr 2021), similar deteriorations are observed during dinner and Suhur (before sunrise) compared to other months.</li></ul>",
+        "vAxisTitle": "PM2.5 Concentration (µg/m3)",
         "headers": 2,
         "colors": [
           "#9f95a6"
@@ -732,22 +733,28 @@
         "chartType": "LineChart"
       },
       {
-        "title": "Correlation",
+        "title": "Correlation Between Daily Average Outdoor and Indoor PM2.5 Concentrations (µg/m3)",
         "subcharts": [
           {
             "query": "SELECT A, B, G",
-            "subchartTitle": "Outdoor - Campus Center"
+            "subchartTitle": "Outdoor - Campus Center",
+            "hAxisTitle": "Outdoor PM2.5 Concentration (µg/m3)",
+            "vAxisTitle": "Campus Center PM2.5 Concentration (µg/m3)"
           },
           {
             "query": "SELECT A, B, L",
-            "subchartTitle": "Outdoor - Dining Hall D2"
+            "subchartTitle": "Outdoor - Dining Hall D2",
+            "hAxisTitle": "Outdoor PM2.5 Concentration (µg/m3)",
+            "vAxisTitle": "Dining Hall D2 PM2.5 Concentration (µg/m3)"
           },
           {
             "query": "SELECT A, G, L",
-            "subchartTitle": "Campus Center - Dining Hall D2"
+            "subchartTitle": "Campus Center - Dining Hall D2",
+            "hAxisTitle": "Campus Center PM2.5 Concentration (µg/m3)",
+            "vAxisTitle": "Dining Hall D2 PM2.5 Concentration (µg/m3)"
           }
         ],
-        "subtitle": "",
+        "subtitle": "Indoor air quality is shown to moderately correlate with outdoor air quality, with R<sup>2</sup> around 0.5-0.6 <i>(hover on the best fit equations to see the exact R<sup>2</sup> value)</i>. Predictably, thanks to the air filtration systems, indoor PM2.5 concentrations are significantly lower than its outdoor counterpart, around <b>6x</b> and <b>4x</b> lower for Campus Center and Dining Hall D2, respectively. Due to cooking activities, air quality in the Dining Hall is estimated to be <b>1.5x</b> worse than the Campus Center when comparing their daily average.",
         "gid": 584789045,
         "headers": 1,
         "hAxisMin": "0",
@@ -777,10 +784,13 @@
             "visibleInLegend": false
           }
         },
+        "legend": {
+          "position": "top"
+        },
         "chartType": "ScatterChart"
       },
       {
-        "title": "GeoChart",
+        "title": "[External Data] Annual PM2.5 Concentration (µg/m3) by Country",
         "subcharts": [
           {
             "query": "SELECT A, B",
@@ -799,7 +809,7 @@
             "subchartTitle": "2018"
           }
         ],
-        "subtitle": "",
+        "subtitle": "<br><br><br>Source data: IQAir - <a href='https://www.iqair.com/us/world-most-polluted-countries' target='_blank' rel='noopener noreferrer'>World's Most Polluted Countries</a>",
         "gid": 1488995786,
         "headers": 1,
         "chartType": "GeoChart",

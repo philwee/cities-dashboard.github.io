@@ -1,7 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
 
-import { React, useMemo } from 'react';
+import { React, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { LinkProvider } from './ContextProviders/LinkContext';
 import { DataProvider } from './ContextProviders/DataContext';
@@ -10,11 +10,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Header from './Components/Header/Header';
-import Home from './Pages/Home/Home';
-import Project from './Pages/Project/Project';
-import About from './Pages/About/About';
+// import Home from './Pages/Home/Home';
+// import Project from './Pages/Project/Project';
+// import About from './Pages/About/About';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
+
+const Home = lazy(() => import('./Pages/Home/Home'));
+const Project = lazy(() => import('./Pages/Project/Project'));
+const About = lazy(() => import('./Pages/About/About'));
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -74,23 +78,35 @@ function App() {
                 backgroundColor: 'customBackground',
               }}
             >
-              <Header />
+              {useMemo(
+                () => (
+                  <Header />
+                ),
+                []
+              )}
               <Box flex={1} display="flex" width="100%">
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Home prefersDarkMode={prefersDarkMode} />}
-                  />
-                  <Route
-                    path="/project/:id"
-                    element={<Project prefersDarkMode={prefersDarkMode} />}
-                  />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/404" element={<FourOhFour />} />
-                  <Route path="*" element={<Navigate replace to="/404" />} />
-                </Routes>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={<Home prefersDarkMode={prefersDarkMode} />}
+                    />
+                    <Route
+                      path="/project/:id"
+                      element={<Project prefersDarkMode={prefersDarkMode} />}
+                    />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/404" element={<FourOhFour />} />
+                    <Route path="*" element={<Navigate replace to="/404" />} />
+                  </Routes>
+                </Suspense>
               </Box>
-              <Footer />
+              {useMemo(
+                () => (
+                  <Footer />
+                ),
+                []
+              )}
             </Box>
           </ThemeProvider>
         </LinkProvider>

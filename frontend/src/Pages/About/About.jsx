@@ -2,7 +2,6 @@
 /* eslint-disable */
 import { useEffect, useContext } from 'react';
 import { LinkContext } from '../../ContextProviders/LinkContext';
-import './About.css';
 import {
   AiFillTwitterCircle,
   AiFillLinkedin,

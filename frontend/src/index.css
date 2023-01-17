@@ -8,3 +8,10 @@
 #root{
   overflow-x: hidden;
 }
+
+.iconLink{
+  color: gray;
+}
+.iconLink:hover{
+  color: #57068c;
+}

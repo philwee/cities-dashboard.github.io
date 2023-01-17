@@ -63,8 +63,7 @@ export function SocialHandleGrid() {
     </Container>
   );
 }
-
-export default function About() {
+const About = () => {
   const [_, setUnderlineLink] = useContext(LinkContext);
 
   useEffect(() => {
@@ -83,9 +82,14 @@ export default function About() {
           </Grid>
         </Container>
         <UnderlinedTitle text="the center" />
-        <br/>
-        <br/>
-        <Typography variant="body1" gutterBottom sx={{ mb: 3 }} color='text.secondary'>
+        <br />
+        <br />
+        <Typography
+          variant="body1"
+          gutterBottom
+          sx={{ mb: 3 }}
+          color="text.secondary"
+        >
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
           interdisciplinary research center dedicated to advance urban science
           and promote cutting-edge research that is translated into practical,
@@ -93,9 +97,9 @@ export default function About() {
           to foster sustainable, resilient, and equitable cities.
         </Typography>
         <UnderlinedTitle text="the project" />
-        <br/>
-        <br/>
-        <Typography variant="body1" gutterBottom color='text.secondary'>
+        <br />
+        <br />
+        <Typography variant="body1" gutterBottom color="text.secondary">
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and
           well-being on campus. As is the case with current environmental and
@@ -105,7 +109,7 @@ export default function About() {
           topics, which results in positive awareness and behavior changes.
         </Typography>
         <br />
-        <Typography variant="body1" gutterBottom color='text.secondary'>
+        <Typography variant="body1" gutterBottom color="text.secondary">
           The CITIES dashboard is currently on its first public-release
           iteration. Any feedback on the existing datasets and visualizations
           and/or suggestions for future datasets is particularly welcomed. Feel
@@ -115,4 +119,6 @@ export default function About() {
       </Paper>
     </Container>
   );
-}
+};
+
+export default About;

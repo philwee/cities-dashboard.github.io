@@ -10,23 +10,31 @@ import { Box, Typography, Container, Divider, Button } from '@mui/material';
 import data from '../../temp_database.json';
 import './Project.css';
 
-import { MdLink } from 'react-icons/md'
+import { MdLink } from 'react-icons/md';
 
 // Download button: download raw dataset
 function DownloadButton({ project }) {
   const isDisabled = project.sheetId == null ? true : false;
   return (
-    <a href={isDisabled ? '' : `https://docs.google.com/spreadsheets/d/${project.sheetId}`} target="_blank" rel="noreferrer">
-      <Button disabled={isDisabled} variant='contained' >
-        <MdLink />&nbsp;
+    <a
+      href={
+        isDisabled
+          ? ''
+          : `https://docs.google.com/spreadsheets/d/${project.sheetId}`
+      }
+      target="_blank"
+      rel="noreferrer"
+    >
+      <Button disabled={isDisabled} variant="contained">
+        <MdLink />
+        &nbsp;
         {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
       </Button>
     </a>
-
   );
 }
 
-export default function Project({ prefersDarkMode }) {
+const Project = ({ prefersDarkMode }) => {
   const [_, setUnderlineLink] = useContext(LinkContext);
   let { id } = useParams();
   const [project, setProject] = useState({});
@@ -44,29 +52,6 @@ export default function Project({ prefersDarkMode }) {
     setUnderlineLink('project');
   }, [id, setUnderlineLink]);
 
-  // for tabs
-  // const [toggleTab, setToggleTab] = useState(1);
-  // const [changeChart, setCHangeChart] = useState(true);
-
-  // const toggleFunc = (index) => {
-  //   setToggleTab(index);
-  // };
-
-  // const changeFunc = () => {
-  //   setCHangeChart((prevT) => !prevT);
-  // };
-
-  // for carousel
-  // const slides = [
-  //   <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
-  //   <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
-  //   <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
-  //   <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
-  //   <CarouselCard title="Project" date="Updated:Apr 5,2022" />,
-  // ];
-
-  // for link change(home -> back)
-
   return (
     <>
       {loading && (
@@ -74,7 +59,8 @@ export default function Project({ prefersDarkMode }) {
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
               <UnderlinedTitle text={project.title} />
-              <br/><br/>
+              <br />
+              <br />
               <Typography variant="body1" color="text.secondary" gutterBottom>
                 {parse(project.description)}
               </Typography>
@@ -111,15 +97,20 @@ export default function Project({ prefersDarkMode }) {
                 Sample Data:
               </Typography>
               {project.rawDataTables.map((element, index) => (
-                <Box key={index} sx={{ pt: 1 }} className={prefersDarkMode ? 'dark-mode' : ''}
+                <Box
+                  key={index}
+                  sx={{ pt: 1 }}
+                  className={prefersDarkMode ? 'dark-mode' : ''}
                 >
-                  <ChartComponent chartData={{
-                    chartType: "Table",
-                    sortAscending: true,
-                    frozenColumns: 1,
-                    sheetId: project.sheetId,
-                    ...element
-                  }} />
+                  <ChartComponent
+                    chartData={{
+                      chartType: 'Table',
+                      sortAscending: true,
+                      frozenColumns: 1,
+                      sheetId: project.sheetId,
+                      ...element,
+                    }}
+                  />
                 </Box>
               ))}
             </Container>
@@ -168,104 +159,6 @@ export default function Project({ prefersDarkMode }) {
       )}
     </>
   );
-}
+};
 
-// <div className="graphSection ">
-//   <div className="centerProjectItems1">
-//     <p className="projectName">PROJECT NAME</p>
-//     <div className="tabList">
-//       <button
-//         type="button"
-//         className={toggleTab === 1 ? 'tabs activeTab' : 'tabs'}
-//         onClick={() => toggleFunc(1)}
-//       >
-//         D2
-//       </button>
-//       <button
-//         type="button"
-//         className={toggleTab === 2 ? 'tabs activeTab' : 'tabs'}
-//         onClick={() => toggleFunc(2)}
-//       >
-//         Marketplace
-//       </button>
-//     </div>
-//     <div className="tabContainer">
-//       <div className="tabContents">
-//         <div
-//           className={
-//             toggleTab === 1 ? 'content  activeContent' : 'content'
-//           }
-//         >
-//           <div className="daysSelect">
-//             <p>Last 30 days</p>
-//           </div>
-//           <div className="graphCanvas">
-//             <div className="midGraph">
-//               {/* <ColumnChart toggleTab={changeChart} /> */}
-//               <ChartComponent
-//                 chartData={{
-//                   sheetId: '1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U',
-//                   title: 'Daily Food Waste (kg), Historical',
-//                   subtitle: '',
-//                   gid: 1952244844,
-//                   headers: 1,
-//                   chartType: 'ColumnChart',
-//                   columns: [
-//                     0,
-//                     5,
-//                     {
-//                       role: 'tooltip',
-//                       sourceColumn: 8,
-//                     },
-//                   ],
-//                   colorAxis: {
-//                     colors: ['#ffffff', '#57068c'],
-//                   },
-//                 }}
-//               />
-//             </div>
-//             <div className="stackedButton">
-//               <Link className="linkButton" to="/project">
-//                 <button
-//                   type="button"
-//                   className="buttonStacked"
-//                   onClick={() => changeFunc()}
-//                 >
-//                   {changeChart ? 'Unstacked' : 'Stacked'}
-//                 </button>
-//               </Link>
-//             </div>
-//           </div>
-//         </div>
-//         <div
-//           className={
-//             toggleTab === 2 ? 'content  activeContent' : 'content'
-//           }
-//         >
-//           <div className="daysSelect">
-//             <p>Last 60 days</p>
-//           </div>
-//           <div className="graphCanvas">
-//             <div className="midGraph"></div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="dlButton">
-//         <Link className="linkButton" to="/project">
-//           <button type="button" className="buttonDl">
-//             Download Raw Data
-//           </button>
-//         </Link>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-
-/* <div className="carousel-container">
-  <div className="centerProjectItems3">
-    <div className="carousel-title">
-      <p>OTHER AVAILABLE DATA</p>
-    </div>
-    <Carousel carouselData={slides} />
-  </div>
-</div> */
+export default Project;

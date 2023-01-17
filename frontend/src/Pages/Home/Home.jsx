@@ -24,14 +24,15 @@ import UnderlinedTitle from '../../Components/UnderlinedTitle';
 import jsonData from '../../home_data.json'
 import parse from 'html-react-parser';
 
-export default function Home({ prefersDarkMode }) {
+const Home = ({ prefersDarkMode }) => {
   // useState for home page data
   const [_, setUnderlineLink] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
 
+  // set underline link to home
   useEffect(() => {
     setUnderlineLink('home');
-  });
+  }, []);
 
   return (
     <Container sx={{ pt: 4, pb: 4 }}>
@@ -40,15 +41,23 @@ export default function Home({ prefersDarkMode }) {
           <UnderlinedTitle text={'join us!'} />
         </Grid>
 
-        <Grid item md={4} sm={9} xs={12} margin='auto'>
+        <Grid item md={4} sm={9} xs={12} margin="auto">
           <Container>
             <Grid container direction="row" spacing={2} sx={{ pt: 2, pb: 2 }}>
               {jsonData.statistics.map((item, index) => (
                 <Grid key={index} item xs={6}>
-                  <Typography variant='h2' color='primary.main' sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}>
+                  <Typography
+                    variant="h2"
+                    color="primary.main"
+                    sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}
+                  >
                     {item.number}
                   </Typography>
-                  <Typography variant='h6' color='text.primary' textTransform='uppercase'>
+                  <Typography
+                    variant="h6"
+                    color="text.primary"
+                    textTransform="uppercase"
+                  >
                     {item.text}
                   </Typography>
                 </Grid>
@@ -64,8 +73,6 @@ export default function Home({ prefersDarkMode }) {
             </Typography>
           </Paper>
         </Grid>
-
-        
 
         <Grid item xs={12}>
           <UnderlinedTitle text={'all projects'} />
@@ -103,4 +110,6 @@ export default function Home({ prefersDarkMode }) {
       </Grid>
     </Container>
   );
-}
+};
+
+export default Home;

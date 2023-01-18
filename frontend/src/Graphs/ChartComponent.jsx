@@ -33,9 +33,11 @@ function InnerChart({ chartData, chartIndex }) {
     chartArea: { width: '80%', height: '65%' },
     vAxis: {
       format: chartData.vAxisFormat ?? 'decimal',
-      title: chartData.vAxisTitle ||
-      (chartData.subcharts && chartData.subcharts[chartIndex].vAxisTitle || null) ||
-      null,
+      title:
+        chartData.vAxisTitle ||
+        (chartData.subcharts && chartData.subcharts[chartIndex].vAxisTitle) ||
+        null ||
+        null,
       viewWindow: {
         min: chartData.vAxisMin,
       },
@@ -46,12 +48,16 @@ function InnerChart({ chartData, chartIndex }) {
       direction: chartData.vAxisDirection,
     },
     hAxis: {
-      format: chartData.hAxisFormat ||
-      (chartData.subcharts && chartData.subcharts[chartIndex].hAxisFormat || null) ||
-      null,
-      title: chartData.hAxisTitle ||
-      (chartData.subcharts && chartData.subcharts[chartIndex].hAxisTitle || null) ||
-      null,
+      format:
+        chartData.hAxisFormat ||
+        (chartData.subcharts && chartData.subcharts[chartIndex].hAxisFormat) ||
+        null ||
+        null,
+      title:
+        chartData.hAxisTitle ||
+        (chartData.subcharts && chartData.subcharts[chartIndex].hAxisTitle) ||
+        null ||
+        null,
       viewWindow: {
         min: chartData.hAxisMin,
       },
@@ -89,7 +95,7 @@ function InnerChart({ chartData, chartIndex }) {
     region: chartData.region,
     frozenColumns: chartData.frozenColumns,
     sortAscending: chartData.sortAscending,
-    sortColumn: chartData.sortColumn
+    sortColumn: chartData.sortColumn,
   };
 
   const chartEvents = [
@@ -133,8 +139,10 @@ function InnerChart({ chartData, chartIndex }) {
           view: {
             columns:
               chartData.columns ||
-              (chartData.subcharts && chartData.subcharts[chartIndex].columns || null) ||
-              null
+              (chartData.subcharts &&
+                chartData.subcharts[chartIndex].columns) ||
+              null ||
+              null,
           },
         }}
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
@@ -213,7 +221,7 @@ export default function ChartComponent({ chartData }) {
         )}
         <Box
           position="relative"
-          height={chartData.height ? chartData.height : '100%'}
+          height={chartData.height ? chartData.height : '90%'}
         >
           {chartData.subcharts.map((element, index) => (
             <Box

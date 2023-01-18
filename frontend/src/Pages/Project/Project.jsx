@@ -126,6 +126,7 @@ const Project = ({ prefersDarkMode }) => {
               <Container
                 sx={{ pt: 4, pb: 4 }}
                 className={prefersDarkMode ? 'dark-mode' : ''}
+                height="auto"
               >
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
@@ -146,7 +147,7 @@ const Project = ({ prefersDarkMode }) => {
                   variant="body1"
                   color="text.secondary"
                   gutterBottom
-                  sx={{ mt: 2 }}
+                  sx={{ mt: 2, paddingTop: 2 }}
                 >
                   {element.subtitle && parse(element.subtitle)}
                 </Typography>

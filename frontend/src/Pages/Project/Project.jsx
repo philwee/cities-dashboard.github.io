@@ -61,7 +61,12 @@ const Project = ({ prefersDarkMode }) => {
               <UnderlinedTitle text={project.title} />
               <br />
               <br />
-              <Typography variant="body1" color="text.secondary" gutterBottom>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ textAlign: 'justify' }}
+                gutterBottom
+              >
                 {parse(project.description)}
               </Typography>
               <br />
@@ -147,7 +152,13 @@ const Project = ({ prefersDarkMode }) => {
                   variant="body1"
                   color="text.secondary"
                   gutterBottom
-                  sx={{ mt: 2, paddingTop: 2 }}
+                  sx={{
+                    mt: 2,
+                    paddingTop: 3,
+                    paddingLeft: 2,
+                    paddingRight: 2,
+                    textAlign: 'justify',
+                  }}
                 >
                   {element.subtitle && parse(element.subtitle)}
                 </Typography>

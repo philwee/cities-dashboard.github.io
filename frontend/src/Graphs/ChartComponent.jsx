@@ -221,7 +221,7 @@ export default function ChartComponent({ chartData }) {
         )}
         <Box
           position="relative"
-          height={chartData.height ? chartData.height : '90%'}
+          height={chartData.height ? chartData.height : '95%'}
         >
           {chartData.subcharts.map((element, index) => (
             <Box

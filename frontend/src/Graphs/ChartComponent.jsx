@@ -45,7 +45,7 @@ function InnerChart({ chartData, chartIndex }) {
         italic: false,
       },
       ticks: chartData.vAxisTicks,
-      direction: chartData.vAxisDirection,
+      direction: chartData.vAxisDirection    
     },
     hAxis: {
       format:
@@ -64,6 +64,9 @@ function InnerChart({ chartData, chartIndex }) {
       titleTextStyle: {
         italic: false,
       },
+      minorGridlines: {
+        count: chartData.hAxisMinorGridlinesCount
+      }  
     },
     width: '100%',
     height: '100%',

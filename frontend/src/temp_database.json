@@ -512,28 +512,24 @@
           "0": {
             "lineWidth": 2,
             "type": "line",
-            "color": "#333333",
+            "color": "#222222",
             "enableInteractivity": true
           },
           "1": {
             "lineWidth": 2,
             "type": "line",
-            "color": "#333333",
+            "color": "#222222",
             "enableInteractivity": true,
             "lineDashStyle": [
-              1,
+              2,
               2
             ]
           },
           "2": {
             "lineWidth": 2,
             "type": "line",
-            "color": "#333333",
-            "enableInteractivity": true,
-            "lineDashStyle": [
-              7,
-              3
-            ]
+            "color": "#777777",
+            "enableInteractivity": true
           },
           "3": {
             "visibleInLegend": false,
@@ -569,7 +565,8 @@
           100,
           150,
           200
-        ]
+        ],
+        "hAxisMinorGridlinesCount": 0
       },
       {
         "title": "Daily Air Quality Index, All Time",

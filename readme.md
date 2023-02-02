@@ -2,7 +2,7 @@
 
 - [Introduction](#introduction)
 - [Description](#description)
-  - React Components(#react-components)
+  - [React Components](#react-components)
 - [Build and Test Locally](#build-and-test-locally)
   - [Run Frontend](#run-frontend)
 - [Team Members](#team-members)

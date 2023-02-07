@@ -1,54 +1,33 @@
 # CITIES VISUALISATION DASHBOARD
 
-- [CITIES Visualisation Dashnoard](#cities-visualisation-dashboard)
-  - [Description](#description)
-    - [React Components](#react-components)
-  - [Instructions to Build and Test Locally](#instructions-to-build-and-test-locally)
-    - [Run Front-end](#run-front-end)
-    - [Run Back-end](#run-back-end)
-  - [Team Members](#team-members)
-  - [Contributing](#contributing)
-  - [References](#references)
+- [Introduction](#introduction)
+- [Description](#description)
+  - [React Components](#react-components)
+- [Build and Test Locally](#build-and-test-locally)
+  - [Run Frontend](#run-frontend)
+- [Team Members](#team-members)
+- [Contributing](#contributing)
+- [References](#references)
+
+## Introduction
+
+Coming soon
 
 ## Description
 
-This is an app designed to visualize data and provide meaningful context about the data being visualized.
+Coming soon
 
 ### React Components
 
-The front-end of this app was built with React.js.There are three react components used in creating the pages of this app.
+Coming soon
 
-- Header :
+## Build and Test Locally
 
-  The header component is at the top of the page. It consists of CITIES logo , a title and a menu bar.
+Coming soon
 
-## Instructions to Build and Test Locally
+### Run Frontend
 
-### Run Back-end
-
-Coming soon...
-
-### Run Front-end
-
-Go to front end folder
-
-```
-cd front-end
-```
-
-Install dependencies
-
-```
-npm install
-```
-
-Run front end program
-
-```
-npm start
-```
-
-Now you should see a browser window running the app.
+Coming soon
 
 ## Team Members
 
@@ -67,4 +46,7 @@ In terms of more detailed contributing rule, read through
 
 - [React.js](https://reactjs.org/)
 - [CircleCI](https://circleci.com/)
+- [React Google Charts](https://react-google-charts.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
+- [Material UI](https://material-ui.com/)
+- [Html-React-Parser](https://www.npmjs.com/package/html-react-parser)

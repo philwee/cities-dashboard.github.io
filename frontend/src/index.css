@@ -5,6 +5,10 @@
     font-family: 'IBM Plex Sans', sans-serif !important;
   }
 
+ul{
+  margin-left: 2em;
+}
+
 #root{
   overflow-x: hidden;
 }

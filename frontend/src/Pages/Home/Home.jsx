@@ -4,7 +4,6 @@ import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/DataContext';
-import { SocialHandle } from '../About/About';
 
 import {
   Box,
@@ -41,11 +40,11 @@ const Home = ({ prefersDarkMode }) => {
           <UnderlinedTitle text={'join us!'} />
         </Grid>
 
-        <Grid item md={4} sm={9} xs={12} margin="auto">
+        <Grid item md={3} xs={12} margin="auto">
           <Container>
-            <Grid container direction="row" spacing={2} sx={{ pt: 2, pb: 2 }}>
+            <Grid container direction="row" spacing={4} sx={{ pt: 2, pb: 2, textAlign: 'center', justifyContent: 'center' }}>
               {jsonData.statistics.map((item, index) => (
-                <Grid key={index} item xs={6}>
+                <Grid key={index} item md={12}>
                   <Typography
                     variant="h2"
                     color="primary.main"
@@ -66,7 +65,7 @@ const Home = ({ prefersDarkMode }) => {
           </Container>
         </Grid>
 
-        <Grid item md={8}>
+        <Grid item md={9}>
           <Paper elevation={2} sx={{ p: 3 }}>
             <Typography variant="body1" color="text.secondary">
               {parse(jsonData.banner)}

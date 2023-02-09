@@ -178,17 +178,6 @@ function InnerChart({ chartData, chartIndex }) {
 }
 
 export default function ChartComponent({ chartData }) {
-  // Case WebsiteEmbed
-  // if (chartData.chartType == 'WebsiteEmbed') {
-  //   return (
-  //     <iframe
-  //       src="https://nyuadair.com/historical#historical-graph-wrapper"
-  //       width="100%"
-  //       height="100%"
-  //     ></iframe>
-  //   );
-  // }
-
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
     // Props for tab panels (multiple data visualizations in the same chart area, navigate with tab panels)

@@ -20,13 +20,13 @@ The CITIES Dashboard is a web application that allows users to visualize and ana
 
 ### React Components ,Pages and Context Providers
 
-- [App.js](./src/App.jsx) - The main component that renders the dashboard.
-- [Header.js](./src/components/Header/Header.jsx) - The component that renders the title and the navigation bar.
-- [Footer.js](./src/components/Header/Footer.jsx) - The component that renders the footer of the dashboard.
-- [Home.js](./src/pages/Home/Home.jsx) - The component that renders the home page of the dashboard.
-- [About.js](./src/pages/About/About.jsx) - The component that renders the about page of the dashboard.
-- [Projects.js](./src/pages/Projects/Projects.jsx) - The component that renders the individual projects of the dashboard.
-- [404.js](./src/pages/404.jsx) - The component that renders the 404 page of the dashboard.
+- [App.jsx](./src/App.jsx) - The main component that renders the dashboard.
+- [Header.jsx](./src/components/Header/Header.jsx) - The component that renders the title and the navigation bar.
+- [Footer.jsx](./src/components/Header/Footer.jsx) - The component that renders the footer of the dashboard.
+- [Home.jsx](./src/pages/Home/Home.jsx) - The component that renders the home page of the dashboard.
+- [About.jsx](./src/pages/About/About.jsx) - The component that renders the about page of the dashboard.
+- [Projects.jsx](./src/pages/Projects/Projects.jsx) - The component that renders the individual projects of the dashboard.
+- [404.jsx](./src/pages/404.jsx) - The component that renders the 404 page of the dashboard.
 - [DataContext.js](./src/contextprovider/DataContext.jsx) - The context provider that provides the data to the home page of the dashboard.
 - [LinkContext.js](./src/contextprovider/LinkContext.jsx) - The context provider that provides the links to the navigation bar of the dashboard.
 

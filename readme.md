@@ -16,7 +16,7 @@ The CITIES Dashboard serves as a data repository for community-wide actions on s
 
 ## Description
 
-The CITIES Dashboard is a web application that allows users to visualize and analyze data from various campus sources. The dashboard is built with React.js and Material UI. React Google Charts is used to visualize the data and the dashboard is currently hosted on github pages. For CI/CD , CircleCI is used to run tests and deploy the application to github pages.
+The CITIES Dashboard is a web application that serves as a data repository and allows users to visualize and analyze data from various NYUAD campus sources. The front-end dashboard is built with React.js and Material UI for React (MUI). React Google Charts is used to visualize the data and the dashboard is currently hosted on Github Pages. For CI/CD , CircleCI is used to run tests and deploy the application to github pages.
 
 ### React Components ,Pages and Context Providers
 

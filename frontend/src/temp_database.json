@@ -556,6 +556,135 @@
             "format": "#.##%"
           }
         }
+      },
+      {
+        "query": "SELECT A, H, I, J, K, L, M, N, O, P, Q, R, S OFFSET 1",
+        "title": "Food Waste (kg) per Day of the Week (Box plot: Min, Max, Mean, Median, Interquartile Range)",
+        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "gid": 171773137,
+        "headers": 2,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          1,
+          {
+            "id": "mean",
+            "role": "interval",
+            "sourceColumn": 1
+          },
+          {
+            "id": "max",
+            "role": "interval",
+            "sourceColumn": 2
+          },
+          {
+            "id": "min",
+            "role": "interval",
+            "sourceColumn": 3
+          },
+          {
+            "id": "firstQuartile",
+            "role": "interval",
+            "sourceColumn": 4
+          },
+          {
+            "id": "median",
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "id": "thirdQuartile",
+            "role": "interval",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "id": "mean",
+            "role": "interval",
+            "sourceColumn": 7
+          },
+          {
+            "id": "max",
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "id": "min",
+            "role": "interval",
+            "sourceColumn": 9
+          },
+          {
+            "id": "firstQuartile",
+            "role": "interval",
+            "sourceColumn": 10
+          },
+          {
+            "id": "median",
+            "role": "interval",
+            "sourceColumn": 11
+          },
+          {
+            "id": "thirdQuartile",
+            "role": "interval",
+            "sourceColumn": 12
+          }
+        ],
+        "options": {
+          "dataOpacity": 0,
+          "intervals": {
+            "barWidth": 0.3,
+            "boxWidth": 0.5,
+            "style": "boxes"
+          },
+          "interval": {
+            "max": {
+              "style": "bars"
+            },
+            "min": {
+              "style": "bars"
+            },
+            "mean": {
+              "style": "points"
+            }
+          }
+        }
+      },
+      {
+        "query": "SELECT * OFFSET 1",
+        "title": "Food Waste (kg) per Day of the Week (With 1 Standard Deviation)",
+        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "gid": 635067311,
+        "headers": 2,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          4,
+          {
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 9
+          }
+        ],
+        "options": {
+          "bar": {
+            "groupWidth": "40%"
+          },
+          "intervals": {
+            "style": "bars"
+          }
+        }
       }
     ]
   },

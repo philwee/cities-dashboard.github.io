@@ -69,6 +69,9 @@
         ],
         "chartType": "ColumnChart",
         "options": {
+          "bar": {
+            "groupWidth": "40%"
+          },
           "isStacked": true,
           "vAxis": {
             "format": "#.##%"
@@ -287,134 +290,238 @@
     ],
     "charts": [
       {
-        "title": "Daily Food Waste (kg) Per Month, with 95% Confidence Interval",
-        "subtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise (as COVID restrictions were loosened in 2022 and as the student population continues to increase year-by-year).",
-        "gid": 1034106646,
+        "title": "Mean Daily Food Waste (kg) by Week",
+        "subtitle": "These charts visualize the mean daily food waste by week, in total or by each meal (breakfast, lunch, and dinner). The shaded interval representing 1 standard deviation (not applicable in the stacked chart). Hover on the line chart to see the week number. From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise (as COVID restrictions were loosened in 2022 and as the student population continues to increase year-by-year). When the data is broken down into the three constituent meals, the increase in 2022 can primarily be traced back to a significant rise of food waste from lunch and dinner.",
         "headers": 1,
-        "chartType": "LineChart",
-        "columns": [
-          0,
-          1,
+        "chartType": "ComboChart",
+        "subcharts": [
           {
-            "role": "interval",
-            "sourceColumn": 2
+            "gid": 1409006115,
+            "subchartTitle": "Total (3 meals)",
+            "columns": [
+              2,
+              3,
+              {
+                "role": "interval",
+                "sourceColumn": 5
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 6
+              },
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 7
+              },
+              {
+                "role": "annotation",
+                "type": "string",
+                "sourceColumn": 8
+              }
+            ],
+            "options": {
+              "seriesType": "line",
+              "vAxis": {
+                "maxValue": 150
+              },
+              "colors": [
+                "#57068c"
+              ]
+            }
           },
           {
-            "role": "interval",
-            "sourceColumn": 3
+            "gid": 1232867906,
+            "subchartTitle": "by Meal (Stacked)",
+            "columns": [
+              2,
+              3,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 15
+              },
+              5,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 16
+              },
+              7,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 17
+              },
+              {
+                "role": "annotation",
+                "type": "string",
+                "sourceColumn": 18
+              }
+            ],
+            "options": {
+              "seriesType": "area",
+              "vAxis": {
+                "maxValue": 150
+              },
+              "isStacked": true
+            }
           },
           {
-            "role": "annotation",
-            "type": "string",
-            "sourceColumn": 4
+            "gid": 1232867906,
+            "subchartTitle": "by Meal (Unstacked)",
+            "columns": [
+              2,
+              3,
+              {
+                "role": "interval",
+                "sourceColumn": 9
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 10
+              },
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 15
+              },
+              5,
+              {
+                "role": "interval",
+                "sourceColumn": 11
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 12
+              },
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 16
+              },
+              7,
+              {
+                "role": "interval",
+                "sourceColumn": 13
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 14
+              },
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 17
+              }
+            ],
+            "options": {
+              "seriesType": "line"
+            }
           }
         ],
         "options": {
+          "hAxis": {
+            "title": "Month - Year (hover on chart to see week number)"
+          },
+          "annotations": {
+            "highContrast": true,
+            "stem": {
+              "length": 100
+            }
+          },
           "intervals": {
             "style": "area"
-          },
-          "colors": [
-            "#57068c"
-          ],
-          "legend": "none"
+          }
         }
       },
       {
-        "title": "Daily Food Waste (kg), Historical",
+        "title": "Historical Daily Food Waste (kg)",
         "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>",
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
-        "columns": [
-          0,
-          5,
+        "subcharts": [
           {
-            "role": "tooltip",
-            "sourceColumn": 8
-          }
-        ],
-        "options": {
-          "colorAxis": {
-            "colors": [
-              "#ffffff",
-              "#57068c"
-            ]
-          }
-        }
-      },
-      {
-        "title": "Daily Food Waste by Meal (kg), with 95% Confidence Interval",
-        "subtitle": "When the data is broken down into the three constituent meals, the increase in 2022 can primarily be traced back to a significant rise of food waste from lunch and dinner.",
-        "gid": 1107716679,
-        "headers": 1,
-        "chartType": "LineChart",
-        "columns": [
-          0,
-          1,
-          {
-            "role": "interval",
-            "sourceColumn": 2
+            "subchartTitle": "Total (3 meals)",
+            "columns": [
+              0,
+              5,
+              {
+                "role": "tooltip",
+                "sourceColumn": 11
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": [
+                  "#ffffff",
+                  "#57068c"
+                ]
+              }
+            }
           },
           {
-            "role": "interval",
-            "sourceColumn": 3
-          },
-          4,
-          {
-            "role": "interval",
-            "sourceColumn": 5
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 6
-          },
-          7,
-          {
-            "role": "interval",
-            "sourceColumn": 8
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 9
-          }
-        ],
-        "options": {
-          "intervals": {
-            "style": "area"
-          }
-        }
-      },
-      {
-        "query": "SELECT * OFFSET 1",
-        "title": "Food Waste (kg) per Day of the Week, with 95% Confidence Interval",
-        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend. In this chart, we can also see the artifact of the UAE's weekend-change policy from 2021 to 2022 (Fri-Sat to Sat-Sun).",
-        "gid": 171773137,
-        "headers": 2,
-        "chartType": "ColumnChart",
-        "columns": [
-          0,
-          4,
-          {
-            "role": "interval",
-            "sourceColumn": 5
+            "subchartTitle": "Breakfast",
+            "columns": [
+              0,
+              2,
+              {
+                "role": "tooltip",
+                "sourceColumn": 8
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": [
+                  "#ffffff",
+                  "rgb(94, 151, 246)"
+                ]
+              }
+            }
           },
           {
-            "role": "interval",
-            "sourceColumn": 6
+            "subchartTitle": "Lunch",
+            "columns": [
+              0,
+              3,
+              {
+                "role": "tooltip",
+                "sourceColumn": 9
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": [
+                  "#ffffff",
+                  "rgb(219, 68, 55)"
+                ]
+              }
+            }
           },
-          7,
           {
-            "role": "interval",
-            "sourceColumn": 8
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 9
+            "subchartTitle": "Dinner",
+            "columns": [
+              0,
+              4,
+              {
+                "role": "tooltip",
+                "sourceColumn": 10
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": [
+                  "#ffffff",
+                  "rgb(242, 166, 0)"
+                ]
+              }
+            }
           }
         ]
       },
       {
-        "title": "Food Waste By Meal, Percentage",
+        "title": "Percentage of Food Waste By Meal",
         "subtitle": "Lunch and dinner make up the majority of campus' food waste, each accounts for roughly two-fifths of the total wastage for a given day.",
         "gid": 387300968,
         "headers": 1,
@@ -447,6 +554,135 @@
           "isStacked": true,
           "vAxis": {
             "format": "#.##%"
+          }
+        }
+      },
+      {
+        "query": "SELECT A, H, I, J, K, L, M, N, O, P, Q, R, S OFFSET 1",
+        "title": "Food Waste (kg) per Day of the Week (Box plot: Min, Max, Mean, Median, Interquartile Range)",
+        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "gid": 171773137,
+        "headers": 2,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          1,
+          {
+            "id": "mean",
+            "role": "interval",
+            "sourceColumn": 1
+          },
+          {
+            "id": "max",
+            "role": "interval",
+            "sourceColumn": 2
+          },
+          {
+            "id": "min",
+            "role": "interval",
+            "sourceColumn": 3
+          },
+          {
+            "id": "firstQuartile",
+            "role": "interval",
+            "sourceColumn": 4
+          },
+          {
+            "id": "median",
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "id": "thirdQuartile",
+            "role": "interval",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "id": "mean",
+            "role": "interval",
+            "sourceColumn": 7
+          },
+          {
+            "id": "max",
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "id": "min",
+            "role": "interval",
+            "sourceColumn": 9
+          },
+          {
+            "id": "firstQuartile",
+            "role": "interval",
+            "sourceColumn": 10
+          },
+          {
+            "id": "median",
+            "role": "interval",
+            "sourceColumn": 11
+          },
+          {
+            "id": "thirdQuartile",
+            "role": "interval",
+            "sourceColumn": 12
+          }
+        ],
+        "options": {
+          "dataOpacity": 0,
+          "intervals": {
+            "barWidth": 0.3,
+            "boxWidth": 0.5,
+            "style": "boxes"
+          },
+          "interval": {
+            "max": {
+              "style": "bars"
+            },
+            "min": {
+              "style": "bars"
+            },
+            "mean": {
+              "style": "points"
+            }
+          }
+        }
+      },
+      {
+        "query": "SELECT * OFFSET 1",
+        "title": "Food Waste (kg) per Day of the Week (With 1 Standard Deviation)",
+        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "gid": 635067311,
+        "headers": 2,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          4,
+          {
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 9
+          }
+        ],
+        "options": {
+          "bar": {
+            "groupWidth": "40%"
+          },
+          "intervals": {
+            "style": "bars"
           }
         }
       }

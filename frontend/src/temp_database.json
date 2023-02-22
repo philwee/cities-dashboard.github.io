@@ -925,7 +925,7 @@
       },
       {
         "query": "SELECT * OFFSET 1",
-        "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 95% Confidence Interval",
+        "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 1 Standard Deviation",
         "subcharts": [
           {
             "gid": 803236520,

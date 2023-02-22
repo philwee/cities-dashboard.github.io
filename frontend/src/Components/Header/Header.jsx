@@ -1,10 +1,10 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
-
 import { Box, Typography, Container, Paper } from '@mui/material';
+import { IoReturnDownBack } from 'react-icons/io5';
 
 import citiesLogo from '../../cities-logo.png';
 
@@ -14,7 +14,7 @@ export default function Header() {
   const [underlineLink] = useContext(LinkContext);
 
   return (
-    <Paper elevation={0} square sx={{m: 0}}>
+    <Paper elevation={0} square sx={{ m: 0 }}>
       <Box sx={{ backgroundColor: 'primary.main', height: '10vh' }} />
       <Container sx={{ pb: 3 }}>
         <Paper
@@ -43,7 +43,17 @@ export default function Header() {
               sx={{ fontWeight: 'medium' }}
               color="text.secondary"
             >
-              HOME
+              {underlineLink === 'home' ? (
+                'HOME'
+              ) : (
+                <div>
+                  <IoReturnDownBack
+                    size={17}
+                    style={{ verticalAlign: 'middle' }}
+                  />
+                  <span> BACK TO HOME</span>
+                </div>
+              )}
             </Typography>
           </Link>
         </Box>

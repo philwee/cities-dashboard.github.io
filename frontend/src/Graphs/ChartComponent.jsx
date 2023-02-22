@@ -27,63 +27,20 @@ function InnerChart({ chartData, chartIndex }) {
   }
   // Show CircleProgress or not
   let [circleProgress, displayCircleProgress] = useState(true);
-  const options = {
+
+  // ---- Formulate the options for this specific chart:
+  // 1. Populate first with subchart's options (if any)
+  let options = (chartData.subcharts?.[chartIndex].options? {...chartData.subcharts[chartIndex].options} : {} );
+  // 2. Append own chart's options and then populate with universal options for all charts
+  options = {
+    ...options,
+    ...chartData.options,
     theme: 'material',
-    backgroundColor: { fill: chartData.backgroundColorFill ?? 'transparent' },
     chartArea: { width: '80%', height: '65%' },
-    vAxis: {
-      format: chartData.vAxisFormat ?? 'decimal',
-      title:
-        chartData.vAxisTitle ||
-        (chartData.subcharts && chartData.subcharts[chartIndex].vAxisTitle) ||
-        null ||
-        null,
-      viewWindow: {
-        min: chartData.vAxisMin,
-      },
-      titleTextStyle: {
-        italic: false,
-      },
-      ticks: chartData.vAxisTicks,
-      direction: chartData.vAxisDirection    
-    },
-    hAxis: {
-      format:
-        chartData.hAxisFormat ||
-        (chartData.subcharts && chartData.subcharts[chartIndex].hAxisFormat) ||
-        null ||
-        null,
-      title:
-        chartData.hAxisTitle ||
-        (chartData.subcharts && chartData.subcharts[chartIndex].hAxisTitle) ||
-        null ||
-        null,
-      viewWindow: {
-        min: chartData.hAxisMin,
-      },
-      titleTextStyle: {
-        italic: false,
-      },
-      minorGridlines: {
-        count: chartData.hAxisMinorGridlinesCount
-      }  
-    },
     width: '100%',
     height: '100%',
-    legend: chartData.legend ?? 'bottom',
-    isStacked: chartData.isStacked ?? false,
-    lineWidth: chartData.lineWidth,
-    seriesType: chartData.seriesType,
-    series: chartData.series,
-    intervals: chartData.intervals,
-    curveType: chartData.curveType ?? 'function',
-    colors: chartData.colors,
-    colorAxis: chartData.colorAxis,
-    defaultColor: chartData.defaultColor,
-    datalessRegionColor: chartData.datalessRegionColor,
-    areaOpacity: chartData.areaOpacity,
-    tooltip: {
-      isHtml: true,
+    backgroundColor: {
+      fill: 'transparent'
     },
     calendar: {
       cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
@@ -92,14 +49,30 @@ function InnerChart({ chartData, chartIndex }) {
       backgroundColor: 'none',
       color: 'none',
     },
-    enableInteractivity: chartData.enableInteractivity,
-    pointSize: chartData.pointSize,
-    trendlines: chartData.trendlines,
-    region: chartData.region,
-    frozenColumns: chartData.frozenColumns,
-    sortAscending: chartData.sortAscending,
-    sortColumn: chartData.sortColumn,
+    tooltip: {
+      isHtml: true,
+    },
+    curveType: 'function',
+    legend: chartData.options?.legend ?? 'bottom'
   };
+  // 3. Append to vAxis and hAxis properties
+  options.vAxis = {
+    ...options.vAxis,
+    format: chartData.options?.vAxis?.format ?? 'decimal',
+    viewWindow: {
+      min: chartData.options?.vAxis?.viewWindow?.min ?? 0
+    },
+    titleTextStyle: {
+      italic: false,
+    }
+  };
+  options.hAxis = {
+    titleTextStyle: {
+      italic: false,
+    },
+    ...options.hAxis
+  };
+
 
   const chartEvents = [
     {
@@ -152,22 +125,22 @@ function InnerChart({ chartData, chartIndex }) {
         spreadSheetQueryParameters={
           chartIndex == null
             ? {
-                headers: chartData.headers,
-                query: chartData.query,
-                gid: chartData.gid,
-              }
+              headers: chartData.headers,
+              query: chartData.query,
+              gid: chartData.gid,
+            }
             : {
-                headers:
-                  chartData.headers ||
-                  chartData.subcharts[chartIndex].headers ||
-                  null,
-                query:
-                  chartData.query ||
-                  chartData.subcharts[chartIndex].query ||
-                  null,
-                gid:
-                  chartData.gid || chartData.subcharts[chartIndex].gid || null,
-              }
+              headers:
+                chartData.headers ||
+                chartData.subcharts[chartIndex].headers ||
+                null,
+              query:
+                chartData.query ||
+                chartData.subcharts[chartIndex].query ||
+                null,
+              gid:
+                chartData.gid || chartData.subcharts[chartIndex].gid || null,
+            }
         }
         options={options}
         chartEvents={chartEvents}

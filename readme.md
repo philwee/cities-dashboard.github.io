@@ -55,13 +55,17 @@ For example, [here](https://docs.google.com/spreadsheets/d/1jQYr20b4c93RmIT4M014
 
 Below are some of the benefits of using Google Sheets as the database:
 - It allows the different university departments to update data regularly on a *"sandbox"* sheet (not used to provide data for the actual dashboard). We then quickly check it for syntax or any abnormalities, before copying the new data to the *"live"* sheet where the website fetches data from.
-![google-sheets-sandbox-base](/documentation/google-sheets-raw-data.png)
-![google-sheets-live-database](/documentation/google-sheets.png)
+
+  ![google-sheets-sandbox-base](/documentation/google-sheets-raw-data.png)  
+
+  ![google-sheets-live-database](/documentation/google-sheets.png)
 *__Example:__ sandbox raw database (top) vs. live database with further analysis and modifications (bottom)*
 
-- It also allows us to perform data analysis on the raw data set by adding mulitple pivot tables to multiple sheets in the same document. Moreover, we can quickly make draft charts on Google Sheets itself which look very similar to charts visualized by Google Charts. This speeds up the prototyping process.
-![google-sheets-pivot-table](/documentation/google-sheets-pivot-table.png)
-*__Example__: A pivot table grouping the food waste by week and a draft of the line chart in the same sheet. This kind of further analysis sheet is hidden by default and can only be seen and edited by the developers, not the public.*
+- It also allows us to perform data analysis on the raw data set by adding mulitple pivot tables to multiple sheets in the same document. Moreover, we can quickly make draft charts on Google Sheets itself which look very similar to charts visualized by Google Charts. This speeds up the prototyping process.  
+
+  ![google-sheets-pivot-table](/documentation/google-sheets-pivot-table.png)  
+
+  *__Example__: A pivot table grouping the food waste by week and a draft of the line chart in the same sheet. This kind of further analysis sheet is hidden by default and can only be seen and edited by the developers, not the public.*
 
 - Data from the Google Sheets can be fetched and visualized by Google Charts; they are highly compatible. We use React-Google-Charts (v3.0.15) as a thin wrapper for React, see [documentation](https://www.react-google-charts.com/components/chart).
 
@@ -191,6 +195,7 @@ Google Sheets parameters:
   ```
 
 - **`"subcharts"`**: sometimes, a chart can contain multiple subcharts for richer contextual data visualization.
+
   ![subcharts](/documentation/subcharts.png)
   *__Example:__ the historical air quality chart can have 3 different subcharts: one for outdoor air quality, one for indoor air quality in the Campus Center, and one for indoor air quality in the Dining Hall. The user can switch between these 3 subcharts using the __\_\_tabs\_\___.*
   

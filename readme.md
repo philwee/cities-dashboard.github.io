@@ -3,20 +3,36 @@
 1. [Introduction](#1-introduction)
 2. [Description](#2-description)  
     2.1. [React Components](#21-react-components-pages-and-context-providers)  
-    2.2. [Database and Google Charts Data Visualization](#22-database-and-google-charts-data-visualization)
+    2.2. [Google Sheets Database](#22-google-sheet-database)  
+    2.3. [Front-end Database and Google Charts Data Visualization](#23-front-end-database-and-google-charts-data-visualization)
 3. [Build and Test Locally](#3-build-and-test-locally)  
     3.1. [Prerequisites](#31-prerequisites)  
     3.2. [Install Dependencies](#32-install-dependencies)
-4. [Contributors](#4-contributors)
-5. [References](#5-references)
+4. [References](#4-references)
 
 # 1. Introduction
 
-The CITIES Dashboard serves as a data repository for community-wide actions on sustainability and well-being. This dashboard is created by and for the community of NYU Abu Dhabi, students, researchers, faculty, staff, and NYUAD partners alike. We highly encourage anyone interested to contribute to this open-source project by sharing new datasets, analyzing existing datasets, proposing projects, and promoting the dashboard to a wider audience. Ultimately, we envision the CITIES Dashboard as a handy tool to support research, education, and community outreach within the NYU Abu Dhabi campus and a precious instrument to support NYUAD partners in meeting their KPI (e.g., reducing food waste)
+The CITIES Dashboard serves as a data repository for community-wide actions on sustainability and well-being. This dashboard is created by and for the community of NYU Abu Dhabi, students, researchers, faculty, staff, and NYUAD partners alike. We highly encourage anyone interested to contribute to this open-source project by sharing new datasets, analyzing existing datasets, proposing projects, and promoting the dashboard to a wider audience. Ultimately, we envision the CITIES Dashboard as a handy tool to support research, education, and community outreach within the NYU Abu Dhabi campus and a precious instrument to support NYUAD partners in meeting their KPI (e.g., reducing food waste).
+
+![homepage](/documentation/home-page.png)
+*The Home page of the dashboard...*
+  
+![homepage-all-project](/documentation/home-page-2.png)
+*... where all data sets / projects are prominently displayed*
+
+![project-page](/documentation/project-page.png)
+*The project page showing the descriptions of the data set, a link to the raw data set (Google Sheets database), a sample data set...*
+
+![project-page-2](/documentation/project-page-2.png)
+*... and data visualizations (made with Google Charts)*
+
+![about-page](/documentation/about-page.png)
+*The About page of the dashboard, detailing CITIES' social network accounts and describing the rationale of the project*
+
 
 # 2. Description
 
-The CITIES Dashboard is a web application that serves as a data repository and allows users to visualize and analyze data from various NYUAD campus sources. The front-end dashboard is built with React.js and Material UI for React (MUI). React Google Charts is used to visualize the data and the dashboard is currently hosted on Github Pages. For CI/CD , CircleCI is used to run tests and deploy the application to github pages. All references for third-party frameworks can be found at the bottom of this documentation.
+The CITIES Dashboard is a web application that serves as a data repository and allows us to visualize and analyze data from various NYUAD campus sources. The front-end dashboard is built with React.js and Material UI for React (MUI). React Google Charts is used to visualize the data and the dashboard is currently hosted on Github Pages. For CI/CD , CircleCI is used to run tests and deploy the application to github pages. All references for third-party frameworks can be found at the bottom of this documentation.
 
 ## 2.1. React Components, Pages, and Context Providers
 
@@ -30,9 +46,29 @@ The CITIES Dashboard is a web application that serves as a data repository and a
 - [DataContext.js](./frontend/src/ContextProviders/DataContext.jsx) - The context provider that provides the data to the home page of the dashboard.
 - [LinkContext.js](./frontend/src/ContextProviders/LinkContext.jsx) - The context provider that provides the links to the navigation bar of the dashboard.
 
+## 2.2. Google Sheets database
+Instead of the typical MERN stack, we use Google Sheets as the back-end database for our project. This is because the raw data set comes from different university departments who:
+- Are not technically savvy
+- Do not have an API for automatically interfacing the data
 
-## 2.2. Database and Google Charts Data Visualization
-The current dashboard prototype uses a temporary JSON database on the front-end, [temp_database.json](./frontend/src/temp_database.json), which contains data to be directly parsed to construct the Google Charts data visualization (charts). The data structure of the database is as below:
+For example, [here](https://docs.google.com/spreadsheets/d/1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U/edit#gid=2039201290) is the database for Food Waste. This link can also be found in the project's page. It is accessible to the public, but is edit-restricted to developers and university departments.
+
+Below are some of the benefits of using Google Sheets as the database:
+- It allows the different university departments to update data regularly on a *"sandbox"* sheet (not used to provide data for the actual dashboard). We then quickly check it for syntax or any abnormalities, before copying the new data to the *"live"* sheet where the website fetches data from.
+![google-sheets-sandbox-base](/documentation/google-sheets-raw-data.png)
+![google-sheets-live-database](/documentation/google-sheets.png)
+*__Example:__ sandbox raw database (top) vs. live database with further analysis and modifications (bottom)*
+
+- It also allows us to perform data analysis on the raw data set by adding mulitple pivot tables to multiple sheets in the same document. Moreover, we can quickly make draft charts on Google Sheets itself which look very similar to charts visualized by Google Charts. This speeds up the prototyping process.
+![google-sheets-pivot-table](/documentation/google-sheets-pivot-table.png)
+*__Example__: A pivot table grouping the food waste by week and a draft of the line chart in the same sheet. This kind of further analysis sheet is hidden by default and can only be seen and edited by the developers, not the public.*
+
+- Data from the Google Sheets can be fetched and visualized by Google Charts; they are highly compatible. We use React-Google-Charts (v3.0.15) as a thin wrapper for React, see [documentation](https://www.react-google-charts.com/components/chart).
+
+*NOTE: Version 3.0.15 is used because version 4+ produces error when fetching data from a Google Sheets document*
+
+## 2.3. Front-end Database and Google Charts Data Visualization
+The current dashboard prototype uses a temporary JSON database on the front-end, [temp_database.json](./frontend/src/temp_database.json), which contains metadata for the Google Charts data visualization (charts). The data structure of the database is as below:
 ```
 [
   // Data set 1:
@@ -75,15 +111,18 @@ The current dashboard prototype uses a temporary JSON database on the front-end,
   ...
 ]
 ```
-### 2.2.1. JSON array level
+### 2.3.1. JSON array level
 The JSON file contains an array of object literals, each correspond to a data set or project.
 
-### 2.2.2. Data set level
-Each data set contains several pairs of keys and values to describe that dataset, below are the most common properties:
-- **`"id"`\***: unique identifier of this data set, also used as its end point url for routing. For example: "food-waste" → https://[domain_name]/projects/food-waste
+### 2.3.2. Data set level
+Each data set contains several pairs of keys and values to describe that dataset, below are the most common properties.
+
+*Properties with an asterisk \* are mandatory, omissions of which will result in an error*
+
+- **`"id"`\***: unique identifier of this data set, also used as its end point url for routing. For example: "food-waste" → https://cities-dashboard.github.io/project/food-waste
 - **`"title"`**: title of the data set, to be displayed on the home and project pages
-- **`"sheetId"`\***: the *alphanumeric id* of the Google Sheet database for this data set: https://docs.google.com/spreadsheets/d/[sheetID]/edit#gid=[gid]
-- **`"publishedSheetId"`**: the *alphanumeric id* of a *__published__* Google Sheet database, only used together with **`"chartType":`** `"HeatMap"`
+- **`"sheetId"`\***: the *alphanumeric id* of the Google Sheets database for this data set: https://docs.google.com/spreadsheets/d/[sheetID]/edit#gid=[gid]
+- **`"publishedSheetId"`**: the *alphanumeric id* of a *__published__* Google Sheets database, only used together with **`"chartType":`** `"HeatMap"`
 - **`"description"`**: the description of this data set, to be displayed on its project page
 - **`"owner"`**: the name of the data set's owner
 - **`"ownerContact"`**: email address of the owner
@@ -101,19 +140,19 @@ Each data set contains several pairs of keys and values to describe that dataset
   ```
 - **`"charts"`**: an array of object literal(s), each describing the chart(s) for this data set. If empty, then the data set is greyed out on the home page with a **`"Coming Soon"`** banner.
 
-### 2.2.3. Chart level
+### 2.3.3. Chart level
 - **`"title"`**: the title of the chart, not to be confused with the title of the data set above
 - **`"subtitle"`**: the subtitle of the chart
 
-Google Sheet parameters:
-- **`"gid"`\***: the *numeric id* of the Google Sheet database for the sheet containing the raw data (https://docs.google.com/spreadsheets/d/[sheetID]/edit#gid=[gid])
-- **`"chartType"`\***: the type of the chart. For example: `"ColumnChart"`, `"LineChart"` ... In addition to all the charts supported by [React-Google-Chart](https://www.react-google-charts.com/examples), it can also be `"HeatMap"`. This is a custom-built chart by embedding a color-formatted sheet from Google Sheet for embedding; where `"HeatMap"` is used, **`"publishedSheetId"`** property must also be used.
-- **`"headers"`**: the row number of the header in the Google Sheet database
-- **`"query"`**: to query the Google Sheet database and receive a  narrowed-down result of the fetched sheet. It works in a similar way compared to a database query language (MongoDB for example), see full [documentation](https://developers.google.com/chart/interactive/docs/querylanguage).
-- **`"columns"`**: an array of items to specify which column of the fetched Google Sheet database to visualize (after being queried on). If it is omitted, then all the non-empty columns in the Google Sheet will be visualized. Else, it can be used to narrow down the visualized columns or assign special roles to the columns. Each column item can either be:
+Google Sheets parameters:
+- **`"gid"`\***: the *numeric id* of the Google Sheets database for the sheet containing the raw data (https://docs.google.com/spreadsheets/d/[sheetID]/edit#gid=[gid])
+- **`"chartType"`\***: the type of the chart. For example: `"ColumnChart"`, `"LineChart"` ... In addition to all the charts supported by [React-Google-Chart](https://www.react-google-charts.com/examples), it can also be `"HeatMap"`. This is a custom-built chart by embedding a color-formatted sheet from Google Sheets for embedding; where `"HeatMap"` is used, **`"publishedSheetId"`** property must also be used.
+- **`"headers"`**: the row number of the header in the Google Sheets database
+- **`"query"`**: to query the Google Sheets database and receive a  narrowed-down result of the fetched sheet. It works in a similar way compared to a database query language (MongoDB for example), see full [documentation](https://developers.google.com/chart/interactive/docs/querylanguage).
+- **`"columns"`**: an array of items to specify which column of the fetched Google Sheets database to visualize (after being queried on). If it is omitted, then all the non-empty columns in the Google Sheets will be visualized. Else, it can be used to narrow down the visualized columns or assign special roles to the columns. Each column item can either be:
   - *An integer:* used for a normal data column. It should be the index of the column. For example:
-    - By default if no query is used, the columns A, B, C... in a Google Sheet correspond to indexes 0, 1, 2...
-    - If a query was applied, for example, "SELECT A, C, E, G", then the Google Sheet columns A, C, E, G correspond to indexes 0, 1, 2, 3.  
+    - By default if no query is used, the columns A, B, C... in a Google Sheets correspond to indexes 0, 1, 2...
+    - If a query was applied, for example, "SELECT A, C, E, G", then the Google Sheets columns A, C, E, G correspond to indexes 0, 1, 2, 3.  
   - *An object literal:* to denote the specific role of this column, other than being a normal data column. It consists of:
     - **`"sourceColumn"`\***: an integer index of this column, discussed above
     - **`"role"`**: mostly used for annotation, tooltip, or interval, see [documentation](https://developers.google.com/chart/interactive/docs/roles)
@@ -152,8 +191,8 @@ Google Sheet parameters:
   ```
 
 - **`"subcharts"`**: sometimes, a chart can contain multiple subcharts for richer contextual data visualization.
-
-  For example, the historical air quality chart can have 3 different subcharts: one for outdoor air quality, one for indoor air quality in the Campus Center, and one for indoor air quality in the Dining Hall. The user can switch between these 3 subcharts using tabs.
+  ![subcharts](/documentation/subcharts.png)
+  *__Example:__ the historical air quality chart can have 3 different subcharts: one for outdoor air quality, one for indoor air quality in the Campus Center, and one for indoor air quality in the Dining Hall. The user can switch between these 3 subcharts using the __\_\_tabs\_\___.*
   
   This property is optional; if omitted, the chart will have one single data visualization. If included, its value should be an array with object literals each correspond to a subchart. It has one mandatory property:
   
@@ -192,7 +231,7 @@ Google Sheet parameters:
   ```
   "query": "SELECT * OFFSET 1", \\ similar among all subcharts
   "subcharts": [
-    
+
     \\ subchart 1's unique properties
     {
       "gid": 782978538,
@@ -212,8 +251,6 @@ Google Sheet parameters:
     }
   ],
   ```
-
-*__Properties with an asterisk \* are must-have, omissions of which will result in an error__*
 # 3. Build and Test Locally
 
 ## 3.1. Prerequisites
@@ -249,14 +286,7 @@ or
 yarn start
 ```
 
-# 4. Contributors
-
-[@princeampofo](https://github.com/princeampofo)  
-[@nguyenvince](https://github.com/nguyenvince)
-[@mjk9913](https://github.com/mjk9913)  
-[@JenniferZheng0430](https://github.com/JenniferZheng0430)
-
-# 5. References
+# 4. References
 
 - [React.js](https://reactjs.org/)
 - [CircleCI](https://circleci.com/)

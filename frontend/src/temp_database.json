@@ -972,18 +972,22 @@
         "subcharts": [
           {
             "query": "SELECT A, B",
-            "subchartTitle": "2021"
+            "subchartTitle": "2022"
           },
           {
             "query": "SELECT A, C",
-            "subchartTitle": "2020"
+            "subchartTitle": "2021"
           },
           {
             "query": "SELECT A, D",
-            "subchartTitle": "2019"
+            "subchartTitle": "2020"
           },
           {
             "query": "SELECT A, E",
+            "subchartTitle": "2019"
+          },
+          {
+            "query": "SELECT A, F",
             "subchartTitle": "2018"
           }
         ],
@@ -1007,10 +1011,113 @@
   {
     "id": "student-population",
     "title": "Student Population",
-    "sheetId": "",
-    "description": "placeholder",
-    "owner": "Institutional Research",
-    "onwerContact": "",
-    "charts": []
+    "sheetId": "1xRuDQem0jvTil1MfXXI4sptWU37Q53VkTwVunqdnSY0",
+    "description": "",
+    "owner": "NYU Institutional Research",
+    "onwerContact": "cities.nyuad@nyu.edu",
+    "rawDataTables": [
+      {
+        "gid": 1622588326,
+        "headers": 1,
+        "query": "SELECT A, B, C, D, E, F, G LIMIT 10"
+      }
+    ],
+    "charts": [
+      {
+        "title": "New First Year Cohort Size by Academic Year (AY), with Year-by-year Growth (%)",
+        "gid": 690526695,
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ComboChart",
+        "options": {
+          "hAxis": {
+            "slantedText": true,
+            "slantedTextAngle": 60
+          },
+          "vAxes": {
+            "0": {
+              "title": "New First Year Cohort Size (Students)",
+              "format": "decimal"
+            },
+            "1": {
+              "title": "Year-by-year growth (%)",
+              "format": "#.##%",
+              "viewWindow": {
+                "min": -0.1
+              }
+            }
+          },
+          "colors": [
+            "#9f95a6",
+            "#57068c"
+          ],
+          "seriesType": "bars",
+          "series": {
+            "0": {
+              "targetAxisIndex": 0
+            },
+            "1": {
+              "type": "line",
+              "targetAxisIndex": 1
+            }
+          }
+        }
+      },
+      {
+        "title": "Breakdown of Undegraduate Students' Citizenship (UAE and US)",
+        "gid": 1856255581,
+        "subcharts": [
+          {
+            "subchartTitle": "Percentage",
+            "query": "SELECT A, C, D, E WHERE A CONTAINS 'Fall'",
+            "options": {
+              "vAxis": {
+                "format": "#.##%"
+              }
+            }
+          },
+          {
+            "subchartTitle": "Absolute",
+            "query": "SELECT A, F, G, H WHERE A CONTAINS 'Fall'"
+          }
+        ],
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "options": {
+          "isStacked": true,
+          "colors": [
+            "#57068c",
+            "#9f95a6",
+            "#cccccc"
+          ]
+        }
+      },
+      {
+        "title": "Number of Students by Level of Education (Undergrads, Masters, PhD)",
+        "gid": 1997121971,
+        "subcharts": [
+          {
+            "subchartTitle": "Percentage",
+            "query": "SELECT A, K, L, M WHERE A CONTAINS 'Fall'",
+            "options": {
+              "vAxis": {
+                "format": "#.##%"
+              }
+            }
+          },
+          {
+            "subchartTitle": "Absolute",
+            "query": "SELECT A, B, F, G WHERE A CONTAINS 'Fall'"
+          }
+        ],
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "options": {
+          "isStacked": true
+        }
+      }
+    ]
   }
 ]

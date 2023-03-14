@@ -58,7 +58,6 @@ function InnerChart({ chartData, chartIndex }) {
     curveType: 'function',
     legend: chartData.options?.legend ?? 'bottom',
   };
-  console.log(options.vAxis);
   // 3. Append to vAxis and hAxis properties
   options.vAxis = {
     ...options.vAxis,

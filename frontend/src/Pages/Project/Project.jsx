@@ -12,7 +12,6 @@ import data from '../../temp_database.json';
 import './Project.css';
 
 import { MdLink } from 'react-icons/md';
-import zIndex from '@mui/material/styles/zIndex';
 
 // Download button: download raw dataset
 function DownloadButton({ project }) {

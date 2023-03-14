@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
+import { TabContext } from '../../ContextProviders/TabContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
@@ -11,6 +12,7 @@ import data from '../../temp_database.json';
 import './Project.css';
 
 import { MdLink } from 'react-icons/md';
+import zIndex from '@mui/material/styles/zIndex';
 
 // Download button: download raw dataset
 function DownloadButton({ project }) {
@@ -39,6 +41,7 @@ const Project = ({ prefersDarkMode }) => {
   let { id } = useParams();
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
+  const [tab] = useContext(TabContext);
 
   useEffect(() => {
     // loop through all projects and find the one with the matching id
@@ -161,6 +164,11 @@ const Project = ({ prefersDarkMode }) => {
                   }}
                 >
                   {element.subtitle && parse(element.subtitle)}
+                  {element.subIndex &&
+                    element.subIndex == Object.keys(tab)[index] &&
+                    element.subcharts[Object.values(tab)[index]].subtext &&
+                    parse(element.subcharts[Object.values(tab)[index]].subtext)}
+                  {element.reference && parse(element.reference)}
                 </Typography>
               </Container>
             </Box>

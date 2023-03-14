@@ -1,9 +1,10 @@
 // disable eslint for this file
 /* eslint-disable */
-import { React, useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress, Tabs, Tab } from '@mui/material/';
 import HeatMap from './HeatMap';
+import { TabContext } from '../ContextProviders/TabContext';
 
 import './ChartComponent.css';
 
@@ -30,7 +31,9 @@ function InnerChart({ chartData, chartIndex }) {
 
   // ---- Formulate the options for this specific chart:
   // 1. Populate first with subchart's options (if any)
-  let options = (chartData.subcharts?.[chartIndex].options? {...chartData.subcharts[chartIndex].options} : {} );
+  let options = chartData.subcharts?.[chartIndex].options
+    ? { ...chartData.subcharts[chartIndex].options }
+    : {};
   // 2. Append own chart's options and then populate with universal options for all charts
   options = {
     ...options,
@@ -40,7 +43,7 @@ function InnerChart({ chartData, chartIndex }) {
     width: '100%',
     height: '100%',
     backgroundColor: {
-      fill: 'transparent'
+      fill: 'transparent',
     },
     calendar: {
       cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
@@ -53,26 +56,25 @@ function InnerChart({ chartData, chartIndex }) {
       isHtml: true,
     },
     curveType: 'function',
-    legend: chartData.options?.legend ?? 'bottom'
+    legend: chartData.options?.legend ?? 'bottom',
   };
   // 3. Append to vAxis and hAxis properties
   options.vAxis = {
     ...options.vAxis,
     format: chartData.options?.vAxis?.format ?? 'decimal',
     viewWindow: {
-      min: chartData.options?.vAxis?.viewWindow?.min ?? 0
+      min: chartData.options?.vAxis?.viewWindow?.min ?? 0,
     },
     titleTextStyle: {
       italic: false,
-    }
+    },
   };
   options.hAxis = {
     titleTextStyle: {
       italic: false,
     },
-    ...options.hAxis
+    ...options.hAxis,
   };
-
 
   const chartEvents = [
     {
@@ -125,22 +127,22 @@ function InnerChart({ chartData, chartIndex }) {
         spreadSheetQueryParameters={
           chartIndex == null
             ? {
-              headers: chartData.headers,
-              query: chartData.query,
-              gid: chartData.gid,
-            }
+                headers: chartData.headers,
+                query: chartData.query,
+                gid: chartData.gid,
+              }
             : {
-              headers:
-                chartData.headers ||
-                chartData.subcharts[chartIndex].headers ||
-                null,
-              query:
-                chartData.query ||
-                chartData.subcharts[chartIndex].query ||
-                null,
-              gid:
-                chartData.gid || chartData.subcharts[chartIndex].gid || null,
-            }
+                headers:
+                  chartData.headers ||
+                  chartData.subcharts[chartIndex].headers ||
+                  null,
+                query:
+                  chartData.query ||
+                  chartData.subcharts[chartIndex].query ||
+                  null,
+                gid:
+                  chartData.gid || chartData.subcharts[chartIndex].gid || null,
+              }
         }
         options={options}
         chartEvents={chartEvents}
@@ -153,10 +155,18 @@ function InnerChart({ chartData, chartIndex }) {
 export default function ChartComponent({ chartData }) {
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
+    // use tab context
+    const [_, setTab] = useContext(TabContext);
+
     // Props for tab panels (multiple data visualizations in the same chart area, navigate with tab panels)
     const [indexValue, setIndexValue] = useState(0); // start with the first elem
 
+    // Handle tab change
     const handleChange = (event, newValue) => {
+      // use setTab to copy the tab object and update the subIndex
+      setTab((prevState) => {
+        return { ...prevState, [chartData.subIndex]: newValue };
+      });
       setIndexValue(newValue);
     };
 

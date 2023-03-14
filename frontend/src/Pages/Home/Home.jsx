@@ -4,6 +4,7 @@ import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/DataContext';
+import { TabContext } from '../../ContextProviders/TabContext';
 
 import {
   Box,
@@ -20,17 +21,30 @@ import {
 
 import UnderlinedTitle from '../../Components/UnderlinedTitle';
 
-import jsonData from '../../home_data.json'
+import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
 
 const Home = ({ prefersDarkMode }) => {
   // useState for home page data
   const [_, setUnderlineLink] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
+  const [__, setTab] = useContext(TabContext);
 
   // set underline link to home
   useEffect(() => {
     setUnderlineLink('home');
+    // use setTab to copy the tab object and update the subIndex
+    setTab(() => {
+      return {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+      };
+    });
   }, []);
 
   return (
@@ -42,7 +56,17 @@ const Home = ({ prefersDarkMode }) => {
 
         <Grid item md={3} xs={12} margin="auto">
           <Container>
-            <Grid container direction="row" spacing={4} sx={{ pt: 2, pb: 2, textAlign: 'center', justifyContent: 'center' }}>
+            <Grid
+              container
+              direction="row"
+              spacing={4}
+              sx={{
+                pt: 2,
+                pb: 2,
+                textAlign: 'center',
+                justifyContent: 'center',
+              }}
+            >
               {jsonData.statistics.map((item, index) => (
                 <Grid key={index} item md={12}>
                   <Typography

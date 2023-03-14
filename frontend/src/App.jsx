@@ -3,8 +3,6 @@
 
 import { React, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { LinkProvider } from './ContextProviders/LinkContext';
-import { DataProvider } from './ContextProviders/DataContext';
 import { Box } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -66,51 +64,47 @@ function App() {
 
   return (
     <BrowserRouter>
-      <DataProvider>
-        <LinkProvider>
-          <ThemeProvider theme={theme}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100vw',
-                minHeight: '100vh',
-                backgroundColor: 'customBackground',
-              }}
-            >
-              {useMemo(
-                () => (
-                  <Header />
-                ),
-                []
-              )}
-              <Box flex={1} display="flex" width="100%">
-                <Suspense fallback={<div>Loading...</div>}>
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={<Home prefersDarkMode={prefersDarkMode} />}
-                    />
-                    <Route
-                      path="/project/:id"
-                      element={<Project prefersDarkMode={prefersDarkMode} />}
-                    />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/404" element={<FourOhFour />} />
-                    <Route path="*" element={<Navigate replace to="/404" />} />
-                  </Routes>
-                </Suspense>
-              </Box>
-              {useMemo(
-                () => (
-                  <Footer />
-                ),
-                []
-              )}
-            </Box>
-          </ThemeProvider>
-        </LinkProvider>
-      </DataProvider>
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100vw',
+            minHeight: '100vh',
+            backgroundColor: 'customBackground',
+          }}
+        >
+          {useMemo(
+            () => (
+              <Header />
+            ),
+            []
+          )}
+          <Box flex={1} display="flex" width="100%">
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Home prefersDarkMode={prefersDarkMode} />}
+                />
+                <Route
+                  path="/project/:id"
+                  element={<Project prefersDarkMode={prefersDarkMode} />}
+                />
+                <Route path="/about" element={<About />} />
+                <Route path="/404" element={<FourOhFour />} />
+                <Route path="*" element={<Navigate replace to="/404" />} />
+              </Routes>
+            </Suspense>
+          </Box>
+          {useMemo(
+            () => (
+              <Footer />
+            ),
+            []
+          )}
+        </Box>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

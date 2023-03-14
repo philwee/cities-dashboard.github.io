@@ -55,24 +55,24 @@ function InnerChart({ chartData, chartIndex }) {
     curveType: 'function',
     legend: chartData.options?.legend ?? 'bottom'
   };
+  console.log(options.vAxis);
   // 3. Append to vAxis and hAxis properties
   options.vAxis = {
     ...options.vAxis,
-    format: chartData.options?.vAxis?.format ?? 'decimal',
+    format: options.vAxis?.format ?? 'decimal',
     viewWindow: {
-      min: chartData.options?.vAxis?.viewWindow?.min ?? 0
+      min: options.vAxis?.viewWindow?.min ?? 0
     },
     titleTextStyle: {
       italic: false,
     }
   };
   options.hAxis = {
+    ...options.hAxis,
     titleTextStyle: {
       italic: false,
-    },
-    ...options.hAxis
+    }
   };
-
 
   const chartEvents = [
     {

@@ -40,13 +40,18 @@ const Project = ({ prefersDarkMode }) => {
   let { id } = useParams();
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
-  const [tab] = useContext(TabContext);
+  const [tab, setTab] = useContext(TabContext);
 
   useEffect(() => {
     // loop through all projects and find the one with the matching id
     data.map((p) => {
       if (p.id === id) {
         setProject({ ...p });
+        let temp = {};
+        for (let i = 0; i < p.charts.length; i++) {
+          temp[i] = 0;
+        }
+        setTab(temp);
         setLoading(true);
       }
     });
@@ -144,6 +149,7 @@ const Project = ({ prefersDarkMode }) => {
                 >
                   <ChartComponent
                     chartData={{
+                      chartIndex: index,
                       sheetId: project.sheetId,
                       ...element,
                     }}
@@ -163,8 +169,8 @@ const Project = ({ prefersDarkMode }) => {
                   }}
                 >
                   {element.subtitle && parse(element.subtitle)}
-                  {element.subIndex &&
-                    element.subIndex == Object.keys(tab)[index] &&
+                  {Object.keys(tab)[index] == index &&
+                    element.subcharts &&
                     element.subcharts[Object.values(tab)[index]].subtext &&
                     parse(element.subcharts[Object.values(tab)[index]].subtext)}
                   {element.reference && parse(element.reference)}

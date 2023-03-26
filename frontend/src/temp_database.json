@@ -598,7 +598,6 @@
     "charts": [
       {
         "title": "Historical Snapshots of Air Quality Index",
-        "subIndex": 1,
         "subcharts": [
           {
             "gid": 184715989,
@@ -720,7 +719,6 @@
       },
       {
         "title": "Daily Air Quality Index, All Time",
-        "subIndex": 2,
         "subcharts": [
           {
             "query": "SELECT A, C",
@@ -764,7 +762,6 @@
       },
       {
         "title": "Percentage of Daily Air Quality Categories by Month",
-        "subIndex": 3,
         "subcharts": [
           {
             "gid": 354322334,
@@ -801,7 +798,6 @@
       {
         "query": "SELECT * OFFSET 1",
         "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 1 Standard Deviation",
-        "subIndex": 4,
         "subcharts": [
           {
             "gid": 803236520,
@@ -844,7 +840,6 @@
       },
       {
         "title": "Hourly Average PM2.5 Concentration (µg/m3) by Month",
-        "subIndex": 5,
         "subcharts": [
           {
             "gid": 1768452772,
@@ -883,7 +878,6 @@
       },
       {
         "title": "Correlation Between Daily Average Outdoor and Indoor PM2.5 Concentrations (µg/m3)",
-        "subIndex": 6,
         "subcharts": [
           {
             "query": "SELECT A, B, G",
@@ -968,7 +962,6 @@
       },
       {
         "title": "[External Data] Annual PM2.5 Concentration (µg/m3) by Country",
-        "subIndex": 7,
         "subcharts": [
           {
             "query": "SELECT A, B",
@@ -1047,10 +1040,7 @@
               }
             }
           },
-          "colors": [
-            "#9f95a6",
-            "#57068c"
-          ],
+          "colors": ["#9f95a6", "#57068c"],
           "seriesType": "bars",
           "series": {
             "0": {
@@ -1086,11 +1076,7 @@
         "chartType": "ColumnChart",
         "options": {
           "isStacked": true,
-          "colors": [
-            "#57068c",
-            "#9f95a6",
-            "#cccccc"
-          ]
+          "colors": ["#57068c", "#9f95a6", "#cccccc"]
         }
       },
       {

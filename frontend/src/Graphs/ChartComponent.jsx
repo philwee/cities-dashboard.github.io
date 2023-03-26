@@ -8,7 +8,7 @@ import { TabContext } from '../ContextProviders/TabContext';
 
 import './ChartComponent.css';
 
-function InnerChart({ chartData, chartIndex }) {
+function InnerChart({ chartData, chartSubIndex }) {
   // Case: HeatMap
   if (chartData.chartType == 'HeatMap') {
     return (
@@ -20,7 +20,7 @@ function InnerChart({ chartData, chartIndex }) {
       >
         <HeatMap
           publishedSheetId={chartData.publishedSheetId}
-          gid={chartData.gid || chartData.subcharts[chartIndex].gid || null}
+          gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
           height={chartData.height}
         />
       </Box>
@@ -31,8 +31,8 @@ function InnerChart({ chartData, chartIndex }) {
 
   // ---- Formulate the options for this specific chart:
   // 1. Populate first with subchart's options (if any)
-  let options = chartData.subcharts?.[chartIndex].options
-    ? { ...chartData.subcharts[chartIndex].options }
+  let options = chartData.subcharts?.[chartSubIndex].options
+    ? { ...chartData.subcharts[chartSubIndex].options }
     : {};
   // 2. Append own chart's options and then populate with universal options for all charts
   options = {
@@ -118,14 +118,14 @@ function InnerChart({ chartData, chartIndex }) {
             columns:
               chartData.columns ||
               (chartData.subcharts &&
-                chartData.subcharts[chartIndex].columns) ||
+                chartData.subcharts[chartSubIndex].columns) ||
               null ||
               null,
           },
         }}
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
         spreadSheetQueryParameters={
-          chartIndex == null
+          chartSubIndex == null
             ? {
                 headers: chartData.headers,
                 query: chartData.query,
@@ -134,14 +134,16 @@ function InnerChart({ chartData, chartIndex }) {
             : {
                 headers:
                   chartData.headers ||
-                  chartData.subcharts[chartIndex].headers ||
+                  chartData.subcharts[chartSubIndex].headers ||
                   null,
                 query:
                   chartData.query ||
-                  chartData.subcharts[chartIndex].query ||
+                  chartData.subcharts[chartSubIndex].query ||
                   null,
                 gid:
-                  chartData.gid || chartData.subcharts[chartIndex].gid || null,
+                  chartData.gid ||
+                  chartData.subcharts[chartSubIndex].gid ||
+                  null,
               }
         }
         options={options}
@@ -165,7 +167,7 @@ export default function ChartComponent({ chartData }) {
     const handleChange = (event, newValue) => {
       // use setTab to copy the tab object and update the subIndex
       setTab((prevState) => {
-        return { ...prevState, [chartData.subIndex]: newValue };
+        return { ...prevState, [chartData.chartIndex]: newValue };
       });
       setIndexValue(newValue);
     };
@@ -211,7 +213,7 @@ export default function ChartComponent({ chartData }) {
             >
               {useMemo(
                 () => (
-                  <InnerChart chartData={chartData} chartIndex={index} />
+                  <InnerChart chartData={chartData} chartSubIndex={index} />
                 ),
                 []
               )}

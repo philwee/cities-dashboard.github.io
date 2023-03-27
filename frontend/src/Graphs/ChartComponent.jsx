@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect, useMemo, useContext } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress, Tabs, Tab } from '@mui/material/';
 import HeatMap from './HeatMap';

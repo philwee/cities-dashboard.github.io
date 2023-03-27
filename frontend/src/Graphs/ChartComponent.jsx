@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useMemo, useContext } from 'react';
+import { useState, useEffect, useMemo, useContext } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress, Tabs, Tab } from '@mui/material/';
 import HeatMap from './HeatMap';
@@ -52,16 +52,27 @@ function InnerChart({ chartData, chartSubIndex }) {
       backgroundColor: 'none',
       color: 'none',
     },
+    enableInteractivity: chartData.homePage ? false : true,
+    annotations: {
+      stem: {
+        length: chartData.homePage ? 0 : 100,
+      },
+      textStyle: {
+        opacity: chartData.homePage ? 0 : 1,
+      },
+    },
     tooltip: {
       isHtml: true,
     },
     curveType: 'function',
-    legend: chartData.options?.legend ?? 'bottom',
+    legend: chartData.homePage ? 'none' : chartData.options?.legend ?? 'bottom',
   };
   // 3. Append to vAxis and hAxis properties
   options.vAxis = {
     ...options.vAxis,
     format: options.vAxis?.format ?? 'decimal',
+    textPosition: chartData.homePage ? 'none' : '',
+    title: chartData.homePage ? '' : options.vAxis?.title ?? '',
     viewWindow: {
       min: options.vAxis?.viewWindow?.min ?? 0,
     },
@@ -71,10 +82,32 @@ function InnerChart({ chartData, chartSubIndex }) {
   };
   options.hAxis = {
     ...options.hAxis,
+    textPosition: chartData.homePage ? 'none' : '',
+    title: chartData.homePage ? '' : options.hAxis?.title ?? '',
     titleTextStyle: {
       italic: false,
     },
   };
+
+  if (
+    options.series &&
+    (chartData.homePage || chartData.homePage === undefined)
+  ) {
+    // loop through series object
+    for (const key in options.series) {
+      // loop through each series object
+      for (const key2 in options.series[key]) {
+        // if key2 is enableInteractivity, set it to false
+        if (key2 === 'enableInteractivity') {
+          options.series[key][key2] = chartData.homePage ? false : true;
+        }
+      }
+    }
+  }
+
+  if (options.vAxes && chartData.homePage) {
+    options.vAxes = {};
+  }
 
   const chartEvents = [
     {

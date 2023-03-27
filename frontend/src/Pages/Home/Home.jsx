@@ -88,7 +88,7 @@ const Home = ({ prefersDarkMode }) => {
         </Grid>
 
         {homeData.map((element, index) => (
-          <Grid key={index} item xs={12} sm={6} md={4}>
+          <Grid key={index} item xs={12} sm={12} md={6}>
             <Card elevation={2}>
               <CardActionArea
                 component={Link}

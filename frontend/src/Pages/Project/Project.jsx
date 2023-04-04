@@ -6,32 +6,38 @@ import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
-import UnderlinedTitle from '../../Components/UnderlinedTitle';
+import UppercasedTitle from '../../Components/UppercasedTitle';
 import { Box, Typography, Container, Divider, Button } from '@mui/material';
+
+import ExpandableSection from './ExpandableSection';
+
 import data from '../../temp_database.json';
 import './Project.css';
 
 import { MdLink } from 'react-icons/md';
 
 // Download button: download raw dataset
-function DownloadButton({ project }) {
+const DatasetDownloadButton = ({ project }) => {
   const isDisabled = project.sheetId == null ? true : false;
   return (
-    <a
-      href={
-        isDisabled
-          ? ''
-          : `https://docs.google.com/spreadsheets/d/${project.sheetId}`
-      }
-      target="_blank"
-      rel="noreferrer"
-    >
-      <Button disabled={isDisabled} variant="contained">
-        <MdLink />
-        &nbsp;
-        {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
-      </Button>
-    </a>
+    <Box sx={{ pb: 3 }}>
+      <a
+        href={
+          isDisabled
+            ? ''
+            : `https://docs.google.com/spreadsheets/d/${project.sheetId}`
+        }
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Button disabled={isDisabled} variant="contained">
+          <MdLink />
+          &nbsp;
+          {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
+        </Button>
+      </a>
+    </Box>
+
   );
 }
 
@@ -65,18 +71,17 @@ const Project = ({ prefersDarkMode }) => {
         <Box width="100%">
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
-              <UnderlinedTitle text={project.title} />
-              <br />
-              <br />
+              <UppercasedTitle text={project.title} />
+
               <Typography
                 variant="body1"
                 color="text.secondary"
-                sx={{ textAlign: 'justify' }}
+                sx={{ textAlign: 'justify', pb: 3, mb: 0 }}
                 gutterBottom
               >
                 {parse(project.description)}
               </Typography>
-              <br />
+
               <Typography
                 variant="body1"
                 color="text.primary"
@@ -84,47 +89,36 @@ const Project = ({ prefersDarkMode }) => {
               >
                 Dataset Owner:
               </Typography>
-              <Typography variant="body1" color="text.secondary" gutterBottom>
-                {project.owner}
+
+              <Typography variant="body1" color="text.secondary" sx={{pb: 3}}>
+                {project.owner} ({project.onwerContact})
               </Typography>
-              <Typography
-                variant="body1"
-                color="text.primary"
-                sx={{ fontWeight: 'medium' }}
-              >
-                Contact:
-              </Typography>
-              <Typography variant="body1" color="text.secondary" gutterBottom>
-                {project.onwerContact}
-              </Typography>
-              <br />
-              <DownloadButton project={project} />
-              <br />
-              <br />
-              <Typography
-                variant="body1"
-                color="text.primary"
-                sx={{ fontWeight: 'medium' }}
-              >
-                Sample Data:
-              </Typography>
-              {project.rawDataTables.map((element, index) => (
-                <Box
-                  key={index}
-                  sx={{ pt: 1 }}
-                  className={prefersDarkMode ? 'dark-mode' : ''}
-                >
-                  <ChartComponent
-                    chartData={{
-                      chartType: 'Table',
-                      sortAscending: true,
-                      frozenColumns: 1,
-                      sheetId: project.sheetId,
-                      ...element,
-                    }}
-                  />
-                </Box>
-              ))}
+
+              <DatasetDownloadButton project={project} />
+
+              <ExpandableSection 
+              title='Sample Data'
+              content={
+                <>
+                  {project.rawDataTables.map((element, index) => (
+                    <Box
+                      key={index}
+                      sx={{ pt: 1 }}
+                      className={prefersDarkMode ? 'dark-mode' : ''}
+                    >
+                      <ChartComponent
+                        chartData={{
+                          chartType: 'Table',
+                          sortAscending: true,
+                          frozenColumns: 1,
+                          sheetId: project.sheetId,
+                          ...element,
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </>
+              } />
             </Container>
           </Box>
 

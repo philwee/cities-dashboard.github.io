@@ -35,8 +35,8 @@ function App() {
                 background: {
                   default: '#555555',
                 },
-                customBackground: '#121212',
-                customAlternateBackground: '#000000',
+                customBackground: '#202124',
+                customAlternateBackground: '#2C2F33',
                 mode: 'dark',
               },
               typography: {

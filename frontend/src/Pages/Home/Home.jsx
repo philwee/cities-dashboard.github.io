@@ -18,7 +18,7 @@ import {
   Paper,
 } from '@mui/material';
 
-import UnderlinedTitle from '../../Components/UnderlinedTitle';
+import UppercasedTitle from '../../Components/UppercasedTitle';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
@@ -34,90 +34,94 @@ const Home = ({ prefersDarkMode }) => {
   }, []);
 
   return (
-    <Container sx={{ pt: 4, pb: 4 }}>
-      <Grid container direction="row" spacing={4} sx={{ pt: 4, pb: 4 }}>
-        <Grid item xs={12}>
-          <UnderlinedTitle text={'join us!'} />
-        </Grid>
-
-        <Grid item md={3} xs={12} margin="auto">
-          <Container>
-            <Grid
-              container
-              direction="row"
-              spacing={4}
-              sx={{
-                pt: 2,
-                pb: 2,
-                textAlign: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {jsonData.statistics.map((item, index) => (
-                <Grid key={index} item md={12}>
-                  <Typography
-                    variant="h2"
-                    color="primary.main"
-                    sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}
-                  >
-                    {item.number}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    color="text.primary"
-                    textTransform="uppercase"
-                  >
-                    {item.text}
-                  </Typography>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
-        </Grid>
-
-        <Grid item md={9}>
-          <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="body1" color="text.secondary">
-              {parse(jsonData.banner)}
-            </Typography>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12}>
-          <UnderlinedTitle text={'all projects'} />
-        </Grid>
-
-        {homeData.map((element, index) => (
-          <Grid key={index} item xs={12} sm={12} md={6}>
-            <Card elevation={2}>
-              <CardActionArea
-                component={Link}
-                to={`/project/${element.id}`}
-                disabled={element.isEmpty}
-              >
-                <Box className={prefersDarkMode ? 'dark-mode' : ''}>
-                  <CardMedia
-                    children={element.graph}
-                    height={'auto'}
-                    sx={{ aspectRatio: '4/3' }}
-                  />
-                </Box>
-
-                <Divider />
-                <CardContent>
-                  <Typography variant="h6" component="div" color="text.primary">
-                    {element.title}
-                  </Typography>
+    <Box width="100%">
+      <Box>
+        <Container sx={{ pt: 4, pb: 4 }}>
+          <UppercasedTitle text={'join us!'} />
+          <Grid container spacing={4}>
+            {jsonData.banners.map((item, index) => (
+              <Grid key={index} item md={6} xs={12}>
+                <Paper elevation={2} sx={{ p: 3 }}>
                   <Typography variant="body1" color="text.secondary">
-                    {element.owner}
+                    {parse(item)}
                   </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Container>
+        </Container>
+      </Box>
+
+      <Box backgroundColor='customAlternateBackground'>
+        <Container sx={{ pt: 4, pb: 4 }}>
+          <UppercasedTitle text={'at a glance'} />
+
+          <Grid container direction="row" spacing={4} sx={{
+            textAlign: 'center',
+            justifyContent: 'center',
+          }}
+          >
+            {jsonData.statistics.map((item, index) => (
+              <Grid key={index} item md={3} sm={4} xs={12}>
+                <Typography
+                  variant="h2"
+                  color="primary.main"
+                  sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}
+                >
+                  {item.number}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  color="text.primary"
+                  textTransform="uppercase"
+                >
+                  {item.text}
+                </Typography>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box>
+        <Container sx={{ pt: 4, pb: 4 }}>
+          <UppercasedTitle text={'all projects'} />
+          <Grid container spacing={4}>
+            {homeData.map((element, index) => (
+              <Grid key={index} item xs={12} sm={12} md={6}>
+                <Card elevation={2}>
+                  <CardActionArea
+                    component={Link}
+                    to={`/project/${element.id}`}
+                    disabled={element.isEmpty}
+                  >
+                    <Box className={prefersDarkMode ? 'dark-mode' : ''}>
+                      <CardMedia
+                        children={element.graph}
+                        height={'auto'}
+                        sx={{ aspectRatio: '4/3' }}
+                      />
+                    </Box>
+
+                    <Divider />
+                    <CardContent>
+                      <Typography variant="h6" component="div" color="text.primary">
+                        {element.title}
+                      </Typography>
+                      <Typography variant="body1" color="text.secondary">
+                        {element.owner}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+        </Container>
+
+      </Box>
+    </Box>
   );
 };
 

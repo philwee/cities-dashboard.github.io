@@ -24,7 +24,7 @@ export default function Header() {
           <img style={{ width: '100%' }} src={citiesLogo} />
         </Paper>
         <Box sx={{ mb: 3 }}>
-          <Typography variant="h3" sx={{ fontWeight: 'medium' }}>
+          <Typography variant="h2" sx={{ fontWeight: 'medium' }}>
             CITIES DASHBOARD
           </Typography>
           <Typography variant="body1" color="text.secondary">

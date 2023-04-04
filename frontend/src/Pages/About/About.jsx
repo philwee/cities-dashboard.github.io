@@ -10,7 +10,7 @@ import {
 } from 'react-icons/ai';
 import { Grid, Typography, Container, Paper } from '@mui/material';
 
-import UnderlinedTitle from '../../Components/UnderlinedTitle';
+import UppercasedTitle from '../../Components/UppercasedTitle';
 
 import citiesLogo from '../../cities-logo.png';
 
@@ -71,9 +71,9 @@ const About = () => {
   });
 
   return (
-    <Container maxWidth="md" sx={{ p: 3 }}>
-      <Paper elevation={3} sx={{ p: 3 }}>
-        <Container maxWidth="xs" sx={{ pb: 3 }}>
+    <Container maxWidth="md" sx={{ p: 4 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Container maxWidth="xs" sx={{ pb: 4 }}>
           <Grid justifyContent="center" container>
             <Grid item xs={12} sx={{ textAlign: 'center', pb: 2 }}>
               <img style={{ maxWidth: '100%' }} src={citiesLogo} />
@@ -81,13 +81,12 @@ const About = () => {
             <SocialHandleGrid />
           </Grid>
         </Container>
-        <UnderlinedTitle text="the center" />
-        <br />
-        <br />
+        <UppercasedTitle text="the center" />
+
         <Typography
           variant="body1"
           gutterBottom
-          sx={{ mb: 3 }}
+          sx={{ mb: 5 }}
           color="text.secondary"
         >
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
@@ -96,9 +95,8 @@ const About = () => {
           real-world solutions for the benefit of society. Our ultimate goal is
           to foster sustainable, resilient, and equitable cities.
         </Typography>
-        <UnderlinedTitle text="the project" />
-        <br />
-        <br />
+        <UppercasedTitle text="the project" />
+
         <Typography variant="body1" gutterBottom color="text.secondary">
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and

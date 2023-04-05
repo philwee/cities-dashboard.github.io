@@ -26,44 +26,44 @@ function App() {
       createTheme(
         prefersDarkMode
           ? {
-              // palette values for dark mode
-              palette: {
-                nyuPurple: '#57068c',
-                primary: {
-                  main: '#893ebd', // lighter nyu purple
-                  contrastText: '#000',
-                },
-                background: {
-                  default: '#555555',
-                },
-                customBackground: '#181819',
-                customAlternateBackground: '#232323',
-                mode: 'dark',
+            // palette values for dark mode
+            palette: {
+              nyuPurple: '#57068c',
+              primary: {
+                main: '#893ebd', // lighter nyu purple
+                contrastText: '#000',
               },
-              typography: {
-                fontFamily: '"IBM Plex Sans", sans-serif !important',
+              background: {
+                default: '#555555',
               },
-            }
+              customBackground: '#181819',
+              customAlternateBackground: '#232323',
+              mode: 'dark',
+            },
+            typography: {
+              fontFamily: '"IBM Plex Sans", sans-serif !important',
+            },
+          }
           : {
-              palette: {
-                // palette values for light mode
-                primary: {
-                  nyuPurple: '#57068c',
-                  main: '#57068c', // nyu purple
-                  contrastText: '#fff',
-                },
-                customBackground: '#f6f6f6',
-                customAlternateBackground: '#ffffff',
-                mode: 'light',
+            // palette values for light mode
+            palette: {
+              nyuPurple: '#57068c',
+              primary: {
+                main: '#57068c', // nyu purple
+                contrastText: '#fff',
               },
-              typography: {
-                fontFamily: '"IBM Plex Sans", sans-serif !important',
-              },
-            }
+              customBackground: '#f6f6f6',
+              customAlternateBackground: '#ffffff',
+              mode: 'light',
+            },
+            typography: {
+              fontFamily: '"IBM Plex Sans", sans-serif !important',
+            },
+          }
       ),
     [prefersDarkMode]
   );
-  
+
 
   return (
     <BrowserRouter>

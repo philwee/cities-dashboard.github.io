@@ -10,6 +10,7 @@ import UppercasedTitle from '../../Components/UppercasedTitle';
 import { Box, Typography, Container, Divider, Button } from '@mui/material';
 
 import ExpandableSection from './ExpandableSection';
+import CustomLink from '../../Components/CustomLink';
 
 import data from '../../temp_database.json';
 import './Project.css';
@@ -91,7 +92,7 @@ const Project = ({ prefersDarkMode }) => {
               </Typography>
 
               <Typography variant="body1" color="text.secondary" sx={{pb: 3}}>
-                {project.owner} ({project.onwerContact})
+                {project.owner} - <CustomLink href={project.onwerContact} text={project.onwerContact}/>
               </Typography>
 
               <DatasetDownloadButton project={project} />

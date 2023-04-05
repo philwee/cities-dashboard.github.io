@@ -2,64 +2,34 @@
 /* eslint-disable */
 import { useEffect, useContext } from 'react';
 import { LinkContext } from '../../ContextProviders/LinkContext';
-import {
-  AiFillTwitterCircle,
-  AiFillLinkedin,
-  AiFillInstagram,
-  AiFillFacebook,
-} from 'react-icons/ai';
+import {Facebook, LinkedIn, Instagram, Twitter} from '@mui/icons-material/';
 import { Grid, Typography, Container, Paper } from '@mui/material';
 
+import CustomLink from '../../Components/CustomLink';
 import UppercasedTitle from '../../Components/UppercasedTitle';
 
 import citiesLogo from '../../cities-logo.png';
 
-export function SocialHandle({ url, icon }) {
-  return (
-    <a className="iconLink" href={url} target="_blank" rel="noreferrer">
-      {icon}
-    </a>
-  );
-}
-
 export function SocialHandleGrid() {
   return (
     <Container>
-      <Grid justifyContent="center" container spacing={{ xs: 3, md: 4 }}>
+      <Grid justifyContent='center' alignItems='center' container>
         <Grid item xs={2}>
-          <SocialHandle
-            url="https://twitter.com/cities_nyuad/"
-            icon={<AiFillTwitterCircle size="100%" />}
-          />
+          <CustomLink href='https://twitter.com/cities_nyuad/' text={<Twitter sx={{fontSize: '2rem'}}/>} />
         </Grid>
         <Grid item xs={2}>
-          <SocialHandle
-            url="https://www.linkedin.com/company/center-for-interacting-urban-networks/"
-            icon={<AiFillLinkedin size="100%" />}
-          />
+          <CustomLink href='https://www.linkedin.com/company/center-for-interacting-urban-networks/' text={<LinkedIn sx={{fontSize: '2rem'}}/>} />
         </Grid>
         <Grid item xs={2}>
-          <SocialHandle
-            url="https://www.facebook.com/nyuad.cities/"
-            icon={<AiFillFacebook size="100%" />}
-          />
+          <CustomLink href='https://www.facebook.com/nyuad.cities/' text={<Facebook sx={{fontSize: '2rem'}}/>} />
         </Grid>
         <Grid item xs={2}>
-          <SocialHandle
-            url="https://www.instagram.com/cities.nyuad/"
-            icon={<AiFillInstagram size="100%" />}
-          />
+          <CustomLink href='https://www.instagram.com/cities.nyuad/' text={<Instagram sx={{fontSize: '2rem'}}/>} />
+        </Grid>
+        <Grid item xs={6}>
+          <CustomLink href="mailto:nyuad.cities@nyu.edu" text="nyuad.cities@nyu.edu" />
         </Grid>
       </Grid>
-
-      <SocialHandle
-        url="mailto:nyuad.cities@nyu.edu"
-        icon={
-          <Typography sx={{ p: 1, textAlign: 'center' }}>
-            nyuad.cities@nyu.edu
-          </Typography>
-        }
-      />
     </Container>
   );
 }

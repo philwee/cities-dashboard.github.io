@@ -15,6 +15,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './Project.css';
 
 const StyledAccordion = styled(MuiAccordion)(({ theme, expanded }) => ({
+
+    color: theme.palette.text.secondary,
+    backgroundImage: 'none',
     backgroundColor: expanded ? theme.palette.background.default : 'transparent',
     boxShadow: expanded ? theme.shadows : 'none',
     transition: theme.transitions,
@@ -24,15 +27,12 @@ const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme, expanded })
     marginTop: expanded ? theme.spacing(3) : 0,
     flexDirection: 'row-reverse',
     paddingLeft: expanded ? theme.spacing(1) : 0,
-    '& .MuiIconButton-root': {
-        color: theme.palette.primary.main,
-    },
     '& .MuiTypography-root': {
-        color: theme.palette.primary.main,
-        textDecoration: 'none',
+        color: theme.palette.text.main,
+        textDecoration: 'underline',
         transition: theme.transitions,
         '&:hover': {
-            color: theme.palette.secondary.main,
+            color: theme.palette.primary.main,
         },
     },
 }));

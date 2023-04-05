@@ -28,6 +28,7 @@ function App() {
           ? {
               // palette values for dark mode
               palette: {
+                nyuPurple: '#57068c',
                 primary: {
                   main: '#893ebd', // lighter nyu purple
                   contrastText: '#000',
@@ -35,8 +36,8 @@ function App() {
                 background: {
                   default: '#555555',
                 },
-                customBackground: '#202124',
-                customAlternateBackground: '#2C2F33',
+                customBackground: '#181819',
+                customAlternateBackground: '#232323',
                 mode: 'dark',
               },
               typography: {
@@ -47,6 +48,7 @@ function App() {
               palette: {
                 // palette values for light mode
                 primary: {
+                  nyuPurple: '#57068c',
                   main: '#57068c', // nyu purple
                   contrastText: '#fff',
                 },
@@ -61,6 +63,7 @@ function App() {
       ),
     [prefersDarkMode]
   );
+  
 
   return (
     <BrowserRouter>

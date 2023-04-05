@@ -9,7 +9,7 @@
 
 .Calendar .google-visualization-tooltip{
     padding: 0.5rem !important;
-}
+}ƒtra
 
 /* Make all texts in the graph white if in dark mode */
 .dark-mode text{
@@ -22,8 +22,20 @@
 }
 
 /* Invert iframe */
-.dark-mode .heat-map-iframe, .dark-mode .Table {
+.dark-mode .heat-map-iframe {
     filter: invert(0.9);
+}
+
+.dark-mode .google-visualization-table-tr-head{
+    background-color: #000;
+}
+
+.dark-mode .google-visualization-table-tr-even {
+    background-color: #181819;
+}
+
+.dark-mode .google-visualization-table-tr-odd {
+    background-color: #232323;
 }
 
 /* Deactivate pointer event in table chart */

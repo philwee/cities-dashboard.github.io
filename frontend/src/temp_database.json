@@ -3,8 +3,8 @@
     "id": "athletics-fabs-membership",
     "title": "Athletics FABS Membership",
     "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 9 different account types, this dataset categorizes into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undegraduate (student)</li><li>Graduate student and alumni</li><li>Staff affliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
-    "owner": "Athletics Office",
+    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 9 different account types, this dataset categorizes into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undegraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
+    "owner": "Department of Athletics",
     "onwerContact": "nyuad.athletics@nyu.edu",
     "rawDataTables": [
       {
@@ -324,7 +324,9 @@
               "vAxis": {
                 "maxValue": 150
               },
-              "colors": ["#57068c"]
+              "colors": [
+                "#57068c"
+              ]
             }
           },
           {
@@ -451,7 +453,10 @@
             ],
             "options": {
               "colorAxis": {
-                "colors": ["#ffffff", "#57068c"]
+                "colors": [
+                  "#ffffff",
+                  "#57068c"
+                ]
               }
             }
           },
@@ -467,7 +472,10 @@
             ],
             "options": {
               "colorAxis": {
-                "colors": ["#ffffff", "rgb(94, 151, 246)"]
+                "colors": [
+                  "#ffffff",
+                  "rgb(94, 151, 246)"
+                ]
               }
             }
           },
@@ -483,7 +491,10 @@
             ],
             "options": {
               "colorAxis": {
-                "colors": ["#ffffff", "rgb(219, 68, 55)"]
+                "colors": [
+                  "#ffffff",
+                  "rgb(219, 68, 55)"
+                ]
               }
             }
           },
@@ -499,7 +510,10 @@
             ],
             "options": {
               "colorAxis": {
-                "colors": ["#ffffff", "rgb(242, 166, 0)"]
+                "colors": [
+                  "#ffffff",
+                  "rgb(242, 166, 0)"
+                ]
               }
             }
           }
@@ -670,7 +684,10 @@
               "type": "line",
               "color": "#222222",
               "enableInteractivity": true,
-              "lineDashStyle": [2, 2]
+              "lineDashStyle": [
+                2,
+                2
+              ]
             },
             "2": {
               "lineWidth": 2,
@@ -708,7 +725,13 @@
           },
           "vAxis": {
             "title": "US Air Quality Index (AQI)",
-            "ticks": [0, 50, 100, 150, 200]
+            "ticks": [
+              0,
+              50,
+              100,
+              150,
+              200
+            ]
           },
           "hAxis": {
             "minorGridlines": {
@@ -753,7 +776,18 @@
               "#9B51E0",
               "#662000"
             ],
-            "values": [0, 50, 51, 100, 101, 150, 151, 200, 201, 500]
+            "values": [
+              0,
+              50,
+              51,
+              100,
+              101,
+              150,
+              151,
+              200,
+              201,
+              500
+            ]
           },
           "legend": {
             "position": "none"
@@ -863,7 +897,9 @@
         "headers": 2,
         "chartType": "LineChart",
         "options": {
-          "colors": ["#9f95a6"],
+          "colors": [
+            "#9f95a6"
+          ],
           "lineWidth": 0.5,
           "series": {
             "12": {
@@ -994,8 +1030,20 @@
           "colorAxis": {
             "minValue": 0,
             "maxValue": 150.4,
-            "colors": ["#219653", "#F2C94C", "#F2994A", "#EB5757", "#9B51E0"],
-            "values": [0, 12, 35.4, 55.4, 150.4]
+            "colors": [
+              "#219653",
+              "#F2C94C",
+              "#F2994A",
+              "#EB5757",
+              "#9B51E0"
+            ],
+            "values": [
+              0,
+              12,
+              35.4,
+              55.4,
+              150.4
+            ]
           }
         }
       }
@@ -1040,7 +1088,10 @@
               }
             }
           },
-          "colors": ["#9f95a6", "#57068c"],
+          "colors": [
+            "#9f95a6",
+            "#57068c"
+          ],
           "seriesType": "bars",
           "series": {
             "0": {
@@ -1076,7 +1127,11 @@
         "chartType": "ColumnChart",
         "options": {
           "isStacked": true,
-          "colors": ["#57068c", "#9f95a6", "#cccccc"]
+          "colors": [
+            "#57068c",
+            "#9f95a6",
+            "#cccccc"
+          ]
         }
       },
       {

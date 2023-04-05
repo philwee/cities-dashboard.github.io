@@ -14,9 +14,9 @@ export default function Header() {
   const [underlineLink] = useContext(LinkContext);
 
   return (
-    <Paper elevation={0} square sx={{ m: 0 }}>
-      <Box sx={{ backgroundColor: 'primary.main', height: '10vh' }} />
-      <Container sx={{ pb: 3 }}>
+    <Box width='100%' sx={{ m: 0 }} backgroundColor='customAlternateBackground'>
+      <Box sx={{ backgroundColor: 'nyuPurple', height: '10vh' }} />
+      <Container sx={{ pb: 3 }} backgroundColor='customAlternateBackground'>
         <Paper
           elevation={4}
           sx={{ width: '12vh', height: '12vh', ml: 0, mt: '-6vh', mb: 3 }}
@@ -24,7 +24,7 @@ export default function Header() {
           <img style={{ width: '100%' }} src={citiesLogo} />
         </Paper>
         <Box sx={{ mb: 3 }}>
-          <Typography variant="h2" sx={{ fontWeight: 'medium' }}>
+          <Typography variant="h2" color="text.primary" sx={{ fontWeight: 'medium' }}>
             CITIES DASHBOARD
           </Typography>
           <Typography variant="body1" color="text.secondary">
@@ -72,6 +72,6 @@ export default function Header() {
           </Link>
         </Box>
       </Container>
-    </Paper>
+    </Box>
   );
 }

@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { Grid, Typography, Container, Paper } from '@mui/material';
+import { Grid, Typography, Container, Box } from '@mui/material';
 
 
 import { SocialHandleGrid } from '../../Pages/About/About';
@@ -12,11 +12,10 @@ function getYear() {
 
 export default function Footer() {
   return (
-    <Paper elevation={0} square sx={{ m: 0 }}>
-      <Container>
+      <Box width='100%' backgroundColor='customAlternateBackground'>
         <Grid container justify="center" align="center" sx={{ p: 5 }}>
           <Grid item xs={12}>
-            <Typography variant="body1" fontWeight="bold" gutterBottom>
+            <Typography variant="body1" fontWeight="bold" color='text.primary' gutterBottom>
               Center for Interacting Urban Networks
               <br />- {getYear()} -
             </Typography>
@@ -25,7 +24,6 @@ export default function Footer() {
             </Container>
           </Grid>
         </Grid>
-      </Container>
-    </Paper>
+      </Box>
   );
 }

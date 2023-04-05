@@ -21,6 +21,7 @@ const StyledAccordion = styled(MuiAccordion)(({ theme, expanded }) => ({
 }));
 
 const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme, expanded }) => ({
+    marginTop: expanded ? theme.spacing(3) : 0,
     flexDirection: 'row-reverse',
     paddingLeft: expanded ? theme.spacing(1) : 0,
     '& .MuiIconButton-root': {

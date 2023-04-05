@@ -20,7 +20,7 @@ import { MdLink } from 'react-icons/md';
 const DatasetDownloadButton = ({ project }) => {
   const isDisabled = project.sheetId == null ? true : false;
   return (
-    <Box sx={{ pb: 3 }}>
+    <Box>
       <a
         href={
           isDisabled

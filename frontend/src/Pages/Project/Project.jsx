@@ -166,8 +166,8 @@ const Project = ({ prefersDarkMode }) => {
                   {element.subtitle && parse(element.subtitle)}
                   {Object.keys(tab)[index] == index &&
                     element.subcharts &&
-                    element.subcharts[Object.values(tab)[index]].subtext &&
-                    parse(element.subcharts[Object.values(tab)[index]].subtext)}
+                    element.subcharts[Object.values(tab)[index]].subchartSubtitle &&
+                    parse(element.subcharts[Object.values(tab)[index]].subchartSubtitle)}
                   {element.reference && parse(element.reference)}
                 </Typography>
               </Container>

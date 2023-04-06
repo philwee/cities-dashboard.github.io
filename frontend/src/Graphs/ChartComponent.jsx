@@ -16,16 +16,19 @@ function InnerChart({ chartData, chartSubIndex }) {
         position={'relative'}
         className={chartData.chartType}
         height={chartData.height}
+        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
         width={'100%'}
       >
         <HeatMap
           publishedSheetId={chartData.publishedSheetId}
           gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
+          range={chartData.range || chartData.subcharts[chartSubIndex].range || null}
           height={chartData.height}
         />
       </Box>
     );
   }
+
   // Show CircleProgress or not
   let [circleProgress, displayCircleProgress] = useState(true);
 
@@ -52,27 +55,17 @@ function InnerChart({ chartData, chartSubIndex }) {
       backgroundColor: 'none',
       color: 'none',
     },
-    enableInteractivity: chartData.homePage ? false : true,
-    annotations: {
-      stem: {
-        length: chartData.homePage ? 0 : 100,
-      },
-      textStyle: {
-        opacity: chartData.homePage ? 0 : 1,
-      },
-    },
     tooltip: {
       isHtml: true,
     },
     curveType: 'function',
-    legend: chartData.homePage ? 'none' : chartData.options?.legend ?? 'bottom',
+    legend: chartData.options?.legend ?? 'bottom',
   };
   // 3. Append to vAxis and hAxis properties
   options.vAxis = {
     ...options.vAxis,
     format: options.vAxis?.format ?? 'decimal',
-    textPosition: chartData.homePage ? 'none' : '',
-    title: chartData.homePage ? '' : options.vAxis?.title ?? '',
+    title: options.vAxis?.title ?? '',
     viewWindow: {
       min: options.vAxis?.viewWindow?.min ?? 0,
     },
@@ -82,31 +75,32 @@ function InnerChart({ chartData, chartSubIndex }) {
   };
   options.hAxis = {
     ...options.hAxis,
-    textPosition: chartData.homePage ? 'none' : '',
-    title: chartData.homePage ? '' : options.hAxis?.title ?? '',
+    title: options.hAxis?.title ?? '',
     titleTextStyle: {
       italic: false,
     },
   };
 
-  if (
-    options.series &&
-    (chartData.homePage || chartData.homePage === undefined)
-  ) {
-    // loop through series object
-    for (const key in options.series) {
-      // loop through each series object
-      for (const key2 in options.series[key]) {
-        // if key2 is enableInteractivity, set it to false
-        if (key2 === 'enableInteractivity') {
-          options.series[key][key2] = chartData.homePage ? false : true;
-        }
-      }
-    }
-  }
-
-  if (options.vAxes && chartData.homePage) {
-    options.vAxes = {};
+  // If the chart is display on the homepage, override the options with:
+  if (chartData.homePage) options = {
+    ...options,
+    enableInteractivity: false,
+    annotations: {
+      stem: {
+        length: 0
+      },
+      textStyle: {
+        opacity: chartData.homePage ? 0 : 1,
+      },
+    },
+    legend: 'none',
+    vAxis: {
+      textPosition: 'none'
+    },
+    hAxis: {
+      textPosition: 'none'
+    },
+    vAxes: {},
   }
 
   const chartEvents = [
@@ -160,24 +154,24 @@ function InnerChart({ chartData, chartSubIndex }) {
         spreadSheetQueryParameters={
           chartSubIndex == null
             ? {
-                headers: chartData.headers,
-                query: chartData.query,
-                gid: chartData.gid,
-              }
+              headers: chartData.headers,
+              query: chartData.query,
+              gid: chartData.gid,
+            }
             : {
-                headers:
-                  chartData.headers ||
-                  chartData.subcharts[chartSubIndex].headers ||
-                  null,
-                query:
-                  chartData.query ||
-                  chartData.subcharts[chartSubIndex].query ||
-                  null,
-                gid:
-                  chartData.gid ||
-                  chartData.subcharts[chartSubIndex].gid ||
-                  null,
-              }
+              headers:
+                chartData.headers ||
+                chartData.subcharts[chartSubIndex].headers ||
+                null,
+              query:
+                chartData.query ||
+                chartData.subcharts[chartSubIndex].query ||
+                null,
+              gid:
+                chartData.gid ||
+                chartData.subcharts[chartSubIndex].gid ||
+                null,
+            }
         }
         options={options}
         chartEvents={chartEvents}
@@ -188,6 +182,13 @@ function InnerChart({ chartData, chartSubIndex }) {
 }
 
 export default function ChartComponent({ chartData }) {
+  // Assign the chart's properties based on the device orientation for HeatMap
+  if (chartData.chartType == 'HeatMap') {
+    chartData = {
+      ...chartData,
+      ...chartData[window.matchMedia("(orientation: landscape)").matches ? 'subchartsLandscape' : 'subchartsPortrait']
+    };
+  }
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
     // use tab context
@@ -206,10 +207,7 @@ export default function ChartComponent({ chartData }) {
     };
 
     return (
-      <Box
-        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
-        height="100%"
-      >
+      <Box height="100%">
         {chartData.homePage ? (
           ''
         ) : (

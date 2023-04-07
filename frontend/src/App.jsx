@@ -3,16 +3,15 @@
 
 import { React, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Box } from '@mui/material/';
+import { Box, Typography, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Header from './Components/Header/Header';
-// import Home from './Pages/Home/Home';
-// import Project from './Pages/Project/Project';
-// import About from './Pages/About/About';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
+
+import themeDatabase from './theme.json';
 
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
@@ -27,43 +26,17 @@ function App() {
         prefersDarkMode
           ? {
             // palette values for dark mode
-            palette: {
-              nyuPurple: '#57068c',
-              primary: {
-                main: '#893ebd', // lighter nyu purple
-                contrastText: '#000',
-              },
-              background: {
-                default: '#555555',
-              },
-              customBackground: '#181819',
-              customAlternateBackground: '#232323',
-              mode: 'dark',
-            },
-            typography: {
-              fontFamily: '"IBM Plex Sans", sans-serif !important',
-            },
+            palette: {...themeDatabase.dark.palette,...themeDatabase.universal.palette},
+            typography: themeDatabase.universal.palette
           }
           : {
             // palette values for light mode
-            palette: {
-              nyuPurple: '#57068c',
-              primary: {
-                main: '#57068c', // nyu purple
-                contrastText: '#fff',
-              },
-              customBackground: '#f6f6f6',
-              customAlternateBackground: '#ffffff',
-              mode: 'light',
-            },
-            typography: {
-              fontFamily: '"IBM Plex Sans", sans-serif !important',
-            },
+            palette: {...themeDatabase.light.palette,...themeDatabase.universal.palette},
+            typography: themeDatabase.universal.palette
           }
       ),
     [prefersDarkMode]
   );
-
 
   return (
     <BrowserRouter>
@@ -84,7 +57,7 @@ function App() {
             []
           )}
           <Box flex={1} display="flex" width="100%">
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<LoadingText/>}>
               <Routes>
                 <Route
                   path="/"
@@ -111,5 +84,13 @@ function App() {
     </BrowserRouter>
   );
 }
+
+const LoadingText = () => {
+  return(
+    <Container>
+      <Typography textAlign='center' sx={{p: 4}}>Loading...</Typography>
+    </Container>
+  )
+};
 
 export default App;

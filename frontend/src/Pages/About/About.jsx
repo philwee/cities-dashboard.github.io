@@ -46,7 +46,7 @@ const About = () => {
         <Container maxWidth="xs" sx={{ pb: 4 }}>
           <Grid justifyContent="center" container>
             <Grid item xs={12} sx={{ textAlign: 'center', pb: 2 }}>
-              <img style={{ maxWidth: '100%' }} src={citiesLogo} />
+              <img style={{ maxWidth: '100%', borderRadius: '1rem' }} src={citiesLogo} />
             </Grid>
             <SocialHandleGrid />
           </Grid>

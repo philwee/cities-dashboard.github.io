@@ -19,10 +19,18 @@ export default function Header() {
       <Container sx={{ pb: 3 }} backgroundColor='customAlternateBackground'>
         <Paper
           elevation={4}
-          sx={{ width: '12vh', height: '12vh', ml: 0, mt: '-6vh', mb: 3 }}
+          sx={{
+            width: '12vh', height: '12vh', ml: 0, mt: '-6vh', mb: 3, transition: '0.2s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.1)'
+            },
+          }}
         >
           <a href='/'>
-            <img style={{ width: '100%', borderRadius: '0.5rem' }} src={citiesLogo} />
+            <img
+              style={{ width: '100%', borderRadius: '0.5rem' }}
+              src={citiesLogo}
+              title='CITIES Dashboard' alt='CITIES Dashboard' />
           </a>
         </Paper>
         <Box sx={{ mb: 3 }}>

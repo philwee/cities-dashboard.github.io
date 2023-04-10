@@ -11,7 +11,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
 
-import themeDatabase from './theme.json';
+import customTheme from './CustomTheme';
 
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
@@ -19,20 +19,19 @@ const About = lazy(() => import('./Pages/About/About'));
 
 function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
   const theme = useMemo(
     () =>
       createTheme(
         prefersDarkMode
           ? {
             // palette values for dark mode
-            palette: {...themeDatabase.dark.palette,...themeDatabase.universal.palette},
-            typography: themeDatabase.universal.palette
+            palette: {...customTheme.dark.palette,...customTheme.universal.palette},
+            typography: customTheme.universal.palette
           }
           : {
             // palette values for light mode
-            palette: {...themeDatabase.light.palette,...themeDatabase.universal.palette},
-            typography: themeDatabase.universal.palette
+            palette: {...customTheme.light.palette,...customTheme.universal.palette},
+            typography: customTheme.universal.palette
           }
       ),
     [prefersDarkMode]

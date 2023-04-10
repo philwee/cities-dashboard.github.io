@@ -91,35 +91,36 @@ const Project = ({ prefersDarkMode }) => {
                 Dataset Owner:
               </Typography>
 
-              <Typography variant="body1" color="text.secondary" sx={{pb: 3}}>
-                {project.owner} - <CustomLink href={project.onwerContact} text={project.onwerContact}/>
+              <Typography variant="body1" color="text.secondary" sx={{ pb: 3 }}>
+                {project.owner} - <CustomLink href={project.onwerContact} text={project.onwerContact} />
               </Typography>
 
               <DatasetDownloadButton project={project} />
 
-              <ExpandableSection 
-              title='Sample Data'
-              content={
-                <>
-                  {project.rawDataTables.map((element, index) => (
-                    <Box
-                      key={index}
-                      sx={{ pt: 1 }}
-                      className={prefersDarkMode ? 'dark-mode' : ''}
-                    >
-                      <ChartComponent
-                        chartData={{
-                          chartType: 'Table',
-                          sortAscending: true,
-                          frozenColumns: 1,
-                          sheetId: project.sheetId,
-                          ...element,
-                        }}
-                      />
-                    </Box>
-                  ))}
-                </>
-              } />
+              <ExpandableSection
+                title='Sample Data'
+                content={
+                  <>
+                    {project.rawDataTables.map((element, index) => (
+                      <Box
+                        key={index}
+                        sx={{ pt: 1 }}
+                        className={prefersDarkMode ? 'dark-mode' : ''}
+                      >
+                        <ChartComponent
+                          chartData={{
+                            chartType: 'Table',
+                            sortAscending: true,
+                            frozenColumns: 1,
+                            sheetId: project.sheetId,
+                            ...element,
+                          }}
+                          prefersDarkMode={prefersDarkMode}
+                        />
+                      </Box>
+                    ))}
+                  </>
+                } />
             </Container>
           </Box>
 
@@ -150,26 +151,23 @@ const Project = ({ prefersDarkMode }) => {
                     }}
                   />
                 </Box>
-
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  gutterBottom
-                  sx={{
-                    mt: 2,
-                    paddingTop: 3,
-                    paddingLeft: 2,
-                    paddingRight: 2,
-                    textAlign: 'justify',
-                  }}
-                >
+                <Box sx={{m: 4}}>
+                <Typography variant="body1" color="text.secondary" sx={{mb: 4}}>
                   {element.subtitle && parse(element.subtitle)}
                   {Object.keys(tab)[index] == index &&
                     element.subcharts &&
                     element.subcharts[Object.values(tab)[index]].subchartSubtitle &&
                     parse(element.subcharts[Object.values(tab)[index]].subchartSubtitle)}
-                  {element.reference && parse(element.reference)}
                 </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {element.reference && parse(element.reference)}
+                  {Object.keys(tab)[index] == index &&
+                    element.subcharts &&
+                    element.subcharts[Object.values(tab)[index]].reference &&
+                    parse(element.subcharts[Object.values(tab)[index]].reference)}
+                </Typography>
+                </Box>
+                
               </Container>
             </Box>
           ))}

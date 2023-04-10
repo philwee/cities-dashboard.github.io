@@ -86,9 +86,9 @@ const Home = ({ prefersDarkMode }) => {
       <Box>
         <Container sx={{ pt: 4, pb: 4 }}>
           <UppercasedTitle text={'all projects'} />
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent='center'>
             {homeData.map((element, index) => (
-              <Grid key={index} item xs={12} sm={12} md={6}>
+              <Grid key={index} item xs={12} sm={9} md={6}>
                 <Card elevation={2}>
                   <CardActionArea
                     component={Link}
@@ -97,6 +97,7 @@ const Home = ({ prefersDarkMode }) => {
                   >
                     <Box className={prefersDarkMode ? 'dark-mode' : ''}>
                       <CardMedia
+                        className='noPointerEvent'
                         children={element.graph}
                         height={'auto'}
                         sx={{ aspectRatio: '4/3' }}

@@ -41,6 +41,7 @@ export const DataProvider = (props) => {
                     homePage: true,
                     ...item.charts[0],
                   }}
+                  chartWrapperHeight={"100%"}
                 />
               ),
             }

@@ -10,7 +10,7 @@ import './ChartComponent.css';
 
 import { useTheme } from '@mui/material/styles';
 
-function InnerChart({ chartData, chartSubIndex }) {
+function InnerChart({ chartData, chartSubIndex, isLandscape }) {
   // Case: HeatMap
   if (chartData.chartType == 'HeatMap') {
     return (
@@ -20,6 +20,7 @@ function InnerChart({ chartData, chartSubIndex }) {
         height={chartData.height}
         maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
         width={'100%'}
+        sx={{ pt: 2, pb: 2 }}
       >
         <HeatMap
           publishedSheetId={chartData.publishedSheetId}
@@ -48,7 +49,7 @@ function InnerChart({ chartData, chartSubIndex }) {
     ...options,
     ...chartData.options,
     theme: 'material',
-    chartArea: { width: '80%', height: '65%' },
+    chartArea: { width: '80%', height: isLandscape ? '70%' : '60%' },
     width: '100%',
     height: '100%',
     backgroundColor: {
@@ -59,8 +60,8 @@ function InnerChart({ chartData, chartSubIndex }) {
     },
     curveType: 'function',
     legend: {
-      legend: "Legend",
-      position: chartData.options?.legend?.position ?? 'right'
+      alignmemt: (isLandscape ? 'start' : 'center'),
+      position: chartData.options?.legend?.position ?? (isLandscape ? 'right' : 'top')
     },
   };
 
@@ -86,6 +87,12 @@ function InnerChart({ chartData, chartSubIndex }) {
     ...options.hAxis,
     title: options.hAxis?.title ?? ''
   };
+  // 3.1. If in portrait mode, slant the text of the hAxis
+  if (!isLandscape) options.hAxis = {
+    ...options.hAxis,
+    slantedText: true,
+    slantedTextAngle: 30
+  }
 
   // 4. Override with custom colors:
   // 4.1. Color scheme of all the series of this chart
@@ -174,9 +181,6 @@ function InnerChart({ chartData, chartSubIndex }) {
     vAxes: {},
   }
 
-
-
-
   const chartEvents = [
     {
       eventName: 'ready',
@@ -195,8 +199,8 @@ function InnerChart({ chartData, chartSubIndex }) {
     <Box
       position={'relative'}
       className={chartData.chartType}
+      height="100%"
       marginLeft={chartData.chartType == 'Calendar' ? '-1rem' : ''}
-      height={'100%'}
       width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}
     >
       {circleProgress && (
@@ -249,18 +253,23 @@ function InnerChart({ chartData, chartSubIndex }) {
         }
         options={options}
         chartEvents={chartEvents}
-        width={'100%'}
       />
     </Box>
   );
 }
 
-export default function ChartComponent({ chartData }) {
+export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight }) {
+  const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+  if (!chartWrapperHeight) {
+    chartWrapperHeight = isLandscape ? "35vw" : "80vw";
+    chartWrapperMaxHeight = isLandscape ? "500px" : "800px";
+  }
+
   // Assign the chart's properties based on the device orientation for HeatMap
   if (chartData.chartType == 'HeatMap') {
     chartData = {
       ...chartData,
-      ...chartData[window.matchMedia("(orientation: landscape)").matches ? 'subchartsLandscape' : 'subchartsPortrait']
+      ...chartData[isLandscape ? 'subchartsLandscape' : 'subchartsPortrait']
     };
   }
   // Check if there are multiple subcharts
@@ -282,28 +291,31 @@ export default function ChartComponent({ chartData }) {
 
     return (
       <Box height="100%">
-        {chartData.homePage ? (
-          ''
-        ) : (
-          <Tabs
-            value={indexValue}
-            onChange={handleChange}
-            variant="scrollable"
-            scrollButtons
-            allowScrollButtonsMobile
-          >
-            {chartData.subcharts.map((element, index) => (
-              <Tab
-                key={index}
-                value={index}
-                label={chartData.subcharts[index].subchartTitle}
-              />
-            ))}
-          </Tabs>
-        )}
+        {
+          // Hide the subchart selector if in homepage 
+          chartData.homePage ? (
+            ''
+          ) : (
+            <Tabs
+              value={indexValue}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons
+              allowScrollButtonsMobile
+            >
+              {chartData.subcharts.map((element, index) => (
+                <Tab
+                  key={index}
+                  value={index}
+                  label={chartData.subcharts[index].subchartTitle}
+                />
+              ))}
+            </Tabs>
+          )}
         <Box
           position="relative"
-          height={chartData.height ? chartData.height : '95%'}
+          height={chartData.height ? chartData.height : chartWrapperHeight}
+          maxHeight={["heatMap", "Calendar"].includes(chartData.chartType) ? '' : chartWrapperMaxHeight}
         >
           {chartData.subcharts.map((element, index) => (
             <Box
@@ -318,7 +330,7 @@ export default function ChartComponent({ chartData }) {
             >
               {useMemo(
                 () => (
-                  <InnerChart chartData={chartData} chartSubIndex={index} />
+                  <InnerChart chartData={chartData} chartSubIndex={index} isLandscape={isLandscape} />
                 ),
                 []
               )}
@@ -329,5 +341,13 @@ export default function ChartComponent({ chartData }) {
     );
   }
   // If there is only one single chart
-  else return <InnerChart chartData={chartData} />;
+  else return (
+    <Box
+      position="relative"
+      height={chartData.height ? chartData.height : chartWrapperHeight}
+      maxHeight={chartData.chartType == 'HeatMap' ? '' : chartWrapperMaxHeight}
+    >
+      <InnerChart chartData={chartData} isLandscape={isLandscape} />
+    </Box>
+  );
 }

@@ -87,7 +87,7 @@ function App() {
 const LoadingText = () => {
   return(
     <Container>
-      <Typography textAlign='center' sx={{p: 4}}>Loading...</Typography>
+      <Typography textAlign='center' sx={{p: 4}} color="text.primary">Loading...</Typography>
     </Container>
   )
 };

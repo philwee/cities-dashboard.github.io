@@ -225,10 +225,18 @@
         ],
         "chartType": "ColumnChart",
         "options": {
+          "annotations": {
+            "stem": {
+              "length": 30
+            }
+          },
           "colors": "rainbow",
           "vAxis": {
             "title": "Relative Number of Check-in, Normalized to Day with the Highest Number of Each Year",
             "format": "#.##%"
+          },
+          "hAxis": {
+            "title": "Year"
           }
         }
       },
@@ -238,7 +246,7 @@
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
         "subchartsPortrait": {
           "gid": 1445127203,
-          "maxWidth": "340px",
+          "maxWidth": "350px",
           "height": "620px",
           "subcharts": [
             {
@@ -257,8 +265,8 @@
         },
         "subchartsLandscape": {
           "gid": 729452023,
-          "maxWidth": "620px",
-          "height": "310px",
+          "maxWidth": "580px",
+          "height": "350px",
           "subcharts": [
             {
               "subchartTitle": "2022",
@@ -282,7 +290,7 @@
         "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
         "subchartsPortrait": {
           "gid": 309021928,
-          "maxWidth": "340px",
+          "maxWidth": "350px",
           "height": "480px",
           "subcharts": [
             {
@@ -301,8 +309,8 @@
         },
         "subchartsLandscape": {
           "gid": 1248059258,
-          "maxWidth": "470px",
-          "height": "310px",
+          "maxWidth": "480px",
+          "height": "350px",
           "subcharts": [
             {
               "subchartTitle": "2022",
@@ -516,7 +524,7 @@
           },
           "annotations": {
             "stem": {
-              "length": 70
+              "length": 30
             }
           },
           "intervals": {
@@ -530,6 +538,7 @@
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
+        "height": "50vw",
         "subcharts": [
           {
             "subchartTitle": "Total (3 meals)",
@@ -864,6 +873,7 @@
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
+        "height": "50vw",
         "options": {
           "colorAxis": {
             "minValue": 0,

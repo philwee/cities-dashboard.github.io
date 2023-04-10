@@ -23,7 +23,7 @@
 
 /* Invert iframe */
 .dark-mode .heat-map-iframe {
-    filter: invert(0.864) hue-rotate(180deg);
+    filter: invert(0.848) hue-rotate(180deg);
 }
 
 .dark-mode .google-visualization-table-tr-head{

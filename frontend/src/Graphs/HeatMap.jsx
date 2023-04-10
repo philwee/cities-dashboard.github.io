@@ -9,7 +9,7 @@ export default function HeatMap({ publishedSheetId, gid, range, height }) {
   return (
     <iframe
       className="heat-map-iframe"
-        style={{ width: '100%', height: "100%", height: height, border: 'none', marginTop: "1rem" }}
+        style={{ width: '100%', height: '100%', border: 'none' }}
         src={embedLink}
         ></iframe>
   );

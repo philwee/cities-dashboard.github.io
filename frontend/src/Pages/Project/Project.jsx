@@ -139,10 +139,6 @@ const Project = ({ prefersDarkMode }) => {
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
                 </Typography>
-                <Box
-                  height={element.chartType == 'HeatMap' ? '' : '60vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 600}
-                >
                   <ChartComponent
                     chartData={{
                       chartIndex: index,
@@ -150,9 +146,8 @@ const Project = ({ prefersDarkMode }) => {
                       ...element,
                     }}
                   />
-                </Box>
-                <Box sx={{m: 4}}>
-                <Typography variant="body1" color="text.secondary" sx={{mb: 4}}>
+                <Box sx={{m: 3}}>
+                <Typography variant="body1" color="text.secondary" sx={{mb: 3}}>
                   {element.subtitle && parse(element.subtitle)}
                   {Object.keys(tab)[index] == index &&
                     element.subcharts &&

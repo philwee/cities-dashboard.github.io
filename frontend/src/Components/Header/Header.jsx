@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <Box width='100%' sx={{ m: 0 }} backgroundColor='customAlternateBackground'>
-      <Box sx={{ backgroundColor: 'nyuPurple', height: '10vh' }} />
+      <Box sx={{ backgroundColor: 'NYUpurple', height: '10vh' }} />
       <Container sx={{ pb: 3 }} backgroundColor='customAlternateBackground'>
         <Paper
           elevation={4}

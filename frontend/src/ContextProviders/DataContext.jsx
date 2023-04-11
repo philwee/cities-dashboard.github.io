@@ -12,7 +12,7 @@ function ComingSoonBanner() {
   return (
     <Grid container height={'100%'} justifyContent="center" alignItems="center">
       <Grid item>
-        <Typography variant="h5" color="text.secondary">
+        <Typography variant="h3" color="text.secondary">
           Coming Soon
         </Typography>
       </Grid>

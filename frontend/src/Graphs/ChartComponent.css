@@ -1,24 +1,20 @@
+/* CSS for Google Charts' HTML tooltip (can't be formatted using options parameter) */
 .google-visualization-tooltip text, .google-visualization-tooltip span{
     font-size: 0.85rem !important;
 }
-
 .google-visualization-tooltip{
     width: unset !important;
     height: unset !important;
 }
-
 .Calendar .google-visualization-tooltip{
     padding: 0.5rem !important;
-}ƒtra
-
-/* Make all texts in the graph white if in dark mode */
-.dark-mode text{
-    fill: #ffffff;
+}
+.dark-mode .google-visualization-tooltip path{
+    fill: #121212; /* Invert tooltip background */
 }
 
-/* Invert tooltip background */
-.dark-mode .google-visualization-tooltip path{
-    fill: #121212;
+.Table *{
+    color: var(--mui-palette-primary-main);
 }
 
 /* Invert iframe */
@@ -38,7 +34,7 @@
     background-color: #232323;
 }
 
-/* Deactivate pointer event in table chart */
-.Table thead{
+/* Deactivate pointer event for class noPointerEvent (charts in home page) */
+.noPointerEvent{
     pointer-events: none;
 }

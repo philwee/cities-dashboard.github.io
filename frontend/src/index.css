@@ -19,7 +19,3 @@ ul{
 .iconLink:hover{
   color: #57068c;
 }
-
-.noPointerEvent{
-  pointer-events: none;
-}

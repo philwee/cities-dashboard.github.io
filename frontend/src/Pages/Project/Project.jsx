@@ -104,7 +104,7 @@ const Project = ({ prefersDarkMode }) => {
                     {project.rawDataTables.map((element, index) => (
                       <Box
                         key={index}
-                        sx={{ pt: 1 }}
+                        sx={(index < project.rawDataTables.length -1) ? {mb: 3} : {mb: 1}}
                         className={prefersDarkMode ? 'dark-mode' : ''}
                       >
                         <ChartComponent

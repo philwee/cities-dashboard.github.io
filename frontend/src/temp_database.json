@@ -291,7 +291,7 @@
         "subchartsPortrait": {
           "gid": 309021928,
           "maxWidth": "350px",
-          "height": "480px",
+          "height": "500px",
           "subcharts": [
             {
               "subchartTitle": "2022",
@@ -651,14 +651,40 @@
         }
       },
       {
-        "query": "SELECT * OFFSET 1",
-        "title": "Food Waste (kg) per Day of the Week (With 1 Standard Deviation)",
-        "subtitle": "The level of food wastage is relatively similar between the different days of the week, with relatively small dips over the weekend. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
-        "gid": 635067311,
-        "headers": 2,
+        "title": "Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
+        "subtitle": "Annually, the level of food wastage is relatively similar between the different days of the week. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "subcharts": [
+          {
+            "gid": 635067311,
+            "subchartTitle": "Total (3 meals)"
+          },
+          {
+            "gid": 1112965050,
+            "subchartTitle": "Breakfast"
+          },
+          {
+            "gid": 825083155,
+            "subchartTitle": "Lunch"
+          },
+          {
+            "gid": 1561192646,
+            "subchartTitle": "Dinner"
+          }
+        ],
+        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D LIMIT 2",
+        "headers": 1,
         "chartType": "ColumnChart",
         "columns": [
           0,
+          1,
+          {
+            "role": "interval",
+            "sourceColumn": 2
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 3
+          },
           4,
           {
             "role": "interval",
@@ -676,6 +702,42 @@
           {
             "role": "interval",
             "sourceColumn": 9
+          },
+          10,
+          {
+            "role": "interval",
+            "sourceColumn": 11
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 12
+          },
+          13,
+          {
+            "role": "interval",
+            "sourceColumn": 14
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 15
+          },
+          16,
+          {
+            "role": "interval",
+            "sourceColumn": 17
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 18
+          },
+          19,
+          {
+            "role": "interval",
+            "sourceColumn": 20
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 21
           }
         ],
         "options": {
@@ -690,7 +752,11 @@
             "title": "Food Waste (in Kilogram)"
           },
           "hAxis": {
-            "title": "Year"
+            "title": "Year",
+            "format": "",
+            "minorGridlines": {
+              "count": 0
+            }
           }
         }
       }
@@ -958,7 +1024,6 @@
         }
       },
       {
-        "query": "SELECT * OFFSET 1",
         "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 1 Standard Deviation",
         "subcharts": [
           {
@@ -974,8 +1039,9 @@
             "subchartTitle": "Dining Hall D2"
           }
         ],
+        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D",
         "subtitle": "",
-        "headers": 2,
+        "headers": 1,
         "chartType": "ColumnChart",
         "columns": [
           0,
@@ -1005,6 +1071,42 @@
           {
             "role": "interval",
             "sourceColumn": 9
+          },
+          10,
+          {
+            "role": "interval",
+            "sourceColumn": 11
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 12
+          },
+          13,
+          {
+            "role": "interval",
+            "sourceColumn": 14
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 15
+          },
+          16,
+          {
+            "role": "interval",
+            "sourceColumn": 17
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 18
+          },
+          19,
+          {
+            "role": "interval",
+            "sourceColumn": 20
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 21
           }
         ],
         "options": {

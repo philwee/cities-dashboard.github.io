@@ -15,13 +15,13 @@ const customTheme = {
             },
             background: {
                 paper: "#202020",
-                default: "#272727"
+                default: "#303030"
             },
             customBackground: "#202020",
-            customAlternateBackground: "#272727",
+            customAlternateBackground: "#303030",
             chart: {
                 optionsColors: {
-                    monochromatic: ['#893ebd', colors.purple[darkShade-100], colors.purple[darkShade-200], colors.purple[darkShade-300]],
+                    monochromatic: [colors.purple[darkShade-200], colors.purple[darkShade-100], colors.purple[darkShade], colors.purple[darkShade+100], colors.purple[darkShade+200], colors.purple[darkShade+300], colors.purple[darkShade+400]],
                     multiColor: [colors.blue[darkShade], colors.pink[darkShade], colors.amber[darkShade], colors.teal[darkShade], colors.blueGrey[darkShade]],
                     grayscale: [colors.grey[darkShade - 100], colors.grey, colors.grey[darkShade + 100]],
                     rainbow: [colors.red[darkShade], colors.orange[darkShade], colors.amber[darkShade], colors.green[darkShade], colors.blue[darkShade], colors.indigo[darkShade], colors.deepPurple[darkShade]]
@@ -44,7 +44,7 @@ const customTheme = {
             customAlternateBackground: "#ffffff",
             chart: {
                 optionsColors: {
-                    monochromatic: ['#57068c', colors.purple[lightShade], colors.purple[lightShade-200], colors.purple[lightShade-400]],
+                    monochromatic: [colors.purple[darkShade+300], colors.purple[darkShade+200], colors.purple[darkShade+100], colors.purple[darkShade], colors.purple[darkShade-100], colors.purple[darkShade-200], colors.purple[darkShade-300]],
                     multiColor: [colors.blue[lightShade], colors.pink[lightShade], colors.amber[lightShade], colors.teal[lightShade], colors.blueGrey[lightShade]],
                     grayscale: [colors.grey[lightShade + 100], colors.grey, colors.grey[lightShade + 100]],
                     rainbow: [colors.red[lightShade], colors.orange[lightShade], colors.amber[lightShade], colors.green[lightShade], colors.blue[lightShade], colors.indigo[lightShade], colors.deepPurple[lightShade]]

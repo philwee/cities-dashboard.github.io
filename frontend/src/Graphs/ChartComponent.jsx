@@ -22,7 +22,9 @@ function InnerChart({ chartData, chartSubIndex }) {
         <HeatMap
           publishedSheetId={chartData.publishedSheetId}
           gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
-          range={chartData.range || chartData.subcharts[chartSubIndex].range || null}
+          range={
+            chartData.range || chartData.subcharts[chartSubIndex].range || null
+          }
           height={chartData.height}
         />
       </Box>
@@ -82,26 +84,27 @@ function InnerChart({ chartData, chartSubIndex }) {
   };
 
   // If the chart is display on the homepage, override the options with:
-  if (chartData.homePage) options = {
-    ...options,
-    enableInteractivity: false,
-    annotations: {
-      stem: {
-        length: 0
+  if (chartData.homePage)
+    options = {
+      ...options,
+      enableInteractivity: false,
+      annotations: {
+        stem: {
+          length: 0,
+        },
+        textStyle: {
+          opacity: chartData.homePage ? 0 : 1,
+        },
       },
-      textStyle: {
-        opacity: chartData.homePage ? 0 : 1,
+      legend: 'none',
+      vAxis: {
+        textPosition: 'none',
       },
-    },
-    legend: 'none',
-    vAxis: {
-      textPosition: 'none'
-    },
-    hAxis: {
-      textPosition: 'none'
-    },
-    vAxes: {},
-  }
+      hAxis: {
+        textPosition: 'none',
+      },
+      vAxes: {},
+    };
 
   const chartEvents = [
     {
@@ -154,24 +157,24 @@ function InnerChart({ chartData, chartSubIndex }) {
         spreadSheetQueryParameters={
           chartSubIndex == null
             ? {
-              headers: chartData.headers,
-              query: chartData.query,
-              gid: chartData.gid,
-            }
+                headers: chartData.headers,
+                query: chartData.query,
+                gid: chartData.gid,
+              }
             : {
-              headers:
-                chartData.headers ||
-                chartData.subcharts[chartSubIndex].headers ||
-                null,
-              query:
-                chartData.query ||
-                chartData.subcharts[chartSubIndex].query ||
-                null,
-              gid:
-                chartData.gid ||
-                chartData.subcharts[chartSubIndex].gid ||
-                null,
-            }
+                headers:
+                  chartData.headers ||
+                  chartData.subcharts[chartSubIndex].headers ||
+                  null,
+                query:
+                  chartData.query ||
+                  chartData.subcharts[chartSubIndex].query ||
+                  null,
+                gid:
+                  chartData.gid ||
+                  chartData.subcharts[chartSubIndex].gid ||
+                  null,
+              }
         }
         options={options}
         chartEvents={chartEvents}
@@ -186,7 +189,11 @@ export default function ChartComponent({ chartData }) {
   if (chartData.chartType == 'HeatMap') {
     chartData = {
       ...chartData,
-      ...chartData[window.matchMedia("(orientation: landscape)").matches ? 'subchartsLandscape' : 'subchartsPortrait']
+      ...chartData[
+        window.matchMedia('(orientation: landscape)').matches
+          ? 'subchartsLandscape'
+          : 'subchartsPortrait'
+      ],
     };
   }
   // Check if there are multiple subcharts

@@ -23,7 +23,7 @@ import UppercasedTitle from '../../Components/UppercasedTitle';
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
 
-const Home = ({ prefersDarkMode }) => {
+const Home = ({ themePreference }) => {
   // useState for home page data
   const [_, setUnderlineLink] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
@@ -52,14 +52,18 @@ const Home = ({ prefersDarkMode }) => {
         </Container>
       </Box>
 
-      <Box backgroundColor='customAlternateBackground'>
+      <Box backgroundColor="customAlternateBackground">
         <Container sx={{ pt: 4, pb: 4 }}>
           <UppercasedTitle text={'at a glance'} />
 
-          <Grid container direction="row" spacing={4} sx={{
-            textAlign: 'center',
-            justifyContent: 'center',
-          }}
+          <Grid
+            container
+            direction="row"
+            spacing={4}
+            sx={{
+              textAlign: 'center',
+              justifyContent: 'center',
+            }}
           >
             {jsonData.statistics.map((item, index) => (
               <Grid key={index} item md={3} sm={4} xs={12}>
@@ -86,17 +90,18 @@ const Home = ({ prefersDarkMode }) => {
       <Box>
         <Container sx={{ pt: 4, pb: 4 }}>
           <UppercasedTitle text={'all projects'} />
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             {homeData.map((element, index) => (
-              <Grid key={index} item xs={12} sm={12} md={6}>
+              <Grid key={index} item xs={12} sm={9} md={6}>
                 <Card elevation={2}>
                   <CardActionArea
                     component={Link}
                     to={`/project/${element.id}`}
                     disabled={element.isEmpty}
                   >
-                    <Box className={prefersDarkMode ? 'dark-mode' : ''}>
+                    <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia
+                        className="noPointerEvent"
                         children={element.graph}
                         height={'auto'}
                         sx={{ aspectRatio: '4/3' }}
@@ -105,7 +110,11 @@ const Home = ({ prefersDarkMode }) => {
 
                     <Divider />
                     <CardContent>
-                      <Typography variant="h6" component="div" color="text.primary">
+                      <Typography
+                        variant="h6"
+                        component="div"
+                        color="text.primary"
+                      >
                         {element.title}
                       </Typography>
                       <Typography variant="body1" color="text.secondary">
@@ -117,9 +126,7 @@ const Home = ({ prefersDarkMode }) => {
               </Grid>
             ))}
           </Grid>
-
         </Container>
-
       </Box>
     </Box>
   );

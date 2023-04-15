@@ -38,11 +38,10 @@ const DatasetDownloadButton = ({ project }) => {
         </Button>
       </a>
     </Box>
-
   );
-}
+};
 
-const Project = ({ prefersDarkMode }) => {
+const Project = ({ themePreference }) => {
   const [_, setUnderlineLink] = useContext(LinkContext);
   let { id } = useParams();
   const [project, setProject] = useState({});
@@ -91,35 +90,45 @@ const Project = ({ prefersDarkMode }) => {
                 Dataset Owner:
               </Typography>
 
-              <Typography variant="body1" color="text.secondary" sx={{pb: 3}}>
-                {project.owner} - <CustomLink href={project.onwerContact} text={project.onwerContact}/>
+              <Typography variant="body1" color="text.secondary" sx={{ pb: 3 }}>
+                {project.owner} -{' '}
+                <CustomLink
+                  href={project.onwerContact}
+                  text={project.onwerContact}
+                />
               </Typography>
 
               <DatasetDownloadButton project={project} />
 
-              <ExpandableSection 
-              title='Sample Data'
-              content={
-                <>
-                  {project.rawDataTables.map((element, index) => (
-                    <Box
-                      key={index}
-                      sx={{ pt: 1 }}
-                      className={prefersDarkMode ? 'dark-mode' : ''}
-                    >
-                      <ChartComponent
-                        chartData={{
-                          chartType: 'Table',
-                          sortAscending: true,
-                          frozenColumns: 1,
-                          sheetId: project.sheetId,
-                          ...element,
-                        }}
-                      />
-                    </Box>
-                  ))}
-                </>
-              } />
+              <ExpandableSection
+                title="Sample Data"
+                content={
+                  <>
+                    {project.rawDataTables.map((element, index) => (
+                      <Box
+                        key={index}
+                        sx={
+                          index < project.rawDataTables.length - 1
+                            ? { mb: 3 }
+                            : { mb: 1 }
+                        }
+                        className={themePreference ? 'dark-mode' : ''}
+                      >
+                        <ChartComponent
+                          chartData={{
+                            chartType: 'Table',
+                            sortAscending: true,
+                            frozenColumns: 1,
+                            sheetId: project.sheetId,
+                            ...element,
+                          }}
+                          themePreference={themePreference}
+                        />
+                      </Box>
+                    ))}
+                  </>
+                }
+              />
             </Container>
           </Box>
 
@@ -132,44 +141,45 @@ const Project = ({ prefersDarkMode }) => {
             >
               <Container
                 sx={{ pt: 4, pb: 4 }}
-                className={prefersDarkMode ? 'dark-mode' : ''}
+                className={themePreference ? 'dark-mode' : ''}
                 height="auto"
               >
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}
                 </Typography>
-                <Box
-                  height={element.chartType == 'HeatMap' ? '' : '60vw'}
-                  maxHeight={element.chartType == 'HeatMap' ? '' : 600}
-                >
-                  <ChartComponent
-                    chartData={{
-                      chartIndex: index,
-                      sheetId: project.sheetId,
-                      ...element,
-                    }}
-                  />
-                </Box>
-
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  gutterBottom
-                  sx={{
-                    mt: 2,
-                    paddingTop: 3,
-                    paddingLeft: 2,
-                    paddingRight: 2,
-                    textAlign: 'justify',
+                <ChartComponent
+                  chartData={{
+                    chartIndex: index,
+                    sheetId: project.sheetId,
+                    ...element,
                   }}
-                >
-                  {element.subtitle && parse(element.subtitle)}
-                  {Object.keys(tab)[index] == index &&
-                    element.subcharts &&
-                    element.subcharts[Object.values(tab)[index]].subchartSubtitle &&
-                    parse(element.subcharts[Object.values(tab)[index]].subchartSubtitle)}
-                  {element.reference && parse(element.reference)}
-                </Typography>
+                />
+                <Box sx={{ m: 3 }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ mb: 3 }}
+                  >
+                    {element.subtitle && parse(element.subtitle)}
+                    {Object.keys(tab)[index] == index &&
+                      element.subcharts &&
+                      element.subcharts[Object.values(tab)[index]]
+                        .subchartSubtitle &&
+                      parse(
+                        element.subcharts[Object.values(tab)[index]]
+                          .subchartSubtitle
+                      )}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {element.reference && parse(element.reference)}
+                    {Object.keys(tab)[index] == index &&
+                      element.subcharts &&
+                      element.subcharts[Object.values(tab)[index]].reference &&
+                      parse(
+                        element.subcharts[Object.values(tab)[index]].reference
+                      )}
+                  </Typography>
+                </Box>
               </Container>
             </Box>
           ))}

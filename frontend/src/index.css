@@ -1,21 +1,27 @@
 * {
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'IBM Plex Sans', sans-serif !important;
-  }
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
 
-ul{
+body {
+  overscroll-behavior: none;
+}
+
+
+ul {
   margin-left: 2em;
 }
 
-#root{
+#root {
   overflow-x: hidden;
 }
 
-.iconLink{
+.iconLink {
   color: gray;
 }
-.iconLink:hover{
+
+.iconLink:hover {
   color: #57068c;
 }

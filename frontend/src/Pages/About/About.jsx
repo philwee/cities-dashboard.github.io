@@ -52,11 +52,10 @@ const About = () => {
           </Grid>
         </Container>
         <UppercasedTitle text="the center" />
-
         <Typography
           variant="body1"
           gutterBottom
-          sx={{ mb: 5 }}
+          sx={{ mt: -2, mb: 5 }}
           color="text.secondary"
         >
           The NYUAD&apos;s Center for Interacting Urban Networks (CITIES) is an
@@ -67,7 +66,8 @@ const About = () => {
         </Typography>
         <UppercasedTitle text="the project" />
 
-        <Typography variant="body1" gutterBottom color="text.secondary">
+        <Typography sx={{ mt: -2 }}
+          variant="body1" gutterBottom color="text.secondary">
           This dashboard is an ongoing initiative funded by CITIES to provide
           the NYU Abu Dhabi's community with data related to sustainability and
           well-being on campus. As is the case with current environmental and
@@ -75,9 +75,9 @@ const About = () => {
           community, carefully-crafted data visualizations encourage people to
           explore the scopes, nuances, and personal responsibilities within such
           topics, which results in positive awareness and behavior changes.
-        </Typography>
-        <br />
-        <Typography variant="body1" gutterBottom color="text.secondary">
+
+        <br /><br />
+        
           The CITIES dashboard is currently on its first public-release
           iteration. Any feedback on the existing datasets and visualizations
           and/or suggestions for future datasets is particularly welcomed. Feel

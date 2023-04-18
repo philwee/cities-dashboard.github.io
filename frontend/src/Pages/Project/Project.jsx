@@ -12,6 +12,8 @@ import { Box, Typography, Container, Divider, Button } from '@mui/material';
 import ExpandableSection from './ExpandableSection';
 import CustomLink from '../../Components/CustomLink';
 
+import ThemePreferences from '../../ThemePreferences';
+
 import data from '../../temp_database.json';
 import './Project.css';
 
@@ -112,7 +114,6 @@ const Project = ({ themePreference }) => {
                             ? { mb: 3 }
                             : { mb: 1 }
                         }
-                        className={themePreference ? 'dark-mode' : ''}
                       >
                         <ChartComponent
                           chartData={{
@@ -141,8 +142,8 @@ const Project = ({ themePreference }) => {
             >
               <Container
                 sx={{ pt: 4, pb: 4 }}
-                className={themePreference ? 'dark-mode' : ''}
                 height="auto"
+                className={themePreference === ThemePreferences.dark ? 'dark' : ''}
               >
                 <Typography variant="h6" color="text.primary">
                   {index + 1}. {element.title}

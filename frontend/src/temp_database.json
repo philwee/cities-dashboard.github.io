@@ -538,7 +538,7 @@
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
-        "height": "50vw",
+        "height": "55vw",
         "subcharts": [
           {
             "subchartTitle": "Total (3 meals)",
@@ -939,7 +939,7 @@
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
-        "height": "50vw",
+        "height": "55vw",
         "options": {
           "colorAxis": {
             "minValue": 0,

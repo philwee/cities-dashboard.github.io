@@ -22,13 +22,9 @@ const StyledTable = styled('div')(({ theme, isLandscape }) => ({
     textAlign: 'left',
     wordWrap: isLandscape ? 'break-word' : '',
   },
-  '& .table-row': {
+  '& .table-row, & .odd-table-row': {
     color: theme.palette.text.secondary,
     backgroundColor: theme.palette.customAlternateBackground,
-  },
-  '& .odd-table-row': {
-    color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.customBackground,
   },
   '& .table-row .table-cell:first-child, & .odd-table-row .table-cell:first-child':
     {
@@ -413,7 +409,7 @@ export default function ChartComponent({
           position="relative"
           height={chartData.height ? chartData.height : chartWrapperHeight}
           maxHeight={
-            ['heatMap', 'Calendar'].includes(chartData.chartType)
+            ['HeatMap', 'Calendar'].includes(chartData.chartType)
               ? ''
               : chartWrapperMaxHeight
           }

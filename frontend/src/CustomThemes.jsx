@@ -6,7 +6,7 @@ const darkShade = 400;
 const lightShade = 600;
 const darkShadeColorAxis = 300;
 
-const customTheme = {
+const CustomThemes = {
     dark: {
         palette: {
             mode: "dark",
@@ -67,4 +67,4 @@ const customTheme = {
     }
 }
 
-export default customTheme;
+export default CustomThemes;

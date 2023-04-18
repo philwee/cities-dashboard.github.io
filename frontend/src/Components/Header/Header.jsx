@@ -13,6 +13,8 @@ import { IoReturnDownBack } from 'react-icons/io5';
 
 import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
 
+import ThemePreferences from '../../ThemePreferences';
+
 import citiesLogo from '../../cities-logo.png';
 
 import './Header.css';
@@ -46,23 +48,23 @@ export default function Header({ themePreference, setThemePreference }) {
 
   const themeChangeHandler = ({ matches }) => {
     if (matches) {
-      setThemePreference('Dark');
+      setThemePreference(ThemePreferences.dark);
     } else {
-      setThemePreference('Light');
+      setThemePreference(ThemePreferences.light);
     }
   };
 
   useEffect(() => {
-    if (themeValue === 'Dark') {
-      setThemePreference('Dark');
-    } else if (themeValue === 'Light') {
-      setThemePreference('Light');
-    } else if (themeValue === 'System') {
+    if (themeValue === ThemePreferences.dark) {
+      setThemePreference(ThemePreferences.dark);
+    } else if (themeValue === ThemePreferences.light) {
+      setThemePreference(ThemePreferences.light);
+    } else if (themeValue === ThemePreferences.system) {
       const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
       if (darkThemeMq.matches) {
-        setThemePreference('Dark');
+        setThemePreference(ThemePreferences.dark);
       } else {
-        setThemePreference('Light');
+        setThemePreference(ThemePreferences.light);
       }
       darkThemeMq.addEventListener('change', themeChangeHandler);
       return () => {
@@ -83,21 +85,21 @@ export default function Header({ themePreference, setThemePreference }) {
             onChange={handleChange}
             sx={{ minWidth: "8rem" }}
           >
-            <MenuItem value={'System'}>
+            <MenuItem value={ThemePreferences.system}>
               <Typography color="text.primary">
                 <Contrast sx={{ mr: 0.5, verticalAlign: "middle" }} />
                 System
               </Typography>
             </MenuItem>
 
-            <MenuItem value={'Light'}>
+            <MenuItem value={ThemePreferences.light}>
               <Typography color="text.primary">
                 <LightMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
                 Light
               </Typography>
             </MenuItem>
 
-            <MenuItem value={'Dark'}>
+            <MenuItem value={ThemePreferences.dark}>
               <Typography color="text.primary">
                 <DarkMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
                 Dark

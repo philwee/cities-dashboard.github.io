@@ -10,7 +10,8 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
 
-import customTheme from './CustomTheme';
+import ThemePreferences from './ThemePreferences';
+import CustomThemes from './CustomThemes';
 
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
@@ -19,16 +20,16 @@ const About = lazy(() => import('./Pages/About/About'));
 const getDesignTokens = (themePreference) => ({
   palette: {
     mode: themePreference,
-    ...(themePreference === 'Dark'
+    ...(themePreference === ThemePreferences.dark
       ? {
-          ...customTheme.dark.palette,
-          ...customTheme.universal.palette,
-          typography: customTheme.universal.palette,
+          ...CustomThemes.dark.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
         }
       : {
-          ...customTheme.light.palette,
-          ...customTheme.universal.palette,
-          typography: customTheme.universal.palette,
+          ...CustomThemes.light.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
         }),
   },
 });
@@ -38,8 +39,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme')
       : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'Dark'
-      : 'Light'
+      ? ThemePreferences.dark
+      : ThemePreferences.light
   );
 
   // create theme using getDesignTokens

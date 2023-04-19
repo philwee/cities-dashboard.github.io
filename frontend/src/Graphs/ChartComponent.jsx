@@ -11,16 +11,16 @@ import './ChartComponent.css';
 import { useTheme, styled } from '@mui/material/styles';
 
 // styled component for the Google Table chart
-const StyledTable = styled('div')(({ theme, isLandscape }) => ({
+const StyledTable = styled('div')(({ theme, isPortrait }) => ({
   '& table': {
-    tableLayout: isLandscape ? 'fixed' : '',
+    tableLayout: isPortrait ? 'fixed' : '',
     fontSize: '0.75rem',
   },
   '& .header-row': {
     backgroundColor: theme.palette.customBackground,
     pointerEvents: 'none',
     textAlign: 'left',
-    wordWrap: isLandscape ? 'break-word' : '',
+    wordWrap: isPortrait ? '' : 'break-word',
   },
   '& .table-row, & .odd-table-row': {
     color: theme.palette.text.secondary,
@@ -32,7 +32,7 @@ const StyledTable = styled('div')(({ theme, isLandscape }) => ({
     },
 }));
 
-function InnerChart({ chartData, chartSubIndex, isLandscape }) {
+function InnerChart({ chartData, chartSubIndex, isPortrait }) {
   // Options object for the chart
   let options = {};
   // Show CircleProgress or not
@@ -49,7 +49,7 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
         height={chartData.height}
         maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
         width={'100%'}
-        sx={{ pt: 2, pb: 2 }}
+        sx={{ pt: 2, pb: 2, margin: 'auto' }}
       >
         <HeatMap
           publishedSheetId={chartData.publishedSheetId}
@@ -78,7 +78,7 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
       width: '100%',
     };
     return (
-      <StyledTable isLandscape={isLandscape}>
+      <StyledTable isPortrait={isPortrait}>
         <Chart
           chartType={chartData.chartType}
           spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
@@ -106,7 +106,7 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
       ...options,
       ...chartData.options,
       theme: 'material',
-      chartArea: { width: '80%', height: isLandscape ? '70%' : '60%' },
+      chartArea: { width: isPortrait? '80%' : '75%', height: isPortrait? '60%' : '70%' },
       width: '100%',
       height: '100%',
       backgroundColor: {
@@ -117,10 +117,10 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
       },
       curveType: 'function',
       legend: {
-        alignmemt: isLandscape ? 'start' : 'center',
+        alignmemt: isPortrait ? 'center' : 'start',
         position:
           chartData.options?.legend?.position ??
-          (isLandscape ? 'right' : 'top'),
+          (isPortrait ? 'top' : 'right'),
         scrollArrows: {
           activeColor: theme.palette.chart.axisTitle,
           inactiveColor: theme.palette.text.secondary,
@@ -157,7 +157,7 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
       title: options.hAxis?.title ?? '',
     };
     // 3.1. If in portrait mode, slant the text of the hAxis
-    if (!isLandscape)
+    if (isPortrait)
       options.hAxis = {
         ...options.hAxis,
         slantedText: true,
@@ -346,22 +346,20 @@ function InnerChart({ chartData, chartSubIndex, isLandscape }) {
   );
 }
 
-export default function ChartComponent({
-  chartData,
-  chartWrapperHeight,
-  chartWrapperMaxHeight,
-}) {
-  const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight}) {
+  // Get the device orientation to make the google chart responsive
+  const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+  
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
-    chartWrapperHeight = isLandscape ? '35vw' : '80vw';
-    chartWrapperMaxHeight = isLandscape ? '500px' : '800px';
+    chartWrapperHeight = isPortrait ? '80vw' : '35vw';
+    chartWrapperMaxHeight = isPortrait ? '800px' : '500px' ;
   }
 
   // Assign the chart's properties based on the device orientation for HeatMap
   if (chartData.chartType == 'HeatMap') {
     chartData = {
       ...chartData,
-      ...chartData[isLandscape ? 'subchartsLandscape' : 'subchartsPortrait'],
+      ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
     };
   }
   // Check if there are multiple subcharts
@@ -430,7 +428,7 @@ export default function ChartComponent({
                   <InnerChart
                     chartData={chartData}
                     chartSubIndex={index}
-                    isLandscape={isLandscape}
+                    isPortrait={isPortrait}
                   />
                 ),
                 []
@@ -451,7 +449,7 @@ export default function ChartComponent({
           chartData.chartType == 'HeatMap' ? '' : chartWrapperMaxHeight
         }
       >
-        <InnerChart chartData={chartData} isLandscape={isLandscape} />
+        <InnerChart chartData={chartData} isPortrait={isPortrait} />
       </Box>
     );
 }

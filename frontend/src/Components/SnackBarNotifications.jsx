@@ -61,7 +61,7 @@ export default function DeviceOrientationNotification() {
 
     return (
         <SimpleSnackBar
-            message='Best experienced on computers or landscape mode'
+            message='The dashboard is best experienced on computers'
             open={open}
             handleClose={handleClose}
             autoHideDuration={10000}

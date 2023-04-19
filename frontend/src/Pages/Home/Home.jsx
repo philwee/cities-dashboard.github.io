@@ -40,7 +40,7 @@ const Home = ({ themePreference }) => {
           <UppercasedTitle text={'join us!'} />
           <Grid container spacing={4}>
             {jsonData.banners.map((item, index) => (
-              <Grid key={index} item md={6} xs={12}>
+              <Grid key={index} item xs={12} sm={6}>
                 <Paper elevation={2} sx={{ p: 3 }}>
                   <Typography variant="body1" color="text.secondary">
                     {parse(item)}
@@ -92,7 +92,7 @@ const Home = ({ themePreference }) => {
           <UppercasedTitle text={'all projects'} />
           <Grid container spacing={4} justifyContent="center">
             {homeData.map((element, index) => (
-              <Grid key={index} item xs={12} sm={9} md={6}>
+              <Grid key={index} item xs={12} sm={6}>
                 <Card elevation={2}>
                   <CardActionArea
                     component={Link}

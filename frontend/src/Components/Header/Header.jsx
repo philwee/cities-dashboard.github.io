@@ -112,10 +112,10 @@ export default function Header({ themePreference, setThemePreference }) {
         <Paper
           elevation={4}
           sx={{
-            width: '12vh',
-            height: '12vh',
+            width: '6rem',
+            height: '6rem',
             ml: 0,
-            mt: '-6vh',
+            mt: '-3rem',
             mb: 3,
             transition: '0.2s ease-in-out',
             '&:hover': {

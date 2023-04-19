@@ -1,7 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
 
-import { React, useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Box, Typography, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -9,6 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './Components/Header/Header';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
+
+import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
 import ThemePreferences from './ThemePreferences';
 import CustomThemes from './CustomThemes';
@@ -22,15 +24,15 @@ const getDesignTokens = (themePreference) => ({
     mode: themePreference,
     ...(themePreference === ThemePreferences.dark
       ? {
-          ...CustomThemes.dark.palette,
-          ...CustomThemes.universal.palette,
-          typography: CustomThemes.universal.palette,
-        }
+        ...CustomThemes.dark.palette,
+        ...CustomThemes.universal.palette,
+        typography: CustomThemes.universal.palette,
+      }
       : {
-          ...CustomThemes.light.palette,
-          ...CustomThemes.universal.palette,
-          typography: CustomThemes.universal.palette,
-        }),
+        ...CustomThemes.light.palette,
+        ...CustomThemes.universal.palette,
+        typography: CustomThemes.universal.palette,
+      }),
   },
 });
 
@@ -39,8 +41,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme')
       : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? ThemePreferences.dark
-      : ThemePreferences.light
+        ? ThemePreferences.dark
+        : ThemePreferences.light
   );
 
   // create theme using getDesignTokens
@@ -61,6 +63,9 @@ function App() {
             backgroundColor: 'customBackground',
           }}
         >
+          <DeviceOrientationNotification />
+
+
           {useMemo(
             () => (
               <Header

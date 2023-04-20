@@ -86,7 +86,7 @@ const Project = ({ themePreference }) => {
                   <Chip size="small" icon={<EmailIcon />} label={project.contact} title="Contact" />
                 </Grid>
                 <Grid item>
-                  <Chip size="small" icon={<PublishedWithChangesIcon />} label={project.lastUpdate} title="Dataset's Last Update" />
+                  <Chip size="small" icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`} title="Dataset's Last Update" />
                 </Grid>
               </Grid>
 

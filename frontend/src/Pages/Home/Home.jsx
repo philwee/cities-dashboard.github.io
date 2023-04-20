@@ -18,7 +18,7 @@ import {
   Paper,
 } from '@mui/material';
 
-import UppercasedTitle from '../../Components/UppercasedTitle';
+import UppercaseTitle from '../../Components/UppercaseTitle';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
@@ -37,7 +37,7 @@ const Home = ({ themePreference }) => {
     <Box width="100%">
       <Box>
         <Container sx={{ pt: 4, pb: 4 }}>
-          <UppercasedTitle text={'join us!'} />
+          <UppercaseTitle text={'join us!'} />
           <Grid container spacing={4}>
             {jsonData.banners.map((item, index) => (
               <Grid key={index} item xs={12} sm={6}>
@@ -54,7 +54,7 @@ const Home = ({ themePreference }) => {
 
       <Box backgroundColor="customAlternateBackground">
         <Container sx={{ pt: 4, pb: 4 }}>
-          <UppercasedTitle text={'at a glance'} />
+          <UppercaseTitle text={'at a glance'} />
 
           <Grid
             container
@@ -89,7 +89,7 @@ const Home = ({ themePreference }) => {
 
       <Box>
         <Container sx={{ pt: 4, pb: 4 }}>
-          <UppercasedTitle text={'all projects'} />
+          <UppercaseTitle text={'all projects'} />
           <Grid container spacing={4} justifyContent="center">
             {homeData.map((element, index) => (
               <Grid key={index} item xs={12} sm={6}>

@@ -6,7 +6,7 @@ import {Facebook, LinkedIn, Instagram, Twitter} from '@mui/icons-material/';
 import { Grid, Typography, Container, Paper } from '@mui/material';
 
 import CustomLink from '../../Components/CustomLink';
-import UppercasedTitle from '../../Components/UppercasedTitle';
+import UppercaseTitle from '../../Components/UppercaseTitle';
 
 import citiesLogo from '../../cities-logo.png';
 
@@ -51,7 +51,7 @@ const About = () => {
             <SocialHandleGrid />
           </Grid>
         </Container>
-        <UppercasedTitle text="the center" />
+        <UppercaseTitle text="the center" />
         <Typography
           variant="body1"
           gutterBottom
@@ -62,22 +62,14 @@ const About = () => {
           interdisciplinary research center dedicated to advance urban science
           and promote cutting-edge research that is translated into practical,
           real-world solutions for the benefit of society. Our ultimate goal is
-          to foster sustainable, resilient, and equitable cities.
+          to foster sustainable, resilient, and equitable cities. To test and showcase cutting-edge applications of its research in real life, CITIES uses the NYUAD campus as a field lab.
         </Typography>
-        <UppercasedTitle text="the project" />
+        <UppercaseTitle text="the project" />
 
         <Typography sx={{ mt: -2 }}
           variant="body1" gutterBottom color="text.secondary">
-          This dashboard is an ongoing initiative funded by CITIES to provide
-          the NYU Abu Dhabi's community with data related to sustainability and
-          well-being on campus. As is the case with current environmental and
-          lifestyle changes worldwide and within the growing NYU Abu Dhabi
-          community, carefully-crafted data visualizations encourage people to
-          explore the scopes, nuances, and personal responsibilities within such
-          topics, which results in positive awareness and behavior changes.
-
+          CITIES collects different types of data from the NYUAD campus and display them on this dashboard. CITIES dashboard is an ongoing project that acts as a data repository to be used by NYUAD researchers, students, and campus stakeholders as a handy tool for data visualization to inform the NYUAD community and promote more sustainable behaviors, and as a platform to support campus stakeholders to improve their operations and meet their Key Performance Indicators (KPIs). 
         <br /><br />
-        
           The CITIES dashboard is currently on its first public-release
           iteration. Any feedback on the existing datasets and visualizations
           and/or suggestions for future datasets is particularly welcomed. Feel

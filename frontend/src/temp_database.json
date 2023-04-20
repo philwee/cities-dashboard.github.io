@@ -3,9 +3,10 @@
     "id": "athletics-fabs-membership",
     "title": "Athletics FABS Membership",
     "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 9 different account types, this dataset categorizes into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undegraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
+    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year. For example, the academic year of 2021 spanned from September 1, 2021 to August 31, 2022.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 9 different account types, this dataset categorizes into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>External: contract, external instructor, guest, and Tamkeen</li></ul>",
     "owner": "Department of Athletics",
-    "onwerContact": "nyuad.athletics@nyu.edu",
+    "contact": "nyuad.athletics@nyu.edu",
+    "lastUpdate": "Aug 2022",
     "rawDataTables": [
       {
         "gid": 560722866,
@@ -15,7 +16,7 @@
     "charts": [
       {
         "title": "Number of Unique FABS Memberships",
-        "subtitle": "As the university continues to expand over the year, the number of registrations has exhibited a clear upward trend. However, there was a significant decrease of staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
+        "subtitle": "As the university continues to expand over the year, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
         "gid": 337720664,
         "headers": 1,
         "columns": [
@@ -53,7 +54,7 @@
       },
       {
         "title": "Percentage of Demographic Groups in FABS",
-        "subtitle": "In relative terms, undergraduate students have remained the largest group of Fitness Facilitiy users in recent years, representing around two-third of all users.",
+        "subtitle": "Undergraduate students have remained the largest group of Fitness Facility memberships in recent years, representing around two-third of all memberships.",
         "gid": 337720664,
         "headers": 1,
         "columns": [
@@ -95,9 +96,10 @@
     "id": "athletic-facilities-check-in",
     "title": "Athletic Facilities Check-in",
     "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
-    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track... This dataset serves as a proxy on estimating the fitness level and physical activity of the community. Temporal data visualizations also allow us to avoid peak times in indoor spaces and spread our exercises more evenly throughout a day or a week.",
+    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track... This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or a week.",
     "owner": "Department of Athletics",
-    "onwerContact": "nyuad.athletics@nyu.edu",
+    "contact": "nyuad.athletics@nyu.edu",
+    "lastUpdate": "May 2022",
     "rawDataTables": [
       {
         "gid": 1993454060,
@@ -117,7 +119,7 @@
         "subcharts": [
           {
             "subchartTitle": "All time average (2020-2022)",
-            "subchartSubtitle": "As the typical workday draws to an end at around <b>5-6pm</b> for students, faculties, and staffs, this time window is the busiest period for fitness activities. While the number of check-in varies throughout the day, with a relatively smaller peak in the morning from 8-9am, the figure doesn't usually surpass half of that of the busiest time. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> timeslots where the occupancy rate is only a quarter of the busiest time.",
+            "subchartSubtitle": "As the typical workday draws to an end at around <b>5-6pm</b> for students, faculties, and staffs, this time window is the busiest period for fitness activities. While the number of check-in varies throughout the day, with a relatively smaller peak in the morning from 8-9am, the figure doesn't usually surpass half of that of the busiest time. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
             "query": "SELECT A, F, H, I",
             "columns": [
               0,
@@ -170,7 +172,7 @@
       },
       {
         "title": "Facilities Check-in Per Week Day, Normalized to the Max Value of Each Year",
-        "subtitle": "While the level of fitness activities exhibits a strong diurnal variation, it remains more stable throughout the weekdays. The second day of the weekend and the first work day of the week have historically been off-peak days where attendance is around 10-30% less compared to the busiest day. Interestingly, even when the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun), this pattern still holds true: 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
+        "subtitle": "While the level of fitness activities exhibits a clear diurnal variation, it remains more stable throughout the weekdays. The second day of the weekend and the first work day of the week have historically been off-peak days, where attendance is around 10-30% less than the busiest day. Interestingly, this pattern still holds even when the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun). 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
         "gid": 654076094,
         "headers": 1,
         "columns": [
@@ -370,9 +372,10 @@
     "id": "food-waste",
     "title": "Food Waste",
     "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
-    "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...",
+    "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is purely the absolute amount of food waste, not taking into account the effect of how many people eat at the Dining Hall D2. We are currently working with the service provider to collect aggregate, anonymized number of transactions and calculate per-transaction waste to better reflect the level of food waste of the years.",
     "owner": "NYUAD Dining",
-    "onwerContact": "nyuad.dining@nyu.edu",
+    "contact": "nyuad.dining@nyu.edu",
+    "lastUpdate": "Feb 2023",
     "rawDataTables": [
       {
         "gid": 1952244844,
@@ -534,7 +537,7 @@
       },
       {
         "title": "Historical Daily Food Waste (kg)",
-        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food can be saved for those in need, simply multiply the kilogram figure by 2.</b>",
+        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food could have been saved, simply multiply the kilogram figure by 2.</b>",
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
@@ -651,8 +654,8 @@
         }
       },
       {
-        "title": "Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
-        "subtitle": "Annually, the level of food wastage is relatively similar between the different days of the week. This might be a surprise to some because most faculties/staffs do not come to campus and students often go out to other dining outlets in the city during the weekend.",
+        "title": "Mean Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
+        "subtitle": "Annually, the level of food wastage is relatively similar between the different days of the week.",
         "subcharts": [
           {
             "gid": 635067311,
@@ -741,7 +744,7 @@
           }
         ],
         "options": {
-          "colors": "monochromatic",
+          "colors": "rainbow",
           "bar": {
             "groupWidth": "40%"
           },
@@ -766,9 +769,10 @@
     "id": "air-quality",
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
-    "description": "<a href='https://citiesair.com/' target='_blank' rel='noopener noreferrer'>CITIESair</a> was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html' target='_blank' rel='noopener noreferrer'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transfering technology to other schools in Abu Dhabi.<br><br>The air quality network on NYU Abu Dhabi now consists of 3 stations: an outdoor station situated in between A1 and A2 building, an indoor station in the Campus Center, and another indoor station in the Dining Hall D2. In 2022, we also designed and featured real-time air quality banners on NYUAD's Student Portal and Intranet, while maintaining the existing physical air quality screens in the Campus Center and Dining Hall D2.",
+    "description": "<a href='https://citiesair.com/' target='_blank' rel='noopener noreferrer'>CITIESair</a> was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html' target='_blank' rel='noopener noreferrer'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.<br><br>The air quality network on NYU Abu Dhabi now consists of 3 stations: an outdoor station situated in between A1 and A2 building, an indoor station in the Campus Center, and another indoor station in the Dining Hall D2. In 2022, we also designed and featured real-time air quality banners on NYUAD's Student Portal and Intranet, while maintaining the existing physical air quality screens in the Campus Center and Dining Hall D2.",
     "owner": "CITIESair",
-    "onwerContact": "cities.nyuad@nyu.edu",
+    "contact": "cities.nyuad@nyu.edu",
+    "lastUpdate": "Today",
     "rawDataTables": [
       {
         "gid": 584789045,
@@ -1125,7 +1129,7 @@
           {
             "gid": 1768452772,
             "subchartTitle": "Outdoor",
-            "subchartSubtitle": "<ul><li>Outdoor dust concentration often peaks in the early morning, followed by a sharp drop until noon and a gradual build-up throughout the night. This is consistent with other studies  in Abu Dhabi <sup>[1][2]</sup>, and is potentially explained by an high humidity levels causing secondary formation of aerosol particles and hygrosopic growth of aerosols.</li></ul>",
+            "subchartSubtitle": "<ul><li>Outdoor dust concentration often peaks in the early morning, followed by a sharp drop until noon and a gradual build-up throughout the night. This is consistent with other studies  in Abu Dhabi <sup>[1][2]</sup>, and is potentially explained by an high humidity levels causing secondary formation of aerosol particles and hygroscopic growth of aerosols.</li></ul>",
             "reference": "[1] Al-Jallad, Fadi A., Clarence C. Rodrigues, and Hamda A. Al-Thani. \"Ambient Levels of TSP, PM10, PM2. 5 and Particle Number Concentration in Al Samha, UAE.\" <i>Journal of Environmental Protection</i> 8.09 (2017): 1002.<br>[2] Phanikumar, Devulapalli Venkata, et al. \"Assessment of particulate matter concentration and gaseous pollutants in urban and rural regions over the Emirate of Abu Dhabi, UAE.\" <i>Journal of Atmospheric and Solar-Terrestrial Physics</i> 199 (2020): 105217."
           },
           {
@@ -1308,7 +1312,8 @@
     "sheetId": "1xRuDQem0jvTil1MfXXI4sptWU37Q53VkTwVunqdnSY0",
     "description": "",
     "owner": "NYU Institutional Research",
-    "onwerContact": "cities.nyuad@nyu.edu",
+    "contact": "cities.nyuad@nyu.edu",
+    "lastUpdate": null,
     "rawDataTables": [
       {
         "gid": 1622588326,

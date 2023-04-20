@@ -26,7 +26,7 @@ const StyledTable = styled('div')(({ theme, isPortrait }) => ({
     color: theme.palette.text.secondary,
     backgroundColor: theme.palette.customAlternateBackground,
   },
-  '& .table-row .table-cell:first-child, & .odd-table-row .table-cell:first-child':
+  '& .table-row .table-cell:first-of-type, & .odd-table-row .table-cell:first-of-type':
     {
       fontWeight: 'bold',
     },
@@ -77,6 +77,7 @@ function InnerChart({ chartData, chartSubIndex, isPortrait }) {
       },
       width: '100%',
     };
+
     return (
       <StyledTable isPortrait={isPortrait}>
         <Chart
@@ -117,7 +118,7 @@ function InnerChart({ chartData, chartSubIndex, isPortrait }) {
       },
       curveType: 'function',
       legend: {
-        alignmemt: isPortrait ? 'center' : 'start',
+        alignment: isPortrait ? 'center' : 'start',
         position:
           chartData.options?.legend?.position ??
           (isPortrait ? 'top' : 'right'),

@@ -6,18 +6,20 @@ import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
-import UppercasedTitle from '../../Components/UppercasedTitle';
-import { Box, Typography, Container, Divider, Button } from '@mui/material';
+import UppercaseTitle from '../../Components/UppercaseTitle';
+import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
 
 import ExpandableSection from './ExpandableSection';
-import CustomLink from '../../Components/CustomLink';
 
 import ThemePreferences from '../../ThemePreferences';
 
 import data from '../../temp_database.json';
 import './Project.css';
 
-import { MdLink } from 'react-icons/md';
+import PersonIcon from '@mui/icons-material/Person';
+import LinkIcon from '@mui/icons-material/Link';
+import EmailIcon from '@mui/icons-material/Email';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 // Download button: download raw dataset
 const DatasetDownloadButton = ({ project }) => {
@@ -34,7 +36,7 @@ const DatasetDownloadButton = ({ project }) => {
         rel="noreferrer"
       >
         <Button disabled={isDisabled} variant="contained">
-          <MdLink />
+          <LinkIcon />
           &nbsp;
           {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
         </Button>
@@ -73,7 +75,22 @@ const Project = ({ themePreference }) => {
         <Box width="100%">
           <Box>
             <Container sx={{ pt: 4, pb: 4 }}>
-              <UppercasedTitle text={project.title} />
+
+              <UppercaseTitle text={project.title} />
+
+              <Grid container spacing={1} sx={{ pb: 3, mt: -3 }}>
+                <Grid item>
+                  <Chip size="small" icon={<PersonIcon />} label={project.owner} title="Dataset Owner"/>
+                </Grid>
+                <Grid item>
+                  <Chip size="small" icon={<EmailIcon />} label={project.contact} title="Contact" />
+                </Grid>
+                <Grid item>
+                  <Chip size="small" icon={<PublishedWithChangesIcon />} label={project.lastUpdate} title="Dataset's Last Update" />
+                </Grid>
+              </Grid>
+
+              {/* google-visualization-table-type-date table-cell */}
 
               <Typography
                 variant="body1"
@@ -82,22 +99,6 @@ const Project = ({ themePreference }) => {
                 gutterBottom
               >
                 {parse(project.description)}
-              </Typography>
-
-              <Typography
-                variant="body1"
-                color="text.primary"
-                sx={{ fontWeight: 'medium' }}
-              >
-                Dataset Owner:
-              </Typography>
-
-              <Typography variant="body1" color="text.secondary" sx={{ pb: 3 }}>
-                {project.owner} -{' '}
-                <CustomLink
-                  href={project.onwerContact}
-                  text={project.onwerContact}
-                />
               </Typography>
 
               <DatasetDownloadButton project={project} />

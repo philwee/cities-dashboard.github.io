@@ -1251,58 +1251,6 @@
             "position": "top"
           }
         }
-      },
-      {
-        "title": "[External Data] Annual PM2.5 Concentration (µg/m3) by Country",
-        "subcharts": [
-          {
-            "query": "SELECT A, B",
-            "subchartTitle": "2022"
-          },
-          {
-            "query": "SELECT A, C",
-            "subchartTitle": "2021"
-          },
-          {
-            "query": "SELECT A, D",
-            "subchartTitle": "2020"
-          },
-          {
-            "query": "SELECT A, E",
-            "subchartTitle": "2019"
-          },
-          {
-            "query": "SELECT A, F",
-            "subchartTitle": "2018"
-          }
-        ],
-        "subtitle": "Hover on each country to see its annual PM2.5 concentration (µg/m3) [1], compared to the UAE over the past 5 years <b>(29.2 - 49.9 µg/m3)</b>. For reference, the World Health Organization's guidelines for annual PM2.5 concentration [2] is <b>5µg/m3</b>.",
-        "reference": "[1] Source data: IQAir - <a href='https://www.iqair.com/us/world-most-polluted-countries' target='_blank' rel='noopener noreferrer'>World's Most Polluted Countries</a><br>[2] World Health Organization. \"WHO global air quality guidelines: particulate matter (PM2. 5 and PM10), ozone, nitrogen dioxide, sulfur dioxide and carbon monoxide: executive summary.\" (2021).",
-        "gid": 1488995786,
-        "headers": 1,
-        "chartType": "GeoChart",
-        "options": {
-          "defaultColor": "transparent",
-          "datalessRegionColor": "transparent",
-          "colorAxis": {
-            "minValue": 0,
-            "maxValue": 150.4,
-            "colors": [
-              "#219653",
-              "#F2C94C",
-              "#F2994A",
-              "#EB5757",
-              "#9B51E0"
-            ],
-            "values": [
-              0,
-              12,
-              35.4,
-              55.4,
-              150.4
-            ]
-          }
-        }
       }
     ]
   },

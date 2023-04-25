@@ -35,3 +35,9 @@
 .noPointerEvent {
     pointer-events: none;
 }
+
+/* Modify the appearance of the Google chart's filter */
+[id^=googlechart-control] {
+    opacity: 0.75;
+    filter: saturate(0.25);
+}

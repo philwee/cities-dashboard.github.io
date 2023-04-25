@@ -96,7 +96,7 @@
     "id": "athletic-facilities-check-in",
     "title": "Athletic Facilities Check-in",
     "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
-    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track... This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or a week.",
+    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track... This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or a week.<br><br><small><b>Note: </b> We are working hard to collect data from May 2022 onwards. Stay tuned!</small>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
     "lastUpdate": "May 2022",
@@ -386,33 +386,34 @@
     "charts": [
       {
         "title": "Mean Daily Food Waste (kg) by Week",
-        "subtitle": "These charts visualize the mean daily food waste by week, in total or by each meal (breakfast, lunch, and dinner). The shaded interval representing 1 standard deviation (not applicable in the stacked chart). Hover on the line chart to see the week number. From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise (as COVID restrictions were loosened in 2022 and as the student population continues to increase year-by-year). When the data is broken down into the three constituent meals, the increase in 2022 can primarily be traced back to a significant rise of food waste from lunch and dinner.",
         "headers": 1,
         "chartType": "ComboChart",
         "subcharts": [
           {
             "gid": 1409006115,
             "subchartTitle": "Total (3 meals)",
+            "subchartSubtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>COVID restrictions were loosened in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at the facility as the student population continues to increase year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul><b>Adjust the slider to zoom in.</b>",
+            "query": "SELECT C, D, F, G, H, I",
             "columns": [
-              2,
-              3,
+              0,
+              1,
               {
                 "role": "interval",
-                "sourceColumn": 5
+                "sourceColumn": 2
               },
               {
                 "role": "interval",
-                "sourceColumn": 6
+                "sourceColumn": 3
               },
               {
                 "role": "tooltip",
                 "type": "string",
-                "sourceColumn": 7
+                "sourceColumn": 4
               },
               {
                 "role": "annotation",
                 "type": "string",
-                "sourceColumn": 8
+                "sourceColumn": 5
               }
             ],
             "options": {
@@ -431,30 +432,32 @@
           {
             "gid": 1232867906,
             "subchartTitle": "by Meal (Stacked)",
+            "subchartSubtitle": "When the data is broken down into the three constituent meals, the majority of food waste comes from lunch and dinner",
+            "query": "SELECT C, D, F, H, P, Q, R, S",
             "columns": [
+              0,
+              1,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 4
+              },
               2,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 5
+              },
               3,
               {
                 "role": "tooltip",
                 "type": "string",
-                "sourceColumn": 15
-              },
-              5,
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 16
-              },
-              7,
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 17
+                "sourceColumn": 6
               },
               {
                 "role": "annotation",
                 "type": "string",
-                "sourceColumn": 18
+                "sourceColumn": 7
               }
             ],
             "options": {
@@ -463,58 +466,6 @@
                 "maxValue": 150
               },
               "isStacked": true
-            }
-          },
-          {
-            "gid": 1232867906,
-            "subchartTitle": "by Meal (Unstacked)",
-            "columns": [
-              2,
-              3,
-              {
-                "role": "interval",
-                "sourceColumn": 9
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 10
-              },
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 15
-              },
-              5,
-              {
-                "role": "interval",
-                "sourceColumn": 11
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 12
-              },
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 16
-              },
-              7,
-              {
-                "role": "interval",
-                "sourceColumn": 13
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 14
-              },
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 17
-              }
-            ],
-            "options": {
-              "seriesType": "line"
             }
           }
         ],
@@ -533,7 +484,8 @@
           "intervals": {
             "style": "area"
           }
-        }
+        },
+        "filter": "ChartRangeFilter"
       },
       {
         "title": "Historical Daily Food Waste (kg)",
@@ -769,7 +721,7 @@
     "id": "air-quality",
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
-    "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD (and a number of schools in Abu Dhabi). The air quality network at NYU Abu Dhabi consists of 3 stations: an outdoor station between A1 and A2 buildings, two indoor stations in the Campus Center, and Dining Hall D2, respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/' target='_blank' rel='noopener noreferrer'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad' target='_blank' rel='noopener noreferrer'>IQAir website</a> (only outdoor station), and physical air quality screens in the Campus Center and Dining Hall D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html' target='_blank' rel='noopener noreferrer'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
+    "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD (and a number of schools in Abu Dhabi). The air quality network at NYU Abu Dhabi consists of 3 stations: an outdoor station between A1 and A2 buildings, two indoor stations in the Campus Center, and Dining Hall D2, respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), and physical air quality screens in the Campus Center and Dining Hall D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
     "owner": "CITIESair",
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdate": "Today",
@@ -780,70 +732,127 @@
         "query": "SELECT A, B, C, D, G, H, I, L, M, N ORDER BY A DESC LIMIT 10"
       }
     ],
+    "homepageChartIndex": 1,
     "charts": [
       {
-        "title": "Historical Snapshots of Air Quality Index",
+        "title": "An Introduction of the US Air Quality Index (AQI)",
+        "gid": 1958405288,
         "subcharts": [
           {
-            "gid": 184715989,
-            "subchartTitle": "Last Week",
+            "subchartTitle": "US Air Quality Index (AQI)",
+            "query": "SELECT * WHERE A = 'Range (AQI)'",
             "options": {
-              "hAxis": {
-                "format": "MMM dd, HH:mm",
-                "title": "Date Time"
+              "vAxis": {
+                "title": "US Air Quality Index (AQI)",
+                "ticks": [
+                  0,
+                  50,
+                  100,
+                  150,
+                  200,
+                  300,
+                  500
+                ],
+                "textPosition": "in"
               }
             }
           },
           {
-            "gid": 2066975752,
-            "subchartTitle": "Monthly",
-            "query": "SELECT A, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y",
-            "columns": [
-              0,
-              1,
-              {
-                "role": "interval",
-                "sourceColumn": 2
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 3
-              },
-              4,
-              {
-                "role": "interval",
-                "sourceColumn": 5
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 6
-              },
-              7,
-              {
-                "role": "interval",
-                "sourceColumn": 8
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 9
-              },
-              10,
-              11,
-              12,
-              13,
-              14,
-              15
-            ],
-            "series": {
-              "0": {
-                "title": "with ±1 standard deviation range"
+            "subchartTitle": "Equivalent Raw PM2.5 Concentration (ug/m3)",
+            "query": "SELECT * WHERE A = 'Range (PM2.5)'",
+            "options": {
+              "vAxis": {
+                "title": "PM2.5 Concentration (µg/m3)",
+                "format": "#.##",
+                "ticks": [
+                  0,
+                  12.1,
+                  35.5,
+                  55.5,
+                  150.5,
+                  250.5,
+                  500.5
+                ],
+                "textPosition": "in"
               }
-            },
+            }
+          }
+        ],
+        "subtitle": "CITIESair adopts the <a href='https://www.airnow.gov/aqi/aqi-basics/'>Air Quality Index (AQI)</a> developed by the United States' Environmental Protection Agency (EPA) to effectively communicate different levels of PM2.5 air pollution with color-coded categories. To calculate the AQI from the raw measurement of PM2.5 concentration (ug/m3), different breakpoints and piecewise linear function are utilized (read more <a href='https://en.wikipedia.org/wiki/Air_quality_index#United_States'>here</a>). Without getting into the technical implementation of the index, it is worth noting that higher AQI values correspond to poorer air quality and higher heath risks to humans.<br><br>The US EPA sets thresholds for PM2.5 concentration: <sup>[1]</sup><ul><li><b>Annual average</b>: 12.0 µg/m3, corresponding to US AQI <b>50</b></li><li><b>24-hour average</b>: 35.0 µg/m3, corresponding to US AQI <b>100</b></li></ul>In 2021, the World's Heath Organization (WHO) proposed a new guideline for PM2.5<sup>[2]</sup> with stricter thresholds than those of the US EPA:<ul><li><b>Annual average</b>: 5.0 µg/m3, corresponding to US AQI <b>21</b></li><li><b>24-hour average</b>: 15.0 µg/m3, corresponding to US AQI <b>56</b></li></ul>",
+        "reference": "[1] \"National Ambient Air Quality Standards (NAAQS) for PM.\" EPA, Environmental Protection Agency, https://www.epa.gov/pm-pollution/national-ambient-air-quality-standards-naaqs-pm.<br>[2] World Health Organization. \"WHO global air quality guidelines: particulate matter (PM2. 5 and PM10), ozone, nitrogen dioxide, sulfur dioxide and carbon monoxide: executive summary.\" (2021).",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          1,
+          {
+            "role": "tooltip",
+            "sourceColumn": 2
+          },
+          3,
+          {
+            "role": "tooltip",
+            "sourceColumn": 4
+          },
+          5,
+          {
+            "role": "tooltip",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "tooltip",
+            "sourceColumn": 8
+          },
+          9,
+          {
+            "role": "tooltip",
+            "sourceColumn": 10
+          },
+          11,
+          {
+            "role": "tooltip",
+            "sourceColumn": 12
+          },
+          13,
+          {
+            "role": "tooltip",
+            "sourceColumn": 14
+          }
+        ],
+        "options": {
+          "isStacked": true,
+          "colors": "aqi",
+          "hAxis": {
+            "textPosition": "none"
+          },
+          "bar": {
+            "groupWidth": "20%"
+          }
+        }
+      },
+      {
+        "title": "Historical Snapshots of AQI",
+        "subcharts": [
+          {
+            "gid": 184715989,
+            "subchartTitle": "Hourly (Last 30 Days)",
+            "subchartSubtitle": "Explore the <b>latest</b> hourly average AQI over the past month here. Compare and see for yourself the differences among the air quality at different locations on the NYU Abu Dhabi campus.<br><br><b>Adjust the slider to zoom in.</b>",
             "options": {
               "hAxis": {
-                "title": "Month",
-                "slantedText": true,
-                "slantedTextAngle": "30"
+                "title": "Date Time"
+              }
+            },
+            "filter": "ChartRangeFilter"
+          },
+          {
+            "gid": 2066975752,
+            "subchartTitle": "Monthly (All Time)",
+            "query": "SELECT A, L, O, R, U, V, W, X, Y , Z",
+            "subchartSubtitle": "Looking at the monthly average of the AQIs, it is clear that in terms of how bad PM2.5 air pollution is: outdoors > the Dining Hall D2 > the Campus Center. Indoor air quality in the Dining Hall D2 and Campus Center also exhibits similar increasing/decreasing trends with the outside air. More comments on seasonal and spatial trends can be found on the next charts.",
+            "options": {
+              "hAxis": {
+                "title": "Month"
               }
             }
           }
@@ -858,29 +867,29 @@
           "areaOpacity": 1,
           "series": {
             "0": {
-              "lineWidth": 2,
+              "lineWidth": 1.5,
               "type": "line",
-              "color": "#111111",
+              "color": "#000",
               "enableInteractivity": true
             },
             "1": {
-              "lineWidth": 2,
+              "lineWidth": 1,
               "type": "line",
-              "color": "#111111",
+              "color": "#000",
               "enableInteractivity": true,
               "lineDashStyle": [
-                7,
-                4
+                5,
+                2
               ]
             },
             "2": {
-              "lineWidth": 2,
+              "lineWidth": 1,
               "type": "line",
-              "color": "#111111",
+              "color": "#000",
               "enableInteractivity": true,
               "lineDashStyle": [
-                2,
-                2
+                1,
+                1
               ]
             },
             "3": {
@@ -912,19 +921,12 @@
             "style": "area"
           },
           "vAxis": {
-            "title": "US Air Quality Index (AQI)",
-            "ticks": [
-              0,
-              50,
-              100,
-              150,
-              200
-            ]
+            "title": "US AQI"
           }
         }
       },
       {
-        "title": "Daily Air Quality Index, All Time",
+        "title": "Daily AQI, All Time",
         "subcharts": [
           {
             "query": "SELECT A, C",
@@ -939,43 +941,14 @@
             "subchartTitle": "Dining Hall D2"
           }
         ],
-        "subtitle": "",
+        "subtitle": "This calendar chart shows how the daily AQI varies throughout the year across different locations of the air quality network. Each square cell represents one day and its color corresponds to the category of the AQI. Hover over each square cell to see the specific date and its average AQI.<br><br><small><b>Note: </b>There were some gaps in our data collection. Dates where there was no recorded data are represented by empty cells.</small>",
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
         "height": "55vw",
         "options": {
           "colorAxis": {
-            "minValue": 0,
-            "maxValue": 500,
-            "colors": [
-              "#219653",
-              "#219653",
-              "#F2C94C",
-              "#F2C94C",
-              "#F2994A",
-              "#F2994A",
-              "#EB5757",
-              "#EB5757",
-              "#9B51E0",
-              "#9B51E0",
-              "#662000",
-              "#662000"
-            ],
-            "values": [
-              0,
-              50,
-              51,
-              100,
-              101,
-              150,
-              151,
-              200,
-              201,
-              300,
-              301,
-              500
-            ]
+            "colors": "aqi"
           },
           "legend": {
             "position": "none"
@@ -1016,19 +989,11 @@
             "format": "#%",
             "title": "Percentage"
           },
-          "colors": [
-            "#bbbbbb",
-            "#219653",
-            "#F2C94C",
-            "#F2994A",
-            "#EB5757",
-            "#9B51E0",
-            "#662000"
-          ]
+          "colors": "aqi"
         }
       },
       {
-        "title": "Average PM2.5 Concentration (µg/m3) by Day of the Week, with 1 Standard Deviation",
+        "title": "Yearly Average PM2.5 Concentration (µg/m3) by Day of the Week, with 1 Standard Deviation",
         "subcharts": [
           {
             "gid": 803236520,
@@ -1044,7 +1009,7 @@
           }
         ],
         "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D",
-        "subtitle": "",
+        "subtitle": "There is no statistically significant difference in the yearly average PM2.5 concentration across 7 days of the week in any of the 3 locations.",
         "headers": 1,
         "chartType": "ColumnChart",
         "columns": [
@@ -1148,9 +1113,7 @@
         "headers": 2,
         "chartType": "LineChart",
         "options": {
-          "colors": [
-            "#9f95a6"
-          ],
+          "colors": "grayscale",
           "vAxis": {
             "title": "PM2.5 Concentration (µg/m3)"
           },
@@ -1159,10 +1122,10 @@
             "slantedText": true,
             "slantedTextAngle": 60
           },
-          "lineWidth": 1,
+          "lineWidth": 0.5,
           "series": {
             "12": {
-              "lineWidth": 4,
+              "lineWidth": 6,
               "color": "default"
             }
           }
@@ -1217,7 +1180,7 @@
             }
           }
         ],
-        "subtitle": "Indoor air quality is shown to moderately correlate with outdoor air quality, with R<sup>2</sup> around 0.5-0.6 <i>(hover on the best fit equations to see the exact R<sup>2</sup> value)</i>. Predictably, thanks to the air filtration systems, indoor PM2.5 concentrations are significantly lower than its outdoor counterpart, around <b>6x</b> and <b>4x</b> lower for Campus Center and Dining Hall D2, respectively. Due to cooking activities, air quality in the Dining Hall is estimated to be <b>1.5x</b> worse than the Campus Center when comparing their daily average.",
+        "subtitle": "Indoor air quality is shown to correlate with outdoor air quality, with R<sup>2</sup> around 0.5-0.6 <i>(hover on the best fit equations to see the exact R<sup>2</sup> value)</i>. Predictably, thanks to the air filtration systems, indoor PM2.5 concentrations are significantly lower than its outdoor counterpart, around <b>6x</b> and <b>4x</b> lower for Campus Center and Dining Hall D2, respectively. Due to cooking activities, air quality in the Dining Hall is estimated to be <b>1.5x</b> worse than the Campus Center when comparing their daily average.",
         "gid": 584789045,
         "headers": 1,
         "columns": [

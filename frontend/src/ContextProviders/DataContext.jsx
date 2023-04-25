@@ -38,10 +38,10 @@ export const DataProvider = (props) => {
                 <ChartComponent
                   chartData={{
                     sheetId: item.sheetId,
-                    homePage: true,
-                    ...item.charts[0],
+                    ...item.charts[item.homepageChartIndex || 0],
                   }}
                   chartWrapperHeight={"100%"}
+                  isHomepage={true}
                 />
               ),
             }

@@ -9,6 +9,8 @@ import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
 
+import { styled } from '@mui/material/styles';
+
 import ExpandableSection from './ExpandableSection';
 
 import ThemePreferences from '../../ThemePreferences';
@@ -45,6 +47,17 @@ const DatasetDownloadButton = ({ project }) => {
   );
 };
 
+// Custom Chip component to display metadata
+const CustomChip = ({icon, label}) =>{
+  return(
+    <Chip
+    size="small"
+    icon={icon}
+    label={label}
+    />
+  );
+}
+
 const Project = ({ themePreference }) => {
   const [_, setUnderlineLink] = useContext(LinkContext);
   let { id } = useParams();
@@ -80,13 +93,13 @@ const Project = ({ themePreference }) => {
 
               <Grid container spacing={1} sx={{ pb: 3, mt: -3 }}>
                 <Grid item>
-                  <Chip size="small" icon={<PersonIcon />} label={project.owner} title="Dataset Owner"/>
+                  <CustomChip icon={<PersonIcon />} label={project.owner}/>
                 </Grid>
                 <Grid item>
-                  <Chip size="small" icon={<EmailIcon />} label={project.contact} title="Contact" />
+                  <CustomChip icon={<EmailIcon />} label={project.contact}/>
                 </Grid>
                 <Grid item>
-                  <Chip size="small" icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`} title="Dataset's Last Update" />
+                  <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`}/>
                 </Grid>
               </Grid>
 
@@ -125,6 +138,7 @@ const Project = ({ themePreference }) => {
                             ...element,
                           }}
                           themePreference={themePreference}
+                          isHomepage={false}
                         />
                       </Box>
                     ))}

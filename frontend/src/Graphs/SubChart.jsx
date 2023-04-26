@@ -80,6 +80,11 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             );
 
         default:
+            function scaleCalendar(min, max) {
+                var cellSize = window.innerWidth / 58;
+                return Math.min(Math.max(cellSize, min), max);
+            }
+            
             let showChartFilter = false;
             if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) showChartFilter = true;
             // ---- Formulate the options for this specific chart:
@@ -262,11 +267,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     },
                 },
             ];
-
-            function scaleCalendar(min, max) {
-                var cellSize = window.innerWidth / 58;
-                return Math.min(Math.max(cellSize, min), max);
-            }
 
             const chartProps = {
                 chartType: chartData.chartType,

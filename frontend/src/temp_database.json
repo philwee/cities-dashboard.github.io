@@ -607,7 +607,7 @@
       },
       {
         "title": "Mean Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
-        "subtitle": "Annually, the level of food wastage is relatively similar between the different days of the week.",
+        "subtitle": "Each year, the level of food wastage is constant among different days of the week",
         "subcharts": [
           {
             "gid": 635067311,

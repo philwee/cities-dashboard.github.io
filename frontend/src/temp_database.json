@@ -1233,5 +1233,31 @@
       }
     ],
     "charts": []
+  },
+  {
+    "id": "weather",
+    "title": "Weather Data at NYUAD",
+    "sheetId": "",
+    "description": "",
+    "owner": "CITIES Research",
+    "contact": "cities.nyuad@nyu.edu",
+    "lastUpdate": null,
+    "rawDataTables": [
+      {}
+    ],
+    "charts": []
+  },
+  {
+    "id": "noise-pollution",
+    "title": "Noise Pollution",
+    "sheetId": "",
+    "description": "",
+    "owner": "CITIES Research",
+    "contact": "cities.nyuad@nyu.edu",
+    "lastUpdate": null,
+    "rawDataTables": [
+      {}
+    ],
+    "charts": []
   }
 ]

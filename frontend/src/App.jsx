@@ -1,48 +1,52 @@
 // disable eslint for this file
 /* eslint-disable */
 
+// import libraries
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Box, Typography, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// import components
 import Header from './Components/Header/Header';
 import Footer from './Components/Header/Footer';
 import FourOhFour from './Pages/404';
-
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
 import ThemePreferences from './ThemePreferences';
 import CustomThemes from './CustomThemes';
 
+// lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
 const About = lazy(() => import('./Pages/About/About'));
 
+// create theme design tokens based on theme preference
 const getDesignTokens = (themePreference) => ({
   palette: {
     mode: themePreference,
     ...(themePreference === ThemePreferences.dark
       ? {
-        ...CustomThemes.dark.palette,
-        ...CustomThemes.universal.palette,
-        typography: CustomThemes.universal.palette,
-      }
+          ...CustomThemes.dark.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
+        }
       : {
-        ...CustomThemes.light.palette,
-        ...CustomThemes.universal.palette,
-        typography: CustomThemes.universal.palette,
-      }),
+          ...CustomThemes.light.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
+        }),
   },
 });
 
 function App() {
+  // set theme preference state based on localStorage or system preference
   const [themePreference, setThemePreference] = useState(
     localStorage.getItem('theme')
       ? localStorage.getItem('theme')
       : window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? ThemePreferences.dark
-        : ThemePreferences.light
+      ? ThemePreferences.dark
+      : ThemePreferences.light
   );
 
   // create theme using getDesignTokens
@@ -65,13 +69,9 @@ function App() {
         >
           <DeviceOrientationNotification />
 
-
           {useMemo(
             () => (
-              <Header
-                themePreference={themePreference}
-                setThemePreference={setThemePreference}
-              />
+              <Header setThemePreference={setThemePreference} />
             ),
             []
           )}
@@ -104,6 +104,7 @@ function App() {
   );
 }
 
+// loading text for suspense fallback
 const LoadingText = () => {
   return (
     <Container>

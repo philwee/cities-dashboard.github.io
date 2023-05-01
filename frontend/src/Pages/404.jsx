@@ -6,8 +6,10 @@ import { LinkContext } from '../ContextProviders/LinkContext';
 import { Button, Typography, Container } from '@mui/material';
 
 export default function FourOhFour() {
+  // state to set underline link in header
   const [_, setUnderlineLink] = useContext(LinkContext);
 
+  // set underline link to 404 (to undo any other underlined links)
   useEffect(() => {
     setUnderlineLink('404');
   }, [setUnderlineLink]);

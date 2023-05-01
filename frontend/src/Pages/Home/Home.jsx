@@ -1,10 +1,9 @@
 // disable eslint for this file
 /* eslint-disable */
+
+// import libraries
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkContext } from '../../ContextProviders/LinkContext';
-import { DataContext } from '../../ContextProviders/DataContext';
-
 import {
   Box,
   Grid,
@@ -17,15 +16,21 @@ import {
   Divider,
   Paper,
 } from '@mui/material';
-
-import UppercaseTitle from '../../Components/UppercaseTitle';
-
-import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
 
+// import components
+import { LinkContext } from '../../ContextProviders/LinkContext';
+import { DataContext } from '../../ContextProviders/DataContext';
+import UppercaseTitle from '../../Components/UppercaseTitle';
+
+// statistics data for home page
+import jsonData from '../../home_data.json';
+
 const Home = ({ themePreference }) => {
-  // useState for home page data
+  // state to set underline link in header
   const [_, setUnderlineLink] = useContext(LinkContext);
+
+  // state to get data from context
   const [homeData] = useContext(DataContext);
 
   // set underline link to home

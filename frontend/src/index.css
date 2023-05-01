@@ -13,11 +13,6 @@ body {
   overscroll-behavior: none;
 }
 
-
-ul {
-  margin-left: 2em;
-}
-
 #root {
   overflow-x: hidden;
 }

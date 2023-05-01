@@ -21,6 +21,13 @@ import './Header.css';
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   background: theme.palette.background.paper,
+  "& .MuiFormLabel-root, .MuiInputBase-root .MuiTypography-root, svg": {
+    fontSize: "0.75rem"
+  },
+  "& svg": {
+    marginRight: theme.spacing(0.5),
+    verticalAlign: "middle"
+  },
   "& .MuiInputBase-root": {
     borderRadius: theme.shape.borderRadius * 2,
     "&:before,:hover,:after": {
@@ -31,11 +38,24 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
     }
   },
   '& .MuiSelect-select': {
+    paddingTop: theme.spacing(2),
+    paddingBottom: 0,
     "&:focus": {
       background: "none"
     }
   }
 }));
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "& .MuiTypography-root, svg": {
+    fontSize: "0.75rem"
+  },
+  "& svg": {
+    marginRight: theme.spacing(0.5),
+    verticalAlign: "middle"
+  }
+}));
+
 
 export default function Header({ themePreference, setThemePreference }) {
   const [underlineLink] = useContext(LinkContext);
@@ -76,35 +96,34 @@ export default function Header({ themePreference, setThemePreference }) {
   return (
     <Box width="100%" sx={{ m: 0 }} backgroundColor="customAlternateBackground">
       <Box sx={{ backgroundColor: 'NYUpurple', display: 'flex', justifyContent: 'flex-end' }}>
-        <StyledFormControl variant="filled" sx={{ m: 2, borderRadius: 2 }} size="small">
+        <StyledFormControl variant="filled" sx={{ m: 1, borderRadius: 2 }} size="small">
           <InputLabel id="select-filled-label">THEME</InputLabel>
           <Select
             labelId="select-filled-label"
             id="select-filled"
             value={themeValue}
             onChange={handleChange}
-            sx={{ minWidth: "8rem" }}
           >
-            <MenuItem value={ThemePreferences.system}>
+            <StyledMenuItem value={ThemePreferences.system}>
               <Typography color="text.primary">
-                <Contrast sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <Contrast />
                 System
               </Typography>
-            </MenuItem>
+            </StyledMenuItem>
 
-            <MenuItem value={ThemePreferences.light}>
+            <StyledMenuItem value={ThemePreferences.light}>
               <Typography color="text.primary">
-                <LightMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <LightMode />
                 Light
               </Typography>
-            </MenuItem>
+            </StyledMenuItem>
 
-            <MenuItem value={ThemePreferences.dark}>
+            <StyledMenuItem value={ThemePreferences.dark}>
               <Typography color="text.primary">
-                <DarkMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <DarkMode />
                 Dark
               </Typography>
-            </MenuItem>
+            </StyledMenuItem>
           </Select>
         </StyledFormControl>
       </Box>
@@ -112,11 +131,11 @@ export default function Header({ themePreference, setThemePreference }) {
         <Paper
           elevation={4}
           sx={{
-            width: '6rem',
-            height: '6rem',
+            width: '5rem',
+            height: '5rem',
             ml: 0,
-            mt: '-3rem',
-            mb: 3,
+            mt: '-2.5rem',
+            mb: 2,
             transition: '0.2s ease-in-out',
             '&:hover': {
               transform: 'scale(1.1)',
@@ -132,17 +151,16 @@ export default function Header({ themePreference, setThemePreference }) {
             />
           </a>
         </Paper>
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <Typography
-            variant="h2"
+            variant="h3"
             color="text.primary"
             sx={{ fontWeight: 'medium' }}
           >
             CITIES DASHBOARD
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Spearheading sustainability and well-being data visualization at NYU
-            Abu Dhabi
+            A data repository and visualization on sustainability and well-being at NYU Abu Dhabi
           </Typography>
         </Box>
 
@@ -170,7 +188,21 @@ export default function Header({ themePreference, setThemePreference }) {
           </Link>
         </Box>
         <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/about">
+          <Link to="#at-a-glance">
+            <Typography
+              className={
+                underlineLink === 'at-a-glance' ? 'navLink active' : 'navLink'
+              }
+              variant="body1"
+              sx={{ fontWeight: 'medium' }}
+              color="text.secondary"
+            >
+              AT A GLANCE
+            </Typography>
+          </Link>
+        </Box>
+        <Box sx={{ display: 'inline-block', mr: 2 }}>
+          <Link to="#about">
             <Typography
               className={
                 underlineLink === 'about' ? 'navLink active' : 'navLink'
@@ -180,6 +212,20 @@ export default function Header({ themePreference, setThemePreference }) {
               color="text.secondary"
             >
               ABOUT
+            </Typography>
+          </Link>
+        </Box>
+        <Box sx={{ display: 'inline-block', mr: 2 }}>
+          <Link to="#join-us">
+            <Typography
+              className={
+                underlineLink === 'join-us' ? 'navLink active' : 'navLink'
+              }
+              variant="body1"
+              sx={{ fontWeight: 'medium' }}
+              color="text.secondary"
+            >
+              JOIN US
             </Typography>
           </Link>
         </Box>

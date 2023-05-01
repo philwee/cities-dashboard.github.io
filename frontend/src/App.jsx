@@ -17,7 +17,6 @@ import CustomThemes from './CustomThemes';
 
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
-const About = lazy(() => import('./Pages/About/About'));
 
 const getDesignTokens = (themePreference) => ({
   palette: {
@@ -86,7 +85,6 @@ function App() {
                   path="/project/:id"
                   element={<Project themePreference={themePreference} />}
                 />
-                <Route path="/about" element={<About />} />
                 <Route path="/404" element={<FourOhFour />} />
                 <Route path="*" element={<Navigate replace to="/404" />} />
               </Routes>

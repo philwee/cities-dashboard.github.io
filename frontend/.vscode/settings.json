@@ -6,7 +6,7 @@
     "editor.formatOnSave": false
   },
   "[javascriptreact]": {
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "editor.codeActionsOnSave": {

@@ -12,18 +12,18 @@ function getYear() {
 
 export default function Footer() {
   return (
-      <Box width='100%' backgroundColor='customAlternateBackground'>
-        <Grid container justify="center" align="center" sx={{ p: 5 }}>
-          <Grid item xs={12}>
-            <Typography variant="body1" fontWeight="bold" color='text.primary' gutterBottom>
-              Center for Interacting Urban Networks
-              <br />- {getYear()} -
-            </Typography>
-            <Container maxWidth="xs">
-              <SocialHandleGrid />
-            </Container>
-          </Grid>
+    <Box width='100%' backgroundColor='customAlternateBackground'>
+      <Grid container justify="center" align="center" sx={{ p: 3, pt: 2 }}>
+        <Grid item xs={12}>
+          <Typography variant="body1" fontWeight="bold" color='text.primary' gutterBottom>
+            Center for Interacting Urban Networks
+            <br />- {getYear()} -
+          </Typography>
+          <Container maxWidth="xs">
+            <SocialHandleGrid />
+          </Container>
         </Grid>
-      </Box>
+      </Grid>
+    </Box>
   );
 }

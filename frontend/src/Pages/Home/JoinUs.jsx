@@ -12,7 +12,7 @@ const JoinUs = () => {
         <Container>
             <UppercaseTitle text={'join us'} />
 
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
                 <Grid item>
                     <Paper elevation={2} sx={{ p: 3 }}>
                         <Typography variant="body2" color="text.secondary">

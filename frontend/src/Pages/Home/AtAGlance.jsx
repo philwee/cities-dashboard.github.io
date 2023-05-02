@@ -19,10 +19,10 @@ const ByTheNumber = (props) => {
         <Grid justifyContent="center" alignItems="center" item sm={3} xs={6}>
             <Stack direction="column" alignItems="center">
                 <Icon fontSize="large" color="primary" />
-                <Typography variant="h3" fontWeight="500">
+                <Typography color="text.primary" variant="h3" fontWeight="500">
                     {props.number}
                 </Typography>
-                <Typography variant="h6" textTransform="uppercase">
+                <Typography color="text.primary" variant="h6" textTransform="uppercase">
                     {props.text}
                 </Typography>
             </Stack>

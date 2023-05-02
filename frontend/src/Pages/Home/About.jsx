@@ -12,7 +12,7 @@ const About = () => {
         <Container>
             <UppercaseTitle text={'about'} />
 
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
                 {jsonData.about.map((item, index) => (
                     <Grid key={index} item xs={12} sm={6}>
                         <Paper elevation={2} sx={{ p: 3 }}>

@@ -27,9 +27,9 @@ const Home = ({ themePreference }) => {
   return (
     <Box width="100%">
       <Box>
-        <Container sx={{ pt: 4, pb: 4 }}>
+        <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
-          <Grid container spacing={4} >
+          <Grid container spacing={3} >
             {homeData.map((element, index) => (
               <Grid key={index} item xs={12} sm={4}>
                 <Card elevation={2}>
@@ -69,7 +69,7 @@ const Home = ({ themePreference }) => {
         </Container>
       </Box>
 
-      <Box id="at-a-glance" sx={{ pt: 4, pb: 4 }} backgroundColor="customAlternateBackground">
+      <Box id="at-a-glance" sx={{ pt: 3, pb: 3 }} backgroundColor="customAlternateBackground">
         <AtAGlance
           numberOfActiveDataset={
             (homeData.reduce((count, element) => {
@@ -79,11 +79,11 @@ const Home = ({ themePreference }) => {
         />
       </Box>
 
-      <Box id="about" sx={{ pt: 4 }}>
+      <Box id="about" sx={{ pt: 3 }}>
         <About />
       </Box>
 
-      <Box id="join-us" sx={{ pt: 4, pb: 4 }}>
+      <Box id="join-us" sx={{ pt: 3, pb: 3 }}>
         <JoinUs />
       </Box>
     </Box>

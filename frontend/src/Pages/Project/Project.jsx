@@ -4,10 +4,10 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
-import parse from 'html-react-parser';
+import parse, {domToReact} from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
-import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
+import { Box, Typography, Container, Divider, Button, Chip, Grid, Link, List, ListItem, ListItemText } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
 
@@ -82,6 +82,34 @@ const Project = ({ themePreference }) => {
     setUnderlineLink('project');
   }, [id, setUnderlineLink]);
 
+  // Function to replace HTML tags with MUI components
+  const replaceHTMLWithMUI = (node) => {
+    // Replace <a> tags with <Link> tags
+    if (node.type === 'tag' && node.name === 'a') {
+      return (
+        <Link href={node.attribs.href} target="_blank" rel="noopener noreferrer" underline='hover'>
+          {node.children && node.children.length > 0 && parse(node.children[0].data)}
+        </Link>
+      );
+    }
+    
+    // Replace <ul> tags with <List> tags
+    if (node.type === "tag" && node.name === "ul") {
+      return (
+        <List dense={true} sx={{ listStyleType: 'disc', paddingLeft: 4, paddingTop: '6px' }}>
+          {node.children.map((child) => (
+            // Replace <li> tags with <ListItem> tags
+            <ListItem sx={{ display: 'list-item', paddingY: 0, paddingLeft: '4px' }}>
+              <ListItemText primary={domToReact(child.children)} />
+            </ListItem>
+          ))}
+        </List>
+      );
+    }
+  
+    return undefined;
+  };
+
   return (
     <>
       {loading && (
@@ -111,7 +139,9 @@ const Project = ({ themePreference }) => {
                 sx={{ textAlign: 'justify', pb: 3, mb: 0 }}
                 gutterBottom
               >
-                {parse(project.description)}
+                {parse(project.description, {
+                  replace: replaceHTMLWithMUI,
+                })}
               </Typography>
 
               <DatasetDownloadButton project={project} />
@@ -174,25 +204,33 @@ const Project = ({ themePreference }) => {
                   <Typography
                     variant="body1"
                     color="text.secondary"
-                    sx={{ mb: 3 }}
+                    sx={{ mb: 2 }}
                   >
-                    {element.subtitle && parse(element.subtitle)}
+                    {element.subtitle && parse(element.subtitle, {
+                      replace: replaceHTMLWithMUI,
+                      })}
                     {Object.keys(tab)[index] == index &&
                       element.subcharts &&
                       element.subcharts[Object.values(tab)[index]]
                         .subchartSubtitle &&
                       parse(
                         element.subcharts[Object.values(tab)[index]]
-                          .subchartSubtitle
+                          .subchartSubtitle, {
+                          replace: replaceHTMLWithMUI,
+                        }
                       )}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    {element.reference && parse(element.reference)}
+                    {element.reference && parse(element.reference, {
+                      replace: replaceHTMLWithMUI,
+                      })}
                     {Object.keys(tab)[index] == index &&
                       element.subcharts &&
                       element.subcharts[Object.values(tab)[index]].reference &&
                       parse(
-                        element.subcharts[Object.values(tab)[index]].reference
+                        element.subcharts[Object.values(tab)[index]].reference, {
+                          replace: replaceHTMLWithMUI,
+                        }
                       )}
                   </Typography>
                 </Box>

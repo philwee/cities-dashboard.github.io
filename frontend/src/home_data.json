@@ -4,18 +4,8 @@
         "The NYUAD's <b>Center for Interacting Urban Networks (CITIES)</b> is an interdisciplinary research center dedicated to advance urban science and promote cutting-edge research that is translated into practical, real-world solutions for the benefit of society. Our ultimate goal is to foster sustainable, resilient, and equitable cities. To test and showcase cutting-edge applications of its research in real life, CITIES uses the NYUAD campus as a field lab."
     ],
     "joinUs": "<b>Reach out</b> to us at <a class='iconLink' href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to get involved! The CITIES dashboard is currently on its first public-release iteration. Any feedback on the existing datasets and visualizations or suggestions/contributions of new datasets is particularly welcomed. In the meantime, explore existing datasets with interactive data visualizations designed by CITIES' students, research fellows, and staff in collaboration with CITIES partners. Stay tuned as more datasets will be available soon.",
-    "statistics": [
-        {
-            "number": 5,
-            "text": "datasets"
-        },
-        {
-            "number": 3,
-            "text": "partners"
-        },
-        {
-            "number": "16K+",
-            "text": "datapoints"
-        }
-    ]
+    "statistics": {
+        "partners": 3,
+        "datapoints": "16K"
+    }
 }

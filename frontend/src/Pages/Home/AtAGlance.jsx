@@ -1,43 +1,59 @@
 // disable eslint for this file
 /* eslint-disable */
-import { Grid, Typography, Container } from '@mui/material';
+import { useState, useEffect } from 'react';
 
-import UppercaseTitle from '../../Components/UppercaseTitle';
+import { Grid, Typography, Container, Stack } from "@mui/material";
 
-import jsonData from '../../home_data.json';
+import UppercaseTitle from "../../Components/UppercaseTitle";
 
-const AtAGlance = () => {
+import homeJsonData from "../../home_data.json";
+
+import BarChartIcon from '@mui/icons-material/BarChart';
+import GroupsIcon from '@mui/icons-material/Groups';
+import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
+
+const ByTheNumber = (props) => {
+    const Icon = props.icon;
+
+    return (
+        <Grid justifyContent="center" alignItems="center" item sm={3} xs={6}>
+            <Stack direction="column" alignItems="center">
+                <Icon fontSize="large" color="primary" />
+                <Typography variant="h3" fontWeight="500">
+                    {props.number}
+                </Typography>
+                <Typography variant="h6" textTransform="uppercase">
+                    {props.text}
+                </Typography>
+            </Stack>
+        </Grid>
+    );
+};
+
+const AtAGlance = (props) => {
+
     return (
         <Container>
-            <UppercaseTitle text={'at a glance'} />
+            <UppercaseTitle text={"at a glance"} />
+            <Grid container direction="row" justifyContent="center" textAlign="center" m={0}>
 
-            <Grid
-                container
-                direction="row"
-                spacing={4}
-                sx={{
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                {jsonData.statistics.map((item, index) => (
-                    <Grid key={index} item md={3} sm={4} xs={12}>
-                        <Typography
-                            variant="h2"
-                            color="primary.main"
-                            sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}
-                        >
-                            {item.number}
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            color="text.primary"
-                            textTransform="uppercase"
-                        >
-                            {item.text}
-                        </Typography>
-                    </Grid>
-                ))}
+                <ByTheNumber
+                    icon={BarChartIcon}
+                    number={props.numberOfActiveDataset}
+                    text="datasets"
+                />
+
+                <ByTheNumber
+                    icon={GroupsIcon}
+                    number={homeJsonData.statistics.partners}
+                    text="partners"
+                />
+
+                <ByTheNumber
+                    icon={ScatterPlotIcon}
+                    number={homeJsonData.statistics.datapoints}
+                    text="datapoints"
+                />
             </Grid>
         </Container>
     );

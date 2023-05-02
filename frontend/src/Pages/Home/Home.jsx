@@ -35,7 +35,7 @@ const Home = ({ themePreference }) => {
                   <CardActionArea
                     component={Link}
                     to={`/project/${element.id}`}
-                    disabled={element.isEmpty}
+                    disabled={element.isActive}
                   >
                     <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia
@@ -69,7 +69,13 @@ const Home = ({ themePreference }) => {
       </Box>
 
       <Box id="at-a-glance" sx={{ pt: 4, pb: 4 }} backgroundColor="customAlternateBackground">
-        <AtAGlance />          
+        <AtAGlance
+          numberOfActiveDataset={
+            (homeData.reduce((count, element) => {
+              return element.isActive ? count + 1 : count;
+            }, 0))
+          }
+        />
       </Box>
 
       <Box id="about" sx={{ pt: 4 }}>

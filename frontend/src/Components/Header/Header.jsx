@@ -1,51 +1,63 @@
 // disable eslint for this file
 /* eslint-disable */
+
+// import libraries
 import { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { LinkContext } from '../../ContextProviders/LinkContext';
 import { Box, Typography, Container, Paper } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { IoReturnDownBack } from 'react-icons/io5';
-
 import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
 
+// import components
+import { LinkContext } from '../../ContextProviders/LinkContext';
 import ThemePreferences from '../../ThemePreferences';
 
+// import images
 import citiesLogo from '../../cities-logo.png';
 
+// import styles
 import './Header.css';
 
+// create styled components
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   background: theme.palette.background.paper,
-  "& .MuiInputBase-root": {
+  '& .MuiInputBase-root': {
     borderRadius: theme.shape.borderRadius * 2,
-    "&:before,:hover,:after": {
-      borderBottom: "none !important"
+    '&:before,:hover,:after': {
+      borderBottom: 'none !important',
     },
-    "&:hover": {
-      background: "rgba(0,0,0,0.25)"
-    }
+    '&:hover': {
+      background: 'rgba(0,0,0,0.25)',
+    },
   },
   '& .MuiSelect-select': {
-    "&:focus": {
-      background: "none"
-    }
-  }
+    '&:focus': {
+      background: 'none',
+    },
+  },
 }));
 
-export default function Header({ themePreference, setThemePreference }) {
+export default function Header({ setThemePreference }) {
+  // context to underline right link in header
   const [underlineLink] = useContext(LinkContext);
-  const [themeValue, setThemeValue] = useState(themePreference);
 
+  // theme preference state
+  const [themeValue, setThemeValue] = useState(
+    localStorage.getItem('theme') || ThemePreferences.system
+  );
+
+  // function to handle theme change
   const handleChange = (event) => {
-    localStorage.setItem('theme', event.target.value);
-    setThemeValue(event.target.value);
+    localStorage.setItem('theme', event.target.value); // save theme preference to localStorage
+    setThemeValue(event.target.value); // set theme preference state
   };
 
+  // function to set theme preference
   const themeChangeHandler = ({ matches }) => {
     if (matches) {
       setThemePreference(ThemePreferences.dark);
@@ -54,19 +66,26 @@ export default function Header({ themePreference, setThemePreference }) {
     }
   };
 
+  // set theme preference based on localStorage or system preference
   useEffect(() => {
     if (themeValue === ThemePreferences.dark) {
-      setThemePreference(ThemePreferences.dark);
+      setThemePreference(ThemePreferences.dark); // set to dark theme
     } else if (themeValue === ThemePreferences.light) {
-      setThemePreference(ThemePreferences.light);
+      setThemePreference(ThemePreferences.light); // set to light theme
     } else if (themeValue === ThemePreferences.system) {
-      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)'); // check for system preference
+
+      // set theme preference based on system preference
       if (darkThemeMq.matches) {
         setThemePreference(ThemePreferences.dark);
       } else {
         setThemePreference(ThemePreferences.light);
       }
+
+      // add event listener for system preference change
       darkThemeMq.addEventListener('change', themeChangeHandler);
+
+      // remove event listener on unmount
       return () => {
         darkThemeMq.removeEventListener('change', themeChangeHandler);
       };
@@ -75,33 +94,43 @@ export default function Header({ themePreference, setThemePreference }) {
 
   return (
     <Box width="100%" sx={{ m: 0 }} backgroundColor="customAlternateBackground">
-      <Box sx={{ backgroundColor: 'NYUpurple', display: 'flex', justifyContent: 'flex-end' }}>
-        <StyledFormControl variant="filled" sx={{ m: 2, borderRadius: 2 }} size="small">
+      <Box
+        sx={{
+          backgroundColor: 'NYUpurple',
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <StyledFormControl
+          variant="filled"
+          sx={{ m: 2, borderRadius: 2 }}
+          size="small"
+        >
           <InputLabel id="select-filled-label">THEME</InputLabel>
           <Select
             labelId="select-filled-label"
             id="select-filled"
             value={themeValue}
             onChange={handleChange}
-            sx={{ minWidth: "8rem" }}
+            sx={{ minWidth: '8rem' }}
           >
             <MenuItem value={ThemePreferences.system}>
               <Typography color="text.primary">
-                <Contrast sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <Contrast sx={{ mr: 0.5, verticalAlign: 'middle' }} />
                 System
               </Typography>
             </MenuItem>
 
             <MenuItem value={ThemePreferences.light}>
               <Typography color="text.primary">
-                <LightMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <LightMode sx={{ mr: 0.5, verticalAlign: 'middle' }} />
                 Light
               </Typography>
             </MenuItem>
 
             <MenuItem value={ThemePreferences.dark}>
               <Typography color="text.primary">
-                <DarkMode sx={{ mr: 0.5, verticalAlign: "middle" }} />
+                <DarkMode sx={{ mr: 0.5, verticalAlign: 'middle' }} />
                 Dark
               </Typography>
             </MenuItem>
@@ -160,9 +189,7 @@ export default function Header({ themePreference, setThemePreference }) {
                 'HOME'
               ) : (
                 <div>
-                  <IoReturnDownBack
-                    style={{ verticalAlign: 'middle' }}
-                  />
+                  <IoReturnDownBack style={{ verticalAlign: 'middle' }} />
                   <span> BACK TO HOME</span>
                 </div>
               )}

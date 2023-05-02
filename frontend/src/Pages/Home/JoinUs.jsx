@@ -10,7 +10,7 @@ import parse from 'html-react-parser';
 const JoinUs = () => {
     return (
         <Container>
-            <UppercaseTitle text={'join us!'} />
+            <UppercaseTitle text={'join us'} />
 
             <Grid container spacing={4}>
                 <Grid item>

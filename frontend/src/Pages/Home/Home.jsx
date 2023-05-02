@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/DataContext';
 
@@ -35,7 +36,7 @@ const Home = ({ themePreference }) => {
                   <CardActionArea
                     component={Link}
                     to={`/project/${element.id}`}
-                    disabled={element.isActive}
+                    disabled={!element.isActive}
                   >
                     <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia

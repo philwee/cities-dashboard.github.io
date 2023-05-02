@@ -6,8 +6,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Box, Typography, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Header from './Components/Header/Header';
-import Footer from './Components/Header/Footer';
+import Header from './Components/Header and Footer/Header';
+import Footer from './Components/Header and Footer/Footer';
 import FourOhFour from './Pages/404';
 
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
@@ -51,7 +51,7 @@ function App() {
   );
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
         <Box
           sx={{

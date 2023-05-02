@@ -9,7 +9,7 @@ import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
 
-import { styled } from '@mui/material/styles';
+import JoinUs from '../Home/JoinUs';
 
 import ExpandableSection from './ExpandableSection';
 
@@ -48,12 +48,12 @@ const DatasetDownloadButton = ({ project }) => {
 };
 
 // Custom Chip component to display metadata
-const CustomChip = ({icon, label}) =>{
-  return(
+const CustomChip = ({ icon, label }) => {
+  return (
     <Chip
-    size="small"
-    icon={icon}
-    label={label}
+      size="small"
+      icon={icon}
+      label={label}
     />
   );
 }
@@ -93,13 +93,13 @@ const Project = ({ themePreference }) => {
 
               <Grid container spacing={1} sx={{ pb: 3, mt: -3 }}>
                 <Grid item>
-                  <CustomChip icon={<PersonIcon />} label={project.owner}/>
+                  <CustomChip icon={<PersonIcon />} label={project.owner} />
                 </Grid>
                 <Grid item>
-                  <CustomChip icon={<EmailIcon />} label={project.contact}/>
+                  <CustomChip icon={<EmailIcon />} label={project.contact} />
                 </Grid>
                 <Grid item>
-                  <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`}/>
+                  <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`} />
                 </Grid>
               </Grid>
 
@@ -199,6 +199,12 @@ const Project = ({ themePreference }) => {
               </Container>
             </Box>
           ))}
+
+          {project.charts.length % 2 != 0 ? <></> : <Divider />}
+
+          <Box id="join-us" sx={{ pt: 3, pb: 3 }}>
+            <JoinUs />
+          </Box>
 
           {project.charts.length % 2 != 0 ? <Divider /> : <></>}
         </Box>

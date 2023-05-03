@@ -21,11 +21,12 @@ import citiesLogo from '../../cities-logo.png';
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
 
-import './Header.css';
-
 const innerHeight = window.innerHeight;
 
+const toolBarHeightInRem = 4;
+
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  boxShadow: 'none',
   "& .MuiToolbar-root": {
     padding: 0
   }
@@ -38,7 +39,7 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
     fontSize: "0.75rem"
   },
   "& svg": {
-    marginRight: "0.5rem",
+    marginRight: "0.25rem",
     verticalAlign: "middle"
   },
   "& .MuiInputBase-root": {
@@ -69,23 +70,6 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   }
 }));
 
-
-
-function HideOnScroll(props) {
-  const { children, window } = props;
-
-  const trigger = useScrollTrigger({
-    target: window,
-    threshold: 40
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-
 function ScrollTop(props) {
   const { children, window } = props;
 
@@ -103,7 +87,7 @@ function ScrollTop(props) {
     if (anchor) {
       anchor.scrollIntoView({
         block: 'center',
-        behavior: 'smooth'
+        behavior: 'instant'
       });
     }
   };
@@ -118,6 +102,84 @@ function ScrollTop(props) {
         {children}
       </Box>
     </Fade>
+  );
+}
+
+const StyledNavLink = styled(Box)(({ theme }) => ({
+  display: 'inline-block',
+  marginRight: theme.spacing(2),
+  cursor: "pointer",
+  textDecoration: "none",
+  "& :hover, & .active": {
+    textDecoration: `underline 2px ${theme.palette.primary.contrastText}`,
+    opacity: 1,
+    textUnderlineOffset: "4px"
+  }
+}));
+
+const NavLinkBehavior = {
+  toNewPage: "toNewPage",
+  scrollTo: "scrollTo"
+}
+
+const BackToHome = () => {
+  return (
+    <>
+      <IoReturnDownBack
+        style={{ verticalAlign: 'middle' }}
+      />
+      <span> Back to Home</span>
+    </>
+  );
+}
+
+function NavLink(props) {
+  const { behavior, underlineLink, to, scrollToSectionID } = props;
+
+  const scrollToSection = (scrollToSectionID) => {
+    const section = document.getElementById(scrollToSectionID);
+    if (section) {
+      section.scrollIntoView({ behavior: 'instant' });
+    }
+  }
+
+  const transformHyphenString = (str) => {
+    const words = str.split('-');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    const capitalizedString = capitalizedWords.join(' ');
+    return capitalizedString;
+  }
+
+  return (
+    <StyledNavLink>
+      {behavior === NavLinkBehavior.toNewPage &&
+        <Link to={to}>
+          <Typography
+            className={
+              underlineLink === to ? 'navLink active' : 'navLink'
+            }
+            variant="caption"
+            fontWeight='medium'
+            color="primary.contrastText"
+            sx={{ opacity: 0.7 }}
+          >
+            {to === "/" ? <BackToHome /> : transformHyphenString(to)}
+          </Typography>
+        </Link>
+      }
+      {behavior === NavLinkBehavior.scrollTo &&
+        <Box onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
+          <Typography
+            variant="caption"
+            fontWeight='medium'
+            color="primary.contrastText"
+            sx={{ opacity: 0.7 }}
+          >
+            {transformHyphenString(scrollToSectionID)}
+          </Typography>
+        </Box>
+      }
+    </StyledNavLink>
   );
 }
 
@@ -159,92 +221,58 @@ export default function Header(props) {
     }
   }, [themeValue]);
 
+  // trigger for hiding/showing the AppBar
+  const triggerHideAppBar = useScrollTrigger({
+    target: window,
+    threshold: 100
+  });
+
   return (
     <>
-      <HideOnScroll {...props}>
-        <StyledAppBar>
-          <Toolbar sx={{ backgroundColor: 'NYUpurple', height: "4rem" }}>
+      <Slide appear={false} direction="down" in={!triggerHideAppBar}>
+        <StyledAppBar enableColorOnDark>
+          <Toolbar sx={{ backgroundColor: 'primary', height: `${toolBarHeightInRem}rem` }}>
             <Container sx={{ height: "100%" }} >
               <Stack direction="row" justifyContent='space-between' alignItems='center' height="100%">
                 <Stack direction="row" alignItems='center' height="100%" spacing={2}>
                   <Paper
                     elevation={4}
                     sx={{
-                      height: "66%",
-                      transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.3)' },
+                      height: `${toolBarHeightInRem * 1.25}rem`,
+                      mt: `${toolBarHeightInRem * 0.7}rem`,
+                      opacity: triggerHideAppBar ? 0 : 1,
+                      transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
                     }}
                   >
-                    <a href="/">
+                    <Link to="/">
                       <img style={{
                         height: "100%", width: "auto", borderRadius: "0.5rem"
                       }} src={citiesLogo} title="CITIES Dashboard Logo" alt="CITIES Dashboard Logo" />
-                    </a>
+                    </Link>
                   </Paper>
-                  <Box sx={{ display: 'inline-block', mr: 2 }}>
-                    <Link to="/">
-                      <Typography
-                        className={
-                          underlineLink === 'home' ? 'navLink active' : 'navLink'
-                        }
-                        variant="body1"
-                        sx={{ fontWeight: 'medium' }}
-                        color="text.secondary"
-                      >
-                        {underlineLink === 'home' ? (
-                          'HOME'
-                        ) : (
-                          <div>
-                            <IoReturnDownBack
-                              style={{ verticalAlign: 'middle' }}
-                            />
-                            <span> BACK TO HOME</span>
-                          </div>
-                        )}
-                      </Typography>
-                    </Link>
-                  </Box>
-                  <Box sx={{ display: 'inline-block', mr: 2 }}>
-                    <Link to="#at-a-glance">
-                      <Typography
-                        className={
-                          underlineLink === 'at-a-glance' ? 'navLink active' : 'navLink'
-                        }
-                        variant="body1"
-                        sx={{ fontWeight: 'medium' }}
-                        color="text.secondary"
-                      >
-                        AT A GLANCE
-                      </Typography>
-                    </Link>
-                  </Box>
-                  <Box sx={{ display: 'inline-block', mr: 2 }}>
-                    <Link to="#about">
-                      <Typography
-                        className={
-                          underlineLink === 'about' ? 'navLink active' : 'navLink'
-                        }
-                        variant="body1"
-                        sx={{ fontWeight: 'medium' }}
-                        color="text.secondary"
-                      >
-                        ABOUT
-                      </Typography>
-                    </Link>
-                  </Box>
-                  <Box sx={{ display: 'inline-block', mr: 2 }}>
-                    <Link to="#join-us">
-                      <Typography
-                        className={
-                          underlineLink === 'join-us' ? 'navLink active' : 'navLink'
-                        }
-                        variant="body1"
-                        sx={{ fontWeight: 'medium' }}
-                        color="text.secondary"
-                      >
-                        JOIN US
-                      </Typography>
-                    </Link>
-                  </Box>
+                  <Stack direction="column">
+                    <Typography
+                      sx={{ fontWeight: 'medium' }}
+                      color="primary.contrastText"
+                    >
+                      {"PLACEHOLDER FOR PAGE NAME"}
+                    </Typography>
+                    <Stack direction="row">
+                      {
+                        // If the current page is homepage, then display these links
+                        underlineLink === "home" ? <>
+                          <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="at-a-glance" />
+                          <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
+                        </> :
+                          // For the rest, display link to return to homepage
+                          <NavLink behavior={NavLinkBehavior.toNewPage} to="/" />
+                      }
+                      <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="join-us" />
+
+                    </Stack>
+                  </Stack>
+
+
                 </Stack>
 
                 <StyledFormControl variant="filled" size="small">
@@ -281,12 +309,12 @@ export default function Header(props) {
             </Container>
           </Toolbar>
         </StyledAppBar>
-      </HideOnScroll >
+      </Slide >
 
       {/* From MUI's documentation: 
       When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. Here is how to fix:
       You can render a second <Toolbar /> component: */}
-      <Toolbar id="back-to-top-anchor" sx={{ backgroundColor: "customAlternateBackground", height: "4rem" }} />
+      <Toolbar id="back-to-top-anchor" sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }} />
 
       <Box width="100%" sx={{ pt: 2, pb: 3, backgroundColor: "customAlternateBackground" }}>
         <Container >
@@ -294,7 +322,9 @@ export default function Header(props) {
             <Typography
               variant="h3"
               color="text.primary"
-              sx={{ fontWeight: 'medium' }}
+              fontWeight='medium'
+              pb={1}
+
             >
               CITIES DASHBOARD
             </Typography>

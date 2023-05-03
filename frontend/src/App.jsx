@@ -3,7 +3,7 @@
 
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Box, Typography, Container } from '@mui/material/';
+import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Header from './Components/Header and Footer/Header';
@@ -64,7 +64,6 @@ function App() {
         >
           <DeviceOrientationNotification />
 
-
           {useMemo(
             () => (
               <Header
@@ -105,9 +104,12 @@ function App() {
 const LoadingText = () => {
   return (
     <Container>
-      <Typography textAlign="center" sx={{ p: 4 }} color="text.primary">
-        Loading...
-      </Typography>
+      <Stack p={4} direction="column" justifyContent="center" alignItems="center" spacing={1}>
+        <CircularProgress />
+        <Typography variant='h6' textAlign="center" color="text.primary">
+          Loading
+        </Typography>
+      </Stack>
     </Container>
   );
 };

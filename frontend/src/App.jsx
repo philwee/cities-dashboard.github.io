@@ -67,7 +67,6 @@ function App() {
           {useMemo(
             () => (
               <Header
-                themePreference={themePreference}
                 setThemePreference={setThemePreference}
               />
             ),

@@ -29,9 +29,20 @@ const Home = ({ themePreference }) => {
       <Box>
         <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
-          <Grid container spacing={3} >
+
+          <Box sx={{ pb: 3 }} >
+            <AtAGlance
+              numberOfActiveDataset={
+                (homeData.reduce((count, element) => {
+                  return element.isActive ? count + 1 : count;
+                }, 0))
+              }
+            />
+          </Box>
+
+          <Grid container spacing={3} sx={{ justifyContent: { sm: "center", md: "start" } }} >
             {homeData.map((element, index) => (
-              <Grid key={index} item xs={12} sm={4}>
+              <Grid key={index} item xs={12} sm={9} md={6} lg={4} >
                 <Card elevation={2}>
                   <CardActionArea
                     component={Link}
@@ -69,24 +80,16 @@ const Home = ({ themePreference }) => {
         </Container>
       </Box>
 
-      <Box id="at-a-glance" sx={{ pt: 3, pb: 3 }} backgroundColor="customAlternateBackground">
-        <AtAGlance
-          numberOfActiveDataset={
-            (homeData.reduce((count, element) => {
-              return element.isActive ? count + 1 : count;
-            }, 0))
-          }
-        />
-      </Box>
 
-      <Box id="about" sx={{ pt: 3 }}>
+
+      <Box id="about" sx={{ pt: 3, pb: 4 }} backgroundColor="customAlternateBackground">
         <About />
       </Box>
 
-      <Box id="join-us" sx={{ pt: 3, pb: 3 }}>
+      <Box id="join-us" sx={{ pt: 3, pb: 4 }}>
         <JoinUs />
       </Box>
-    </Box>
+    </Box >
   );
 };
 

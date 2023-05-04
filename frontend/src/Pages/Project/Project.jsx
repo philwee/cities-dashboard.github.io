@@ -79,7 +79,7 @@ const Project = ({ themePreference }) => {
       }
     });
 
-    setUnderlineLink('project');
+    setUnderlineLink(id);
   }, [id, setUnderlineLink]);
 
   return (

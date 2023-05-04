@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
-import { Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack } from '@mui/material';
+import { Grid, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,6 +13,9 @@ import { IoReturnDownBack } from 'react-icons/io5';
 
 import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import ThemePreferences from '../../ThemePreferences';
 
@@ -25,10 +28,24 @@ const innerHeight = window.innerHeight;
 
 const toolBarHeightInRem = 4;
 
+const showInMobile = { display: { xs: "block", lg: "none" } };
+const showInLandscape = { display: { xs: "none", lg: "block" } };
+
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
   "& .MuiToolbar-root": {
     padding: 0
+  }
+}));
+
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+  boxSizing: "border-box",
+  maxWidth: "60vw",
+  "& .MuiPaper-root": {
+    height: "auto",
+    borderRadius: "0.5rem",
+    marginRight: theme.spacing(1),
+    marginTop: theme.spacing(1)
   }
 }));
 
@@ -108,16 +125,24 @@ function ScrollTop(props) {
 const StyledNavLink = styled(Box)(({ theme }) => ({
   display: 'inline-block',
   marginRight: theme.spacing(2),
-  cursor: "pointer",
-  textDecoration: "none",
-  "& :hover, & .active": {
+  "& .MuiTypography-root": {
+    color: { xs: theme.palette.text.primary, lg: theme.palette.primary.contrastText },
+    opacity: 0.75,
+    fontWeight: "500"
+  },
+  "& .underlineOnHover, & a": {
+    cursor: "pointer",
+    textDecoration: "none"
+  },
+  "& .underlineOnHover:hover": {
     textDecoration: `underline 2px ${theme.palette.primary.contrastText}`,
+    textUnderlineOffset: "4px",
     opacity: 1,
-    textUnderlineOffset: "4px"
-  }
+  },
 }));
 
 const NavLinkBehavior = {
+  doNothingForNow: "doNothingForNow",
   toNewPage: "toNewPage",
   scrollTo: "scrollTo"
 }
@@ -128,13 +153,13 @@ const BackToHome = () => {
       <IoReturnDownBack
         style={{ verticalAlign: 'middle' }}
       />
-      <span> Back to Home</span>
+      Back to Home
     </>
   );
 }
 
-function NavLink(props) {
-  const { behavior, underlineLink, to, scrollToSectionID } = props;
+const NavLink = (props) => {
+  const { behavior, to, scrollToSectionID, text, currentPage } = props;
 
   const scrollToSection = (scrollToSectionID) => {
     const section = document.getElementById(scrollToSectionID);
@@ -143,83 +168,99 @@ function NavLink(props) {
     }
   }
 
-  const transformHyphenString = (str) => {
-    const words = str.split('-');
+  const capitalizePhrase = (str) => {
+    const words = str.split(/[\s-]+/);
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     const capitalizedString = capitalizedWords.join(' ');
     return capitalizedString;
   }
 
-  return (
-    <StyledNavLink>
-      {behavior === NavLinkBehavior.toNewPage &&
+  let placeholderDOM;
+
+  switch (behavior) {
+    case NavLinkBehavior.doNothingForNow:
+      placeholderDOM = (
+        <Typography variant="body1">
+          {capitalizePhrase(text)}
+        </Typography>
+      );
+      break;
+
+    case NavLinkBehavior.toNewPage:
+      placeholderDOM = (
         <Link to={to}>
           <Typography
-            className={
-              underlineLink === to ? 'navLink active' : 'navLink'
-            }
-            variant="caption"
-            fontWeight='medium'
-            color="primary.contrastText"
-            sx={{ opacity: 0.7 }}
+            className="underlineOnHover"
+            variant="body1"
+            color={{ xs: "text.primary", lg: "primary.contrastText" }} // need to use color here or else it won't override <a> color scheme
           >
-            {to === "/" ? <BackToHome /> : transformHyphenString(to)}
+            {to === "/" ? <BackToHome /> : capitalizePhrase(to)}
           </Typography>
-        </Link>
-      }
-      {behavior === NavLinkBehavior.scrollTo &&
+        </Link >
+      );
+      break;
+
+
+    case NavLinkBehavior.scrollTo:
+      placeholderDOM = (
         <Box onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
           <Typography
-            variant="caption"
-            fontWeight='medium'
-            color="primary.contrastText"
-            sx={{ opacity: 0.7 }}
+            className="underlineOnHover"
+            variant="body1"
           >
-            {transformHyphenString(scrollToSectionID)}
+            {capitalizePhrase(scrollToSectionID)}
           </Typography>
         </Box>
-      }
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  return (
+    <StyledNavLink>
+      {placeholderDOM}
     </StyledNavLink>
   );
 }
 
-export default function Header(props) {
-  const { themePreference, setThemePreference } = props;
+const NavBar = (props) => {
+  const { currentPage } = props;
 
-  const [underlineLink] = useContext(LinkContext);
-  const [themeValue, setThemeValue] = useState(themePreference);
+  console.log(currentPage)
 
-  const handleChange = (event) => {
-    localStorage.setItem('theme', event.target.value);
-    setThemeValue(event.target.value);
-  };
+  return (
+    <Grid container spacing={1}>
+      {
+        // If the current page is homepage, then display ABOUT link
+        // If not homepage (implies in project page at this point), display Back to Home link and the name of this project
+        currentPage === "home" ?
+          <Grid item xs={12} lg="auto">
+            <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
+          </Grid>
+          :
+          <>
+            <Grid item xs={12} lg="auto">
+              <NavLink behavior={NavLinkBehavior.toNewPage} to="/" />
+            </Grid>
 
-  const themeChangeHandler = ({ matches }) => {
-    if (matches) {
-      setThemePreference(ThemePreferences.dark);
-    } else {
-      setThemePreference(ThemePreferences.light);
-    }
-  };
-
-  useEffect(() => {
-    if (themeValue === ThemePreferences.dark) {
-      setThemePreference(ThemePreferences.dark);
-    } else if (themeValue === ThemePreferences.light) {
-      setThemePreference(ThemePreferences.light);
-    } else if (themeValue === ThemePreferences.system) {
-      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
-      if (darkThemeMq.matches) {
-        setThemePreference(ThemePreferences.dark);
-      } else {
-        setThemePreference(ThemePreferences.light);
+            <Grid item xs={12} lg="auto">
+              <NavLink behavior={NavLinkBehavior.doNothingForNow} text={`Charts: ${currentPage}`} />
+            </Grid>
+          </>
       }
-      darkThemeMq.addEventListener('change', themeChangeHandler);
-      return () => {
-        darkThemeMq.removeEventListener('change', themeChangeHandler);
-      };
-    }
-  }, [themeValue]);
+      <Grid item xs={12} lg="auto">
+        <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="join-us" />
+      </Grid>
+    </Grid>
+  );
+}
+
+export default function Header(props) {
+  const { setThemePreference } = props;
+
+  const [currentPage] = useContext(LinkContext);
 
   // trigger for hiding/showing the AppBar
   const triggerHideAppBar = useScrollTrigger({
@@ -227,89 +268,97 @@ export default function Header(props) {
     threshold: 100
   });
 
+  // hamburger menu on mobile
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
   return (
     <>
+      {/* Hidable navbar */}
       <Slide appear={false} direction="down" in={!triggerHideAppBar}>
-        <StyledAppBar enableColorOnDark>
+        <StyledAppBar enableColorOnDark component="nav">
           <Toolbar sx={{ backgroundColor: 'primary', height: `${toolBarHeightInRem}rem` }}>
             <Container sx={{ height: "100%" }} >
+              {/* CITIES logo and navbar */}
               <Stack direction="row" justifyContent='space-between' alignItems='center' height="100%">
-                <Stack direction="row" alignItems='center' height="100%" spacing={2}>
-                  <Paper
-                    elevation={4}
-                    sx={{
-                      height: `${toolBarHeightInRem * 1.25}rem`,
-                      mt: `${toolBarHeightInRem * 0.7}rem`,
-                      opacity: triggerHideAppBar ? 0 : 1,
-                      transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
-                    }}
+                <Paper elevation={4}
+                  sx={{
+                    height: `${toolBarHeightInRem * 1.25}rem`,
+                    mt: `${toolBarHeightInRem * 0.5}rem`,
+                    opacity: triggerHideAppBar ? 0 : 1,
+                    borderRadius: "0.5rem",
+                    transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
+                  }}
+                >
+                  <CITIESlogoLinkToHome />
+                </Paper>
+
+                <Stack direction="row" alignItems='center' justifyContent="flex-end" height="100%" spacing={2}>
+
+                  {/* Navbar in landscape placed here, will be hidden in mobile  */}
+                  <Box sx={showInLandscape}>
+                    <NavBar currentPage={currentPage} />
+                  </Box>
+
+                  <IconButton
+                    color="inherit"
+                    aria-label="open mobile menu drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={showInMobile}
                   >
-                    <Link to="/">
-                      <img style={{
-                        height: "100%", width: "auto", borderRadius: "0.5rem"
-                      }} src={citiesLogo} title="CITIES Dashboard Logo" alt="CITIES Dashboard Logo" />
-                    </Link>
-                  </Paper>
-                  <Stack direction="column">
-                    <Typography
-                      sx={{ fontWeight: 'medium' }}
-                      color="primary.contrastText"
-                    >
-                      {"PLACEHOLDER FOR PAGE NAME"}
-                    </Typography>
-                    <Stack direction="row">
-                      {
-                        // If the current page is homepage, then display these links
-                        underlineLink === "home" ? <>
-                          <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="at-a-glance" />
-                          <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
-                        </> :
-                          // For the rest, display link to return to homepage
-                          <NavLink behavior={NavLinkBehavior.toNewPage} to="/" />
-                      }
-                      <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="join-us" />
+                    <MenuIcon />
+                  </IconButton>
 
-                    </Stack>
-                  </Stack>
-
-
+                  <IconButton
+                    color="inherit"
+                    aria-label="open setting drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={showInLandscape}
+                  >
+                    <SettingsIcon />
+                  </IconButton>
                 </Stack>
 
-                <StyledFormControl variant="filled" size="small">
-                  <InputLabel id="select-filled-label">THEME</InputLabel>
-                  <Select
-                    labelId="select-filled-label"
-                    id="select-filled"
-                    value={themeValue}
-                    onChange={handleChange}
-                  >
-                    <StyledMenuItem value={ThemePreferences.system}>
-                      <Typography color="text.primary">
-                        <Contrast />
-                        System
-                      </Typography>
-                    </StyledMenuItem>
 
-                    <StyledMenuItem value={ThemePreferences.light}>
-                      <Typography color="text.primary">
-                        <LightMode />
-                        Light
-                      </Typography>
-                    </StyledMenuItem>
-
-                    <StyledMenuItem value={ThemePreferences.dark}>
-                      <Typography color="text.primary">
-                        <DarkMode />
-                        Dark
-                      </Typography>
-                    </StyledMenuItem>
-                  </Select>
-                </StyledFormControl>
               </Stack>
             </Container>
           </Toolbar>
         </StyledAppBar>
       </Slide >
+
+      <Box component="nav">
+        <StyledDrawer
+          anchor="right" //from which side the drawer slides in
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          <Stack onClick={handleDrawerToggle}>
+            {/* // Only show the NavBar here in mobile  */}
+            <Box sx={showInMobile}>
+              <Container sx={{ py: 2 }}>
+                <NavBar currentPage={currentPage} />
+              </Container>
+              <Divider />
+            </Box>
+
+            <Container sx={{ py: 2 }}>
+              <Typography variant="body1" color="text.secondary" fontWeight='medium' gutterBottom>
+                Dashboard Settings
+              </Typography>
+              <ThemeSelector isFullWidth={true} setThemePreference={setThemePreference} />
+            </Container>
+          </Stack>
+        </StyledDrawer>
+      </Box>
 
       {/* From MUI's documentation: 
       When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. Here is how to fix:
@@ -323,11 +372,10 @@ export default function Header(props) {
               variant="h3"
               color="text.primary"
               fontWeight='medium'
-              pb={1}
-
             >
               CITIES DASHBOARD
             </Typography>
+
             <Typography variant="body1" color="text.secondary">
               {parse(jsonData.siteDescription)}
             </Typography>
@@ -344,4 +392,87 @@ export default function Header(props) {
     </>
 
   );
+}
+
+const ThemeSelector = (props) => {
+  const { isFullWidth, setThemePreference } = props;
+  const [themeValue, setThemeValue] = useState(localStorage.getItem('theme') || ThemePreferences.system);
+
+  const handleChange = (event) => {
+    localStorage.setItem('theme', event.target.value);
+    setThemeValue(event.target.value);
+  };
+
+  const themeChangeHandler = ({ matches }) => {
+    if (matches) {
+      setThemePreference(ThemePreferences.dark);
+    } else {
+      setThemePreference(ThemePreferences.light);
+    }
+  };
+
+  useEffect(() => {
+    switch (themeValue) {
+      case ThemePreferences.dark:
+        setThemePreference(ThemePreferences.dark);
+        break;
+
+      case ThemePreferences.light:
+        setThemePreference(ThemePreferences.light);
+        break;
+
+      case ThemePreferences.system:
+        const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+        darkThemeMq.matches ? setThemePreference(ThemePreferences.dark) : setThemePreference(ThemePreferences.light);
+        darkThemeMq.addEventListener('change', themeChangeHandler);
+
+        return () => {
+          darkThemeMq.removeEventListener('change', themeChangeHandler);
+        };
+
+      default:
+        break;
+    }
+  }, [themeValue]);
+
+  return (
+    <StyledFormControl sx={{ display: isFullWidth ? "grid" : "" }} variant="filled" size="small">
+      <InputLabel id="select-filled-label">THEME</InputLabel>
+      <Select
+        labelId="select-filled-label"
+        id="select-filled"
+        value={themeValue}
+        onChange={handleChange}
+      >
+        <StyledMenuItem value={ThemePreferences.system}>
+          <Typography color="text.primary">
+            <Contrast />
+            System
+          </Typography>
+        </StyledMenuItem>
+
+        <StyledMenuItem value={ThemePreferences.light}>
+          <Typography color="text.primary">
+            <LightMode />
+            Light
+          </Typography>
+        </StyledMenuItem>
+
+        <StyledMenuItem value={ThemePreferences.dark}>
+          <Typography color="text.primary">
+            <DarkMode />
+            Dark
+          </Typography>
+        </StyledMenuItem>
+      </Select>
+    </StyledFormControl>
+  );
+};
+
+const CITIESlogoLinkToHome = () => {
+  return (<Link to="/">
+    <img style={{
+      height: "100%", width: "auto", borderRadius: "0.5rem"
+    }} src={citiesLogo} title="CITIES Dashboard Logo" alt="CITIES Dashboard Logo" />
+  </Link>);
 }

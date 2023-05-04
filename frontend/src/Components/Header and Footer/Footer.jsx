@@ -1,12 +1,10 @@
 // disable eslint for this file
 /* eslint-disable */
-import { Typography, Container, Box, Stack, Divider } from '@mui/material';
-
-import jsonData from '../../home_data.json';
-import parse from 'html-react-parser';
+import { Typography, Container, Box, Stack } from '@mui/material';
 
 import { Facebook, LinkedIn, Instagram, Twitter } from '@mui/icons-material/';
 import CustomLink from '../CustomLink';
+import SocialHandleGrid from './SocialHandleGrid';
 
 function getYear() {
   const d = new Date();
@@ -24,14 +22,7 @@ export default function Footer() {
             {getYear()}
           </Typography>
 
-          <Stack direction="row" spacing={1} justifyContent="center">
-            <CustomLink href='https://twitter.com/cities_nyuad/' text={<Twitter sx={{ fontSize: '2rem' }} />} />
-            <CustomLink href='https://www.linkedin.com/company/center-for-interacting-urban-networks/' text={<LinkedIn sx={{ fontSize: '2rem' }} />} />
-            <CustomLink href='https://www.facebook.com/nyuad.cities/' text={<Facebook sx={{ fontSize: '2rem' }} />} />
-            <CustomLink href='https://www.instagram.com/cities.nyuad/' text={<Instagram sx={{ fontSize: '2rem' }} />} />
-          </Stack>
-
-          <CustomLink href="mailto:nyuad.cities@nyu.edu" text="nyuad.cities@nyu.edu" />
+          <SocialHandleGrid />
         </Stack>
       </Container>
     </Box >

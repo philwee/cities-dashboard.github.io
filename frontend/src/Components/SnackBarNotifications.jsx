@@ -10,7 +10,6 @@ function SimpleSnackBar({ message, open, handleClose, autoHideDuration }) {
         <IconButton
             size="small"
             aria-label="close"
-            color="inherit"
             onClick={handleClose}
         >
             <Close color="secondary" fontSize="small" />
@@ -61,7 +60,7 @@ export default function DeviceOrientationNotification() {
 
     return (
         <SimpleSnackBar
-            message='The dashboard is best experienced on computers/landscape'
+            message='Best experienced on computers/landscape'
             open={open}
             handleClose={handleClose}
             autoHideDuration={10000}

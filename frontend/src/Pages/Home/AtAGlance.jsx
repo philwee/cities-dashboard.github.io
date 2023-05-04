@@ -1,10 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect } from 'react';
-
 import { Grid, Typography, Container, Stack } from "@mui/material";
-
-import UppercaseTitle from "../../Components/UppercaseTitle";
 
 import homeJsonData from "../../home_data.json";
 
@@ -19,10 +15,10 @@ const ByTheNumber = (props) => {
         <Grid justifyContent="center" alignItems="center" item sm={3} xs={6}>
             <Stack direction="column" alignItems="center">
                 <Icon fontSize="large" color="primary" />
-                <Typography color="text.primary" variant="h3" fontWeight="500">
+                <Typography color="text.primary" variant="h4" fontWeight="500">
                     {props.number}
                 </Typography>
-                <Typography color="text.primary" variant="h6" textTransform="uppercase">
+                <Typography color="text.secondary" variant="h6" fontWeight="400" textTransform="uppercase">
                     {props.text}
                 </Typography>
             </Stack>
@@ -31,24 +27,19 @@ const ByTheNumber = (props) => {
 };
 
 const AtAGlance = (props) => {
-
     return (
         <Container>
-            <UppercaseTitle text={"at a glance"} />
             <Grid container direction="row" justifyContent="center" textAlign="center" m={0}>
-
                 <ByTheNumber
                     icon={BarChartIcon}
                     number={props.numberOfActiveDataset}
-                    text="datasets"
+                    text="active datasets"
                 />
-
                 <ByTheNumber
                     icon={GroupsIcon}
                     number={homeJsonData.statistics.partners}
                     text="partners"
                 />
-
                 <ByTheNumber
                     icon={ScatterPlotIcon}
                     number={homeJsonData.statistics.datapoints}

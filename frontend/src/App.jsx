@@ -6,8 +6,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Header from './Components/Header and Footer/Header';
-import Footer from './Components/Header and Footer/Footer';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
 
 import DeviceOrientationNotification from './Components/SnackBarNotifications';

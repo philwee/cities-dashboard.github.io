@@ -59,28 +59,37 @@ const CustomChip = ({ icon, label }) => {
 }
 
 const Project = ({ themePreference }) => {
-  const [_, setUnderlineLink] = useContext(LinkContext);
+  const [_, setCurrentPage, chartsTitlesList, setChartsTitlesList] = useContext(LinkContext);
+
   let { id } = useParams();
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useContext(TabContext);
 
+  // Update the currentPage with the project's ID
+  // and the chartsTitle with all the charts' titles of the project
   useEffect(() => {
     // loop through all projects and find the one with the matching id
-    data.map((p) => {
-      if (p.id === id) {
-        setProject({ ...p });
+    let chartsTitles = [];
+
+    data.map((project) => {
+      if (project.id === id) {
+        setProject({ ...project });
         let temp = {};
-        for (let i = 0; i < p.charts.length; i++) {
+        for (let i = 0; i < project.charts.length; i++) {
           temp[i] = 0;
         }
         setTab(temp);
         setLoading(true);
+        // Populate the array with all the charts' titles of the project
+        chartsTitles = project.charts.map((element, index) => ({ chartTitle: element.title, chartID: `-${index + 1}` }));
       }
     });
 
-    setUnderlineLink(id);
-  }, [id, setUnderlineLink]);
+    setCurrentPage(id);
+    setChartsTitlesList(chartsTitles);
+
+  }, [id, setCurrentPage, setChartsTitlesList]);
 
   return (
     <>
@@ -102,8 +111,6 @@ const Project = ({ themePreference }) => {
                   <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`} />
                 </Grid>
               </Grid>
-
-              {/* google-visualization-table-type-date table-cell */}
 
               <Typography
                 variant="body1"
@@ -150,6 +157,7 @@ const Project = ({ themePreference }) => {
 
           {project.charts.map((element, index) => (
             <Box
+              id={chartsTitlesList[index].chartID} // set the chartWrapper's ID to help Navbar in Header scroll to
               key={index}
               backgroundColor={
                 index % 2 == 0 ? 'customAlternateBackground' : ''

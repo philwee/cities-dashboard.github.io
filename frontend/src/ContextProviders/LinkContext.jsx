@@ -6,9 +6,11 @@ import { useState, createContext } from 'react';
 export const LinkContext = createContext();
 
 export const LinkProvider = (props) => {
-  const [underlineLink, setUnderlineLink] = useState('home');
+  const [currentPage, setCurrentPage] = useState('home');
+  const [chartsTitlesList, setChartsTitlesList] = useState([]);
+
   return (
-    <LinkContext.Provider value={[underlineLink, setUnderlineLink]}>
+    <LinkContext.Provider value={[currentPage, setCurrentPage, chartsTitlesList, setChartsTitlesList]}>
       {props.children}
     </LinkContext.Provider>
   );

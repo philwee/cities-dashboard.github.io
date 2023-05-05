@@ -16,12 +16,12 @@ import JoinUs from './JoinUs';
 
 const Home = ({ themePreference }) => {
   // useState for home page data
-  const [_, setUnderlineLink] = useContext(LinkContext);
+  const [_, setCurrentPage] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
 
   // set underline link to home
   useEffect(() => {
-    setUnderlineLink('home');
+    setCurrentPage('home');
   }, []);
 
   return (

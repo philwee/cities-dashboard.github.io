@@ -6,11 +6,11 @@ import { LinkContext } from '../ContextProviders/LinkContext';
 import { Button, Typography, Container } from '@mui/material';
 
 export default function FourOhFour() {
-  const [_, setUnderlineLink] = useContext(LinkContext);
+  const [_, setCurrentPage] = useContext(LinkContext);
 
   useEffect(() => {
-    setUnderlineLink('404');
-  }, [setUnderlineLink]);
+    setCurrentPage('404');
+  }, [setCurrentPage]);
 
   return (
     <Container sx={{ p: 5, textAlign: 'center', margin: 'auto' }}>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/DataContext';
 
-import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Paper } from '@mui/material';
+import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Div } from '@mui/material';
 
 import UppercaseTitle from '../../Components/UppercaseTitle';
 
@@ -80,9 +80,7 @@ const Home = ({ themePreference }) => {
         </Container>
       </Box>
 
-
-
-      <Box id="about" sx={{ pt: 3, pb: 4 }} backgroundColor="customAlternateBackground">
+      <Box id="about" sx={{ pt: 3, pb: 4 }} >
         <About />
       </Box>
 

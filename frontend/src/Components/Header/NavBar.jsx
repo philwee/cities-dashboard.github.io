@@ -2,9 +2,9 @@
 /* eslint-disable */
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { Tooltip, Button, Menu, MenuItem, Grid, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
+import { MenuList, MenuItem, Box, Divider } from '@mui/material';
 
-import { IoReturnDownBack } from 'react-icons/io5';
+import HomeIcon from '@mui/icons-material/Home';
 
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
 import PopupState, {
@@ -15,28 +15,65 @@ import PopupState, {
 
 import { showInDesktop, showInMobile } from './Header';
 
+const capitalizePhrase = (str) => {
+    const words = str.split(/[\s-]+/);
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    const capitalizedString = capitalizedWords.join(' ');
+    return capitalizedString;
+}
+
+const NavLinkBehavior = {
+    doNothingForNow: "doNothingForNow",
+    toNewPage: "toNewPage",
+    scrollTo: "scrollTo"
+}
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    // Make height 100% and vertical align text elements of popup menu
+    "& .MuiBox-root": {
+        height: "100%",
+        display: "flex",
+        alignItems: "center"
+    },
+    [theme.breakpoints.up("lg")]: {
+        "&:hover": {
+            backgroundColor: theme.palette.backgroundColorForNavLink
+        }
+    }
+}));
+
+const StyledMenuList = styled(MenuList)(({ theme }) => ({
+    // Make these items display on the same line on large display
+    "& .MuiMenuItem-root": {
+        [theme.breakpoints.up("lg")]: {
+            display: "inline-flex !important",
+            height: "100%",
+        },
+    }
+}));
+
+
 const HoverFocusMenu = (props) => {
-    const { popupId, elementToDisplay, menuItemToDisplay } = props;
+    const { popupId, menuLabel, menuItems } = props;
 
     return (
         <PopupState variant="popover" popupId={popupId || "demoPopup"}>
             {(popupState) => (
                 <>
                     <Box {...bindHover(popupState)} {...bindFocus(popupState)}>
-                        {elementToDisplay}
+                        {menuLabel}
                     </Box>
 
                     {
-                        // Sanity check if there are items in menuItemToDisplay array to display
-                        (Array.isArray(menuItemToDisplay) && menuItemToDisplay.length > 0) &&
+                        // Sanity check if there are items in menuItems array to display
+                        (Array.isArray(menuItems) && menuItems.length > 0) &&
                         <HoverMenu
                             {...bindMenu(popupState)}
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                            onClick={popupState.close}
                         >
-                            {menuItemToDisplay.map((element) => (
-                                <MenuItem onClick={popupState.close}>{element}</MenuItem>
-                            ))}
+                            {menuItems}
                         </HoverMenu>
                     }
                 </>
@@ -45,49 +82,8 @@ const HoverFocusMenu = (props) => {
     );
 };
 
-const StyledNavLink = styled(Box)(({ theme }) => ({
-    display: 'inline-block',
-    marginRight: theme.spacing(2),
-    "& .MuiTypography-root": {
-        color: { xs: theme.palette.text.primary, lg: theme.palette.primary.contrastText },
-        opacity: 0.75,
-    },
-    "& .underlineOnHover, & a": {
-        cursor: "pointer",
-        textDecoration: "none"
-    },
-    "& .underlineOnHover:hover": {
-        textDecoration: "underline 2px",
-        textUnderlineOffset: "4px",
-        opacity: 1,
-        [theme.breakpoints.up("lg")]: {
-            textDecorationColor: theme.palette.primary.contrastText,
-        },
-        [theme.breakpoints.down("lg")]: {
-            textDecorationColor: theme.palette.primary.main,
-        },
-    },
-}));
-
-const NavLinkBehavior = {
-    doNothingForNow: "doNothingForNow",
-    toNewPage: "toNewPage",
-    scrollTo: "scrollTo"
-}
-
-const BackToHome = () => {
-    return (
-        <>
-            <IoReturnDownBack
-                style={{ verticalAlign: 'middle' }}
-            />
-            Back to Home
-        </>
-    );
-}
-
-const NavLink = (props) => {
-    const { behavior, to, scrollToSectionID, label, typographyVariant, typographyFontWeight } = props;
+const MenuItemAsNavLink = (props) => {
+    const { behavior, to, scrollToSectionID, label } = props;
 
     const scrollToSection = (scrollToSectionID) => {
         const section = document.getElementById(scrollToSectionID);
@@ -96,137 +92,94 @@ const NavLink = (props) => {
         }
     }
 
-    const capitalizePhrase = (str) => {
-        const words = str.split(/[\s-]+/);
-        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-        const capitalizedString = capitalizedWords.join(' ');
-        return capitalizedString;
-    }
-
-    let placeholderDOM;
-
     switch (behavior) {
         case NavLinkBehavior.doNothingForNow:
-            placeholderDOM = (
-                <Typography variant={typographyVariant || "body1"}
-                    fontWeight={typographyFontWeight || 500}>
+            return (
+                <StyledMenuItem>
                     {capitalizePhrase(label)}
-                </Typography>
+                </StyledMenuItem>
             );
-            break;
 
         case NavLinkBehavior.toNewPage:
-            placeholderDOM = (
-                <Link to={to}>
-                    <Typography
-                        className="underlineOnHover"
-                        variant={typographyVariant || "body1"}
-                        fontWeight={typographyFontWeight || 500}
-                        color={{ xs: "text.primary", lg: "primary.contrastText" }} // need to use color here or else it won't override <a> color scheme
-                    >
-                        {to === "/" ? <BackToHome /> : capitalizePhrase(to)}
-                    </Typography>
-                </Link >
+            return (
+                <StyledMenuItem component={Link} to={to}>
+                    {capitalizePhrase((to === "/") ? "home" : to)}
+                </StyledMenuItem>
             );
-            break;
-
 
         case NavLinkBehavior.scrollTo:
-            placeholderDOM = (
-                <Box onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
-                    <Typography
-                        className="underlineOnHover"
-                        variant={typographyVariant || "body1"}
-                        fontWeight={typographyFontWeight || 500}
-                    >
-                        {capitalizePhrase(label || scrollToSectionID)}
-                    </Typography>
-                </Box>
+            return (
+                <StyledMenuItem onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
+                    {capitalizePhrase(label || scrollToSectionID)}
+                </StyledMenuItem>
             );
-            break;
 
         default:
-            break;
-    }
+            return null;
 
-    return (
-        <StyledNavLink>
-            {placeholderDOM}
-        </StyledNavLink>
-    );
+    }
 }
 
 export default function NavBar(props) {
     const { currentPage, chartsTitlesList } = props;
 
     const mobileChartList = (
-        <Grid container ml={3}>
-            {chartsTitlesList.map((element, index) => (
-                <Grid key={index} item xs={12} lg="auto">
-                    <NavLink
-                        behavior={NavLinkBehavior.scrollTo}
-                        scrollToSectionID={element.chartID}
-                        label={`${element.chartID}. ${element.chartTitle}`}
-                        typographyVariant="caption"
-                        typographyFontWeight={400}
-                    />
-                </Grid>
+        <MenuList sx={{ p: 0, ml: 3 }}>
+            {chartsTitlesList.map((element) => (
+                <MenuItemAsNavLink
+                    behavior={NavLinkBehavior.scrollTo}
+                    scrollToSectionID={element.chartID}
+                    label={`${element.chartID}. ${element.chartTitle}`}
+                />
             ))}
-        </Grid>
+        </MenuList>
     );
 
     const desktopChartList = (
         <HoverFocusMenu
             popupId={"chart-list-popup"}
-            elementToDisplay={
-                <NavLink behavior={NavLinkBehavior.doNothingForNow} label={`Charts of ${currentPage}`} />
-            }
-            menuItemToDisplay={chartsTitlesList.map((element, index) => (
-                <NavLink
-                    key={index}
-                    behavior={NavLinkBehavior.scrollTo}
-                    scrollToSectionID={element.chartID}
-                    label={`${element.chartID}. ${element.chartTitle}`}
-                    typographyVariant="caption"
-                    typographyFontWeight={400}
-                />
-            ))}
+            menuLabel={capitalizePhrase(`Charts: ${currentPage}`)}
+            menuItems={
+                chartsTitlesList.map((element, index) => (
+                    <MenuItemAsNavLink
+                        key={index}
+                        behavior={NavLinkBehavior.scrollTo}
+                        scrollToSectionID={element.chartID}
+                        label={`${element.chartID}. ${element.chartTitle}`}
+                        sx={{ fontSize: "0.5rem" }}
+                    />
+                ))}
         />
     );
 
     return (
-        <Grid container spacing={1}>
+        <StyledMenuList sx={{ height: "100%", p: 0 }}>
             {
                 // If the current page is homepage, then display ABOUT link
                 // If not homepage (implies in project page at this point), display Back to Home link and the name of this project
                 currentPage === "home" ?
-                    <Grid item xs={12} lg="auto">
-                        <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
-                    </Grid>
+                    <>
+                        <MenuItemAsNavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
+                    </>
                     :
                     <>
-                        <Grid item xs={12} lg="auto">
-                            <NavLink
-                                behavior={NavLinkBehavior.toNewPage} to="/" />
-                        </Grid>
+                        <MenuItemAsNavLink behavior={NavLinkBehavior.toNewPage} to="/" />
 
-                        <Grid container sx={showInMobile}>
-                            <Grid item xs={12} lg="auto">
-                                <NavLink behavior={NavLinkBehavior.doNothingForNow} label={`Charts of ${currentPage}`} />
-                            </Grid>
-                            <Grid item xs={12} lg="auto" >
-                                {mobileChartList}
-                            </Grid>
-                        </Grid>
+                        <Box sx={showInMobile("block")}>
+                            <MenuItemAsNavLink behavior={NavLinkBehavior.doNothingForNow} label={`Charts: ${currentPage}`} />
+                            {mobileChartList}
+                        </Box>
 
-                        <Grid item xs={12} lg="auto" sx={showInDesktop}>
+                        <StyledMenuItem sx={showInDesktop("block")}>
                             {desktopChartList}
-                        </Grid>
+                        </StyledMenuItem>
                     </>
             }
-            <Grid item xs={12} lg="auto">
-                <NavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="join-us" />
-            </Grid>
-        </Grid>
+            <MenuItemAsNavLink
+                behavior={NavLinkBehavior.scrollTo}
+                scrollToSectionID="join-us"
+
+            />
+        </StyledMenuList>
     );
 }

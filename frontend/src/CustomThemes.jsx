@@ -90,7 +90,8 @@ const CustomThemes = {
     },
     universal: {
         palette: {
-            NYUpurple: "#57068c"
+            NYUpurple: "#57068c",
+            backgroundColorForNavLink: "rgba(0, 0, 0, 0.2)",
         },
         typography: {
             fontFamily: "'IBM Plex Sans', sans-serif !important"

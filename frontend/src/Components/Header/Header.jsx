@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
-import { Tooltip, Button, Menu, MenuItem, Grid, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
+import { Tooltip, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
 
 import ThemeSelector from './ThemeSelector';
 import NavBar from './NavBar';
@@ -19,11 +19,15 @@ import citiesLogo from '../../cities-logo.png';
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
 
-export const showInMobile = { display: { xs: "block", lg: "none" } };
-export const showInDesktop = { display: { xs: "none", lg: "block" } };
+export const showInMobile = (defaultDisplay) => {
+  return { display: { xs: (defaultDisplay || "block"), lg: "none" } };
+}
+export const showInDesktop = (defaultDisplay) => {
+  return { display: { xs: "none", lg: (defaultDisplay || "block") } };
+}
 
 const innerHeight = window.innerHeight;
-const toolBarHeightInRem = 4;
+const toolBarHeightInRem = 3;
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
@@ -108,8 +112,8 @@ export default function Header(props) {
               <Stack direction="row" justifyContent='space-between' alignItems='center' height="100%">
                 <Paper elevation={4}
                   sx={{
-                    height: `${toolBarHeightInRem * 1.25}rem`,
-                    mt: `${toolBarHeightInRem * 0.5}rem`,
+                    height: `${toolBarHeightInRem * 4 / 3}rem`,
+                    mt: `${toolBarHeightInRem * 2 / 3}rem`,
                     opacity: triggerHideAppBar ? 0 : 1,
                     borderRadius: "0.5rem",
                     transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
@@ -121,7 +125,7 @@ export default function Header(props) {
                 <Stack direction="row" alignItems='center' justifyContent="flex-end" height="100%" spacing={2}>
 
                   {/* Navbar in landscape placed here, will be hidden in mobile  */}
-                  <Box sx={showInDesktop}>
+                  <Box sx={{ ...showInDesktop("block"), height: "100%" }}>
                     <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
                   </Box>
 
@@ -131,7 +135,7 @@ export default function Header(props) {
                       aria-label="open mobile menu drawer"
                       edge="start"
                       onClick={handleDrawerToggle}
-                      sx={showInMobile}
+                      sx={showInMobile("flex")}
                     >
                       <MenuIcon />
                     </IconButton>
@@ -144,7 +148,7 @@ export default function Header(props) {
                       aria-label="open setting drawer"
                       edge="start"
                       onClick={handleDrawerToggle}
-                      sx={showInDesktop}
+                      sx={showInDesktop("flex")}
                     >
                       <SettingsIcon />
                     </IconButton>
@@ -157,7 +161,7 @@ export default function Header(props) {
         </StyledAppBar>
       </Slide >
 
-      <Box component="nav">
+      <Box>
         <StyledDrawer
           anchor="right" //from which side the drawer slides in
           variant="temporary"
@@ -169,15 +173,18 @@ export default function Header(props) {
         >
           <Stack onClick={handleDrawerToggle}>
             {/* // Only show the NavBar here in mobile  */}
-            <Box sx={showInMobile}>
+            <Box sx={showInMobile("block")}>
               <Container sx={{ py: 2 }}>
+                <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
+                  CITIES Dashboard
+                </Typography>
                 <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
               </Container>
               <Divider />
             </Box>
 
             <Container sx={{ py: 2 }}>
-              <Typography variant="body1" color="text.secondary" fontWeight='medium' gutterBottom>
+              <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
                 Dashboard Settings
               </Typography>
               <ThemeSelector isFullWidth={true} setThemePreference={setThemePreference} />
@@ -212,7 +219,7 @@ export default function Header(props) {
       </Box >
 
       <ScrollTop {...props}>
-        <Fab aria-label="scroll back to top">
+        <Fab aria-label="scroll back to top" color="primary">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

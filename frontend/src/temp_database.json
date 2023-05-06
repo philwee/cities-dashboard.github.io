@@ -756,8 +756,7 @@
                   200,
                   300,
                   500
-                ],
-                "textPosition": "in"
+                ]
               }
             }
           },
@@ -776,8 +775,7 @@
                   150.5,
                   250.5,
                   500.5
-                ],
-                "textPosition": "in"
+                ]
               }
             }
           }
@@ -825,13 +823,23 @@
           }
         ],
         "options": {
+          "width": {
+            "landscape": "70%"
+          },
+          "chartArea": {
+            "width": {
+              "portrait": "70%",
+              "landscape": "30%"
+            }
+          },
           "isStacked": true,
           "colors": "aqi",
           "hAxis": {
+            "title": "Categories",
             "textPosition": "none"
           },
           "bar": {
-            "groupWidth": "20%"
+            "groupWidth": "30%"
           }
         }
       },
@@ -897,27 +905,21 @@
               ]
             },
             "3": {
-              "visibleInLegend": false,
               "color": "#662000"
             },
             "4": {
-              "visibleInLegend": false,
               "color": "#9B51E0"
             },
             "5": {
-              "visibleInLegend": false,
               "color": "#EB5757"
             },
             "6": {
-              "visibleInLegend": false,
               "color": "#F2994A"
             },
             "7": {
-              "visibleInLegend": false,
               "color": "#F2C94C"
             },
             "8": {
-              "visibleInLegend": false,
               "color": "#219653"
             }
           },

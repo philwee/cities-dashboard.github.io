@@ -21,13 +21,28 @@ const hideAnnotations = {
     boxStyle: null,
 };
 
+
 const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
+    // Get the current theme
+    const theme = useTheme();
+    // Define some shared styling rules for the chart
+    const responsiveFontSize = isPortrait ? 9 : 12;
+    const axisTitleTextStyle = {
+        italic: false,
+        bold: true,
+        color: theme.palette.chart.axisTitle,
+        fontSize: responsiveFontSize
+    };
+    const axisTextStyle = {
+        color: theme.palette.chart.axisText,
+        fontSize: responsiveFontSize
+    };
+
     // Options object for the chart
     let options = {};
     // Show CircleProgress or not
     let [circleProgress, displayCircleProgress] = useState(true);
-    // Get the current theme
-    const theme = useTheme();
+
 
     switch (chartData.chartType) {
         case 'HeatMap':
@@ -84,7 +99,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 var cellSize = window.innerWidth / 58;
                 return Math.min(Math.max(cellSize, min), max);
             }
-            
+
             let showChartFilter = false;
             if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) showChartFilter = true;
             // ---- Formulate the options for this specific chart:
@@ -98,12 +113,13 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 ...options,
                 ...chartData.options,
                 theme: 'material',
-                chartArea: { width: isPortrait ? '80%' : '75%', height: isPortrait ? '60%' : '70%' },
-                width: '100%',
-                height: showChartFilter? '90%' : '100%',
-                backgroundColor: {
-                    fill: 'transparent',
+                chartArea: {
+                    width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
+                    height: isPortrait ? '60%' : '70%'
                 },
+                width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
+                height: showChartFilter ? '90%' : '100%',
+                backgroundColor: { fill: 'transparent' },
                 tooltip: {
                     isHtml: true,
                     showColorCode: true
@@ -120,9 +136,10 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                         inactiveColor: theme.palette.text.secondary,
                     },
                     pagingTextStyle: {
+                        fontSize: 12,
                         color: theme.palette.chart.axisTitle,
                         bold: true,
-                    },
+                    }
                 }
             };
 
@@ -131,6 +148,10 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     ...options,
                     calendar: {
                         cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
+                        yearLabel: {
+                            fontSize: scaleCalendar(5, 20) * 2
+                        },
+                        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
                     },
                     noDataPattern: {
                         backgroundColor: 'none',
@@ -200,15 +221,15 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             // 4.5. Colors of other elements of the chart (typographies and gridlines)
             options.vAxis = {
                 ...options.vAxis,
-                titleTextStyle: { italic: false, color: theme.palette.chart.axisTitle },
-                textStyle: { color: theme.palette.chart.axisText },
+                titleTextStyle: axisTitleTextStyle,
+                textStyle: axisTextStyle,
                 gridlines: { color: theme.palette.chart.gridlines },
                 minorGridlines: { count: 0 },
             };
             options.hAxis = {
                 ...options.hAxis,
-                titleTextStyle: { italic: false, color: theme.palette.chart.axisTitle },
-                textStyle: { color: theme.palette.chart.axisText },
+                titleTextStyle: axisTitleTextStyle,
+                textStyle: axisTextStyle,
                 gridlines: { color: theme.palette.chart.gridlines },
                 minorGridlines: {
                     ...options.hAxis?.minorGridlines,
@@ -217,14 +238,14 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             };
             options.legend = {
                 ...options.legend,
-                textStyle: { color: theme.palette.chart.axisText },
+                textStyle: axisTextStyle,
             };
             options.annotations = {
                 ...options.annotations,
                 highContrast: true,
                 textStyle: {
                     color: theme.palette.text.secondary,
-                    fontSize: scaleCalendar(3, 15),
+                    fontSize: responsiveFontSize,
                 },
                 stem: {
                     ...options.annotations?.stem,
@@ -249,11 +270,19 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     vAxis: {
                         ...options.vAxis,
                         textPosition: 'none',
+                        titleTextStyle: {
+                            ...options.vAxis.titleTextStyle,
+                            bold: false
+                        }
                     },
                     hAxis: {
                         ...options.hAxis,
                         textPosition: 'none',
                         minorGridlines: { count: 0 },
+                        titleTextStyle: {
+                            ...options.hAxis.titleTextStyle,
+                            bold: false
+                        }
                     },
                     vAxes: {},
                 };
@@ -308,7 +337,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 // if the filter prop exists and it's not a chart on homepage:
                 // add the packages and control props below
                 ...(
-                    showChartFilter? {
+                    showChartFilter ? {
                         chartPackages: ["corechart", "controls"],
                         controls: [
                             {
@@ -334,7 +363,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                                                 textPosition: 'out',
                                                 textStyle: { color: theme.palette.chart.axisText }
                                             },
-                                            annotations:{ ...hideAnnotations },
+                                            annotations: { ...hideAnnotations },
                                             legend: null,
                                         }
                                     },
@@ -351,7 +380,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     position={'relative'}
                     className={chartData.chartType}
                     height="100%"
-                    marginLeft={chartData.chartType == 'Calendar' ? '-1rem' : ''}
+                    marginLeft={chartData.chartType == 'Calendar' ? '-0.5rem' : ''}
                     width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}
                 >
                     {circleProgress && (
@@ -361,7 +390,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                             }}
                         />
                     )}
-                    <Chart {...chartProps} />
+                    <Chart style={{ margin: "auto" }} {...chartProps} />
                 </Box>
             );
     }

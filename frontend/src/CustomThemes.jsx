@@ -54,7 +54,7 @@ const CustomThemes = {
                 axisTitle: colors.grey[darkShade - 100],
                 axisText: colors.grey[darkShade],
                 gridlines: colors.grey[darkShade + 200],
-                annotationBoxFill: colors.blueGrey[100]
+                annotationBoxFill: colors.blueGrey[600]
             }
         }
     },
@@ -84,7 +84,7 @@ const CustomThemes = {
                 axisTitle: colors.grey[lightShade + 100],
                 axisText: colors.grey[lightShade],
                 gridlines: colors.grey[lightShade - 200],
-                annotationBoxFill: colors.blueGrey[100]
+                annotationBoxFill: colors.blueGrey[800]
             }
         }
     },

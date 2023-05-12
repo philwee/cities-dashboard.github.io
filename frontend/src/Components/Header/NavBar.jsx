@@ -28,7 +28,11 @@ const NavLinkBehavior = {
     scrollTo: "scrollTo"
 }
 
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+const StyledMenuItem = styled(MenuItem)(({ theme, fontSize }) => ({
+    whiteSpace: "normal",
+    overflowWrap: "break-word",
+    fontSize: fontSize,
+    minHeight: "unset",
     // Make height 100% and vertical align text elements of popup menu
     "& .MuiBox-root": {
         height: "100%",
@@ -83,7 +87,7 @@ const HoverFocusMenu = (props) => {
 };
 
 const MenuItemAsNavLink = (props) => {
-    const { behavior, to, scrollToSectionID, label } = props;
+    const { behavior, to, scrollToSectionID, label, fontSize } = props;
 
     const scrollToSection = (scrollToSectionID) => {
         const section = document.getElementById(scrollToSectionID);
@@ -95,21 +99,21 @@ const MenuItemAsNavLink = (props) => {
     switch (behavior) {
         case NavLinkBehavior.doNothingForNow:
             return (
-                <StyledMenuItem>
+                <StyledMenuItem fontSize={fontSize}>
                     {capitalizePhrase(label)}
                 </StyledMenuItem>
             );
 
         case NavLinkBehavior.toNewPage:
             return (
-                <StyledMenuItem component={Link} to={to}>
+                <StyledMenuItem fontSize={fontSize} component={Link} to={to}>
                     {capitalizePhrase((to === "/") ? "home" : to)}
                 </StyledMenuItem>
             );
 
         case NavLinkBehavior.scrollTo:
             return (
-                <StyledMenuItem onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
+                <StyledMenuItem fontSize={fontSize} onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}>
                     {capitalizePhrase(label || scrollToSectionID)}
                 </StyledMenuItem>
             );
@@ -130,6 +134,7 @@ export default function NavBar(props) {
                     behavior={NavLinkBehavior.scrollTo}
                     scrollToSectionID={element.chartID}
                     label={`${element.chartID}. ${element.chartTitle}`}
+                    fontSize="0.75rem"
                 />
             ))}
         </MenuList>
@@ -146,7 +151,7 @@ export default function NavBar(props) {
                         behavior={NavLinkBehavior.scrollTo}
                         scrollToSectionID={element.chartID}
                         label={`${element.chartID}. ${element.chartTitle}`}
-                        sx={{ fontSize: "0.5rem" }}
+                        fontSize="0.8rem"
                     />
                 ))}
         />
@@ -178,7 +183,6 @@ export default function NavBar(props) {
             <MenuItemAsNavLink
                 behavior={NavLinkBehavior.scrollTo}
                 scrollToSectionID="join-us"
-
             />
         </StyledMenuList>
     );

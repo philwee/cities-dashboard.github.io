@@ -38,11 +38,10 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   boxSizing: "border-box",
-  maxWidth: "60vw",
   "& .MuiPaper-root": {
     height: "auto",
     borderRadius: "0.5rem",
-    margin: theme.spacing(2),
+    margin: theme.spacing(2)
   }
 }));
 
@@ -113,7 +112,7 @@ export default function Header(props) {
                 <Paper elevation={4}
                   sx={{
                     height: `${toolBarHeightInRem * 4 / 3}rem`,
-                    mt: `${toolBarHeightInRem * 2 / 3}rem`,
+                    mt: `${toolBarHeightInRem}rem`,
                     opacity: triggerHideAppBar ? 0 : 1,
                     borderRadius: "0.5rem",
                     transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
@@ -183,7 +182,7 @@ export default function Header(props) {
               <Divider />
             </Box>
 
-            <Container sx={{ py: 2 }}>
+            <Container sx={{ pt: 2, pb: 3 }}>
               <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
                 Dashboard Settings
               </Typography>
@@ -200,7 +199,7 @@ export default function Header(props) {
       < Toolbar id="back-to-top-anchor" sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
       } />
 
-      < Box width="100%" sx={{ pt: 2, pb: 3, backgroundColor: "customAlternateBackground" }}>
+      < Box width="100%" sx={{ pt: 4, pb: 3, backgroundColor: "customAlternateBackground" }}>
         <Container >
           <Box>
             <Typography

@@ -6,6 +6,7 @@ import UppercaseTitle from '../../Components/UppercaseTitle';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
+import { replacePlainHTMLWithMuiComponents } from '../../Utils';
 
 const About = () => {
     return (
@@ -17,7 +18,9 @@ const About = () => {
                     <Grid key={index} item xs={12} md={6}>
                         <Paper elevation={2} sx={{ p: 3 }}>
                             <Typography variant="body2" color="text.secondary">
-                                {parse(item)}
+                                {parse(item, {
+                                    replace: replacePlainHTMLWithMuiComponents,
+                                })}
                             </Typography>
                         </Paper>
                     </Grid>

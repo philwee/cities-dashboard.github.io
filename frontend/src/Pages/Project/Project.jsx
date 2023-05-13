@@ -4,10 +4,10 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
-import parse, {domToReact} from 'html-react-parser';
+import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
-import { Box, Typography, Container, Divider, Button, Chip, Grid, Link, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
 
 import JoinUs from '../Home/JoinUs';
 
@@ -22,6 +22,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import LinkIcon from '@mui/icons-material/Link';
 import EmailIcon from '@mui/icons-material/Email';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+
+import { replacePlainHTMLWithMuiComponents } from '../../Utils';
 
 // Download button: download raw dataset
 const DatasetDownloadButton = ({ project }) => {
@@ -91,34 +93,6 @@ const Project = ({ themePreference }) => {
 
   }, [id, setCurrentPage, setChartsTitlesList]);
 
-  // Function to replace HTML tags with MUI components
-  const replaceHTMLWithMUI = (node) => {
-    // Replace <a> tags with <Link> tags
-    if (node.type === 'tag' && node.name === 'a') {
-      return (
-        <Link href={node.attribs.href} target="_blank" rel="noopener noreferrer" underline='hover'>
-          {node.children && node.children.length > 0 && parse(node.children[0].data)}
-        </Link>
-      );
-    }
-    
-    // Replace <ul> tags with <List> tags
-    if (node.type === "tag" && node.name === "ul") {
-      return (
-        <List dense={true} sx={{ listStyleType: 'disc', paddingLeft: 4, paddingTop: '6px' }}>
-          {node.children.map((child) => (
-            // Replace <li> tags with <ListItem> tags
-            <ListItem sx={{ display: 'list-item', paddingY: 0, paddingLeft: '4px' }}>
-              <ListItemText primary={domToReact(child.children)} />
-            </ListItem>
-          ))}
-        </List>
-      );
-    }
-  
-    return undefined;
-  };
-
   return (
     <>
       {loading && (
@@ -147,7 +121,7 @@ const Project = ({ themePreference }) => {
                 gutterBottom
               >
                 {parse(project.description, {
-                  replace: replaceHTMLWithMUI,
+                  replace: replacePlainHTMLWithMuiComponents,
                 })}
               </Typography>
 
@@ -215,8 +189,8 @@ const Project = ({ themePreference }) => {
                     sx={{ mb: 2 }}
                   >
                     {element.subtitle && parse(element.subtitle, {
-                      replace: replaceHTMLWithMUI,
-                      })}
+                      replace: replacePlainHTMLWithMuiComponents,
+                    })}
                     {Object.keys(tab)[index] == index &&
                       element.subcharts &&
                       element.subcharts[Object.values(tab)[index]]
@@ -224,21 +198,21 @@ const Project = ({ themePreference }) => {
                       parse(
                         element.subcharts[Object.values(tab)[index]]
                           .subchartSubtitle, {
-                          replace: replaceHTMLWithMUI,
-                        }
+                        replace: replacePlainHTMLWithMuiComponents,
+                      }
                       )}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {element.reference && parse(element.reference, {
-                      replace: replaceHTMLWithMUI,
-                      })}
+                      replace: replacePlainHTMLWithMuiComponents,
+                    })}
                     {Object.keys(tab)[index] == index &&
                       element.subcharts &&
                       element.subcharts[Object.values(tab)[index]].reference &&
                       parse(
                         element.subcharts[Object.values(tab)[index]].reference, {
-                          replace: replaceHTMLWithMUI,
-                        }
+                        replace: replacePlainHTMLWithMuiComponents,
+                      }
                       )}
                   </Typography>
                 </Box>

@@ -19,6 +19,7 @@ import citiesLogo from '../../cities-logo.png';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
+import { replacePlainHTMLWithMuiComponents } from '../../Utils';
 
 export const showInMobile = (defaultDisplay) => {
   return { display: { xs: (defaultDisplay || "block"), lg: "none" } };
@@ -212,7 +213,9 @@ export default function Header(props) {
             </Typography>
 
             <Typography variant="body1" color="text.secondary">
-              {parse(jsonData.siteDescription)}
+              {parse(jsonData.siteDescription, {
+                replace: replacePlainHTMLWithMuiComponents,
+              })}
             </Typography>
           </Box>
         </Container>

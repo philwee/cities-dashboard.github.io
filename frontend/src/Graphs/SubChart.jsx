@@ -115,6 +115,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 ...options,
                 ...chartData.options,
                 theme: 'material',
+                crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
                 chartArea: {
                     width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
                     height: isPortrait ? '60%' : '70%'
@@ -267,6 +268,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             if (isHomepage)
                 options = {
                     ...options,
+                    enableInteractivity: false,
                     annotations: {
                         ...options.annotations,
                         ...hideAnnotations

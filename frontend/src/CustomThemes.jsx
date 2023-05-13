@@ -38,9 +38,9 @@ const CustomThemes = {
             customAlternateBackground: "#303030",
             chart: {
                 optionsColors: {
-                    monochromatic: [colors.purple[darkShade - 200], colors.purple[darkShade + 200]],
+                    monochromatic: [colors.purple[darkShade - 100], colors.purple[darkShade + 200]],
                     multiColor: [colors.blue[darkShade], colors.pink[darkShade], colors.amber[darkShade], colors.teal[darkShade], colors.grey[darkShade]],
-                    grayscale: [colors.grey[darkShade - 100], colors.grey[darkShade + 200]],
+                    grayscale: [colors.grey[darkShade + 100], colors.grey[darkShade + 300]],
                     rainbow: [colors.red[darkShade], colors.orange[darkShade], colors.amber[darkShade], colors.green[darkShade], colors.blue[darkShade], colors.indigo[darkShade], colors.deepPurple[darkShade]],
                     aqi: [colors.green[darkShade], colors.yellow[darkShade + 200], colors.orange[darkShade], colors.red[darkShade], colors.purple[darkShade], maroon[darkShade], maroon[darkShade], colors.grey[darkShade], colors.grey[darkShade + 200]]
                 },
@@ -68,7 +68,7 @@ const CustomThemes = {
             customAlternateBackground: "#ffffff",
             chart: {
                 optionsColors: {
-                    monochromatic: [colors.purple[lightShade + 100], colors.purple[lightShade - 300]],
+                    monochromatic: [colors.purple[lightShade], colors.purple[lightShade - 300]],
                     multiColor: [colors.blue[lightShade], colors.pink[lightShade], colors.amber[lightShade], colors.teal[lightShade], colors.grey[lightShade]],
                     grayscale: [colors.grey[lightShade - 100], colors.grey[lightShade + 200]],
                     rainbow: [colors.red[lightShade], colors.orange[lightShade], colors.amber[lightShade], colors.green[lightShade], colors.blue[lightShade], colors.indigo[lightShade], colors.deepPurple[lightShade]],

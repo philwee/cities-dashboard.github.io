@@ -48,7 +48,7 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
   '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
     stroke: theme.palette.text.primary,
-    strokeWidth: 2
+    strokeWidth: 3
   }
 }));
 

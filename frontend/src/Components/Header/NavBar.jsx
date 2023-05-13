@@ -2,9 +2,7 @@
 /* eslint-disable */
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { MenuList, MenuItem, Box, Divider } from '@mui/material';
-
-import HomeIcon from '@mui/icons-material/Home';
+import { MenuList, MenuItem, Box } from '@mui/material';
 
 import HoverMenu from 'material-ui-popup-state/HoverMenu';
 import PopupState, {

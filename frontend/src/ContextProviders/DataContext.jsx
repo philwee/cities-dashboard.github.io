@@ -1,13 +1,18 @@
 // disable eslint for this file
 /* eslint-disable */
 
+// import libraries
 import { useState, createContext } from 'react';
 import ChartComponent from '../Graphs/ChartComponent';
 import { Grid, Typography } from '@mui/material';
+
+// import data
 import json_data from '../temp_database.json';
 
+// create context
 export const DataContext = createContext();
 
+// banner for coming soon
 function ComingSoonBanner() {
   return (
     <Grid container height={'100%'} justifyContent="center" alignItems="center">
@@ -20,7 +25,9 @@ function ComingSoonBanner() {
   );
 }
 
+// context provider
 export const DataProvider = (props) => {
+  // state to store data
   const [data, setData] = useState([]);
 
   if (data.length === 0) {
@@ -40,7 +47,7 @@ export const DataProvider = (props) => {
                     sheetId: item.sheetId,
                     ...item.charts[item.homepageChartIndex || 0],
                   }}
-                  chartWrapperHeight={"100%"}
+                  chartWrapperHeight={'100%'}
                   isHomepage={true}
                 />
               ),
@@ -55,6 +62,7 @@ export const DataProvider = (props) => {
     });
   }
 
+  // return context provider
   return (
     <DataContext.Provider value={[data, setData]}>
       {props.children}

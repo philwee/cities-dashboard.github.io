@@ -1,23 +1,26 @@
 // disable eslint for this file
 /* eslint-disable */
 
+// import libraries
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// import components
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
-
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
 import ThemePreferences from './ThemePreferences';
 import CustomThemes from './CustomThemes';
 
+// lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
 
+// create theme design tokens based on theme preference
 const getDesignTokens = (themePreference) => ({
   palette: {
     mode: themePreference,
@@ -36,6 +39,7 @@ const getDesignTokens = (themePreference) => ({
 });
 
 function App() {
+  // set theme preference state based on localStorage or system preference
   const [themePreference, setThemePreference] = useState(
     localStorage.getItem('theme')
       ? localStorage.getItem('theme')
@@ -66,9 +70,7 @@ function App() {
 
           {useMemo(
             () => (
-              <Header
-                setThemePreference={setThemePreference}
-              />
+              <Header setThemePreference={setThemePreference} />
             ),
             []
           )}
@@ -100,6 +102,7 @@ function App() {
   );
 }
 
+// loading text for suspense fallback
 const LoadingText = () => {
   return (
     <Container>

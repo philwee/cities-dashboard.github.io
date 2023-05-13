@@ -14,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+// import images
 import citiesLogo from '../../cities-logo.png';
 
 import jsonData from '../../home_data.json';

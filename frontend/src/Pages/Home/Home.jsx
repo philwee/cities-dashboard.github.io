@@ -1,5 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
+
+// import libraries
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 

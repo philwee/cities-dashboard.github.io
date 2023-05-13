@@ -8,6 +8,7 @@ import { Button, Typography, Container } from '@mui/material';
 export default function FourOhFour() {
   const [_, setCurrentPage] = useContext(LinkContext);
 
+  // set underline link to 404 (to undo any other underlined links)
   useEffect(() => {
     setCurrentPage('404');
   }, [setCurrentPage]);

@@ -35,8 +35,8 @@ jobs:
           npm run deploy  # deploy app to github pages
 
 # Orchestrate our job run sequence
-workflows:
-  build-frontend:
-    jobs:
-      # - build-react-js
-      - deploy-react-js
+# workflows:
+# build-frontend:
+# jobs:
+# - build-react-js
+# - deploy-react-js

@@ -17,7 +17,7 @@ function ComingSoonBanner() {
   return (
     <Grid container height={'100%'} justifyContent="center" alignItems="center">
       <Grid item>
-        <Typography variant="h3" color="text.secondary">
+        <Typography variant="h4" color="text.secondary">
           Coming Soon
         </Typography>
       </Grid>
@@ -35,12 +35,12 @@ export const DataProvider = (props) => {
     json_data.map((item) => {
       setData((prev) => [
         ...prev,
-        item.charts.length != 0
+        item.isActive
           ? {
+              isActive: item.isActive,
               id: item.id,
               title: item.title,
               owner: item.owner,
-              isEmpty: false,
               graph: (
                 <ChartComponent
                   chartData={{
@@ -53,9 +53,9 @@ export const DataProvider = (props) => {
               ),
             }
           : {
+              isActive: item.isActive,
               title: item.title,
               owner: item.owner,
-              isEmpty: true,
               graph: <ComingSoonBanner />,
             },
       ]);

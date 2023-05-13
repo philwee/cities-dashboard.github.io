@@ -9,12 +9,11 @@ export const LinkContext = createContext();
 
 // context provider
 export const LinkProvider = (props) => {
-  // state to store underline link
-  const [underlineLink, setUnderlineLink] = useState('home');
+  const [currentPage, setCurrentPage] = useState('home');
+  const [chartsTitlesList, setChartsTitlesList] = useState([]);
 
-  // return context provider
   return (
-    <LinkContext.Provider value={[underlineLink, setUnderlineLink]}>
+    <LinkContext.Provider value={[currentPage, setCurrentPage, chartsTitlesList, setChartsTitlesList]}>
       {props.children}
     </LinkContext.Provider>
   );

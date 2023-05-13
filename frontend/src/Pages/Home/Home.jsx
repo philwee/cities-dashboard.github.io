@@ -4,105 +4,52 @@
 // import libraries
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Box,
-  Grid,
-  Typography,
-  Container,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  Divider,
-  Paper,
-} from '@mui/material';
-import parse from 'html-react-parser';
 
-// import components
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/DataContext';
+
+import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Div } from '@mui/material';
+
 import UppercaseTitle from '../../Components/UppercaseTitle';
 
-// statistics data for home page
-import jsonData from '../../home_data.json';
+import AtAGlance from './AtAGlance';
+import About from './About';
+import JoinUs from './JoinUs';
 
 const Home = ({ themePreference }) => {
-  // state to set underline link in header
-  const [_, setUnderlineLink] = useContext(LinkContext);
-
-  // state to get data from context
+  // useState for home page data
+  const [_, setCurrentPage] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
 
   // set underline link to home
   useEffect(() => {
-    setUnderlineLink('home');
+    setCurrentPage('home');
   }, []);
 
   return (
     <Box width="100%">
       <Box>
-        <Container sx={{ pt: 4, pb: 4 }}>
-          <UppercaseTitle text={'join us!'} />
-          <Grid container spacing={4}>
-            {jsonData.banners.map((item, index) => (
-              <Grid key={index} item xs={12} sm={6}>
-                <Paper elevation={2} sx={{ p: 3 }}>
-                  <Typography variant="body1" color="text.secondary">
-                    {parse(item)}
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box backgroundColor="customAlternateBackground">
-        <Container sx={{ pt: 4, pb: 4 }}>
-          <UppercaseTitle text={'at a glance'} />
-
-          <Grid
-            container
-            direction="row"
-            spacing={4}
-            sx={{
-              textAlign: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {jsonData.statistics.map((item, index) => (
-              <Grid key={index} item md={3} sm={4} xs={12}>
-                <Typography
-                  variant="h2"
-                  color="primary.main"
-                  sx={{ marginBottom: '-0.5rem', fontWeight: 'medium' }}
-                >
-                  {item.number}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  color="text.primary"
-                  textTransform="uppercase"
-                >
-                  {item.text}
-                </Typography>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box>
-        <Container sx={{ pt: 4, pb: 4 }}>
+        <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
-          <Grid container spacing={4} justifyContent="center">
+
+          <Box sx={{ pb: 3 }} >
+            <AtAGlance
+              numberOfActiveDataset={
+                (homeData.reduce((count, element) => {
+                  return element.isActive ? count + 1 : count;
+                }, 0))
+              }
+            />
+          </Box>
+
+          <Grid container spacing={3} sx={{ justifyContent: { sm: "center", md: "start" } }} >
             {homeData.map((element, index) => (
-              <Grid key={index} item xs={12} sm={6}>
+              <Grid key={index} item xs={12} sm={9} md={6} lg={4} >
                 <Card elevation={2}>
                   <CardActionArea
                     component={Link}
                     to={`/project/${element.id}`}
-                    disabled={element.isEmpty}
+                    disabled={!element.isActive}
                   >
                     <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia
@@ -116,13 +63,14 @@ const Home = ({ themePreference }) => {
                     <Divider />
                     <CardContent>
                       <Typography
-                        variant="h6"
+                        variant="body1"
                         component="div"
                         color="text.primary"
+                        fontWeight="500"
                       >
                         {element.title}
                       </Typography>
-                      <Typography variant="body1" color="text.secondary">
+                      <Typography variant="caption" color="text.secondary">
                         {element.owner}
                       </Typography>
                     </CardContent>
@@ -133,7 +81,15 @@ const Home = ({ themePreference }) => {
           </Grid>
         </Container>
       </Box>
-    </Box>
+
+      <Box id="about" sx={{ pt: 3, pb: 4 }} >
+        <About />
+      </Box>
+
+      <Box id="join-us" sx={{ pt: 3, pb: 4 }}>
+        <JoinUs />
+      </Box>
+    </Box >
   );
 };
 

@@ -4,12 +4,12 @@
 // import libraries
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Box, Typography, Container } from '@mui/material/';
+import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // import components
 import Header from './Components/Header/Header';
-import Footer from './Components/Header/Footer';
+import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
@@ -19,7 +19,6 @@ import CustomThemes from './CustomThemes';
 // lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
-const About = lazy(() => import('./Pages/About/About'));
 
 // create theme design tokens based on theme preference
 const getDesignTokens = (themePreference) => ({
@@ -27,15 +26,15 @@ const getDesignTokens = (themePreference) => ({
     mode: themePreference,
     ...(themePreference === ThemePreferences.dark
       ? {
-          ...CustomThemes.dark.palette,
-          ...CustomThemes.universal.palette,
-          typography: CustomThemes.universal.palette,
-        }
+        ...CustomThemes.dark.palette,
+        ...CustomThemes.universal.palette,
+        typography: CustomThemes.universal.palette,
+      }
       : {
-          ...CustomThemes.light.palette,
-          ...CustomThemes.universal.palette,
-          typography: CustomThemes.universal.palette,
-        }),
+        ...CustomThemes.light.palette,
+        ...CustomThemes.universal.palette,
+        typography: CustomThemes.universal.palette,
+      }),
   },
 });
 
@@ -45,8 +44,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme')
       : window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? ThemePreferences.dark
-      : ThemePreferences.light
+        ? ThemePreferences.dark
+        : ThemePreferences.light
   );
 
   // create theme using getDesignTokens
@@ -56,7 +55,7 @@ function App() {
   );
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
         <Box
           sx={{
@@ -86,7 +85,6 @@ function App() {
                   path="/project/:id"
                   element={<Project themePreference={themePreference} />}
                 />
-                <Route path="/about" element={<About />} />
                 <Route path="/404" element={<FourOhFour />} />
                 <Route path="*" element={<Navigate replace to="/404" />} />
               </Routes>
@@ -108,9 +106,12 @@ function App() {
 const LoadingText = () => {
   return (
     <Container>
-      <Typography textAlign="center" sx={{ p: 4 }} color="text.primary">
-        Loading...
-      </Typography>
+      <Stack p={4} direction="column" justifyContent="center" alignItems="center" spacing={1}>
+        <CircularProgress />
+        <Typography variant='h6' textAlign="center" color="text.primary">
+          Loading
+        </Typography>
+      </Stack>
     </Container>
   );
 };

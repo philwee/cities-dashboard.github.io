@@ -1,216 +1,238 @@
 // disable eslint for this file
 /* eslint-disable */
-
-// import libraries
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Container, Paper } from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { IoReturnDownBack } from 'react-icons/io5';
-import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
-
-// import components
 import { LinkContext } from '../../ContextProviders/LinkContext';
-import ThemePreferences from '../../ThemePreferences';
+import { Tooltip, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
+
+import ThemeSelector from './ThemeSelector';
+import NavBar from './NavBar';
+
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 // import images
 import citiesLogo from '../../cities-logo.png';
 
-// import styles
-import './Header.css';
+import jsonData from '../../home_data.json';
+import parse from 'html-react-parser';
 
-// create styled components
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  background: theme.palette.background.paper,
-  '& .MuiInputBase-root': {
-    borderRadius: theme.shape.borderRadius * 2,
-    '&:before,:hover,:after': {
-      borderBottom: 'none !important',
-    },
-    '&:hover': {
-      background: 'rgba(0,0,0,0.25)',
-    },
-  },
-  '& .MuiSelect-select': {
-    '&:focus': {
-      background: 'none',
-    },
-  },
+export const showInMobile = (defaultDisplay) => {
+  return { display: { xs: (defaultDisplay || "block"), lg: "none" } };
+}
+export const showInDesktop = (defaultDisplay) => {
+  return { display: { xs: "none", lg: (defaultDisplay || "block") } };
+}
+
+const innerHeight = window.innerHeight;
+const toolBarHeightInRem = 3;
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  boxShadow: 'none',
+  "& .MuiToolbar-root": {
+    padding: 0
+  }
 }));
 
-export default function Header({ setThemePreference }) {
-  // context to underline right link in header
-  const [underlineLink] = useContext(LinkContext);
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+  boxSizing: "border-box",
+  "& .MuiPaper-root": {
+    height: "auto",
+    borderRadius: "0.5rem",
+    margin: theme.spacing(2)
+  }
+}));
 
-  // theme preference state
-  const [themeValue, setThemeValue] = useState(
-    localStorage.getItem('theme') || ThemePreferences.system
-  );
+function ScrollTop(props) {
+  const { children, window } = props;
 
-  // function to handle theme change
-  const handleChange = (event) => {
-    localStorage.setItem('theme', event.target.value); // save theme preference to localStorage
-    setThemeValue(event.target.value); // set theme preference state
-  };
+  const trigger = useScrollTrigger({
+    target: window,
+    disableHysteresis: true,
+    threshold: innerHeight / 2,
+  });
 
-  // function to set theme preference
-  const themeChangeHandler = ({ matches }) => {
-    if (matches) {
-      setThemePreference(ThemePreferences.dark);
-    } else {
-      setThemePreference(ThemePreferences.light);
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      '#back-to-top-anchor',
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({
+        block: 'center',
+        behavior: 'instant'
+      });
     }
   };
-
-  // set theme preference based on localStorage or system preference
-  useEffect(() => {
-    if (themeValue === ThemePreferences.dark) {
-      setThemePreference(ThemePreferences.dark); // set to dark theme
-    } else if (themeValue === ThemePreferences.light) {
-      setThemePreference(ThemePreferences.light); // set to light theme
-    } else if (themeValue === ThemePreferences.system) {
-      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)'); // check for system preference
-
-      // set theme preference based on system preference
-      if (darkThemeMq.matches) {
-        setThemePreference(ThemePreferences.dark);
-      } else {
-        setThemePreference(ThemePreferences.light);
-      }
-
-      // add event listener for system preference change
-      darkThemeMq.addEventListener('change', themeChangeHandler);
-
-      // remove event listener on unmount
-      return () => {
-        darkThemeMq.removeEventListener('change', themeChangeHandler);
-      };
-    }
-  }, [themeValue]);
 
   return (
-    <Box width="100%" sx={{ m: 0 }} backgroundColor="customAlternateBackground">
+    <Fade in={trigger}>
       <Box
-        sx={{
-          backgroundColor: 'NYUpurple',
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
+        onClick={handleClick}
+        role="presentation"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
       >
-        <StyledFormControl
-          variant="filled"
-          sx={{ m: 2, borderRadius: 2 }}
-          size="small"
-        >
-          <InputLabel id="select-filled-label">THEME</InputLabel>
-          <Select
-            labelId="select-filled-label"
-            id="select-filled"
-            value={themeValue}
-            onChange={handleChange}
-            sx={{ minWidth: '8rem' }}
-          >
-            <MenuItem value={ThemePreferences.system}>
-              <Typography color="text.primary">
-                <Contrast sx={{ mr: 0.5, verticalAlign: 'middle' }} />
-                System
-              </Typography>
-            </MenuItem>
-
-            <MenuItem value={ThemePreferences.light}>
-              <Typography color="text.primary">
-                <LightMode sx={{ mr: 0.5, verticalAlign: 'middle' }} />
-                Light
-              </Typography>
-            </MenuItem>
-
-            <MenuItem value={ThemePreferences.dark}>
-              <Typography color="text.primary">
-                <DarkMode sx={{ mr: 0.5, verticalAlign: 'middle' }} />
-                Dark
-              </Typography>
-            </MenuItem>
-          </Select>
-        </StyledFormControl>
+        {children}
       </Box>
-      <Container sx={{ pb: 3 }} backgroundColor="customAlternateBackground">
-        <Paper
-          elevation={4}
-          sx={{
-            width: '6rem',
-            height: '6rem',
-            ml: 0,
-            mt: '-3rem',
-            mb: 3,
-            transition: '0.2s ease-in-out',
-            '&:hover': {
-              transform: 'scale(1.1)',
-            },
+    </Fade>
+  );
+}
+
+
+
+export default function Header(props) {
+  const { setThemePreference } = props;
+
+  const [currentPage, _, chartsTitlesList, __] = useContext(LinkContext);
+
+  // trigger for hiding/showing the AppBar
+  const triggerHideAppBar = useScrollTrigger({
+    target: window,
+    threshold: 100
+  });
+
+  // hamburger menu on mobile
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  return (
+    <>
+      {/* Hidable navbar */}
+      <Slide appear={false} direction="down" in={!triggerHideAppBar}>
+        <StyledAppBar enableColorOnDark component="nav">
+          <Toolbar sx={{ backgroundColor: 'primary', height: `${toolBarHeightInRem}rem` }}>
+            <Container sx={{ height: "100%" }} >
+              {/* CITIES logo and navbar */}
+              <Stack direction="row" justifyContent='space-between' alignItems='center' height="100%">
+                <Paper elevation={4}
+                  sx={{
+                    height: `${toolBarHeightInRem * 4 / 3}rem`,
+                    mt: `${toolBarHeightInRem}rem`,
+                    opacity: triggerHideAppBar ? 0 : 1,
+                    borderRadius: "0.5rem",
+                    transition: '0.2s ease-in-out', '&:hover': { transform: 'scale(1.1)' },
+                  }}
+                >
+                  <CITIESlogoLinkToHome />
+                </Paper>
+
+                <Stack direction="row" alignItems='center' justifyContent="flex-end" height="100%" spacing={2}>
+
+                  {/* Navbar in landscape placed here, will be hidden in mobile  */}
+                  <Box sx={{ ...showInDesktop("block"), height: "100%" }}>
+                    <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
+                  </Box>
+
+                  <Tooltip title={"Navigation Menu"}>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open mobile menu drawer"
+                      edge="start"
+                      onClick={handleDrawerToggle}
+                      sx={showInMobile("flex")}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  </Tooltip>
+
+
+                  <Tooltip title={"Settings"}>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open setting drawer"
+                      edge="start"
+                      onClick={handleDrawerToggle}
+                      sx={showInDesktop("flex")}
+                    >
+                      <SettingsIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Stack>
+
+              </Stack>
+            </Container>
+          </Toolbar>
+        </StyledAppBar>
+      </Slide >
+
+      <Box>
+        <StyledDrawer
+          anchor="right" //from which side the drawer slides in
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
           }}
         >
-          <a href="/">
-            <img
-              style={{ width: '100%', borderRadius: '0.5rem' }}
-              src={citiesLogo}
-              title="CITIES Dashboard"
-              alt="CITIES Dashboard"
-            />
-          </a>
-        </Paper>
-        <Box sx={{ mb: 3 }}>
-          <Typography
-            variant="h2"
-            color="text.primary"
-            sx={{ fontWeight: 'medium' }}
-          >
-            CITIES DASHBOARD
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Spearheading sustainability and well-being data visualization at NYU
-            Abu Dhabi
-          </Typography>
-        </Box>
+          <Stack onClick={handleDrawerToggle}>
+            {/* // Only show the NavBar here in mobile  */}
+            <Box sx={showInMobile("block")}>
+              <Container sx={{ py: 2 }}>
+                <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
+                  CITIES Dashboard
+                </Typography>
+                <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
+              </Container>
+              <Divider />
+            </Box>
 
-        <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/">
+            <Container sx={{ pt: 2, pb: 3 }}>
+              <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
+                Dashboard Settings
+              </Typography>
+              <ThemeSelector isFullWidth={true} setThemePreference={setThemePreference} />
+            </Container>
+
+          </Stack>
+        </StyledDrawer>
+      </Box >
+
+      {/* From MUI's documentation: 
+      When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. Here is how to fix:
+      You can render a second <Toolbar /> component: */}
+      < Toolbar id="back-to-top-anchor" sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
+      } />
+
+      < Box width="100%" sx={{ pt: 4, pb: 3, backgroundColor: "customAlternateBackground" }}>
+        <Container >
+          <Box>
             <Typography
-              className={
-                underlineLink === 'home' ? 'navLink active' : 'navLink'
-              }
-              variant="body1"
-              sx={{ fontWeight: 'medium' }}
-              color="text.secondary"
+              variant="h3"
+              color="text.primary"
+              fontWeight='medium'
             >
-              {underlineLink === 'home' ? (
-                'HOME'
-              ) : (
-                <div>
-                  <IoReturnDownBack style={{ verticalAlign: 'middle' }} />
-                  <span> BACK TO HOME</span>
-                </div>
-              )}
+              CITIES DASHBOARD
             </Typography>
-          </Link>
-        </Box>
-        <Box sx={{ display: 'inline-block', mr: 2 }}>
-          <Link to="/about">
-            <Typography
-              className={
-                underlineLink === 'about' ? 'navLink active' : 'navLink'
-              }
-              variant="body1"
-              sx={{ fontWeight: 'medium' }}
-              color="text.secondary"
-            >
-              ABOUT
+
+            <Typography variant="body1" color="text.secondary">
+              {parse(jsonData.siteDescription)}
             </Typography>
-          </Link>
-        </Box>
-      </Container>
-    </Box>
+          </Box>
+        </Container>
+      </Box >
+
+      <ScrollTop {...props}>
+        <Fab aria-label="scroll back to top" color="primary">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
+
+    </>
+
   );
+}
+
+const CITIESlogoLinkToHome = () => {
+  return (<Link to="/">
+    <img style={{
+      height: "100%", width: "auto", borderRadius: "0.5rem"
+    }} src={citiesLogo} title="CITIES Dashboard Logo" alt="CITIES Dashboard Logo" />
+  </Link>);
 }

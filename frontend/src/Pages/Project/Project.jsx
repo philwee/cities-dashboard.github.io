@@ -9,7 +9,7 @@ import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import { Box, Typography, Container, Divider, Button, Chip, Grid, Link, List, ListItem, ListItemText } from '@mui/material';
 
-import { styled } from '@mui/material/styles';
+import JoinUs from '../Home/JoinUs';
 
 import ExpandableSection from './ExpandableSection';
 
@@ -48,39 +48,48 @@ const DatasetDownloadButton = ({ project }) => {
 };
 
 // Custom Chip component to display metadata
-const CustomChip = ({icon, label}) =>{
-  return(
+const CustomChip = ({ icon, label }) => {
+  return (
     <Chip
-    size="small"
-    icon={icon}
-    label={label}
+      size="small"
+      icon={icon}
+      label={label}
     />
   );
 }
 
 const Project = ({ themePreference }) => {
-  const [_, setUnderlineLink] = useContext(LinkContext);
+  const [_, setCurrentPage, chartsTitlesList, setChartsTitlesList] = useContext(LinkContext);
+
   let { id } = useParams();
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useContext(TabContext);
 
+  // Update the currentPage with the project's ID
+  // and the chartsTitle with all the charts' titles of the project
   useEffect(() => {
     // loop through all projects and find the one with the matching id
-    data.map((p) => {
-      if (p.id === id) {
-        setProject({ ...p });
+    let chartsTitles = [];
+
+    data.map((project) => {
+      if (project.id === id) {
+        setProject({ ...project });
         let temp = {};
-        for (let i = 0; i < p.charts.length; i++) {
+        for (let i = 0; i < project.charts.length; i++) {
           temp[i] = 0;
         }
         setTab(temp);
         setLoading(true);
+        // Populate the array with all the charts' titles of the project
+        chartsTitles = project.charts.map((element, index) => ({ chartTitle: element.title, chartID: `-${index + 1}` }));
       }
     });
 
-    setUnderlineLink('project');
-  }, [id, setUnderlineLink]);
+    setCurrentPage(id);
+    setChartsTitlesList(chartsTitles);
+
+  }, [id, setCurrentPage, setChartsTitlesList]);
 
   // Function to replace HTML tags with MUI components
   const replaceHTMLWithMUI = (node) => {
@@ -121,17 +130,15 @@ const Project = ({ themePreference }) => {
 
               <Grid container spacing={1} sx={{ pb: 3, mt: -3 }}>
                 <Grid item>
-                  <CustomChip icon={<PersonIcon />} label={project.owner}/>
+                  <CustomChip icon={<PersonIcon />} label={project.owner} />
                 </Grid>
                 <Grid item>
-                  <CustomChip icon={<EmailIcon />} label={project.contact}/>
+                  <CustomChip icon={<EmailIcon />} label={project.contact} />
                 </Grid>
                 <Grid item>
-                  <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`}/>
+                  <CustomChip icon={<PublishedWithChangesIcon />} label={`Last update: ${project.lastUpdate}`} />
                 </Grid>
               </Grid>
-
-              {/* google-visualization-table-type-date table-cell */}
 
               <Typography
                 variant="body1"
@@ -180,6 +187,7 @@ const Project = ({ themePreference }) => {
 
           {project.charts.map((element, index) => (
             <Box
+              id={chartsTitlesList[index].chartID} // set the chartWrapper's ID to help Navbar in Header scroll to
               key={index}
               backgroundColor={
                 index % 2 == 0 ? 'customAlternateBackground' : ''
@@ -237,6 +245,12 @@ const Project = ({ themePreference }) => {
               </Container>
             </Box>
           ))}
+
+          {project.charts.length % 2 != 0 ? <></> : <Divider />}
+
+          <Box id="join-us" sx={{ pt: 3, pb: 3 }}>
+            <JoinUs />
+          </Box>
 
           {project.charts.length % 2 != 0 ? <Divider /> : <></>}
         </Box>

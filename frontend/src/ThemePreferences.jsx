@@ -2,9 +2,9 @@
 /* eslint-disable */
 
 const ThemePreferences = {
-    dark: "dark",
-    light: "light",
-    system: "system"
+    dark: "Dark",
+    light: "Light",
+    system: "System"
 }
 
 export default ThemePreferences;

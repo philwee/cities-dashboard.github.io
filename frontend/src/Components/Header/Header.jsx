@@ -221,11 +221,14 @@ export default function Header(props) {
         </Container>
       </Box >
 
-      <ScrollTop {...props}>
-        <Fab aria-label="scroll back to top" color="primary">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
+      <Box sx={{ zIndex: 99999999999999 }}>
+        <ScrollTop {...props} >
+          <Fab aria-label="scroll back to top" color="primary">
+            <KeyboardArrowUpIcon />
+          </Fab>
+        </ScrollTop>
+      </Box>
+
 
     </>
 

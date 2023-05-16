@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useMemo, useContext } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
@@ -53,9 +53,11 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 }));
 
 
-export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
+export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage, windowSize }) {
   // Get the device orientation to make the google chart responsive
   const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+
+  console.log("Chart component rerendering");
 
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
@@ -140,7 +142,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
                     isHomepage={isHomepage}
                   />
                 ),
-                []
+                [windowSize]
               )}
             </Box>
           ))}

@@ -75,7 +75,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       // end of the resize.
       timeoutID = setTimeout(() => {
         setWindowSize(window.innerWidth, window.innerHeight);
-        console.log("Window size changed", window.innerWidth);
       }, 400);
     };
 

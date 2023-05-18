@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect, useMemo, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';

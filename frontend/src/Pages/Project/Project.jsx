@@ -68,35 +68,6 @@ const Project = ({ themePreference }) => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useContext(TabContext);
 
-  // re-draw all Google charts on window resize to for responsiveness
-  const [windowSize, setWindowSize] = useState([
-    window.innerWidth,
-    window.innerHeight,
-  ]);
-
-  useEffect(() => {
-    let timeoutID = null;
-
-    const handleWindowResize = () => {
-      console.log("Handling")
-
-      // debounce before triggering re-render. as user is resizing window, the state could
-      // change multiple times, causing many expensive rerenders. we try to rerender at the
-      // end of the resize.
-      clearTimeout(timeoutID);
-      timeoutID = setTimeout(() => {
-        setWindowSize(window.innerWidth, window.innerHeight);
-        console.log("Window size changed", window.innerWidth);
-      }, 400);
-    };
-
-    window.addEventListener('resize', handleWindowResize);
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-
   // Update the currentPage with the project's ID
   // and the chartsTitle with all the charts' titles of the project
   useEffect(() => {
@@ -179,7 +150,6 @@ const Project = ({ themePreference }) => {
                           }}
                           themePreference={themePreference}
                           isHomepage={false}
-                          windowSize={windowSize}
                         />
                       </Box>
                     ))}
@@ -211,7 +181,6 @@ const Project = ({ themePreference }) => {
                     sheetId: project.sheetId,
                     ...element,
                   }}
-                  windowSize={windowSize}
                 />
                 <Box sx={{ m: 3 }}>
                   <Typography

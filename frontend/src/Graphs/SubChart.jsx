@@ -43,8 +43,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
   // Show CircleProgress or not
   let [circleProgress, displayCircleProgress] = useState(true);
 
-  console.log("Subchart rendering");
-
   switch (chartData.chartType) {
     case 'HeatMap':
       return (

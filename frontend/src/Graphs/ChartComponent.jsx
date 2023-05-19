@@ -57,37 +57,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
   // Get the device orientation to make the google chart responsive
   const isPortrait = window.matchMedia('(orientation: portrait)').matches;
 
-  const [windowSize, setWindowSize] = useState([
-    window.innerWidth,
-    window.innerHeight,
-  ]);
-
-  // redraw "ComboChart" and "Calendar" charts upon window resize.
-  // ComboChart & Calendar charts are not automatically respnsive, so we have to redraw them.
-  useEffect(() => {
-    let timeoutID = null;
-
-    const handleWindowResize = () => {
-      clearTimeout(timeoutID);
-
-      // debounce before triggering re-render. as user is resizing window, the state could
-      // change multiple times causing many expensive rerenders. we try to rerender at the
-      // end of the resize.
-      timeoutID = setTimeout(() => {
-        setWindowSize(window.innerWidth, window.innerHeight);
-      }, 400);
-    };
-
-    // only for "ComboChart" and "Calendar" type charts
-    if (["ComboChart", "Calendar"].includes(chartData.chartType)) {
-      window.addEventListener('resize', handleWindowResize);
-    }
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
@@ -171,7 +140,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
                     isHomepage={isHomepage}
                   />
                 ),
-                [windowSize]
+                []
               )}
             </Box>
           ))}

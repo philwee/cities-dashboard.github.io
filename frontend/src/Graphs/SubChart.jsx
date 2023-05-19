@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
@@ -27,6 +27,41 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
   const theme = useTheme();
   // Define some shared styling rules for the chart
   const responsiveFontSize = isPortrait ? 9 : 12;
+
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+
+  // redraw "Calendar" charts and charts with a time filter upon window resize.
+  // ComboChart & Calendar charts are not automatically respnsive, so we have to redraw them.
+  useEffect(() => {
+    let timeoutID = null;
+
+    const handleWindowResize = () => {
+      clearTimeout(timeoutID);
+
+      // debounce before triggering re-render. as user is resizing window, the state could
+      // change multiple times causing many expensive rerenders. we try to rerender at the
+      // end of the resize.
+      timeoutID = setTimeout(() => {
+        setWindowSize(window.innerWidth, window.innerHeight);
+      }, 400);
+    };
+
+    // only for "Calendar" and time filter type charts
+    if (chartData.chartType == "Calendar"
+      || chartData.filter != null
+      || chartData.subcharts?.[chartSubIndex].filter != null
+    ) {
+      window.addEventListener('resize', handleWindowResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
   const axisTitleTextStyle = {
     italic: false,
     bold: true,

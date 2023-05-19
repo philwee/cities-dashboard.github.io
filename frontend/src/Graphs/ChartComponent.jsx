@@ -49,6 +49,14 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
     stroke: theme.palette.text.primary,
     strokeWidth: 3
+  },
+
+  // Cursor of series in legends
+  '& [column-id]:not(:empty)': {
+    cursor: 'pointer',
+    ':hover': {
+      fontWeight: 600
+    }
   }
 }));
 

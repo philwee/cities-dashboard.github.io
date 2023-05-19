@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useMemo, useEffect, useContext } from 'react';
+import { useState, useMemo, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';

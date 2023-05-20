@@ -1245,40 +1245,55 @@
         "subtitle": "",
         "headers": 1,
         "chartType": "ComboChart",
-        "options": {
-          "hAxis": {
-            "slantedText": true,
-            "slantedTextAngle": 60
-          },
-          "vAxes": {
-            "0": {
-              "title": "New First Year Cohort Size (Students)",
-              "format": "decimal"
+        "subcharts": [
+            {
+                "subchartTitle": "Cohort Size",
+                "query": "SELECT A, B",
+                "options": {
+                    "hAxis": {
+                        "slantedText": true,
+                        "slantedTextAngle": 60
+                    },
+                    "vAxis": {
+                        "title": "New First Year Cohort Size (Students)",
+                        "format": "decimal"
+                    },
+                    "colors": ["#9f95a6"],
+                    "seriesType": "bars",
+                    "series": {
+                        "0": {
+                            "targetAxisIndex": 0
+                        }
+                    }
+                }
             },
-            "1": {
-              "title": "Year-by-year growth (%)",
-              "format": "#.##%",
-              "viewWindow": {
-                "min": -0.1
-              }
+            {
+                "subchartTitle": "Year-by-Year Growth",
+                "query": "SELECT A, C",
+                "options": {
+                    "hAxis": {
+                        "slantedText": true,
+                        "slantedTextAngle": 60
+                    },
+                    "vAxis": {
+                        "title": "Year-by-year growth (%)",
+                        "format": "#.##%",
+                        "viewWindow": {
+                            "min": -0.1,
+                            "max": 0.5
+                        }
+                    },
+                    "colors": ["#57068c"],
+                    "seriesType": "line",
+                    "series": {
+                        "1": {
+                            "targetAxisIndex": 1
+                        }
+                    }
+                }
             }
-          },
-          "colors": [
-            "#9f95a6",
-            "#57068c"
-          ],
-          "seriesType": "bars",
-          "series": {
-            "0": {
-              "targetAxisIndex": 0
-            },
-            "1": {
-              "type": "line",
-              "targetAxisIndex": 1
-            }
-          }
-        }
-      },
+        ]
+    },
       {
         "title": "Breakdown of Undegraduate Students' Citizenship (UAE and US)",
         "gid": 1856255581,

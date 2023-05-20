@@ -14,6 +14,7 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // import components
+import ScrollToTop from './Components/ScrollToTop';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
@@ -62,6 +63,7 @@ function App() {
   return (
     <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
+        <ScrollToTop />
         <Box
           sx={{
             display: 'flex',

@@ -4,10 +4,17 @@
 // import libraries
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
+import {
+  Box,
+  Typography,
+  Container,
+  CircularProgress,
+  Stack,
+} from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // import components
+import ScrollToTop from './Components/ScrollToTop';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
@@ -26,26 +33,25 @@ const getDesignTokens = (themePreference) => ({
     mode: themePreference,
     ...(themePreference === ThemePreferences.dark
       ? {
-        ...CustomThemes.dark.palette,
-        ...CustomThemes.universal.palette,
-        typography: CustomThemes.universal.palette,
-      }
+          ...CustomThemes.dark.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
+        }
       : {
-        ...CustomThemes.light.palette,
-        ...CustomThemes.universal.palette,
-        typography: CustomThemes.universal.palette,
-      }),
+          ...CustomThemes.light.palette,
+          ...CustomThemes.universal.palette,
+          typography: CustomThemes.universal.palette,
+        }),
   },
 });
 
 function App() {
   // set theme preference state based on localStorage or system preference
   const [themePreference, setThemePreference] = useState(
-    localStorage.getItem('theme')
-      ? localStorage.getItem('theme')
-      : window.matchMedia('(prefers-color-scheme: dark)').matches
+    localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches
         ? ThemePreferences.dark
-        : ThemePreferences.light
+        : ThemePreferences.light)
   );
 
   // create theme using getDesignTokens
@@ -57,6 +63,7 @@ function App() {
   return (
     <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
+        <ScrollToTop />
         <Box
           sx={{
             display: 'flex',
@@ -103,17 +110,23 @@ function App() {
 }
 
 // loading text for suspense fallback
-const LoadingText = () => {
+function LoadingText() {
   return (
     <Container>
-      <Stack p={4} direction="column" justifyContent="center" alignItems="center" spacing={1}>
+      <Stack
+        p={4}
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+      >
         <CircularProgress />
-        <Typography variant='h6' textAlign="center" color="text.primary">
+        <Typography variant="h6" textAlign="center" color="text.primary">
           Loading
         </Typography>
       </Stack>
     </Container>
   );
-};
+}
 
 export default App;

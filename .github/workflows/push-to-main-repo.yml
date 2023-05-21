@@ -1,4 +1,4 @@
-name: Push files from B's main branch to A
+name: Push files from development repository to production repository
 
 on:
   push:
@@ -13,22 +13,22 @@ jobs:
       - name: Check out development repository
         uses: actions/checkout@v2
 
-      - name: Check out public facing repository
+      - name: Check out production repository
         uses: actions/checkout@v2
         with:
           repository: CITIES-Dashboard/air-quality
           token: ${{ secrets.PAT_TOKEN }}
           ref: main
-          path: ./repository-A
+          path: ./prod_files
 
-      - name: Copy files from repository B to repository A
-        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=repository-A/ ./ ./repository-A/
+      - name: Copy files from development repository to production repository
+        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=prod_files/ ./ ./prod_files/
 
-      - name: Commit and push changes to repository A
+      - name: Commit and push changes to production repository
         run: |
-          cd ./repository-A
+          cd ./prod_files
           git config user.name "princeampofo"
           git config user.email "pla252@nyu.edu"
           git add .
-          git commit -m "Update files from repository B"
+          git commit -m "production repository in sync with development repository"
           git push origin main

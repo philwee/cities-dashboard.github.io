@@ -19,14 +19,14 @@ jobs:
           repository: CITIES-Dashboard/air-quality
           token: ${{ secrets.PAT_TOKEN }}
           ref: main
-          path: ./prod_files
+          path: ./prod-files
 
       - name: Copy files from development repository to production repository
-        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=prod_files/ ./ ./prod_files/
+        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=prod-files/ ./ ./prod_files/
 
       - name: Commit and push changes to production repository
         run: |
-          cd ./prod_files
+          cd ./prod-files
           git config user.name ${{ secrets.USER_NAME }}
           git config user.email ${{ secrets.USER_EMAIL }}
           git add .

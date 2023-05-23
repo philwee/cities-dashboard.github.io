@@ -87,7 +87,8 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     };
 
     // only for "Calendar" type charts and charts with a filter
-    if (chartData.chartType === "Calendar" || chartData.filter != null) {
+    if (chartData.chartType === "Calendar" 
+      || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
 
       window.addEventListener('resize', handleWindowResize);
     }
@@ -96,6 +97,8 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
+
+  console.log("Redrawing", chartData)
 
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';

@@ -27,6 +27,8 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     const theme = useTheme();
     // Define some shared styling rules for the chart
     const responsiveFontSize = isPortrait ? 9 : 12;
+    const responsiveFontSizeSmall = isPortrait ? 7 : 10;
+
     const axisTitleTextStyle = {
         italic: false,
         bold: true,
@@ -42,6 +44,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     let options = {};
     // Show CircleProgress or not
     let [circleProgress, displayCircleProgress] = useState(true);
+
 
     switch (chartData.chartType) {
         case 'HeatMap':
@@ -112,6 +115,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 ...options,
                 ...chartData.options,
                 theme: 'material',
+                crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
                 chartArea: {
                     width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
                     height: isPortrait ? '60%' : '70%'
@@ -243,17 +247,20 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 ...options.annotations,
                 highContrast: true,
                 textStyle: {
-                    color: theme.palette.text.secondary,
-                    fontSize: responsiveFontSize,
+                    color: theme.palette.primary.contrastText,
+                    fontSize: responsiveFontSizeSmall,
+                    opacity: 0.8
                 },
                 stem: {
                     ...options.annotations?.stem,
                     color: theme.palette.chart.axisTitle,
+                    thickness: 2
                 },
                 boxStyle: {
-                    rx: 4, // rounded corners
-                    ry: 4,
+                    rx: theme.shape.borderRadius, // rounded corners
+                    ry: theme.shape.borderRadius,
                     fill: theme.palette.chart.annotationBoxFill,
+                    fillOpacity: 0.5
                 },
             };
 
@@ -261,6 +268,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             if (isHomepage)
                 options = {
                     ...options,
+                    enableInteractivity: false,
                     annotations: {
                         ...options.annotations,
                         ...hideAnnotations

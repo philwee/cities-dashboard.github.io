@@ -70,8 +70,8 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     window.innerHeight,
   ]);
 
-  // redraw "ComboChart" and "Calendar" charts upon window resize.
-  // ComboChart & Calendar charts are not automatically respnsive, so we have to redraw them.
+  // redraw "Calendar" charts and charts with a time filter upon window resize.
+  // Filter & Calendar charts are not automatically respnsive, so we have to redraw them.
   useEffect(() => {
     let timeoutID = null;
 
@@ -86,8 +86,9 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       }, 400);
     };
 
-    // only for "ComboChart" and "Calendar" type charts
-    if (["ComboChart", "Calendar"].includes(chartData.chartType)) {
+    // only for "Calendar" type charts and charts with a filter
+    if (chartData.chartType === "Calendar" || chartData.filter != null) {
+
       window.addEventListener('resize', handleWindowResize);
     }
 

@@ -42,14 +42,22 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
         filter: 'saturate(0.25)',
     },
 
-    // These are the paths showing on top of the line chart 
-    // and the stroke around the bar/column chart
-    // when the user hovers on the legend to make the serie stand out
-    // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
-    '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
-        stroke: theme.palette.text.primary,
-        strokeWidth: 3
+  // These are the paths showing on top of the line chart 
+  // and the stroke around the bar/column chart
+  // when the user hovers on the legend to make the serie stand out
+  // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
+  '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
+    stroke: theme.palette.text.primary,
+    strokeWidth: 3
+  },
+
+  // Cursor of series in legends
+  '& [column-id]:not(:empty)': {
+    cursor: 'pointer',
+    ':hover': {
+      fontWeight: 600
     }
+  }
 }));
 
 

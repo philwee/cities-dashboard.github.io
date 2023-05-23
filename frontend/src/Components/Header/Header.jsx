@@ -8,8 +8,8 @@ import { Tooltip, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollT
 
 import ThemeSelector from './ThemeSelector';
 import NavBar from './NavBar';
+import SpeedDialButton from './SpeedDialButton';
 
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -28,10 +28,10 @@ export const showInDesktop = (defaultDisplay) => {
   return { display: { xs: "none", lg: (defaultDisplay || "block") } };
 }
 
-const innerHeight = window.innerHeight;
 const toolBarHeightInRem = 3;
+const topAnchorID = "top-anchor-ID";
 
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
+const StyledAppBar = styled(AppBar)(() => ({
   boxShadow: 'none',
   "& .MuiToolbar-root": {
     padding: 0
@@ -47,43 +47,6 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   }
 }));
 
-function ScrollTop(props) {
-  const { children, window } = props;
-
-  const trigger = useScrollTrigger({
-    target: window,
-    disableHysteresis: true,
-    threshold: innerHeight / 2,
-  });
-
-  const handleClick = (event) => {
-    const anchor = (event.target.ownerDocument || document).querySelector(
-      '#back-to-top-anchor',
-    );
-
-    if (anchor) {
-      anchor.scrollIntoView({
-        block: 'center',
-        behavior: 'instant'
-      });
-    }
-  };
-
-  return (
-    <Fade in={trigger}>
-      <Box
-        onClick={handleClick}
-        role="presentation"
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
-      >
-        {children}
-      </Box>
-    </Fade>
-  );
-}
-
-
-
 export default function Header(props) {
   const { setThemePreference } = props;
 
@@ -92,7 +55,7 @@ export default function Header(props) {
   // trigger for hiding/showing the AppBar
   const triggerHideAppBar = useScrollTrigger({
     target: window,
-    threshold: 100
+    threshold: 70
   });
 
   // hamburger menu on mobile
@@ -127,7 +90,7 @@ export default function Header(props) {
 
                   {/* Navbar in landscape placed here, will be hidden in mobile  */}
                   <Box sx={{ ...showInDesktop("block"), height: "100%" }}>
-                    <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
+                    <NavBar currentPage={currentPage} />
                   </Box>
 
                   <Tooltip title={"Navigation Menu"}>
@@ -179,7 +142,7 @@ export default function Header(props) {
                 <Typography variant="h6" color="text.secondary" fontWeight='medium' gutterBottom>
                   CITIES Dashboard
                 </Typography>
-                <NavBar currentPage={currentPage} chartsTitlesList={chartsTitlesList} />
+                <NavBar currentPage={currentPage} />
               </Container>
               <Divider />
             </Box>
@@ -198,40 +161,30 @@ export default function Header(props) {
       {/* From MUI's documentation: 
       When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. Here is how to fix:
       You can render a second <Toolbar /> component: */}
-      < Toolbar id="back-to-top-anchor" sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
+      <Toolbar id={topAnchorID} sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
       } />
 
-      < Box width="100%" sx={{ pt: 4, pb: 3, backgroundColor: "customAlternateBackground" }}>
+      <Box width="100%" sx={{ pt: 4, pb: 3, backgroundColor: "customAlternateBackground" }}>
         <Container >
-          <Box>
-            <Typography
-              variant="h3"
-              color="text.primary"
-              fontWeight='medium'
-            >
-              CITIES DASHBOARD
-            </Typography>
+          <Typography
+            variant="h3"
+            color="text.primary"
+            fontWeight='medium'
+          >
+            CITIES DASHBOARD
+          </Typography>
 
-            <Typography variant="body1" color="text.secondary">
-              {parse(jsonData.siteDescription, {
-                replace: replacePlainHTMLWithMuiComponents,
-              })}
-            </Typography>
-          </Box>
+          <Typography variant="body1" color="text.secondary">
+            {parse(jsonData.siteDescription, {
+              replace: replacePlainHTMLWithMuiComponents,
+            })}
+          </Typography>
         </Container>
       </Box >
 
-      <Box sx={{ zIndex: 99999999999999 }}>
-        <ScrollTop {...props} >
-          <Fab aria-label="scroll back to top" color="primary">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
-      </Box>
-
+      <SpeedDialButton chartsTitlesList={chartsTitlesList} topAnchorID={topAnchorID} />
 
     </>
-
   );
 }
 

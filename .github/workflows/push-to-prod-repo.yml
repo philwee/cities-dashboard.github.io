@@ -1,0 +1,37 @@
+name: Push files from development repository to production repository
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  pushFiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out development repository
+        uses: actions/checkout@v3
+
+      - name: Check out production repository
+        uses: actions/checkout@v3
+        with:
+          repository: CITIES-Dashboard/citiesdashboard.com
+          token: ${{ secrets.PAT_TOKEN }}
+          ref: main
+          path: ./prod-files
+
+      - name: Copy files from development repository to production repository
+        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=prod-files/ ./ ./prod-files/
+
+      - name: Commit and push changes to production repository
+        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+        run: |
+          cd ./prod-files
+          git config user.name ${{ secrets.USER_NAME }}
+          git config user.email ${{ secrets.USER_EMAIL }}
+          git add .
+          git commit -m "files synced with development repository files"
+          git push origin main

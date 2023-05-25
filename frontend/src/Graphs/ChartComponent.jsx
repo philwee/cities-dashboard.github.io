@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useMemo, useContext } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
@@ -64,6 +64,41 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
   // Get the device orientation to make the google chart responsive
   const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+
+  // redraw "Calendar" charts and charts with a time filter upon window resize.
+  // Filter & Calendar charts are not automatically respnsive, so we have to redraw them.
+  useEffect(() => {
+    let timeoutID = null;
+
+    const handleWindowResize = () => {
+      clearTimeout(timeoutID);
+
+      // debounce before triggering re-render. as user is resizing window, the state could
+      // change multiple times causing many expensive rerenders. we try to rerender at the
+      // end of the resize.
+      timeoutID = setTimeout(() => {
+        setWindowSize(window.innerWidth, window.innerHeight);
+      }, 400);
+    };
+
+    // only for "Calendar" type charts and charts with a filter
+    if (chartData.chartType === "Calendar" 
+      || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
+
+      window.addEventListener('resize', handleWindowResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  console.log("Redrawing", chartData)
 
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
@@ -148,7 +183,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
                     isHomepage={isHomepage}
                   />
                 ),
-                []
+                [windowSize]
               )}
             </Box>
           ))}

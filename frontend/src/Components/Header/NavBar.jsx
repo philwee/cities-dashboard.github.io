@@ -5,6 +5,8 @@ import { MenuList } from '@mui/material';
 
 import MenuItemAsNavLink from './MenuItemAsNavLink';
 
+import jsonData from '../../home_data.json';
+
 export const NavLinkBehavior = {
     doNothingForNow: "doNothingForNow",
     toNewPage: "toNewPage",
@@ -30,13 +32,13 @@ export default function NavBar(props) {
                 // If the current page is homepage, then display ABOUT link
                 // If not homepage (implies in project page at this point), display Back to Home link and the name of this project
                 currentPage === "home" ?
-                    <MenuItemAsNavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
+                    <MenuItemAsNavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID={jsonData.about.id} />
                     :
                     <MenuItemAsNavLink behavior={NavLinkBehavior.toNewPage} to="/" />
             }
             <MenuItemAsNavLink
                 behavior={NavLinkBehavior.scrollTo}
-                scrollToSectionID="join-us"
+                scrollToSectionID={jsonData.getInTouch.id}
             />
         </StyledMenuList>
     );

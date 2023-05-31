@@ -16,6 +16,8 @@ import AtAGlance from './AtAGlance';
 import About from './About';
 import JoinUs from './JoinUs';
 
+import jsonData from '../../home_data.json';
+
 const Home = ({ themePreference }) => {
   // useState for home page data
   const [_, setCurrentPage, __, setChartsTitlesList] = useContext(LinkContext);
@@ -33,7 +35,8 @@ const Home = ({ themePreference }) => {
         <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
 
-          <Box sx={{ pb: 3 }} >
+          { // Temporary hide AtAGlance until we have higher analytics
+          /* <Box sx={{ pb: 3 }} >
             <AtAGlance
               numberOfActiveDataset={
                 (homeData.reduce((count, element) => {
@@ -41,7 +44,7 @@ const Home = ({ themePreference }) => {
                 }, 0))
               }
             />
-          </Box>
+          </Box> */}
 
           <Grid container spacing={3} sx={{ justifyContent: { sm: "center", md: "start" } }} >
             {homeData.map((element, index) => (
@@ -83,12 +86,12 @@ const Home = ({ themePreference }) => {
         </Container>
       </Box>
 
-      <Box id="about" sx={{ pt: 3, pb: 4 }} >
+      <Box id={jsonData.about.id} sx={{ pt: 3, pb: 4 }} >
         <About />
       </Box>
 
-      <Box id="join-us" sx={{ pt: 3, pb: 4 }}>
-        <JoinUs />
+      <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
+        <JoinUs themePreference={themePreference} />
       </Box>
     </Box >
   );

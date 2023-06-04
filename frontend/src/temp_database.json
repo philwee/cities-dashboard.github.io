@@ -378,7 +378,7 @@
     "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat at Dining Hall D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
     "owner": "NYUAD Dining",
     "contact": "nyuad.dining@nyu.edu",
-    "lastUpdate": "Apr 2023",
+    "lastUpdate": "May 2023",
     "rawDataTables": [
       {
         "gid": 1952244844,
@@ -1246,54 +1246,58 @@
         "headers": 1,
         "chartType": "ComboChart",
         "subcharts": [
-            {
-                "subchartTitle": "Cohort Size",
-                "query": "SELECT A, B",
-                "options": {
-                    "hAxis": {
-                        "slantedText": true,
-                        "slantedTextAngle": 60
-                    },
-                    "vAxis": {
-                        "title": "New First Year Cohort Size (Students)",
-                        "format": "decimal"
-                    },
-                    "colors": ["#9f95a6"],
-                    "seriesType": "bars",
-                    "series": {
-                        "0": {
-                            "targetAxisIndex": 0
-                        }
-                    }
+          {
+            "subchartTitle": "Cohort Size",
+            "query": "SELECT A, B",
+            "options": {
+              "hAxis": {
+                "slantedText": true,
+                "slantedTextAngle": 60
+              },
+              "vAxis": {
+                "title": "New First Year Cohort Size (Students)",
+                "format": "decimal"
+              },
+              "colors": [
+                "#9f95a6"
+              ],
+              "seriesType": "bars",
+              "series": {
+                "0": {
+                  "targetAxisIndex": 0
                 }
-            },
-            {
-                "subchartTitle": "Year-by-Year Growth",
-                "query": "SELECT A, C",
-                "options": {
-                    "hAxis": {
-                        "slantedText": true,
-                        "slantedTextAngle": 60
-                    },
-                    "vAxis": {
-                        "title": "Year-by-year growth (%)",
-                        "format": "#.##%",
-                        "viewWindow": {
-                            "min": -0.1,
-                            "max": 0.5
-                        }
-                    },
-                    "colors": ["#57068c"],
-                    "seriesType": "line",
-                    "series": {
-                        "1": {
-                            "targetAxisIndex": 1
-                        }
-                    }
-                }
+              }
             }
+          },
+          {
+            "subchartTitle": "Year-by-Year Growth",
+            "query": "SELECT A, C",
+            "options": {
+              "hAxis": {
+                "slantedText": true,
+                "slantedTextAngle": 60
+              },
+              "vAxis": {
+                "title": "Year-by-year growth (%)",
+                "format": "#.##%",
+                "viewWindow": {
+                  "min": -0.1,
+                  "max": 0.5
+                }
+              },
+              "colors": [
+                "#57068c"
+              ],
+              "seriesType": "line",
+              "series": {
+                "1": {
+                  "targetAxisIndex": 1
+                }
+              }
+            }
+          }
         ]
-    },
+      },
       {
         "title": "Breakdown of Undegraduate Students' Citizenship (UAE and US)",
         "gid": 1856255581,

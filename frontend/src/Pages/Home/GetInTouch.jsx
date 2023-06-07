@@ -7,7 +7,7 @@ import UppercaseTitle from '../../Components/UppercaseTitle';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
-import { replacePlainHTMLWithMuiComponents } from '../../Utils';
+import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
 
 const IFrameWrapper = styled(Box)(({ theme }) => ({
     filter: theme.palette.mode == "dark" && "invert(0.848) hue-rotate(180deg)",
@@ -21,7 +21,7 @@ const IFrameWrapper = styled(Box)(({ theme }) => ({
     },
 }));
 
-const JoinUs = ({ themePreference }) => {
+const GetInTouch = ({ themePreference }) => {
     const googleFormLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenxtTIizWED0PT3hBOn3IU6fwmj4sr1yhjU70mjmK4R-ipsw/';
     return (
         <Container>
@@ -47,4 +47,4 @@ const JoinUs = ({ themePreference }) => {
     );
 };
 
-export default JoinUs;
+export default GetInTouch;

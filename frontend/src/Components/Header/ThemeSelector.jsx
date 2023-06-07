@@ -9,7 +9,7 @@ import Select from '@mui/material/Select';
 
 import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
 
-import ThemePreferences from '../../ThemePreferences';
+import ThemePreferences from '../../Themes/ThemePreferences';
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
     borderRadius: "0.5rem",

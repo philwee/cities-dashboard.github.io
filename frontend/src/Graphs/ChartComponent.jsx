@@ -91,7 +91,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     };
   }, []);
 
-  console.log("Redrawing", chartData)
+  // console.log("Redrawing", chartData)
 
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';

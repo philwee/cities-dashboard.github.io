@@ -6,7 +6,7 @@ import UppercaseTitle from '../../Components/UppercaseTitle';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
-import { replacePlainHTMLWithMuiComponents } from '../../Utils';
+import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
 
 const About = () => {
     return (

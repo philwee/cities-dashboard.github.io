@@ -2,7 +2,6 @@
 /* eslint-disable */
 import { useState, useContext } from 'react';
 import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { Tooltip, Box, Typography, Container, Paper, AppBar, Toolbar, useScrollTrigger, Fab, Fade, Slide, Stack, Drawer, Divider } from '@mui/material';
 
@@ -15,11 +14,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 // import images
-import citiesLogo from '../../cities-logo.png';
 
 import jsonData from '../../home_data.json';
 import parse from 'html-react-parser';
-import { replacePlainHTMLWithMuiComponents } from '../../Utils';
+import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
+import { CITIESlogoLinkToHome } from './CITIESlogoLinkToHome';
 
 export const showInMobile = (defaultDisplay) => {
   return { display: { xs: (defaultDisplay || "block"), lg: "none" } };
@@ -29,7 +28,7 @@ export const showInDesktop = (defaultDisplay) => {
 }
 
 const toolBarHeightInRem = 3;
-const topAnchorID = "top-anchor-ID";
+const topAnchorID = "top-anchor";
 
 const StyledAppBar = styled(AppBar)(() => ({
   boxShadow: 'none',
@@ -188,10 +187,3 @@ export default function Header(props) {
   );
 }
 
-const CITIESlogoLinkToHome = () => {
-  return (<Link to="/">
-    <img style={{
-      height: "100%", width: "auto", borderRadius: "0.5rem"
-    }} src={citiesLogo} title="CITIES Dashboard Logo" alt="CITIES Dashboard Logo" />
-  </Link>);
-}

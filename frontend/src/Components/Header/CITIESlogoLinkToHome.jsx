@@ -4,12 +4,19 @@
 import { Link } from 'react-router-dom';
 import citiesLogo from '../../cities-logo.png';
 
+import * as Tracking from '../../Utils/Tracking';
+
 export function CITIESlogoLinkToHome() {
     return (
         <Link
             to="/"
             onClick={() => {
-                window.gtag("event", "cities_logo_click");
+                Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                    {
+                        destination_id: "/",
+                        destination_label: "home",
+                        origin_id: "cities-logo"
+                    })
             }}>
             <img style={{
                 height: "100%", width: "auto", borderRadius: "0.5rem"

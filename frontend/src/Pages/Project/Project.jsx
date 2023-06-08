@@ -7,47 +7,23 @@ import { TabContext } from '../../ContextProviders/TabContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
 import UppercaseTitle from '../../Components/UppercaseTitle';
-import { Box, Typography, Container, Divider, Button, Chip, Grid } from '@mui/material';
+import { Box, Typography, Container, Divider, Chip, Grid } from '@mui/material';
 
-import JoinUs from '../Home/JoinUs';
+import GetInTouch from '../Home/GetInTouch';
 
 import ExpandableSection from './ExpandableSection';
 
-import ThemePreferences from '../../ThemePreferences';
+import ThemePreferences from '../../Themes/ThemePreferences';
 
 import data from '../../temp_database.json';
-import './Project.css';
+import jsonData from '../../home_data.json';
 
 import PersonIcon from '@mui/icons-material/Person';
-import LinkIcon from '@mui/icons-material/Link';
 import EmailIcon from '@mui/icons-material/Email';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
-import { replacePlainHTMLWithMuiComponents } from '../../Utils';
-
-// Download button: download raw dataset
-const DatasetDownloadButton = ({ project }) => {
-  const isDisabled = project.sheetId == null ? true : false;
-  return (
-    <Box>
-      <a
-        href={
-          isDisabled
-            ? ''
-            : `https://docs.google.com/spreadsheets/d/${project.sheetId}`
-        }
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Button disabled={isDisabled} variant="contained">
-          <LinkIcon />
-          &nbsp;
-          {isDisabled ? 'COMING SOON' : 'FULL DATASET'}
-        </Button>
-      </a>
-    </Box>
-  );
-};
+import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
+import { DatasetDownloadButton } from './DatasetDownloadButton';
 
 // Custom Chip component to display metadata
 const CustomChip = ({ icon, label }) => {
@@ -68,6 +44,9 @@ const Project = ({ themePreference }) => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useContext(TabContext);
 
+  // Update the page's title
+  useEffect(() => { if (project.title) document.title = `${project.title} | CITIES Dashboard`, [project] });
+
   // Update the currentPage with the project's ID
   // and the chartsTitle with all the charts' titles of the project
   useEffect(() => {
@@ -84,7 +63,7 @@ const Project = ({ themePreference }) => {
         setTab(temp);
         setLoading(true);
         // Populate the array with all the charts' titles of the project
-        chartsTitles = project.charts.map((element, index) => ({ chartTitle: element.title, chartID: `-${index + 1}` }));
+        chartsTitles = project.charts.map((element, index) => ({ chartTitle: element.title, chartID: `chart-${index + 1}` }));
       }
     });
 
@@ -222,8 +201,8 @@ const Project = ({ themePreference }) => {
 
           {project.charts.length % 2 != 0 ? <></> : <Divider />}
 
-          <Box id="join-us" sx={{ pt: 3, pb: 3 }}>
-            <JoinUs />
+          <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
+            <GetInTouch themePreference={themePreference} />
           </Box>
 
           {project.charts.length % 2 != 0 ? <Divider /> : <></>}

@@ -3,6 +3,7 @@
 
 import { Box, Button } from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
+import * as Tracking from '../../Utils/Tracking';
 
 // Download button: download raw dataset
 
@@ -11,7 +12,7 @@ export function DatasetDownloadButton({ project }) {
     return (
         <Button
             onClick={() => {
-                window.gtag("event", "get_dataset");
+                Tracking.sendEventAnalytics(Tracking.Events.getDataset);
             }}
             href={isDisabled
                 ? ''

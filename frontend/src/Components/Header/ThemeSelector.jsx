@@ -11,6 +11,8 @@ import { LightMode, DarkMode, Contrast } from '@mui/icons-material';
 
 import ThemePreferences from '../../Themes/ThemePreferences';
 
+import * as Tracking from '../../Utils/Tracking';
+
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
     borderRadius: "0.5rem",
     background: theme.palette.background.paper,
@@ -54,6 +56,11 @@ export default function ThemeSelector(props) {
     const [themeValue, setThemeValue] = useState(localStorage.getItem('theme') || ThemePreferences.system);
 
     const handleChange = (event) => {
+        Tracking.sendEventAnalytics(Tracking.Events.themeChange,
+            {
+                old_theme: themeValue,
+                new_theme: event.target.value
+            });
         localStorage.setItem('theme', event.target.value);
         setThemeValue(event.target.value);
     };

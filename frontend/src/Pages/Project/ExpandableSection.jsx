@@ -7,10 +7,12 @@ import { styled } from '@mui/material/styles';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import './Project.css';
+import * as Tracking from '../../Utils/Tracking';
+
+// import ReactGA from 'react-ga4';
 
 const StyledAccordion = styled(MuiAccordion)(({ theme, expanded }) => ({
     color: theme.palette.text.secondary,
@@ -39,11 +41,16 @@ const ExpandableSection = ({ title, content }) => {
 
     const handleAccordionChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : undefined);
+
+        Tracking.sendEventAnalytics(isExpanded ? Tracking.Events.expandSampleData : Tracking.Events.collapseSampleData);
     };
 
     return (
-        <div>
-            <StyledAccordion expanded={expanded === "panel1"} onChange={handleAccordionChange("panel1")}>
+        <Box>
+            <StyledAccordion
+                expanded={expanded === "panel1"}
+                onChange={handleAccordionChange("panel1")}
+            >
                 <StyledAccordionSummary expanded={expanded} expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                     <Typography component="a" variant="body1">
                         {title}
@@ -53,7 +60,7 @@ const ExpandableSection = ({ title, content }) => {
                     {content}
                 </MuiAccordionDetails>
             </StyledAccordion>
-        </div>
+        </Box>
     );
 }
 

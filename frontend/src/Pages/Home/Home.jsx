@@ -12,13 +12,18 @@ import { Box, Grid, Typography, Container, Card, CardContent, CardMedia, CardAct
 
 import UppercaseTitle from '../../Components/UppercaseTitle';
 
-import AtAGlance from './AtAGlance';
+// import AtAGlance from './AtAGlance';
 import About from './About';
-import JoinUs from './JoinUs';
+import GetInTouch from './GetInTouch';
 
 import jsonData from '../../home_data.json';
 
-const Home = ({ themePreference }) => {
+import * as Tracking from '../../Utils/Tracking';
+
+const Home = ({ themePreference, title }) => {
+  // Update the page's title
+  useEffect(() => document.title = title, []);
+
   // useState for home page data
   const [_, setCurrentPage, __, setChartsTitlesList] = useContext(LinkContext);
   const [homeData] = useContext(DataContext);
@@ -54,6 +59,13 @@ const Home = ({ themePreference }) => {
                     component={Link}
                     to={`/project/${element.id}`}
                     disabled={!element.isActive}
+                    onClick={() => {
+                      Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                        {
+                          destination_id: `/project/${element.id}`,
+                          destination_label: element.id
+                        });
+                    }}
                   >
                     <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia
@@ -91,7 +103,7 @@ const Home = ({ themePreference }) => {
       </Box>
 
       <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
-        <JoinUs themePreference={themePreference} />
+        <GetInTouch themePreference={themePreference} />
       </Box>
     </Box >
   );

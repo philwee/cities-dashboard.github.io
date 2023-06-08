@@ -6,6 +6,8 @@ import { MenuItem } from '@mui/material';
 
 import { NavLinkBehavior } from './NavBar';
 
+import * as Tracking from '../../Utils/Tracking';
+
 const capitalizePhrase = (str) => {
     const words = str.split(/[\s-]+/);
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
@@ -39,23 +41,29 @@ export const scrollToSection = (scrollToSectionID) => {
 };
 
 export default function MenuItemAsNavLink(props) {
-    const { behavior, to, scrollToSectionID, sx } = props;
+    const { behavior, to, scrollToSectionID, sx, analyticsOriginID, analyticsDestinationLabel } = props;
     let { label } = props;
 
     if (label && typeof label === 'string') label = capitalizePhrase(label);
 
     switch (behavior) {
-        case NavLinkBehavior.doNothingForNow:
-            return (
-                <StyledMenuItem sx={sx}>
-                    {label}
-                </StyledMenuItem>
-            );
-
         case NavLinkBehavior.toNewPage:
+            let newPageLabel = capitalizePhrase((to === "/") ? "home" : to);
             return (
-                <StyledMenuItem sx={sx} component={Link} to={to}>
-                    {capitalizePhrase((to === "/") ? "home" : to)}
+                <StyledMenuItem
+                    sx={sx}
+                    component={Link}
+                    to={to}
+                    onClick={() => {
+                        Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                            {
+                                destination_id: to,
+                                destination_label: newPageLabel,
+                                origin_id: analyticsOriginID
+                            })
+                    }}
+                >
+                    {newPageLabel}
                 </StyledMenuItem>
             );
 
@@ -63,7 +71,15 @@ export default function MenuItemAsNavLink(props) {
             return (
                 <StyledMenuItem
                     sx={sx}
-                    onClick={() => scrollToSectionID && scrollToSection(scrollToSectionID)}
+                    onClick={() => {
+                        scrollToSectionID && scrollToSection(scrollToSectionID);
+                        Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                            {
+                                destination_id: scrollToSectionID,
+                                destination_label: analyticsDestinationLabel,
+                                origin_id: analyticsOriginID
+                            });
+                    }}
                 >
                     {label || capitalizePhrase(scrollToSectionID)}
                 </StyledMenuItem>

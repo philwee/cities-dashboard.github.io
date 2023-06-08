@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import { LinkContext } from '../ContextProviders/LinkContext';
 import { Button, Typography, Container } from '@mui/material';
 
-export default function FourOhFour() {
+export default function FourOhFour({ title }) {
+  // Update the page's title
+  useEffect(() => document.title = title, []);
+
   const [_, setCurrentPage] = useContext(LinkContext);
 
   // set underline link to 404 (to undo any other underlined links)

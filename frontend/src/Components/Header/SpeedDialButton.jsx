@@ -15,6 +15,8 @@ import MenuItemAsNavLink from './MenuItemAsNavLink';
 import { scrollToSection } from './MenuItemAsNavLink';
 import { NavLinkBehavior } from './NavBar';
 
+import * as Tracking from '../../Utils/Tracking';
+
 const innerHeight = window.innerHeight;
 
 function FadeInButton(props) {
@@ -76,6 +78,8 @@ export default function SpeedDialButton(props) {
                 behavior={NavLinkBehavior.scrollTo}
                 scrollToSectionID={element.chartID}
                 label={`${element.chartID}. ${element.chartTitle}`}
+                analyticsOriginID="speed-dial"
+                analyticsDestinationLabel={element.chartTitle}
                 sx={{ fontSize: "0.8rem" }}
             />
         ));
@@ -85,6 +89,7 @@ export default function SpeedDialButton(props) {
                 behavior={NavLinkBehavior.scrollTo}
                 scrollToSectionID={topAnchorID}
                 label={'↑ Scroll to Top'}
+                analyticsOriginID="speed-dial"
                 sx={{ fontSize: "0.8rem", fontWeight: "600" }}
             />
         );
@@ -110,7 +115,14 @@ export default function SpeedDialButton(props) {
                         // If there is no chart to scroll to
                         // Simply display a button to scroll to the top
                         <Fab
-                            onClick={() => topAnchorID && scrollToSection(topAnchorID)}
+                            onClick={() => {
+                                topAnchorID && scrollToSection(topAnchorID);
+                                Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                                    {
+                                        destination_id: topAnchorID,
+                                        origin_id: "speed-dial"
+                                    });
+                            }}
                             sx={{ mt: 1 }} aria-label="popup menu" color="primary"
                         >
                             <KeyboardArrowUpIcon />

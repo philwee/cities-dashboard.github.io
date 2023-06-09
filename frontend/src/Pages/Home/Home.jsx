@@ -63,7 +63,8 @@ const Home = ({ themePreference, title }) => {
                       Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
                         {
                           destination_id: `/project/${element.id}`,
-                          destination_label: element.id
+                          destination_label: element.id,
+                          origin_id: "home"
                         });
                     }}
                   >

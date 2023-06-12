@@ -3,6 +3,14 @@
 import { Link, List, ListItem, ListItemText } from '@mui/material';
 import parse, { domToReact } from 'html-react-parser';
 
+// Function to replace characters like "-" with " " from a string and capitalize it
+export const capitalizePhrase = (str) => {
+    const words = str.split(/[\s-]+/);
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    const capitalizedString = capitalizedWords.join(' ');
+    return capitalizedString;
+}
+
 // Function to replace HTML tags with MUI components
 export const replacePlainHTMLWithMuiComponents = (node) => {
     // Replace <a> tags with <Link> tags

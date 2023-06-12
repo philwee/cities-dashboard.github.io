@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Tooltip } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import * as Tracking from '../../Utils/Tracking';
@@ -52,9 +52,11 @@ const ExpandableSection = ({ title, content }) => {
                 onChange={handleAccordionChange("panel1")}
             >
                 <StyledAccordionSummary expanded={expanded} expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                    <Typography component="a" variant="body1">
-                        {title}
-                    </Typography>
+                    <Tooltip title={expanded ? "Click to collapse" : "Click to expand"}>
+                        <Typography component="a" variant="body1">
+                            {title}
+                        </Typography>
+                    </Tooltip>
                 </StyledAccordionSummary>
                 <MuiAccordionDetails>
                     {content}

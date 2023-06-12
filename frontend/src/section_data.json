@@ -1,4 +1,8 @@
 {
+    "siteDescription": "Data repository and visualization on sustainability and well-being at NYU Abu Dhabi<br>Reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to get involved!",
+    "charts": {
+        "id": "charts"
+    },
     "about": {
         "id": "about",
         "content": [
@@ -6,7 +10,10 @@
             "The NYUAD's <b>Center for Interacting Urban Networks (CITIES)</b> is an interdisciplinary research center dedicated to advance urban science and promote cutting-edge research that is translated into practical, real-world solutions for the benefit of society. Our ultimate goal is to foster sustainable, resilient, and equitable cities. To test and showcase cutting-edge applications of its research in real life, CITIES uses the NYUAD campus as a field lab."
         ]
     },
-    "siteDescription": "Data repository and visualization on sustainability and well-being at NYU Abu Dhabi<br>Reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to get involved!",
+    "commentSection": {
+        "id": "comments",
+        "content": "<b>What stands out to you?</b> Leave a comment below to share your thoughts on this project and discuss with other."
+    },
     "getInTouch": {
         "id": "get-in-touch",
         "content": "<b>Simply fill out the feedback form below or reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to share your thoughts and/or get involved!</b><br><br>The CITIES dashboard is on its first public-release iteration. Feedback on the existing datasets and visualizations, or suggestions/contributions of new datasets is welcomed. Meanwhile, explore existing datasets with interactive data visualizations designed by CITIES' students, researchers, and staffs in collaboration with CITIES partners. Stay tuned as more datasets will be available soon."

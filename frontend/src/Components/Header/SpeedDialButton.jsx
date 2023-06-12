@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { Box, useScrollTrigger, Fab, Fade } from '@mui/material';
+import { Box, useScrollTrigger, Fab, Fade, Tooltip } from '@mui/material';
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
@@ -12,6 +12,7 @@ import PopupState, {
     bindMenu,
 } from 'material-ui-popup-state';
 import MenuItemAsNavLink from './MenuItemAsNavLink';
+import { StyledMenuItem } from './MenuItemAsNavLink';
 import { scrollToSection } from './MenuItemAsNavLink';
 import { NavLinkBehavior } from './NavBar';
 
@@ -84,14 +85,19 @@ export default function SpeedDialButton(props) {
             />
         ));
 
-        menuItemsArray.unshift(
+        menuItemsArray.unshift([
+            <StyledMenuItem disabled sx={{ fontWeight: "600" }}>
+                Quick Chart Navigation
+            </StyledMenuItem>
+            ,
             <MenuItemAsNavLink
                 behavior={NavLinkBehavior.scrollTo}
                 scrollToSectionID={topAnchorID}
                 label={'↑ Scroll to Top'}
                 analyticsOriginID="speed-dial"
-                sx={{ fontSize: "0.8rem", fontWeight: "600" }}
+                sx={{ fontSize: "0.8rem" }}
             />
+        ]
         );
     }
 
@@ -114,19 +120,22 @@ export default function SpeedDialButton(props) {
                         :
                         // If there is no chart to scroll to
                         // Simply display a button to scroll to the top
-                        <Fab
-                            onClick={() => {
-                                topAnchorID && scrollToSection(topAnchorID);
-                                Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
-                                    {
-                                        destination_id: topAnchorID,
-                                        origin_id: "speed-dial"
-                                    });
-                            }}
-                            sx={{ mt: 1 }} aria-label="popup menu" color="primary"
-                        >
-                            <KeyboardArrowUpIcon />
-                        </Fab>
+                        <Tooltip title="Scroll to Top">
+                            <Fab
+                                onClick={() => {
+                                    topAnchorID && scrollToSection(topAnchorID);
+                                    Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                                        {
+                                            destination_id: topAnchorID,
+                                            origin_id: "speed-dial"
+                                        });
+                                }}
+                                sx={{ mt: 1 }} aria-label="popup menu" color="primary"
+                            >
+                                <KeyboardArrowUpIcon />
+                            </Fab>
+                        </Tooltip>
+
                 }
 
             </FadeInButton>

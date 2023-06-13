@@ -6,6 +6,7 @@ import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
 import parse from 'html-react-parser';
 import ChartComponent from '../../Graphs/ChartComponent';
+import SampleDataTable from '../../Graphs/SampleDataTable';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import CommentSection from '../../Components/CommentSection';
 import { Box, Typography, Container, Divider, Chip, Grid, Tooltip } from '@mui/material';
@@ -136,7 +137,7 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<CommentIcon />}
-                    label={`${commentCounts[project.id]?.commentCounts || "..."} Comment${commentCounts[project.id]?.commentCounts > 1 ? "s" : ""}`}
+                    label={`${commentCounts[project.id]?.commentCounts || "0"} Comment${commentCounts[project.id]?.commentCounts > 1 ? "s" : ""}`}
                     tooltipTitle="Number of Comments"
                     onClick={() => {
                       scrollToSection(jsonData.commentSection.id);
@@ -169,26 +170,12 @@ const Project = ({ themePreference }) => {
                 content={
                   <>
                     {project.rawDataTables.map((element, index) => (
-                      <Box
+                      <SampleDataTable
                         key={index}
-                        sx={
-                          index < project.rawDataTables.length - 1
-                            ? { mb: 3 }
-                            : { mb: 1 }
-                        }
-                      >
-                        <ChartComponent
-                          chartData={{
-                            chartType: 'Table',
-                            sortAscending: true,
-                            frozenColumns: 1,
-                            sheetId: project.sheetId,
-                            ...element,
-                          }}
-                          themePreference={themePreference}
-                          isHomepage={false}
-                        />
-                      </Box>
+                        chartData={element}
+                        sheetId={project.sheetId}
+                        marginBottom={(index < project.rawDataTables.length - 1) ? 3 : 1}
+                      />
                     ))}
                   </>
                 }

@@ -110,14 +110,17 @@ const Home = ({ themePreference, title }) => {
                                   </Typography>
                                 </Stack>
                               </Tooltip>
-                              <Tooltip title="Number of Comments">
-                                <Stack direction="row" spacing={0.2} alignItems={"center"}>
-                                  <CommentIcon sx={{ fontSize: "0.75rem", color: "text.secondary" }} />
-                                  <Typography variant="caption" color="text.secondary">
-                                    {commentCounts[key].commentCounts || "..."}
-                                  </Typography>
-                                </Stack>
-                              </Tooltip>
+                              {commentCounts[key].commentCounts && (
+                                <Tooltip title="Number of Comments">
+                                  <Stack direction="row" spacing={0.2} alignItems={"center"}>
+                                    <CommentIcon sx={{ fontSize: "0.75rem", color: "text.secondary" }} />
+                                    <Typography variant="caption" color="text.secondary">
+                                      {commentCounts[key].commentCounts}
+                                    </Typography>
+                                  </Stack>
+                                </Tooltip>
+                              )
+                              }
                             </Stack>
                           </Grid>
                         }

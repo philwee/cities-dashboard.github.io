@@ -5,7 +5,6 @@ import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
 import HeatMap from './HeatMap';
-import StyledTable from './StyledTable';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -45,7 +44,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     // Show CircleProgress or not
     let [circleProgress, displayCircleProgress] = useState(true);
 
-
     switch (chartData.chartType) {
         case 'HeatMap':
             return (
@@ -66,34 +64,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                         height={chartData.height}
                     />
                 </Box>
-            );
-
-        case 'Table':
-            options = {
-                cssClassNames: {
-                    headerRow: 'header-row',
-                    tableRow: 'table-row',
-                    oddTableRow: 'odd-table-row',
-                    selectedTableRow: 'selected-table-row',
-                    hoverTableRow: 'hover-table-row',
-                    headerCell: 'header-cell',
-                    tableCell: 'table-cell',
-                },
-                width: '100%',
-            };
-            return (
-                <StyledTable isPortrait={isPortrait}>
-                    <Chart
-                        chartType={chartData.chartType}
-                        spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
-                        spreadSheetQueryParameters={{
-                            headers: chartData.headers,
-                            query: chartData.query,
-                            gid: chartData.gid,
-                        }}
-                        options={options}
-                    />
-                </StyledTable>
             );
 
         default:

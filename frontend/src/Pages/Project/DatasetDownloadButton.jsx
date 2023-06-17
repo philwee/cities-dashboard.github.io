@@ -1,7 +1,7 @@
 // disable eslint for this file
 /* eslint-disable */
 
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
 import * as Tracking from '../../Utils/Tracking';
 

@@ -110,7 +110,7 @@ const Home = ({ themePreference, title }) => {
                                   </Typography>
                                 </Stack>
                               </Tooltip>
-                              {commentCounts[key].commentCounts && (
+                              {(commentCounts[key]?.commentCounts != null) && (
                                 <Tooltip title="Number of Comments">
                                   <Stack direction="row" spacing={0.2} alignItems={"center"}>
                                     <CommentIcon sx={{ fontSize: "0.75rem", color: "text.secondary" }} />
@@ -144,7 +144,7 @@ const Home = ({ themePreference, title }) => {
       <Divider />
 
       <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
-        <GetInTouch themePreference={themePreference} />
+        <GetInTouch />
       </Box>
     </Box >
   );

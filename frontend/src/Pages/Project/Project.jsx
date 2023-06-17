@@ -256,7 +256,7 @@ const Project = ({ themePreference }) => {
           <Divider />
 
           <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
-            <GetInTouch themePreference={themePreference} />
+            <GetInTouch />
           </Box>
         </Box>
       )}

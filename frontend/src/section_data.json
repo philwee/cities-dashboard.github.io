@@ -16,7 +16,7 @@
     },
     "getInTouch": {
         "id": "get-in-touch",
-        "content": "<b>Simply fill out the feedback form below or reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to share your thoughts and/or get involved!</b><br><br>The CITIES dashboard is on its first public-release iteration. Feedback on the existing datasets and visualizations, or suggestions/contributions of new datasets is welcomed. Meanwhile, explore existing datasets with interactive data visualizations designed by CITIES' students, researchers, and staffs in collaboration with CITIES partners. Stay tuned as more datasets will be available soon."
+        "content": "<b>Simply fill out the feedback form below or reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to share your thoughts and/or get involved!</b><br><br>The CITIES dashboard is on its first public-release iteration. Feedback on the existing datasets and visualizations, and/or contributions of new datasets are welcomed. Meanwhile, explore existing datasets with interactive data visualizations designed by CITIES' students, researchers, and staffs in collaboration with CITIES partners. Stay tuned as more datasets will be available soon."
     },
     "statistics": {
         "partners": 3,

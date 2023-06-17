@@ -11,7 +11,7 @@ import jsonData from '../section_data.json';
 import parse from 'html-react-parser';
 import { replacePlainHTMLWithMuiComponents, capitalizePhrase } from '../Utils/Utils';
 
-export const WEBSITE_ID = 8990; // Hyvor Talk's website ID
+export const WEBSITE_ID = 9021; // Hyvor Talk's website ID
 
 const StyledHyvorTalk = styled(Box)(({ theme }) => ({
     "& #hyvor-talk-iframe": {

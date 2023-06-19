@@ -12,7 +12,7 @@
     },
     "commentSection": {
         "id": "comments",
-        "content": "<b>What stands out to you?</b> Leave a comment below to share your thoughts on this project and discuss with other."
+        "content": "<b>What stands out to you?</b> Leave a comment below to share your thoughts on this project and discuss with other.<br><small><i>*Comment as a guest (with your email to receive reply emails) or create an account below.</i></small>"
     },
     "getInTouch": {
         "id": "get-in-touch",

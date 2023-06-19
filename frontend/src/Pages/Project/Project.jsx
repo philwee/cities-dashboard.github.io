@@ -35,6 +35,8 @@ import * as Tracking from '../../Utils/Tracking';
 
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
 
+import { gapi } from 'gapi-script';
+
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
   const { tooltipTitle, ...otherProps } = props;
@@ -86,6 +88,56 @@ const Project = ({ themePreference }) => {
 
   }, [id, setCurrentPage, setChartsTitlesList]);
 
+  const [lastModified, setLastModified] = useState("Loading...");
+
+  // Google Sheets API to get the last modified date of the project's spreadsheet
+  useEffect(() => {
+    if (project.sheetId) {
+      gapi.load('client', () => {
+        gapi.client.init({
+          apiKey: 'AIzaSyCjVRS9swFZFN8FQq9ChM0FHWb_kRc0LCI',
+          discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+        }).then(() => {
+          // Get all the sheets inside the Google Sheets document to find the name of 
+          // the sheet with gid === project.lastUpdateGID
+          // This sheet contains the last modified date of the visualized data
+          gapi.client.sheets.spreadsheets.get({
+            spreadsheetId: project.sheetId,
+            includeGridData: false,
+          }).then((response) => {
+            const sheets = response.result.sheets;
+            let sheetName = 'Metadata'; // Default value
+            for (let i = 0; i < sheets.length; i++) {
+              if (sheets[i].properties.sheetId === Number(project.lastUpdateGID)) {
+                sheetName = sheets[i].properties.title;
+                break;
+              }
+            }
+            // Now fetch the cell data
+            const range = `${sheetName}!A2:A2`;
+            gapi.client.sheets.spreadsheets.values.get({
+              spreadsheetId: project.sheetId,
+              range: range,
+            }).then((response) => {
+              const result = response.result;
+              if (result.values && result.values.length > 0) {
+                // The cell value should be in the first row and column of the values array
+                const cellValue = result.values[0][0];
+                setLastModified(cellValue);
+              } else {
+                console.log('No data found.');
+              }
+            }).catch((error) => {
+              console.log(error);
+            });
+          }).catch((error) => {
+            console.log(error);
+          });
+        });
+      });
+    }
+  }, [project.sheetId, project.lastUpdateGID]);
+
   return (
     <>
       {loading && (
@@ -115,7 +167,7 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<PublishedWithChangesIcon />}
-                    label={`${project.lastUpdate}`}
+                    label={lastModified}
                     tooltipTitle="Last Update" />
                 </Grid>
                 <Grid item>

@@ -93,11 +93,12 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
 
   // console.log("Redrawing", chartData)
 
-  if (chartData.chartType != 'Table' && !chartWrapperHeight) {
+  if (chartData.chartType != 'Table' && chartData.chartType != 'Calendar' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
 
+  console.log('isPortrait?', isPortrait, chartWrapperHeight)
   // Assign the subcharts array for HeatMap based on the device orientation 
   if (chartData.chartType == 'HeatMap') {
     chartData = {
@@ -105,6 +106,8 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
     };
   }
+
+  console.log(chartData);
 
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
@@ -149,7 +152,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
         }
         <Box
           position="relative"
-          height={chartData.height ? chartData.height : chartWrapperHeight}
+          height={chartWrapperHeight}
           maxHeight={
             ['HeatMap', 'Calendar'].includes(chartData.chartType)
               ? ''

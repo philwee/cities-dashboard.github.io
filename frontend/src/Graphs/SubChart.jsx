@@ -5,6 +5,7 @@ import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
 import HeatMap from './HeatMap';
+import CalendarChart from './CalendarChart.jsx';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -68,7 +69,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
 
         default:
             function scaleCalendar(min, max) {
-                var cellSize = window.innerWidth / 58;
+                var cellSize = (window.innerWidth * 0.98) / 58;
                 return Math.min(Math.max(cellSize, min), max);
             }
 
@@ -352,13 +353,19 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 )
             };
 
+            if (chartData.chartType == 'Calendar') return (
+              <CalendarChart 
+                chartData={chartData}
+                chartProps={chartProps}
+              />
+            )
+
             return (
                 <Box
                     position={'relative'}
                     className={chartData.chartType}
                     height="100%"
-                    marginLeft={chartData.chartType == 'Calendar' ? '-0.5rem' : ''}
-                    width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}
+                    width='100%'
                 >
                     {circleProgress && (
                         <CircularProgress

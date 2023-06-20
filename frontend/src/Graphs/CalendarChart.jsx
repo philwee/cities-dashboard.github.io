@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
-function CalendarChart({ chartData, chartProps }) {
+function CalendarChart({ chartData, chartProps, isPortrait }) {
   const [chartHeight, setChartHeight] = useState('100%');
   const [circleProgress, displayCircleProgress] = useState(true);
 
@@ -11,6 +11,26 @@ function CalendarChart({ chartData, chartProps }) {
     const chartContainer = chartWrapper.container.querySelector('div > div:nth-child(1) > div > svg > g:nth-child(2)');
     const renderedHeight = chartContainer.getBBox().height;
     setChartHeight(renderedHeight * 1.15); // additional 15% for padding
+  };
+
+  const scaleCalendar = (min, max) => {
+    const cellSize = (window.innerWidth * 0.98) / 58;
+    return Math.min(Math.max(cellSize, min), max);
+  };
+
+  chartProps.options = {
+    ...chartProps.options,
+    calendar: {
+      cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
+      yearLabel: {
+        fontSize: scaleCalendar(5, 20) * 2
+      },
+      daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
+    },
+    noDataPattern: {
+      backgroundColor: 'none',
+      color: 'none',
+    },
   };
 
   return (

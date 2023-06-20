@@ -68,11 +68,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             );
 
         default:
-            function scaleCalendar(min, max) {
-                var cellSize = (window.innerWidth * 0.98) / 58;
-                return Math.min(Math.max(cellSize, min), max);
-            }
-
             let showChartFilter = false;
             if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) showChartFilter = true;
             // ---- Formulate the options for this specific chart:
@@ -116,23 +111,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     }
                 }
             };
-
-            if (chartData.chartType == 'Calendar')
-                options = {
-                    ...options,
-                    calendar: {
-                        cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
-                        yearLabel: {
-                            fontSize: scaleCalendar(5, 20) * 2
-                        },
-                        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
-                    },
-                    noDataPattern: {
-                        backgroundColor: 'none',
-                        color: 'none',
-                    },
-                };
-
+  
             // 3. Append to vAxis and hAxis properties
             options.vAxis = {
                 ...options.vAxis,
@@ -357,6 +336,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
               <CalendarChart 
                 chartData={chartData}
                 chartProps={chartProps}
+                isPortrait={isPortrait}
               />
             )
 

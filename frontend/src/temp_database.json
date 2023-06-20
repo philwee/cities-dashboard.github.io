@@ -232,7 +232,6 @@
         "gid": 584789045,
         "headers": 1,
         "chartType": "Calendar",
-        "height": "55vw",
         "options": {
           "colorAxis": {
             "colors": "aqi"

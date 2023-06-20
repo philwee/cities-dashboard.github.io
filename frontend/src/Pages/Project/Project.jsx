@@ -34,6 +34,7 @@ import { scrollToSection } from '../../Components/Header/MenuItemAsNavLink';
 import * as Tracking from '../../Utils/Tracking';
 
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
+import { LastUpdate } from '../../Utils/GoogleSheetAPI';
 
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
@@ -115,7 +116,7 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<PublishedWithChangesIcon />}
-                    label={`${project.lastUpdate}`}
+                    label={<LastUpdate spreadsheetId={project.sheetId} lastUpdateGID={project.lastUpdateGID} />}
                     tooltipTitle="Last Update" />
                 </Grid>
                 <Grid item>

@@ -7,7 +7,7 @@
     "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD (and a number of schools in Abu Dhabi). The air quality network at NYU Abu Dhabi consists of 3 stations: an outdoor station between A1 and A2 buildings, two indoor stations in the Campus Center, and Dining Hall D2, respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), and physical air quality screens in the Campus Center and Dining Hall D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
     "owner": "CITIESair",
     "contact": "cities.nyuad@nyu.edu",
-    "lastUpdate": "Today",
+    "lastUpdateGID": 382965081,
     "rawDataTables": [
       {
         "gid": 584789045,
@@ -513,7 +513,7 @@
     "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 10 different account types, our data visualizations simplify them into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>Other and external: community, contract, external instructor, guest, and Tamkeen</li></ul>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
-    "lastUpdate": "May 2023",
+    "lastUpdateGID": 1015126269,
     "rawDataTables": [
       {
         "gid": 560722866,
@@ -607,7 +607,7 @@
     "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
-    "lastUpdate": "Dec 2022",
+    "lastUpdateGID": 1486220958,
     "rawDataTables": [
       {
         "gid": 1993454060,
@@ -884,7 +884,7 @@
     "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat at Dining Hall D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
     "owner": "NYUAD Dining",
     "contact": "nyuad.dining@nyu.edu",
-    "lastUpdate": "May 2023",
+    "lastUpdateGID": 787382510,
     "rawDataTables": [
       {
         "gid": 1952244844,

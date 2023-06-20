@@ -98,7 +98,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
 
-  console.log('isPortrait?', isPortrait, chartWrapperHeight)
   // Assign the subcharts array for HeatMap based on the device orientation 
   if (chartData.chartType == 'HeatMap') {
     chartData = {
@@ -106,8 +105,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
     };
   }
-
-  console.log(chartData);
 
   // Check if there are multiple subcharts
   if (chartData.subcharts) {

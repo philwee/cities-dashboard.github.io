@@ -9,6 +9,6 @@ export default function HeatMap({ publishedSheetId, gid, range, height }) {
       className="heat-map-iframe"
       style={{ width: '100%', height: '100%', border: 'none' }}
       src={embedLink}
-    ></iframe>
+    >Loading...</iframe>
   );
 }

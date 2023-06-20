@@ -1,0 +1,25 @@
+{
+    "siteDescription": "Data repository and visualization on sustainability and well-being at NYU Abu Dhabi<br>Reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to get involved!",
+    "charts": {
+        "id": "charts"
+    },
+    "about": {
+        "id": "about",
+        "content": [
+            "<b>The CITIES Dashboard</b> is a data repository for community-wide actions on sustainability and well-being. It is created by and for the NYU Abu Dhabi community (students, researchers, faculty, staff, and partners alike). The Dashboard is a handy tool for: <ul><li>Informing the NYUAD community and promoting sustainable behaviors</li><li>Supporting research, education, and community outreach within the NYUAD campus</li><li>Supporting campus stakeholders and partners to improve operations and meet Key Performance Indicators (KPIs), e.g. reducing food waste...</li></ul><b>We thank</b> Department of Athletics, NYUAD Institutional Research, and Royal Catering Services (RCS) for supporting this project with their data.",
+            "The NYUAD's <b>Center for Interacting Urban Networks (CITIES)</b> is an interdisciplinary research center dedicated to advance urban science and promote cutting-edge research that is translated into practical, real-world solutions for the benefit of society. Our ultimate goal is to foster sustainable, resilient, and equitable cities. To test and showcase cutting-edge applications of its research in real life, CITIES uses the NYUAD campus as a field lab."
+        ]
+    },
+    "commentSection": {
+        "id": "comments",
+        "content": "<b>What stands out to you?</b> Leave a comment below to share your thoughts on this project and discuss with other.<br><small><i>*Comment as a guest (with your email to receive reply emails) or create an account below.</i></small>"
+    },
+    "getInTouch": {
+        "id": "get-in-touch",
+        "content": "<b>Simply fill out the feedback form below or reach out to us at <a href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</a> to share your thoughts and/or get involved!</b><br><br>The CITIES dashboard is on its first public-release iteration. Feedback on the existing datasets and visualizations, and/or contributions of new datasets are welcomed. Meanwhile, explore existing datasets with interactive data visualizations designed by CITIES' students, researchers, and staffs in collaboration with CITIES partners. Stay tuned as more datasets will be available soon."
+    },
+    "statistics": {
+        "partners": 3,
+        "datapoints": "16K"
+    }
+}

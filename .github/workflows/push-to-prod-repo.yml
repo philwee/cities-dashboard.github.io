@@ -1,10 +1,12 @@
 name: Push files from development repository to production repository
 
 on:
-  pull_request:
-    branches:
-      - main
-    types: [closed]
+  workflow_dispatch:
+    inputs:
+      commit_message:
+        description: 'Commit message'
+        required: true
+        default: 'Enter commit message here'
 
 jobs:
   pushFiles:
@@ -23,15 +25,13 @@ jobs:
           path: ./prod-files
 
       - name: Copy files from development repository to production repository
-        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
-        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=prod-files/ ./ ./prod-files/
+        run: rsync -av --exclude=.git/ --exclude=.github/workflows/ --exclude=.vscode --exclude=documentation/ --exclude=.gitignore --exclude=readme.md --exclude=prod-files/ ./ ./prod-files
 
       - name: Commit and push changes to production repository
-        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
         run: |
           cd ./prod-files
           git config user.name ${{ secrets.USER_NAME }}
           git config user.email ${{ secrets.USER_EMAIL }}
           git add .
-          git commit -m "files synced with development repository files"
+          git commit -m "${{ github.event.inputs.commit_message }}"
           git push origin main

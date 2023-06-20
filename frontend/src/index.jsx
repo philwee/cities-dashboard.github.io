@@ -4,18 +4,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { LinkProvider } from './ContextProviders/LinkContext';
-import { DataProvider } from './ContextProviders/DataContext';
+import { HomePageProvider } from './ContextProviders/HomePageContext';
+import { CommentCountsProvider } from './ContextProviders/CommentCountsContext';
 import { TabProvider } from './ContextProviders/TabContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <DataProvider>
-      <LinkProvider>
-        <TabProvider>
-          <App />
-        </TabProvider>
-      </LinkProvider>
-    </DataProvider>
+    <HomePageProvider>
+      <CommentCountsProvider>
+        <LinkProvider>
+          <TabProvider>
+            <App />
+          </TabProvider>
+        </LinkProvider>
+      </CommentCountsProvider>
+    </HomePageProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

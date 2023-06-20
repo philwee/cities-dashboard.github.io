@@ -1,730 +1,13 @@
 [
   {
     "isActive": true,
-    "id": "athletics-fabs-membership",
-    "title": "Athletics FABS Membership",
-    "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 10 different account types, our data visualizations simplify them into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>Other and external: community, contract, external instructor, guest, and Tamkeen</li></ul>",
-    "owner": "Department of Athletics",
-    "contact": "nyuad.athletics@nyu.edu",
-    "lastUpdate": "May 2023",
-    "rawDataTables": [
-      {
-        "gid": 560722866,
-        "headers": 1
-      }
-    ],
-    "charts": [
-      {
-        "title": "Number of Unique FABS Memberships",
-        "subtitle": "As the university continues to expand over the year, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
-        "gid": 337720664,
-        "headers": 1,
-        "columns": [
-          0,
-          1,
-          {
-            "role": "tooltip",
-            "sourceColumn": 17
-          },
-          2,
-          {
-            "role": "tooltip",
-            "sourceColumn": 18
-          },
-          3,
-          {
-            "role": "tooltip",
-            "sourceColumn": 19
-          },
-          4,
-          {
-            "role": "tooltip",
-            "sourceColumn": 20
-          }
-        ],
-        "chartType": "ColumnChart",
-        "options": {
-          "vAxis": {
-            "title": "Number of Unique FABS Memberships"
-          },
-          "hAxis": {
-            "title": "Academic Year (Aug - Sep next year)"
-          }
-        }
-      },
-      {
-        "title": "Percentage of Demographic Groups in FABS",
-        "subtitle": "Undergraduate students have remained the largest group of Fitness Facility memberships in recent years, representing around two-third of all memberships.",
-        "gid": 337720664,
-        "headers": 1,
-        "columns": [
-          0,
-          6,
-          {
-            "calc": "stringify",
-            "type": "string",
-            "role": "annotation",
-            "sourceColumn": 6
-          },
-          7,
-          8,
-          {
-            "calc": "stringify",
-            "type": "string",
-            "role": "annotation",
-            "sourceColumn": 8
-          },
-          9
-        ],
-        "chartType": "ColumnChart",
-        "options": {
-          "bar": {
-            "groupWidth": "40%"
-          },
-          "isStacked": true,
-          "vAxis": {
-            "format": "#.##%"
-          },
-          "hAxis": {
-            "title": "Academic Year (Aug - Sep next year)"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "isActive": true,
-    "id": "athletic-facilities-check-in",
-    "title": "Athletic Facilities Check-in",
-    "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
-    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track... This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or a week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
-    "owner": "Department of Athletics",
-    "contact": "nyuad.athletics@nyu.edu",
-    "lastUpdate": "Dec 2022",
-    "rawDataTables": [
-      {
-        "gid": 1993454060,
-        "headers": 1
-      },
-      {
-        "gid": 948552227,
-        "headers": 1
-      },
-      {
-        "gid": 30903651,
-        "headers": 1
-      }
-    ],
-    "charts": [
-      {
-        "subcharts": [
-          {
-            "subchartTitle": "All time average (2020-2022)",
-            "subchartSubtitle": "As the typical workday draws to an end at around <b>5-6pm</b> for students, faculties, and staffs, this time window is the busiest period for fitness activities. While the number of check-in varies throughout the day, with a relatively smaller peak in the morning from 8-9am, the figure doesn't usually surpass half of that of the busiest time. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
-            "query": "SELECT A, F, H, I",
-            "columns": [
-              0,
-              1,
-              {
-                "role": "interval",
-                "sourceColumn": 2
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 3
-              }
-            ],
-            "options": {
-              "colors": "monochromatic",
-              "series": {
-                "0": {
-                  "type": "line",
-                  "lineWidth": 3
-                }
-              },
-              "intervals": {
-                "style": "area"
-              }
-            }
-          },
-          {
-            "subchartTitle": "By year",
-            "subchartSubtitle": "Due to COVID-19 restrictions, there was a limit on how many people could be in the same facilities during 2020-2022. Take the fitness center, for example, the cap was 15 people in 2020, which was gradually loosened to 25 people in 2022.",
-            "query": "SELECT A, B, C, D",
-            "options": {
-              "seriesType": "line"
-            }
-          }
-        ],
-        "title": "Average Number of Facilities Check-in Throughout the Day",
-        "gid": 947338007,
-        "headers": 1,
-        "chartType": "LineChart",
-        "options": {
-          "vAxis": {
-            "title": "Average Hourly Number of Facilities Check-in"
-          },
-          "hAxis": {
-            "title": "Hour of the Day",
-            "slantedText": true,
-            "slantedTextAngle": 30
-          }
-        }
-      },
-      {
-        "title": "Facilities Check-in Per Week Day, Normalized to the Max Value of Each Year",
-        "subtitle": "While the level of fitness activities exhibits a clear diurnal variation, it remains more stable throughout the weekdays. The second day of the weekend and the first work day of the week have historically been off-peak days, where attendance is around 10-30% less than the busiest day. Interestingly, this pattern still holds even when the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun). 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
-        "gid": 654076094,
-        "headers": 1,
-        "columns": [
-          0,
-          1,
-          {
-            "role": "tooltip",
-            "sourceColumn": 10
-          },
-          2,
-          {
-            "role": "tooltip",
-            "sourceColumn": 11
-          },
-          3,
-          {
-            "role": "tooltip",
-            "sourceColumn": 12
-          },
-          4,
-          {
-            "role": "tooltip",
-            "sourceColumn": 13
-          },
-          5,
-          {
-            "role": "tooltip",
-            "sourceColumn": 14
-          },
-          {
-            "role": "annotation",
-            "sourceColumn": 17
-          },
-          6,
-          {
-            "role": "tooltip",
-            "sourceColumn": 15
-          },
-          {
-            "role": "annotation",
-            "sourceColumn": 18
-          },
-          7,
-          {
-            "role": "tooltip",
-            "sourceColumn": 16
-          },
-          {
-            "role": "annotation",
-            "sourceColumn": 19
-          }
-        ],
-        "chartType": "ColumnChart",
-        "options": {
-          "annotations": {
-            "stem": {
-              "length": 30
-            }
-          },
-          "colors": "rainbow",
-          "vAxis": {
-            "title": "Relative Number of Check-in, Normalized to Day with the Highest Number of Each Year",
-            "format": "#.##%"
-          },
-          "hAxis": {
-            "title": "Year"
-          }
-        }
-      },
-      {
-        "title": "Total Monthly Facilities Check-in, Historical",
-        "subtitle": "Finally, this visualization shows how much fitness activity has increased since the introduction of FABS which can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
-        "gid": 1045014031,
-        "headers": 1,
-        "columns": [
-          0,
-          1,
-          {
-            "role": "annotation",
-            "type": "string",
-            "sourceColumn": 2
-          },
-          3,
-          {
-            "role": "annotation",
-            "type": "string",
-            "sourceColumn": 4
-          },
-          5,
-          {
-            "role": "annotation",
-            "type": "string",
-            "sourceColumn": 6
-          }
-        ],
-        "options": {
-          "vAxis": {
-            "title": "Number of check-in per month"
-          },
-          "hAxis": {
-            "title": "Month of the Year"
-          }
-        },
-        "chartType": "ColumnChart"
-      },
-      {
-        "title": "Heat Map for the Average Hourly Number of Check-in, by Day of the Week",
-        "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each hour.",
-        "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "subchartsPortrait": {
-          "gid": 1445127203,
-          "maxWidth": "350px",
-          "height": "620px",
-          "subcharts": [
-            {
-              "subchartTitle": "2022",
-              "range": "W2:AF21"
-            },
-            {
-              "subchartTitle": "2021",
-              "range": "L2:T21"
-            },
-            {
-              "subchartTitle": "2020",
-              "range": "A2:J21"
-            }
-          ]
-        },
-        "subchartsLandscape": {
-          "gid": 729452023,
-          "maxWidth": "580px",
-          "height": "350px",
-          "subcharts": [
-            {
-              "subchartTitle": "2022",
-              "range": "A28:S38"
-            },
-            {
-              "subchartTitle": "2021",
-              "range": "A15:S25"
-            },
-            {
-              "subchartTitle": "2020",
-              "range": "A2:S12"
-            }
-          ]
-        },
-        "chartType": "HeatMap"
-      },
-      {
-        "title": "Heat Map for the Total Monthly Number of Check-in, by Day of the Week",
-        "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each month.",
-        "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
-        "subchartsPortrait": {
-          "gid": 309021928,
-          "maxWidth": "350px",
-          "height": "500px",
-          "subcharts": [
-            {
-              "subchartTitle": "2022",
-              "range": "W2:AF17"
-            },
-            {
-              "subchartTitle": "2021",
-              "range": "L2:U17"
-            },
-            {
-              "subchartTitle": "2020",
-              "range": "A2:J17"
-            }
-          ]
-        },
-        "subchartsLandscape": {
-          "gid": 1248059258,
-          "maxWidth": "480px",
-          "height": "350px",
-          "subcharts": [
-            {
-              "subchartTitle": "2022",
-              "range": "A28:O38"
-            },
-            {
-              "subchartTitle": "2021",
-              "range": "A15:O25"
-            },
-            {
-              "subchartTitle": "2020",
-              "range": "A2:O12"
-            }
-          ]
-        },
-        "chartType": "HeatMap"
-      }
-    ]
-  },
-  {
-    "isActive": true,
-    "id": "food-waste",
-    "title": "Food Waste",
-    "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
-    "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat at Dining Hall D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
-    "owner": "NYUAD Dining",
-    "contact": "nyuad.dining@nyu.edu",
-    "lastUpdate": "Apr 2023",
-    "rawDataTables": [
-      {
-        "gid": 1952244844,
-        "headers": 1,
-        "query": "SELECT A, B, C, D, E, F ORDER BY A DESC LIMIT 10"
-      }
-    ],
-    "charts": [
-      {
-        "title": "Mean Daily Food Waste (kg) by Week",
-        "headers": 1,
-        "chartType": "ComboChart",
-        "subcharts": [
-          {
-            "gid": 1409006115,
-            "subchartTitle": "Total (3 meals)",
-            "subchartSubtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>COVID restrictions were loosened in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at the facility as the student population continues to increase year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul><b>Adjust the slider to zoom in.</b>",
-            "query": "SELECT C, D, F, G, H, I WHERE A IS NOT NULL",
-            "columns": [
-              0,
-              1,
-              {
-                "role": "interval",
-                "sourceColumn": 2
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 3
-              },
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 4
-              },
-              {
-                "role": "annotation",
-                "type": "string",
-                "sourceColumn": 5
-              }
-            ],
-            "options": {
-              "colors": "monochromatic",
-              "seriesType": "line",
-              "series": {
-                "0": {
-                  "lineWidth": 3
-                }
-              }
-            }
-          },
-          {
-            "gid": 1232867906,
-            "subchartTitle": "by Meal (Stacked)",
-            "subchartSubtitle": "When the data is broken down into the three constituent meals, the majority of food waste comes from lunch and dinner",
-            "query": "SELECT C, D, F, H, P, Q, R, S WHERE A IS NOT NULL",
-            "columns": [
-              0,
-              1,
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 4
-              },
-              2,
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 5
-              },
-              3,
-              {
-                "role": "tooltip",
-                "type": "string",
-                "sourceColumn": 6
-              },
-              {
-                "role": "annotation",
-                "type": "string",
-                "sourceColumn": 7
-              }
-            ],
-            "options": {
-              "seriesType": "area",
-              "isStacked": true
-            }
-          }
-        ],
-        "options": {
-          "hAxis": {
-            "title": "Month - Year (hover on the line chart to see week number)"
-          },
-          "vAxis": {
-            "title": "Food Waste (in Kilogram)",
-            "maxValue": 150
-          },
-          "annotations": {
-            "stem": {
-              "length": 50
-            }
-          },
-          "intervals": {
-            "style": "area"
-          }
-        },
-        "filter": "ChartRangeFilter"
-      },
-      {
-        "title": "Historical Daily Food Waste (kg)",
-        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food could have been saved, simply multiply the kilogram figure by 2.</b>",
-        "gid": 1952244844,
-        "headers": 1,
-        "chartType": "Calendar",
-        "height": "55vw",
-        "subcharts": [
-          {
-            "subchartTitle": "Total (3 meals)",
-            "columns": [
-              0,
-              5,
-              {
-                "role": "tooltip",
-                "sourceColumn": 11
-              }
-            ],
-            "options": {
-              "colorAxis": {
-                "colors": "default"
-              }
-            }
-          },
-          {
-            "subchartTitle": "Breakfast",
-            "columns": [
-              0,
-              2,
-              {
-                "role": "tooltip",
-                "sourceColumn": 8
-              }
-            ],
-            "options": {
-              "colorAxis": {
-                "colors": "matchingColor",
-                "colorIndex": 0
-              }
-            }
-          },
-          {
-            "subchartTitle": "Lunch",
-            "columns": [
-              0,
-              3,
-              {
-                "role": "tooltip",
-                "sourceColumn": 9
-              }
-            ],
-            "options": {
-              "colorAxis": {
-                "colors": "matchingColor",
-                "colorIndex": 1
-              }
-            }
-          },
-          {
-            "subchartTitle": "Dinner",
-            "columns": [
-              0,
-              4,
-              {
-                "role": "tooltip",
-                "sourceColumn": 10
-              }
-            ],
-            "options": {
-              "colorAxis": {
-                "colors": "matchingColor",
-                "colorIndex": 2
-              }
-            }
-          }
-        ]
-      },
-      {
-        "title": "Percentage of Food Waste By Meal",
-        "subtitle": "Lunch and dinner make up the majority of campus' food waste, each accounts for roughly two-fifths of the total wastage for a given day.",
-        "gid": 387300968,
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "columns": [
-          0,
-          4,
-          {
-            "calc": "stringify",
-            "type": "string",
-            "role": "annotation",
-            "sourceColumn": 4
-          },
-          5,
-          {
-            "calc": "stringify",
-            "type": "string",
-            "role": "annotation",
-            "sourceColumn": 5
-          },
-          6,
-          {
-            "calc": "stringify",
-            "type": "string",
-            "role": "annotation",
-            "sourceColumn": 6
-          }
-        ],
-        "options": {
-          "isStacked": true,
-          "vAxis": {
-            "title": "Percentage",
-            "format": "#.##%"
-          },
-          "hAxis": {
-            "title": "Quarter - Year"
-          }
-        }
-      },
-      {
-        "title": "Mean Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
-        "subtitle": "Each year, the level of food wastage is constant among different days of the week",
-        "subcharts": [
-          {
-            "gid": 635067311,
-            "subchartTitle": "Total (3 meals)"
-          },
-          {
-            "gid": 1112965050,
-            "subchartTitle": "Breakfast"
-          },
-          {
-            "gid": 825083155,
-            "subchartTitle": "Lunch"
-          },
-          {
-            "gid": 1561192646,
-            "subchartTitle": "Dinner"
-          }
-        ],
-        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D LIMIT 2",
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "columns": [
-          0,
-          1,
-          {
-            "role": "interval",
-            "sourceColumn": 2
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 3
-          },
-          4,
-          {
-            "role": "interval",
-            "sourceColumn": 5
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 6
-          },
-          7,
-          {
-            "role": "interval",
-            "sourceColumn": 8
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 9
-          },
-          10,
-          {
-            "role": "interval",
-            "sourceColumn": 11
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 12
-          },
-          13,
-          {
-            "role": "interval",
-            "sourceColumn": 14
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 15
-          },
-          16,
-          {
-            "role": "interval",
-            "sourceColumn": 17
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 18
-          },
-          19,
-          {
-            "role": "interval",
-            "sourceColumn": 20
-          },
-          {
-            "role": "interval",
-            "sourceColumn": 21
-          }
-        ],
-        "options": {
-          "colors": "rainbow",
-          "bar": {
-            "groupWidth": "40%"
-          },
-          "intervals": {
-            "style": "bars"
-          },
-          "vAxis": {
-            "title": "Food Waste (in Kilogram)",
-            "maxValue": 100
-          },
-          "hAxis": {
-            "title": "Year",
-            "format": "",
-            "minorGridlines": {
-              "count": 0
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "isActive": true,
     "id": "air-quality",
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
     "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD (and a number of schools in Abu Dhabi). The air quality network at NYU Abu Dhabi consists of 3 stations: an outdoor station between A1 and A2 buildings, two indoor stations in the Campus Center, and Dining Hall D2, respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), and physical air quality screens in the Campus Center and Dining Hall D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
     "owner": "CITIESair",
     "contact": "cities.nyuad@nyu.edu",
-    "lastUpdate": "Today",
+    "lastUpdateGID": 382965081,
     "rawDataTables": [
       {
         "gid": 584789045,
@@ -1223,6 +506,737 @@
     ]
   },
   {
+    "isActive": true,
+    "id": "athletics-fabs-membership",
+    "title": "Athletics FABS Membership",
+    "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
+    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 10 different account types, our data visualizations simplify them into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>Other and external: community, contract, external instructor, guest, and Tamkeen</li></ul>",
+    "owner": "Department of Athletics",
+    "contact": "nyuad.athletics@nyu.edu",
+    "lastUpdateGID": 1015126269,
+    "rawDataTables": [
+      {
+        "gid": 560722866,
+        "headers": 1
+      }
+    ],
+    "charts": [
+      {
+        "title": "Number of Unique FABS Memberships",
+        "subtitle": "As the university continues to expand over the year, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
+        "gid": 337720664,
+        "headers": 1,
+        "columns": [
+          0,
+          1,
+          {
+            "role": "tooltip",
+            "sourceColumn": 17
+          },
+          2,
+          {
+            "role": "tooltip",
+            "sourceColumn": 18
+          },
+          3,
+          {
+            "role": "tooltip",
+            "sourceColumn": 19
+          },
+          4,
+          {
+            "role": "tooltip",
+            "sourceColumn": 20
+          }
+        ],
+        "chartType": "ColumnChart",
+        "options": {
+          "vAxis": {
+            "title": "Number of Unique FABS Memberships"
+          },
+          "hAxis": {
+            "title": "Academic Year (Aug - Sep next year)"
+          }
+        }
+      },
+      {
+        "title": "Percentage of Demographic Groups in FABS",
+        "subtitle": "Undergraduate students have remained the largest group of Fitness Facility memberships in recent years, representing around two-third of all memberships.",
+        "gid": 337720664,
+        "headers": 1,
+        "columns": [
+          0,
+          6,
+          {
+            "calc": "stringify",
+            "type": "string",
+            "role": "annotation",
+            "sourceColumn": 6
+          },
+          7,
+          8,
+          {
+            "calc": "stringify",
+            "type": "string",
+            "role": "annotation",
+            "sourceColumn": 8
+          },
+          9
+        ],
+        "chartType": "ColumnChart",
+        "options": {
+          "bar": {
+            "groupWidth": "40%"
+          },
+          "isStacked": true,
+          "vAxis": {
+            "format": "#.##%"
+          },
+          "hAxis": {
+            "title": "Academic Year (Aug - Sep next year)"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "isActive": true,
+    "id": "athletic-facilities-check-in",
+    "title": "Athletic Facilities Check-in",
+    "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
+    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
+    "owner": "Department of Athletics",
+    "contact": "nyuad.athletics@nyu.edu",
+    "lastUpdateGID": 1486220958,
+    "rawDataTables": [
+      {
+        "gid": 1993454060,
+        "headers": 1
+      },
+      {
+        "gid": 948552227,
+        "headers": 1
+      },
+      {
+        "gid": 30903651,
+        "headers": 1
+      }
+    ],
+    "charts": [
+      {
+        "subcharts": [
+          {
+            "subchartTitle": "All time average (2020-2022)",
+            "subchartSubtitle": "As the typical workday draws to an end at around <b>5-6pm</b> for students, faculties, and staffs, this time window is the busiest period for fitness activities. While the number of check-in varies throughout the day, with a relatively smaller peak in the morning from 8-9am, the figure doesn't usually surpass half of that of the busiest time. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
+            "query": "SELECT A, F, H, I",
+            "columns": [
+              0,
+              1,
+              {
+                "role": "interval",
+                "sourceColumn": 2
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 3
+              }
+            ],
+            "options": {
+              "colors": "monochromatic",
+              "series": {
+                "0": {
+                  "type": "line",
+                  "lineWidth": 3
+                }
+              },
+              "intervals": {
+                "style": "area"
+              }
+            }
+          },
+          {
+            "subchartTitle": "By year",
+            "subchartSubtitle": "Due to COVID-19 restrictions, there was a limit on how many people could be in the same facilities during 2020-2022. Take the fitness center, for example, the cap was 15 people in 2020, which was gradually loosened to 25 people in 2022.",
+            "query": "SELECT A, B, C, D",
+            "options": {
+              "seriesType": "line"
+            }
+          }
+        ],
+        "title": "Average Number of Facilities Check-in Throughout the Day",
+        "gid": 947338007,
+        "headers": 1,
+        "chartType": "LineChart",
+        "options": {
+          "vAxis": {
+            "title": "Average Hourly Number of Facilities Check-in"
+          },
+          "hAxis": {
+            "title": "Hour of the Day",
+            "slantedText": true,
+            "slantedTextAngle": 30
+          }
+        }
+      },
+      {
+        "title": "Facilities Check-in Per Week Day, Normalized to the Max Value of Each Year",
+        "subtitle": "While the level of fitness activities exhibits a clear diurnal variation, it remains more stable throughout the weekdays. The second day of the weekend and the first work day of the week have historically been off-peak days, where attendance is around 10-30% less than the busiest day. Interestingly, this pattern still holds even when the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun). 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
+        "gid": 654076094,
+        "headers": 1,
+        "columns": [
+          0,
+          1,
+          {
+            "role": "tooltip",
+            "sourceColumn": 10
+          },
+          2,
+          {
+            "role": "tooltip",
+            "sourceColumn": 11
+          },
+          3,
+          {
+            "role": "tooltip",
+            "sourceColumn": 12
+          },
+          4,
+          {
+            "role": "tooltip",
+            "sourceColumn": 13
+          },
+          5,
+          {
+            "role": "tooltip",
+            "sourceColumn": 14
+          },
+          {
+            "role": "annotation",
+            "sourceColumn": 17
+          },
+          6,
+          {
+            "role": "tooltip",
+            "sourceColumn": 15
+          },
+          {
+            "role": "annotation",
+            "sourceColumn": 18
+          },
+          7,
+          {
+            "role": "tooltip",
+            "sourceColumn": 16
+          },
+          {
+            "role": "annotation",
+            "sourceColumn": 19
+          }
+        ],
+        "chartType": "ColumnChart",
+        "options": {
+          "annotations": {
+            "stem": {
+              "length": 30
+            }
+          },
+          "colors": "rainbow",
+          "vAxis": {
+            "title": "Relative Number of Check-in, Normalized to Day with the Highest Number of Each Year",
+            "format": "#.##%"
+          },
+          "hAxis": {
+            "title": "Year"
+          }
+        }
+      },
+      {
+        "title": "Total Monthly Facilities Check-in, Historical",
+        "subtitle": "Finally, this visualization shows how much fitness activity has increased since the introduction of FABS. This can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
+        "gid": 1045014031,
+        "headers": 1,
+        "columns": [
+          0,
+          1,
+          {
+            "role": "annotation",
+            "type": "string",
+            "sourceColumn": 2
+          },
+          3,
+          {
+            "role": "annotation",
+            "type": "string",
+            "sourceColumn": 4
+          },
+          5,
+          {
+            "role": "annotation",
+            "type": "string",
+            "sourceColumn": 6
+          }
+        ],
+        "options": {
+          "vAxis": {
+            "title": "Number of check-in per month"
+          },
+          "hAxis": {
+            "title": "Month of the Year"
+          }
+        },
+        "chartType": "ColumnChart"
+      },
+      {
+        "title": "Heat Map for the Average Hourly Number of Check-in, by Day of the Week",
+        "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each hour.",
+        "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
+        "subchartsPortrait": {
+          "gid": 1445127203,
+          "maxWidth": "350px",
+          "height": "620px",
+          "subcharts": [
+            {
+              "subchartTitle": "2022",
+              "range": "W2:AF21"
+            },
+            {
+              "subchartTitle": "2021",
+              "range": "L2:T21"
+            },
+            {
+              "subchartTitle": "2020",
+              "range": "A2:J21"
+            }
+          ]
+        },
+        "subchartsLandscape": {
+          "gid": 729452023,
+          "maxWidth": "580px",
+          "height": "350px",
+          "subcharts": [
+            {
+              "subchartTitle": "2022",
+              "range": "A28:S38"
+            },
+            {
+              "subchartTitle": "2021",
+              "range": "A15:S25"
+            },
+            {
+              "subchartTitle": "2020",
+              "range": "A2:S12"
+            }
+          ]
+        },
+        "chartType": "HeatMap"
+      },
+      {
+        "title": "Heat Map for the Total Monthly Number of Check-in, by Day of the Week",
+        "subtitle": "Explore them and see for yourself the differences between each year, each day of the week, and each month.",
+        "publishedSheetId": "2PACX-1vTN1TnqxRYhVu1SXrxaQOa9S5sgpKalPyB5RpfknuBn4xwN_pafHtnF91Y96W09FNKkR271ObS2w9fC",
+        "subchartsPortrait": {
+          "gid": 309021928,
+          "maxWidth": "350px",
+          "height": "500px",
+          "subcharts": [
+            {
+              "subchartTitle": "2022",
+              "range": "W2:AF17"
+            },
+            {
+              "subchartTitle": "2021",
+              "range": "L2:U17"
+            },
+            {
+              "subchartTitle": "2020",
+              "range": "A2:J17"
+            }
+          ]
+        },
+        "subchartsLandscape": {
+          "gid": 1248059258,
+          "maxWidth": "480px",
+          "height": "350px",
+          "subcharts": [
+            {
+              "subchartTitle": "2022",
+              "range": "A28:O38"
+            },
+            {
+              "subchartTitle": "2021",
+              "range": "A15:O25"
+            },
+            {
+              "subchartTitle": "2020",
+              "range": "A2:O12"
+            }
+          ]
+        },
+        "chartType": "HeatMap"
+      }
+    ]
+  },
+  {
+    "isActive": true,
+    "id": "food-waste",
+    "title": "Food Waste",
+    "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
+    "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat at Dining Hall D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
+    "owner": "NYUAD Dining",
+    "contact": "nyuad.dining@nyu.edu",
+    "lastUpdateGID": 787382510,
+    "rawDataTables": [
+      {
+        "gid": 1952244844,
+        "headers": 1,
+        "query": "SELECT A, B, C, D, E, F ORDER BY A DESC LIMIT 10"
+      }
+    ],
+    "charts": [
+      {
+        "title": "Mean Daily Food Waste (kg) by Week",
+        "headers": 1,
+        "chartType": "ComboChart",
+        "subcharts": [
+          {
+            "gid": 1409006115,
+            "subchartTitle": "Total (3 meals)",
+            "subchartSubtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>COVID restrictions were loosened in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at the facility as the student population continues to increase year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul><b>Adjust the slider to zoom in.</b>",
+            "query": "SELECT C, D, F, G, H, I WHERE A IS NOT NULL",
+            "columns": [
+              0,
+              1,
+              {
+                "role": "interval",
+                "sourceColumn": 2
+              },
+              {
+                "role": "interval",
+                "sourceColumn": 3
+              },
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 4
+              },
+              {
+                "role": "annotation",
+                "type": "string",
+                "sourceColumn": 5
+              }
+            ],
+            "options": {
+              "colors": "monochromatic",
+              "seriesType": "line",
+              "series": {
+                "0": {
+                  "lineWidth": 3
+                }
+              }
+            }
+          },
+          {
+            "gid": 1232867906,
+            "subchartTitle": "by Meal (Stacked)",
+            "subchartSubtitle": "When the data is broken down into the three constituent meals, the majority of food waste comes from lunch and dinner",
+            "query": "SELECT C, D, F, H, P, Q, R, S WHERE A IS NOT NULL",
+            "columns": [
+              0,
+              1,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 4
+              },
+              2,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 5
+              },
+              3,
+              {
+                "role": "tooltip",
+                "type": "string",
+                "sourceColumn": 6
+              },
+              {
+                "role": "annotation",
+                "type": "string",
+                "sourceColumn": 7
+              }
+            ],
+            "options": {
+              "seriesType": "area",
+              "isStacked": true
+            }
+          }
+        ],
+        "options": {
+          "hAxis": {
+            "title": "Month - Year (hover on the line chart to see week number)"
+          },
+          "vAxis": {
+            "title": "Food Waste (in Kilogram)",
+            "maxValue": 150
+          },
+          "annotations": {
+            "stem": {
+              "length": 50
+            }
+          },
+          "intervals": {
+            "style": "area"
+          }
+        },
+        "filter": "ChartRangeFilter"
+      },
+      {
+        "title": "Historical Daily Food Waste (kg)",
+        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food could have been saved, simply multiply the kilogram figure by 2.</b>",
+        "gid": 1952244844,
+        "headers": 1,
+        "chartType": "Calendar",
+        "height": "55vw",
+        "subcharts": [
+          {
+            "subchartTitle": "Total (3 meals)",
+            "columns": [
+              0,
+              5,
+              {
+                "role": "tooltip",
+                "sourceColumn": 11
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": "default"
+              }
+            }
+          },
+          {
+            "subchartTitle": "Breakfast",
+            "columns": [
+              0,
+              2,
+              {
+                "role": "tooltip",
+                "sourceColumn": 8
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": "matchingColor",
+                "colorIndex": 0
+              }
+            }
+          },
+          {
+            "subchartTitle": "Lunch",
+            "columns": [
+              0,
+              3,
+              {
+                "role": "tooltip",
+                "sourceColumn": 9
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": "matchingColor",
+                "colorIndex": 1
+              }
+            }
+          },
+          {
+            "subchartTitle": "Dinner",
+            "columns": [
+              0,
+              4,
+              {
+                "role": "tooltip",
+                "sourceColumn": 10
+              }
+            ],
+            "options": {
+              "colorAxis": {
+                "colors": "matchingColor",
+                "colorIndex": 2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "title": "Percentage of Food Waste By Meal",
+        "subtitle": "Lunch and dinner make up the majority of campus' food waste, each accounts for roughly two-fifths of the total wastage for a given day.",
+        "gid": 387300968,
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          4,
+          {
+            "calc": "stringify",
+            "type": "string",
+            "role": "annotation",
+            "sourceColumn": 4
+          },
+          5,
+          {
+            "calc": "stringify",
+            "type": "string",
+            "role": "annotation",
+            "sourceColumn": 5
+          },
+          6,
+          {
+            "calc": "stringify",
+            "type": "string",
+            "role": "annotation",
+            "sourceColumn": 6
+          }
+        ],
+        "options": {
+          "isStacked": true,
+          "vAxis": {
+            "title": "Percentage",
+            "format": "#.##%"
+          },
+          "hAxis": {
+            "title": "Quarter - Year"
+          }
+        }
+      },
+      {
+        "title": "Mean Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
+        "subtitle": "Each year, the level of food wastage is constant among different days of the week",
+        "subcharts": [
+          {
+            "gid": 635067311,
+            "subchartTitle": "Total (3 meals)"
+          },
+          {
+            "gid": 1112965050,
+            "subchartTitle": "Breakfast"
+          },
+          {
+            "gid": 825083155,
+            "subchartTitle": "Lunch"
+          },
+          {
+            "gid": 1561192646,
+            "subchartTitle": "Dinner"
+          }
+        ],
+        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D LIMIT 2",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "columns": [
+          0,
+          1,
+          {
+            "role": "interval",
+            "sourceColumn": 2
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 3
+          },
+          4,
+          {
+            "role": "interval",
+            "sourceColumn": 5
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "interval",
+            "sourceColumn": 8
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 9
+          },
+          10,
+          {
+            "role": "interval",
+            "sourceColumn": 11
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 12
+          },
+          13,
+          {
+            "role": "interval",
+            "sourceColumn": 14
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 15
+          },
+          16,
+          {
+            "role": "interval",
+            "sourceColumn": 17
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 18
+          },
+          19,
+          {
+            "role": "interval",
+            "sourceColumn": 20
+          },
+          {
+            "role": "interval",
+            "sourceColumn": 21
+          }
+        ],
+        "options": {
+          "colors": "rainbow",
+          "bar": {
+            "groupWidth": "40%"
+          },
+          "intervals": {
+            "style": "bars"
+          },
+          "vAxis": {
+            "title": "Food Waste (in Kilogram)",
+            "maxValue": 100
+          },
+          "hAxis": {
+            "title": "Year",
+            "format": "",
+            "minorGridlines": {
+              "count": 0
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "isActive": false,
+    "id": "noise-pollution",
+    "title": "Noise Pollution",
+    "sheetId": "",
+    "description": "",
+    "owner": "CITIES Research",
+    "contact": "cities.nyuad@nyu.edu",
+    "lastUpdate": null,
+    "rawDataTables": [
+      {}
+    ],
+    "charts": []
+  },
+  {
     "isActive": false,
     "id": "student-population",
     "title": "Student Population",
@@ -1246,54 +1260,58 @@
         "headers": 1,
         "chartType": "ComboChart",
         "subcharts": [
-            {
-                "subchartTitle": "Cohort Size",
-                "query": "SELECT A, B",
-                "options": {
-                    "hAxis": {
-                        "slantedText": true,
-                        "slantedTextAngle": 60
-                    },
-                    "vAxis": {
-                        "title": "New First Year Cohort Size (Students)",
-                        "format": "decimal"
-                    },
-                    "colors": ["#9f95a6"],
-                    "seriesType": "bars",
-                    "series": {
-                        "0": {
-                            "targetAxisIndex": 0
-                        }
-                    }
+          {
+            "subchartTitle": "Cohort Size",
+            "query": "SELECT A, B",
+            "options": {
+              "hAxis": {
+                "slantedText": true,
+                "slantedTextAngle": 60
+              },
+              "vAxis": {
+                "title": "New First Year Cohort Size (Students)",
+                "format": "decimal"
+              },
+              "colors": [
+                "#9f95a6"
+              ],
+              "seriesType": "bars",
+              "series": {
+                "0": {
+                  "targetAxisIndex": 0
                 }
-            },
-            {
-                "subchartTitle": "Year-by-Year Growth",
-                "query": "SELECT A, C",
-                "options": {
-                    "hAxis": {
-                        "slantedText": true,
-                        "slantedTextAngle": 60
-                    },
-                    "vAxis": {
-                        "title": "Year-by-year growth (%)",
-                        "format": "#.##%",
-                        "viewWindow": {
-                            "min": -0.1,
-                            "max": 0.5
-                        }
-                    },
-                    "colors": ["#57068c"],
-                    "seriesType": "line",
-                    "series": {
-                        "1": {
-                            "targetAxisIndex": 1
-                        }
-                    }
-                }
+              }
             }
+          },
+          {
+            "subchartTitle": "Year-by-Year Growth",
+            "query": "SELECT A, C",
+            "options": {
+              "hAxis": {
+                "slantedText": true,
+                "slantedTextAngle": 60
+              },
+              "vAxis": {
+                "title": "Year-by-year growth (%)",
+                "format": "#.##%",
+                "viewWindow": {
+                  "min": -0.1,
+                  "max": 0.5
+                }
+              },
+              "colors": [
+                "#57068c"
+              ],
+              "seriesType": "line",
+              "series": {
+                "1": {
+                  "targetAxisIndex": 1
+                }
+              }
+            }
+          }
         ]
-    },
+      },
       {
         "title": "Breakdown of Undegraduate Students' Citizenship (UAE and US)",
         "gid": 1856255581,
@@ -1355,20 +1373,6 @@
     "isActive": false,
     "id": "weather",
     "title": "Weather Data at NYUAD",
-    "sheetId": "",
-    "description": "",
-    "owner": "CITIES Research",
-    "contact": "cities.nyuad@nyu.edu",
-    "lastUpdate": null,
-    "rawDataTables": [
-      {}
-    ],
-    "charts": []
-  },
-  {
-    "isActive": false,
-    "id": "noise-pollution",
-    "title": "Noise Pollution",
     "sheetId": "",
     "description": "",
     "owner": "CITIES Research",

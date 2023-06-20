@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { Grid, Typography, Container, Stack } from "@mui/material";
 
-import homeJsonData from "../../home_data.json";
+import homeJsonData from "../../section_data.json";
 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import GroupsIcon from '@mui/icons-material/Groups';

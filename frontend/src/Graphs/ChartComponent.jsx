@@ -8,8 +8,16 @@ import { TabContext } from '../ContextProviders/TabContext';
 import SubChart from './SubChart';
 
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
-  filter: theme.palette.mode == "dark" && "saturate(0.85)",
-  /* CSS for Google Charts' HTML tooltip (can't be formatted using options parameter) */
+  // CSS for dark theme only
+  ...(theme.palette.mode == "dark" && {
+    // De-saturate a bit
+    filter: "saturate(0.85)",
+    // Invert iframe
+    '& .heat-map-iframe': {
+      filter: 'invert(0.848) hue-rotate(180deg)',
+    }
+  }),
+  // CSS for Google Charts' HTML tooltip (can't be formatted using options parameter)
   '& .google-visualization-tooltip text, .google-visualization-tooltip span': {
     fontSize: '0.85rem',
   },
@@ -21,21 +29,6 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   '& .Calendar .google-visualization-tooltip': {
     padding: '0.5rem',
   },
-
-  /* Invert iframe */
-  '&.dark .heat-map-iframe': {
-    filter: 'invert(0.848) hue-rotate(180deg)',
-  },
-  '&.dark .google-visualization-table-tr-head': {
-    backgroundColor: '#000',
-  },
-  '&.dark .google-visualization-table-tr-even': {
-    backgroundColor: '#181819',
-  },
-  '&.dark .google-visualization-table-tr-odd': {
-    backgroundColor: '#232323',
-  },
-
   /* Modify the appearance of the Google chart's filter (by selecting all divs with id containing the keyword below */
   '& [id^=googlechart-control]': {
     opacity: 0.75,
@@ -87,7 +80,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     };
 
     // only for "Calendar" type charts and charts with a filter
-    if (chartData.chartType === "Calendar" 
+    if (chartData.chartType === "Calendar"
       || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
 
       window.addEventListener('resize', handleWindowResize);
@@ -98,7 +91,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     };
   }, []);
 
-  console.log("Redrawing", chartData)
+  // console.log("Redrawing", chartData)
 
   if (chartData.chartType != 'Table' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';

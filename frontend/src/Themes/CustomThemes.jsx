@@ -28,7 +28,7 @@ const CustomThemes = {
         palette: {
             mode: "dark",
             primary: {
-                main: "#893ebd"
+                main: "#a947eb"
             },
             background: {
                 paper: "#202020",
@@ -36,6 +36,9 @@ const CustomThemes = {
             },
             customBackground: "#202020",
             customAlternateBackground: "#303030",
+            text: {
+                secondaryRGB: "#c1c1c1"
+            },
             chart: {
                 optionsColors: {
                     monochromatic: [colors.purple[darkShade - 100], colors.purple[darkShade + 200]],
@@ -66,6 +69,9 @@ const CustomThemes = {
             },
             customBackground: "#f6f6f6",
             customAlternateBackground: "#ffffff",
+            text: {
+                secondaryRGB: "#666666"
+            },
             chart: {
                 optionsColors: {
                     monochromatic: [colors.purple[lightShade], colors.purple[lightShade - 300]],

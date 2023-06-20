@@ -5,8 +5,14 @@ import { MenuList } from '@mui/material';
 
 import MenuItemAsNavLink from './MenuItemAsNavLink';
 
+import jsonData from '../../section_data.json';
+
+import HomeIcon from '@mui/icons-material/Home';
+import CommentIcon from '@mui/icons-material/Comment';
+import EmailIcon from '@mui/icons-material/Email';
+import InfoIcon from '@mui/icons-material/Info';
+
 export const NavLinkBehavior = {
-    doNothingForNow: "doNothingForNow",
     toNewPage: "toNewPage",
     scrollTo: "scrollTo"
 }
@@ -28,15 +34,37 @@ export default function NavBar(props) {
         <StyledMenuList sx={{ height: "100%", p: 0 }}>
             {
                 // If the current page is homepage, then display ABOUT link
-                // If not homepage (implies in project page at this point), display Back to Home link and the name of this project
+                // If not homepage, display HOME link
                 currentPage === "home" ?
-                    <MenuItemAsNavLink behavior={NavLinkBehavior.scrollTo} scrollToSectionID="about" />
+                    <MenuItemAsNavLink
+                        behavior={NavLinkBehavior.scrollTo}
+                        scrollToSectionID={jsonData.about.id}
+                        icon={<InfoIcon />}
+                        analyticsOriginID="navbar"
+                    />
                     :
-                    <MenuItemAsNavLink behavior={NavLinkBehavior.toNewPage} to="/" />
+                    <MenuItemAsNavLink
+                        behavior={NavLinkBehavior.toNewPage}
+                        to="/"
+                        icon={<HomeIcon />}
+                        analyticsOriginID="navbar"
+                    />
+            }
+            {
+                // If the current page is project, then display COMMENT link
+                currentPage === "project" &&
+                <MenuItemAsNavLink
+                    behavior={NavLinkBehavior.scrollTo}
+                    scrollToSectionID={jsonData.commentSection.id}
+                    icon={<CommentIcon />}
+                    analyticsOriginID="navbar"
+                />
             }
             <MenuItemAsNavLink
                 behavior={NavLinkBehavior.scrollTo}
-                scrollToSectionID="join-us"
+                scrollToSectionID={jsonData.getInTouch.id}
+                icon={<EmailIcon />}
+                analyticsOriginID="navbar"
             />
         </StyledMenuList>
     );

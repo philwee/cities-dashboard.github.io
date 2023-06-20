@@ -604,7 +604,7 @@
     "id": "athletic-facilities-check-in",
     "title": "Athletic Facilities Check-in",
     "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
-    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track... This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or a week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
+    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
     "lastUpdate": "Dec 2022",
@@ -752,7 +752,7 @@
       },
       {
         "title": "Total Monthly Facilities Check-in, Historical",
-        "subtitle": "Finally, this visualization shows how much fitness activity has increased since the introduction of FABS which can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
+        "subtitle": "Finally, this visualization shows how much fitness activity has increased since the introduction of FABS. This can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
         "gid": 1045014031,
         "headers": 1,
         "columns": [

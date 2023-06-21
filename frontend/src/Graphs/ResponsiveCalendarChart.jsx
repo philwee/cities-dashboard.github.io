@@ -6,13 +6,17 @@ import { Box, CircularProgress } from '@mui/material/';
 
 function CalendarChart({ chartData, chartProps, isPortrait }) {
   const [chartHeight, setChartHeight] = useState("200px");
+  const [chartWidth, setChartWidth] = useState();
   const [circleProgress, displayCircleProgress] = useState(true);
 
   const updateChartHeight = (chartWrapper) => {
     // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.
     const chartContainer = chartWrapper.container.querySelector('svg > g:nth-of-type(1)');
     const renderedHeight = chartContainer.getBBox().height;
+    const renderedWidth = chartContainer.getBBox().width;
+
     const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
+    setChartWidth(renderedWidth);
     setChartHeight(renderedHeight * (hasLegend ? 1.07 : 1.15)); // additional 7% or 15% for padding depends on if there is a legend
   };
 
@@ -29,7 +33,7 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
 
   chartProps.options = {
     ...chartProps.options,
-    width: calendarDimensions.chartWidth, // width doesn't get updated on window resize yet, so not fully responsive
+    width: chartWidth ? chartWidth : calendarDimensions.chartWidth, // width doesn't get updated on window resize yet, so not fully responsive
     calendar: {
       cellSize: calendarDimensions.cellSize,
       yearLabel: {

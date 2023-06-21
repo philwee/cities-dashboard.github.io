@@ -5,7 +5,7 @@ import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
 import HeatMap from './HeatMap';
-import CalendarChart from './CalendarChart.jsx';
+import CalendarChart from './ResponsiveCalendarChart';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -111,7 +111,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     }
                 }
             };
-  
+
             // 3. Append to vAxis and hAxis properties
             options.vAxis = {
                 ...options.vAxis,
@@ -333,11 +333,11 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             };
 
             if (chartData.chartType == 'Calendar') return (
-              <CalendarChart 
-                chartData={chartData}
-                chartProps={chartProps}
-                isPortrait={isPortrait}
-              />
+                <CalendarChart
+                    chartData={chartData}
+                    chartProps={chartProps}
+                    isPortrait={isPortrait}
+                />
             )
 
             return (

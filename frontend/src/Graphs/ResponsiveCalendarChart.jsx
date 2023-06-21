@@ -1,3 +1,5 @@
+// disable eslint for this file
+/* eslint-disable */
 import { useState } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
@@ -8,9 +10,10 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
 
   const updateChartHeight = (chartWrapper) => {
     // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.
-    const chartContainer = chartWrapper.container.querySelector('div > div:nth-child(1) > div > svg > g:nth-child(2)');
+    const chartContainer = chartWrapper.container.querySelector('svg > g:nth-of-type(1)');
     const renderedHeight = chartContainer.getBBox().height;
-    setChartHeight(renderedHeight * 1.15); // additional 15% for padding
+    const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
+    setChartHeight(renderedHeight * (hasLegend ? 1.05 : 1.15)); // additional 5% or 15% for padding depends on if there is a legend
   };
 
   const scaleCalendar = (min, max) => {

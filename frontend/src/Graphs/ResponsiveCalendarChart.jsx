@@ -5,7 +5,7 @@ import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
 function CalendarChart({ chartData, chartProps, isPortrait }) {
-  const [chartHeight, setChartHeight] = useState('100%');
+  const [chartHeight, setChartHeight] = useState("200px");
   const [circleProgress, displayCircleProgress] = useState(true);
 
   const updateChartHeight = (chartWrapper) => {
@@ -13,20 +13,27 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
     const chartContainer = chartWrapper.container.querySelector('svg > g:nth-of-type(1)');
     const renderedHeight = chartContainer.getBBox().height;
     const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
-    setChartHeight(renderedHeight * (hasLegend ? 1.05 : 1.15)); // additional 5% or 15% for padding depends on if there is a legend
+    setChartHeight(renderedHeight * (hasLegend ? 1.07 : 1.15)); // additional 7% or 15% for padding depends on if there is a legend
   };
 
-  const scaleCalendar = (min, max) => {
-    const cellSize = (window.innerWidth * 0.98) / 58;
-    return Math.min(Math.max(cellSize, min), max);
+  const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
+    const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
+    return {
+      chartWidth: cellSize * 56, // fixed ratio
+      cellSize: cellSize,
+      yearLabelFontSize: cellSize * 2
+    };
   };
+
+  const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 10, cellSizeMax: 18 });
 
   chartProps.options = {
     ...chartProps.options,
+    width: calendarDimensions.chartWidth, // width doesn't get updated on window resize yet, so not fully responsive
     calendar: {
-      cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
+      cellSize: calendarDimensions.cellSize,
       yearLabel: {
-        fontSize: scaleCalendar(5, 20) * 2
+        fontSize: calendarDimensions.yearLabelFontSize
       },
       daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
     },
@@ -38,11 +45,14 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
 
   return (
     <Box
-      position="relative"
       className={chartData.chartType}
-      height={chartHeight}
-      marginLeft="-0.5rem"
-      width="100vw"
+      sx={{
+        position: "relative",
+        width: "100%",
+        height: chartHeight,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+      }}
     >
       {circleProgress && (
         <CircularProgress

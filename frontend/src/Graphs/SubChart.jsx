@@ -1,11 +1,11 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
 
 import HeatMap from './HeatMap';
-import StyledTable from './StyledTable';
+import CalendarChart from './CalendarChart.jsx';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -29,41 +29,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     const responsiveFontSize = isPortrait ? 9 : 12;
     const responsiveFontSizeSmall = isPortrait ? 7 : 10;
 
-    
-    const [windowSize, setWindowSize] = useState([
-        window.innerWidth,
-        window.innerHeight,
-    ]);
-
-    // redraw "Calendar" charts and charts with a time filter upon window resize.
-    // ComboChart & Calendar charts are not automatically respnsive, so we have to redraw them.
-    useEffect(() => {
-        let timeoutID = null;
-
-        const handleWindowResize = () => {
-                clearTimeout(timeoutID);
-
-                // debounce before triggering re-render. as user is resizing window, the state could
-                // change multiple times causing many expensive rerenders. we try to rerender at the
-                // end of the resize.
-                timeoutID = setTimeout(() => {
-                setWindowSize(window.innerWidth, window.innerHeight);
-                }, 400);
-            };
-
-            // only for "Calendar" and time filter type charts
-            if (chartData.chartType == "Calendar"
-                || chartData.filter != null
-                || chartData.subcharts?.[chartSubIndex].filter != null
-            ) {
-                window.addEventListener('resize', handleWindowResize);
-            }
-
-            return () => {
-                window.removeEventListener('resize', handleWindowResize);
-        };
-    }, []);
-
     const axisTitleTextStyle = {
         italic: false,
         bold: true,
@@ -79,7 +44,6 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     let options = {};
     // Show CircleProgress or not
     let [circleProgress, displayCircleProgress] = useState(true);
-
 
     switch (chartData.chartType) {
         case 'HeatMap':
@@ -103,40 +67,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 </Box>
             );
 
-        case 'Table':
-            options = {
-                cssClassNames: {
-                    headerRow: 'header-row',
-                    tableRow: 'table-row',
-                    oddTableRow: 'odd-table-row',
-                    selectedTableRow: 'selected-table-row',
-                    hoverTableRow: 'hover-table-row',
-                    headerCell: 'header-cell',
-                    tableCell: 'table-cell',
-                },
-                width: '100%',
-            };
-            return (
-                <StyledTable isPortrait={isPortrait}>
-                    <Chart
-                        chartType={chartData.chartType}
-                        spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${chartData.sheetId}`}
-                        spreadSheetQueryParameters={{
-                            headers: chartData.headers,
-                            query: chartData.query,
-                            gid: chartData.gid,
-                        }}
-                        options={options}
-                    />
-                </StyledTable>
-            );
-
         default:
-            function scaleCalendar(min, max) {
-                var cellSize = window.innerWidth / 58;
-                return Math.min(Math.max(cellSize, min), max);
-            }
-
             let showChartFilter = false;
             if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) showChartFilter = true;
             // ---- Formulate the options for this specific chart:
@@ -180,23 +111,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                     }
                 }
             };
-
-            if (chartData.chartType == 'Calendar')
-                options = {
-                    ...options,
-                    calendar: {
-                        cellSize: scaleCalendar(5, 20), // calculate cell size for calendar chart
-                        yearLabel: {
-                            fontSize: scaleCalendar(5, 20) * 2
-                        },
-                        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
-                    },
-                    noDataPattern: {
-                        backgroundColor: 'none',
-                        color: 'none',
-                    },
-                };
-
+  
             // 3. Append to vAxis and hAxis properties
             options.vAxis = {
                 ...options.vAxis,
@@ -417,13 +332,20 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                 )
             };
 
+            if (chartData.chartType == 'Calendar') return (
+              <CalendarChart 
+                chartData={chartData}
+                chartProps={chartProps}
+                isPortrait={isPortrait}
+              />
+            )
+
             return (
                 <Box
                     position={'relative'}
                     className={chartData.chartType}
                     height="100%"
-                    marginLeft={chartData.chartType == 'Calendar' ? '-0.5rem' : ''}
-                    width={chartData.chartType == 'Calendar' ? '100vw' : '100%'}
+                    width='100%'
                 >
                     {circleProgress && (
                         <CircularProgress

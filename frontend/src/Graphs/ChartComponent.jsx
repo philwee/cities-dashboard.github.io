@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useMemo, useContext } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
@@ -8,8 +8,16 @@ import { TabContext } from '../ContextProviders/TabContext';
 import SubChart from './SubChart';
 
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
-  filter: theme.palette.mode == "dark" && "saturate(0.85)",
-  /* CSS for Google Charts' HTML tooltip (can't be formatted using options parameter) */
+  // CSS for dark theme only
+  ...(theme.palette.mode == "dark" && {
+    // De-saturate a bit
+    filter: "saturate(0.85)",
+    // Invert iframe
+    '& .heat-map-iframe': {
+      filter: 'invert(0.848) hue-rotate(180deg)',
+    }
+  }),
+  // CSS for Google Charts' HTML tooltip (can't be formatted using options parameter)
   '& .google-visualization-tooltip text, .google-visualization-tooltip span': {
     fontSize: '0.85rem',
   },
@@ -21,21 +29,6 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   '& .Calendar .google-visualization-tooltip': {
     padding: '0.5rem',
   },
-
-  /* Invert iframe */
-  '&.dark .heat-map-iframe': {
-    filter: 'invert(0.848) hue-rotate(180deg)',
-  },
-  '&.dark .google-visualization-table-tr-head': {
-    backgroundColor: '#000',
-  },
-  '&.dark .google-visualization-table-tr-even': {
-    backgroundColor: '#181819',
-  },
-  '&.dark .google-visualization-table-tr-odd': {
-    backgroundColor: '#232323',
-  },
-
   /* Modify the appearance of the Google chart's filter (by selecting all divs with id containing the keyword below */
   '& [id^=googlechart-control]': {
     opacity: 0.75,
@@ -49,6 +42,14 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
     stroke: theme.palette.text.primary,
     strokeWidth: 3
+  },
+
+  // Cursor of series in legends
+  '& [column-id]:not(:empty)': {
+    cursor: 'pointer',
+    ':hover': {
+      fontWeight: 600
+    }
   }
 }));
 
@@ -57,7 +58,42 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
   // Get the device orientation to make the google chart responsive
   const isPortrait = window.matchMedia('(orientation: portrait)').matches;
 
-  if (chartData.chartType != 'Table' && !chartWrapperHeight) {
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+
+  // redraw "Calendar" charts and charts with a time filter upon window resize.
+  // Filter & Calendar charts are not automatically respnsive, so we have to redraw them.
+  useEffect(() => {
+    let timeoutID = null;
+
+    const handleWindowResize = () => {
+      clearTimeout(timeoutID);
+
+      // debounce before triggering re-render. as user is resizing window, the state could
+      // change multiple times causing many expensive rerenders. we try to rerender at the
+      // end of the resize.
+      timeoutID = setTimeout(() => {
+        setWindowSize(window.innerWidth, window.innerHeight);
+      }, 400);
+    };
+
+    // only for "Calendar" type charts and charts with a filter
+    if (chartData.chartType === "Calendar"
+      || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
+
+      window.addEventListener('resize', handleWindowResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  // console.log("Redrawing", chartData)
+
+  if (chartData.chartType != 'Table' && chartData.chartType != 'Calendar' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
@@ -113,7 +149,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
         }
         <Box
           position="relative"
-          height={chartData.height ? chartData.height : chartWrapperHeight}
+          height={chartWrapperHeight}
           maxHeight={
             ['HeatMap', 'Calendar'].includes(chartData.chartType)
               ? ''
@@ -140,7 +176,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
                     isHomepage={isHomepage}
                   />
                 ),
-                []
+                [windowSize]
               )}
             </Box>
           ))}

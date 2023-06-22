@@ -3,6 +3,17 @@
 import { useState } from 'react';
 import { Chart } from 'react-google-charts';
 import { Box, CircularProgress } from '@mui/material/';
+import { styled } from '@mui/material/';
+
+const StyledChartWrapper = styled(Box)(({ theme }) => ({
+  // Override React Google Charts to make Calendar chart truly responsive
+  "& > div, & > div > div ": {
+    width: "100% !important"
+  },
+  "& > div > div > div > div": {
+    margin: "auto"
+  }
+}));
 
 function CalendarChart({ chartData, chartProps, isPortrait }) {
   const [chartHeight, setChartHeight] = useState("200px");
@@ -33,7 +44,7 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
 
   chartProps.options = {
     ...chartProps.options,
-    width: chartWidth ? chartWidth : calendarDimensions.chartWidth, // width doesn't get updated on window resize yet, so not fully responsive
+    width: chartWidth ? chartWidth : calendarDimensions.chartWidth,
     calendar: {
       cellSize: calendarDimensions.cellSize,
       yearLabel: {
@@ -48,7 +59,7 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
   };
 
   return (
-    <Box
+    <StyledChartWrapper
       className={chartData.chartType}
       sx={{
         position: "relative",
@@ -78,7 +89,8 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
           }
         ]}
       />
-    </Box>
+    </StyledChartWrapper>
+
   );
 }
 

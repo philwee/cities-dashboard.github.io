@@ -7,6 +7,8 @@ import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './SubChart';
 
+const debounceMilliseconds = 50;
+
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for dark theme only
   ...(theme.palette.mode == "dark" && {
@@ -55,7 +57,7 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 
 
 export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
-  const [isPortrait, setIsPortrait] = useState([window.matchMedia('(orientation: portrait)').matches])
+  const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
@@ -87,7 +89,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
           setWindowSize(window.innerWidth, window.innerHeight);
         }
 
-      }, 400);
+      }, debounceMilliseconds);
     };
 
     // listen to window resize events

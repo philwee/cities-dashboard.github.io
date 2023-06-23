@@ -996,7 +996,6 @@
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
-        "height": "55vw",
         "subcharts": [
           {
             "subchartTitle": "Total (3 meals)",

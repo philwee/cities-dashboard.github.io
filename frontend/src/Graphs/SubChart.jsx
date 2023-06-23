@@ -87,7 +87,9 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
           height: isPortrait ? '60%' : '70%'
         },
         width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
-        height: showChartFilter ? '90%' : '100%',
+        // if there is a filter, we make space for the chartFilter from the chart's height. 
+        // value is divided in 2 because the calculation is applied twice due to how react-google-charts nest components
+        height: showChartFilter ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
         backgroundColor: { fill: 'transparent' },
         tooltip: {
           isHtml: true,

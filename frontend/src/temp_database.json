@@ -4,7 +4,7 @@
     "id": "air-quality",
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
-    "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD (and a number of schools in Abu Dhabi). The air quality network at NYU Abu Dhabi consists of 3 stations: an outdoor station between A1 and A2 buildings, two indoor stations in the Campus Center, and Dining Hall D2, respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), and physical air quality screens in the Campus Center and Dining Hall D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality around the NYU Abu Dhabi campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
+    "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD and several schools in Abu Dhabi. The air quality network at NYUAD consists of three stations: an outdoor station between the A1 and A2 buildings, two indoor stations in the Campus Center (C2), and East Dining Hall (D2), respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), as well as dedicated physical air quality screens in C2 and D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality data around the NYUAD campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
     "owner": "CITIESair",
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdateGID": 382965081,
@@ -59,7 +59,7 @@
             }
           }
         ],
-        "subtitle": "CITIESair adopts the <a href='https://www.airnow.gov/aqi/aqi-basics/'>Air Quality Index (AQI)</a> developed by the United States' Environmental Protection Agency (EPA) to effectively communicate different levels of PM2.5 air pollution with color-coded categories. To calculate the AQI from the raw measurement of PM2.5 concentration (ug/m3), different breakpoints and piecewise linear function are utilized (read more <a href='https://en.wikipedia.org/wiki/Air_quality_index#United_States'>here</a>). Without getting into the technical implementation of the index, it is worth noting that higher AQI values correspond to poorer air quality and higher heath risks to humans.<br><br>The US EPA sets thresholds for PM2.5 concentration: <sup>[1]</sup><ul><li><b>Annual average</b>: 12.0 µg/m3, corresponding to US AQI <b>50</b></li><li><b>24-hour average</b>: 35.0 µg/m3, corresponding to US AQI <b>100</b></li></ul>In 2021, the World's Heath Organization (WHO) proposed a new guideline for PM2.5<sup>[2]</sup> with stricter thresholds than those of the US EPA:<ul><li><b>Annual average</b>: 5.0 µg/m3, corresponding to US AQI <b>21</b></li><li><b>24-hour average</b>: 15.0 µg/m3, corresponding to US AQI <b>56</b></li></ul>",
+        "subtitle": "CITIESair uses the <a href='https://www.airnow.gov/aqi/aqi-basics/'>Air Quality Index (AQI)</a> developed by the United States Environmental Protection Agency (EPA) to effectively communicate different levels of PM2.5 air pollution. To calculate the AQI from the raw measurement of PM2.5 concentration (ug/m3), different breakpoints and piecewise linear function are utilized (read more <a href='https://en.wikipedia.org/wiki/Air_quality_index#United_States'>here</a>). Higher AQI values correspond to poorer air quality and greater heath risks to humans.<br><br>The US EPA sets thresholds for PM2.5 concentration: <sup>[1]</sup><ul><li><b>Annual average</b>: 12.0 µg/m3, corresponding to US AQI <b>50</b></li><li><b>24-hour average</b>: 35.0 µg/m3, corresponding to US AQI <b>100</b></li></ul>In 2021, the World's Heath Organization (WHO) proposed a new guideline for PM2.5<sup>[2]</sup> with stricter thresholds than those of the US EPA:<ul><li><b>Annual average</b>: 5.0 µg/m3, corresponding to US AQI <b>21</b></li><li><b>24-hour average</b>: 15.0 µg/m3, corresponding to US AQI <b>56</b></li></ul>",
         "reference": "[1] \"National Ambient Air Quality Standards (NAAQS) for PM.\" EPA, Environmental Protection Agency, https://www.epa.gov/pm-pollution/national-ambient-air-quality-standards-naaqs-pm.<br>[2] World Health Organization. \"WHO global air quality guidelines: particulate matter (PM2. 5 and PM10), ozone, nitrogen dioxide, sulfur dioxide and carbon monoxide: executive summary.\" (2021).",
         "headers": 1,
         "chartType": "ColumnChart",
@@ -128,7 +128,7 @@
           {
             "gid": 184715989,
             "subchartTitle": "Hourly (Last 30 Days)",
-            "subchartSubtitle": "Explore the <b>latest</b> hourly average AQI over the past month here. Compare and see for yourself the differences among the air quality at different locations on the NYU Abu Dhabi campus.<br><br><b>Adjust the slider to zoom in.</b>",
+            "subchartSubtitle": "Explore the <b>latest</b> hourly average AQI over the past month to see the differences in the air quality between different locations on the NYUAD campus.<br><br><b>Adjust the slider to zoom in.</b>",
             "options": {
               "hAxis": {
                 "title": "Date Time"
@@ -247,7 +247,7 @@
           {
             "gid": 354322334,
             "subchartTitle": "Outdoor",
-            "subchartSubtitle": "Outdoor air quality at the NYU Abu Dhabi campus exhibits seasonal variations. Although the figure also varies year-to-year, air quality often gets worse during the summer months compared to the winter months. This variation is consistent with other scientific studies <sup>[1][2][3]</sup>, and is potentially explained by higher electricity consumption and more frequent dust storms during the summer. Noticeably, August 2021 and October 2022 witnessed more than 10 days each where the daily air quality crossed the <b>Unhealthy</b> mark.",
+            "subchartSubtitle": "Outdoor air quality at the NYUAD campus exhibits seasonal variations. Although the figure also varies year-to-year, air quality often gets worse during the summer months compared to the winter months. For example, August 2021 and October 2022 witnessed more than 10 days each where the daily air quality crossed the <b>Unhealthy</b> mark. This variation is consistent with trends found in existing scientific studies <sup>[1][2][3]</sup>, and is potentially explained by higher electricity consumption and more frequent dust storms during the summer. ",
             "reference": "[1] Al-Jallad, Fadi A., Clarence C. Rodrigues, and Hamda A. Al-Thani. \"Ambient Levels of TSP, PM10, PM2. 5 and Particle Number Concentration in Al Samha, UAE.\" <i>Journal of Environmental Protection</i> 8.09 (2017): 1002.<br>[2] Phanikumar, Devulapalli Venkata, et al. \"Assessment of particulate matter concentration and gaseous pollutants in urban and rural regions over the Emirate of Abu Dhabi, UAE.\" <i>Journal of Atmospheric and Solar-Terrestrial Physics</i> 199 (2020): 105217.<br>[3] Al-Taani, Ahmed A., et al. \"Long-term trends in ambient fine particulate matter from 1980 to 2016 in United Arab Emirates.\" <i>Environmental monitoring and assessment</i> 191 (2019): 1-19."
           },
           {
@@ -380,7 +380,7 @@
           {
             "gid": 1768452772,
             "subchartTitle": "Outdoor",
-            "subchartSubtitle": "<ul><li>Outdoor dust concentration often peaks in the early morning, followed by a sharp drop until noon and a gradual build-up throughout the night. This is consistent with other studies  in Abu Dhabi <sup>[1][2]</sup>, and is potentially explained by an high humidity levels causing secondary formation of aerosol particles and hygroscopic growth of aerosols.</li></ul>",
+            "subchartSubtitle": "<ul><li>Outdoor dust concentration often peaks in the early morning, followed by a sharp drop until noon and a gradual build-up throughout the night. This is consistent with other studies conducted in Abu Dhabi <sup>[1][2]</sup>, and can potentially be explained by high humidity levels causing secondary formation of aerosol particles and hygroscopic growth of aerosols.</li></ul>",
             "reference": "[1] Al-Jallad, Fadi A., Clarence C. Rodrigues, and Hamda A. Al-Thani. \"Ambient Levels of TSP, PM10, PM2. 5 and Particle Number Concentration in Al Samha, UAE.\" <i>Journal of Environmental Protection</i> 8.09 (2017): 1002.<br>[2] Phanikumar, Devulapalli Venkata, et al. \"Assessment of particulate matter concentration and gaseous pollutants in urban and rural regions over the Emirate of Abu Dhabi, UAE.\" <i>Journal of Atmospheric and Solar-Terrestrial Physics</i> 199 (2020): 105217."
           },
           {
@@ -394,7 +394,7 @@
             "subchartSubtitle": "<ul><li>In the Dining Hall, the concentration gradually builds up throughout the day, hitting bigger peaks after each meal (breakfast, lunch, and dinner) with small troughs in-between meals. This might be explained by cooking activities, especially grilling, that produce volatile microscopic particles, and to a lesser extent, people repeatedly entering and exiting the building.</li><li>For those with a sharp eye for <b>anomalies</b>, it is instantly clear that an influx of students <b>every September</b> causes a remarkable deterioration of the air quality during lunch when students usually hang out with friends. And as the semester progresses, more and more students opt for take-outs for convenience. During the past two Ramadans (May 2020 and Apr 2021), similar deteriorations are observed during dinner and Suhur (before sunrise) compared to other months.</li></ul>"
           }
         ],
-        "subtitle": "The graph shows hourly PM2.5 concentration (µg/m3) throughout a day, on average. <b>Each thin line represents a calendar month, while the highlighted line represents the all-time average.</b><br>Here are some clear trends:",
+        "subtitle": "The graph shows the average hourly PM2.5 concentration (µg/m3) throughout a 24-period for each month. <b>Each thin line represents a calendar month, while the highlighted line represents the all-time average.</b><br>Here are some clear trends:",
         "vAxisTitle": "PM2.5 Concentration (µg/m3)",
         "headers": 2,
         "chartType": "LineChart",
@@ -467,7 +467,7 @@
             }
           }
         ],
-        "subtitle": "Indoor air quality is shown to correlate with outdoor air quality, with R<sup>2</sup> around 0.5-0.6 <i>(hover on the best fit equations to see the exact R<sup>2</sup> value)</i>. Predictably, thanks to the air filtration systems, indoor PM2.5 concentrations are significantly lower than its outdoor counterpart, around <b>6x</b> and <b>4x</b> lower for Campus Center and Dining Hall D2, respectively. Due to cooking activities, air quality in the Dining Hall is estimated to be <b>1.5x</b> worse than the Campus Center when comparing their daily average.",
+        "subtitle": "This chart shows that indoor air quality correlates with outdoor air quality, with R<sup>2</sup> around 0.5-0.6 <i>(hover on the best fit equations to see the exact R<sup>2</sup> value)</i>. Thanks to air filtration systems, indoor PM2.5 concentrations are significantly lower than its outdoor counterpart, around <b>6x</b> and <b>4x</b> lower for Campus Center (C2) and East Dining Hall (D2), respectively. Due to cooking activities, air quality in D2 is estimated to be <b>1.5x</b> worse than the Campus Center when comparing their daily average.",
         "gid": 584789045,
         "headers": 1,
         "columns": [
@@ -509,7 +509,7 @@
     "id": "athletics-fabs-membership",
     "title": "Athletics FABS Membership",
     "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-    "description": "This dataset visualizes the number of unique memberships registered within the Fitness and Athletics Booking (FABS) system, by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS memberships allow access to and reservations of several Athletic facilities, such as: fitness center, women-only gym, faculty pool, 50m pool, 400m track, indoor track...<br><br>While FABS allows for 10 different account types, our data visualizations simplify them into <b>4 distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate (student)</li><li>Graduate student and alumni</li><li>Staff affiliation: faculty, staff, and family member</li><li>Other and external: community, contract, external instructor, guest, and Tamkeen</li></ul>",
+    "description": "This dataset visualizes the number of unique memberships registered in the Fitness and Athletics Booking (FABS) system by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS members can access on-campus Athletic facilities, such as the fitness center, women’s-only gym, faculty pool, 50m pool, 400m track and indoor track.<br><br>While there are 11 different types of FABS accounts, our data visualizations simplify them into <b>four distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate student</li><li>Graduate student and alumni</li><li>Staff affiliation (consisting of faculty, staff, and family member)</li><li>Other and external (consiting of community, contract, external instructor, guest, and Tamkeen)</li></ul>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
     "lastUpdateGID": 1015126269,
@@ -522,7 +522,7 @@
     "charts": [
       {
         "title": "Number of Unique FABS Memberships",
-        "subtitle": "As the university continues to expand over the year, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a minor 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
+        "subtitle": "As the university population continues to grow, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
         "gid": 337720664,
         "headers": 1,
         "columns": [
@@ -560,7 +560,7 @@
       },
       {
         "title": "Percentage of Demographic Groups in FABS",
-        "subtitle": "Undergraduate students have remained the largest group of Fitness Facility memberships in recent years, representing around two-third of all memberships.",
+        "subtitle": "Undergraduate students have remained the largest group of FABS in recent years, representing around two-thirds of all memberships.",
         "gid": 337720664,
         "headers": 1,
         "columns": [
@@ -603,7 +603,7 @@
     "id": "athletic-facilities-check-in",
     "title": "Athletic Facilities Check-in",
     "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
-    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
+    "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women's-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
     "lastUpdateGID": 1486220958,
@@ -626,7 +626,7 @@
         "subcharts": [
           {
             "subchartTitle": "All time average (2020-2022)",
-            "subchartSubtitle": "As the typical workday draws to an end at around <b>5-6pm</b> for students, faculties, and staffs, this time window is the busiest period for fitness activities. While the number of check-in varies throughout the day, with a relatively smaller peak in the morning from 8-9am, the figure doesn't usually surpass half of that of the busiest time. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
+            "subchartSubtitle": "As the typical workday draws to a close at around <b>5-6pm</b> for students, faculty, and staff, this time window is the busiest period for fitness activities. There is another relatively smaller peak in the morning from 8-9am; however, its magnitude doesn't usually surpass half of the afternoon rush's. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
             "query": "SELECT A, F, H, I",
             "columns": [
               0,
@@ -679,7 +679,7 @@
       },
       {
         "title": "Facilities Check-in Per Week Day, Normalized to the Max Value of Each Year",
-        "subtitle": "While the level of fitness activities exhibits a clear diurnal variation, it remains more stable throughout the weekdays. The second day of the weekend and the first work day of the week have historically been off-peak days, where attendance is around 10-30% less than the busiest day. Interestingly, this pattern still holds even when the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun). 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
+        "subtitle": "While the number of check-ins exhibits a clear diurnal variation, it remains more stable throughout the weekdays than on the weekends. The second day of the weekend and the first work day of the week have historically been off-peak days, where attendance is around 10-30% lower than the busiest day. Interestingly, this pattern still holds even after the UAE changed its weekend days on January 1, 2022 (from Fri-Sat to Sat-Sun). 2021's off-peak days are Sat and Sun, whereas 2022's off-peak days are Sun and Mon.",
         "gid": 654076094,
         "headers": 1,
         "columns": [
@@ -751,7 +751,7 @@
       },
       {
         "title": "Total Monthly Facilities Check-in, Historical",
-        "subtitle": "Finally, this visualization shows how much fitness activity has increased since the introduction of FABS. This can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
+        "subtitle": "This visualization shows how much fitness activity has increased since the introduction of FABS. This can be attributed to the gradual relaxation of COVID-19 restrictions and the increase in on-campus residents over the period of 2020-2022.",
         "gid": 1045014031,
         "headers": 1,
         "columns": [
@@ -880,7 +880,7 @@
     "id": "food-waste",
     "title": "Food Waste",
     "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
-    "description": "This dataset visualizes food waste in the Dining Hall D2. The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the green calendar-styled monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space in the Dining Halls, this online visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics...<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat at Dining Hall D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
+    "description": "This dataset visualizes food waste in the East Dining Hall (D2). The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the calendar-style monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space of the Dining Hall, this visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics.<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat in D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
     "owner": "NYUAD Dining",
     "contact": "nyuad.dining@nyu.edu",
     "lastUpdateGID": 787382510,
@@ -900,7 +900,7 @@
           {
             "gid": 1409006115,
             "subchartTitle": "Total (3 meals)",
-            "subchartSubtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>COVID restrictions were loosened in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at the facility as the student population continues to increase year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul><b>Adjust the slider to zoom in.</b>",
+            "subchartSubtitle": "From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>The loosening of COVID restrictions in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at D2 as the student population increases year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul><b>Adjust the slider to zoom in.</b>",
             "query": "SELECT C, D, F, G, H, I WHERE A IS NOT NULL",
             "columns": [
               0,
@@ -992,7 +992,7 @@
       },
       {
         "title": "Historical Daily Food Waste (kg)",
-        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilogram(s) of food waste. On average, a plate full of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many plates full of food could have been saved, simply multiply the kilogram figure by 2.</b>",
+        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilograms of food waste. On average, a full plate of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many full plates of food could have been saved, simply multiply the kilogram figure by two.</b>",
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
@@ -1069,7 +1069,7 @@
       },
       {
         "title": "Percentage of Food Waste By Meal",
-        "subtitle": "Lunch and dinner make up the majority of campus' food waste, each accounts for roughly two-fifths of the total wastage for a given day.",
+        "subtitle": "Lunch and dinner make up the majority of the food waste in D2. Each accounts for roughly two-fifths of the total waste for a given day.",
         "gid": 387300968,
         "headers": 1,
         "chartType": "ColumnChart",
@@ -1110,7 +1110,7 @@
       },
       {
         "title": "Mean Food Waste (kg) by Day of the Week, with 1 Standard Deviation",
-        "subtitle": "Each year, the level of food wastage is constant among different days of the week",
+        "subtitle": "Each year, the amount of food wastage is essentially constant among different days of the week",
         "subcharts": [
           {
             "gid": 635067311,

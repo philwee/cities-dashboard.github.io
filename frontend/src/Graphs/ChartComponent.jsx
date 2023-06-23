@@ -156,7 +156,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
         }
         <Box
           position="relative"
-          height={chartWrapperHeight}
+          height={chartData.height ? chartData.height : chartWrapperHeight}
           maxHeight={
             ['HeatMap', 'Calendar'].includes(chartData.chartType)
               ? ''

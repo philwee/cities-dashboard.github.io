@@ -83,14 +83,17 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
 
         // we redraw Calendar/Filter type charts on ANY window resize, even if
         // device orientation does not change.
+
         if (chartData.chartType === "Calendar"
-          || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
+          || (chartData.subcharts?.some((subchart) => subchart.filter != null)) 
+          || (chartData.filter != null)) {
 
           setWindowSize(window.innerWidth, window.innerHeight);
         }
 
       }, debounceMilliseconds);
     };
+    console.log(chartData.chartType, chartData);
 
     // listen to window resize events
     window.addEventListener('resize', handleWindowResize);

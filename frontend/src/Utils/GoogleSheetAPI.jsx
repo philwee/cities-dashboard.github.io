@@ -1,63 +1,57 @@
 // disable eslint for this file
 /* eslint-disable */
 
-import { useState, useEffect } from 'react';
-import { gapi } from 'gapi-script';
+import React, { useEffect, useState } from 'react';
+import { gapi } from "gapi-script";
 
-export const LastUpdate = (props) => {
-    const { spreadsheetId, lastUpdateGID } = props;
+export const LastUpdate = ({ projectName }) => {
     const [lastUpdate, setLastUpdate] = useState("Loading...");
     const notFoundString = "Timestamp of last update not found";
 
-    // Google Sheets API to get the last modified date of the project's spreadsheet
     useEffect(() => {
-        gapi.load('client', () => {
-            gapi.client.init({
-                apiKey: 'AIzaSyCjVRS9swFZFN8FQq9ChM0FHWb_kRc0LCI',
-                discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-            }).then(() => {
-                // Get all the sheets inside the Google Sheets document to find the name of 
-                // the sheet with gid === lastUpdateGID
-                // This sheet contains the last modified date of the visualized data
-                gapi.client.sheets.spreadsheets.get({
-                    spreadsheetId: spreadsheetId,
-                    includeGridData: false,
-                }).then((response) => {
-                    const metadataSheet = response.result.sheets.filter(
-                        function (s) { return s.properties.sheetId == Number(lastUpdateGID) }
-                    )[0] || null;
-                    const sheetName = metadataSheet?.properties?.title;
-                    if (!metadataSheet || !sheetName) {
+        const fetchData = async () => {
+            try {
+                await gapi.load("client:auth2", async () => {
+                    await gapi.client.init({
+                        apiKey: "AIzaSyCjVRS9swFZFN8FQq9ChM0FHWb_kRc0LCI",
+                        discoveryDocs: [
+                            "https://sheets.googleapis.com/$discovery/rest?version=v4",
+                        ],
+                    });
+                    const spreadsheetId = "1ddbsEukjKPX3tApu2nYRDoQpLMGpqFdrZ9jh_JYh5Tk";
+                    const response = await gapi.client.sheets.spreadsheets.get({
+                        spreadsheetId: spreadsheetId,
+                    });
+                    const metadataSheet = response.result.sheets.find(
+                        (sheet) => sheet.properties.title === projectName
+                    );
+                    if (!metadataSheet) {
                         setLastUpdate(notFoundString);
                         return;
                     }
-                    // Now fetch the cell data
-                    const range = `${sheetName}!A2:A2`;
-                    gapi.client.sheets.spreadsheets.values.get({
+                    const sheetName = metadataSheet.properties.title;
+                    const dataResponse = await gapi.client.sheets.spreadsheets.values.get({
                         spreadsheetId: spreadsheetId,
-                        range: range,
-                    }).then((response) => {
-                        const result = response.result;
-                        if (result.values && result.values.length > 0) {
-                            // The cell value should be in the first row and column of the values array
-                            const cellValue = result.values[0][0];
-                            setLastUpdate(cellValue);
-                        } else {
-                            setLastUpdate(notFoundString);
-                            return;
-                        }
-                    }).catch((error) => {
-                        setLastUpdate(notFoundString);
-                        return;
+                        range: `${sheetName}!A2:A2`,
                     });
-                }).catch((error) => {
-                    setLastUpdate(notFoundString);
-                    return;
+                    if (
+                        dataResponse.result.values &&
+                        dataResponse.result.values.length > 0
+                    ) {
+                        // console.log(dataResponse.result.values[0][0]);
+                        setLastUpdate(dataResponse.result.values[0][0]);
+                    } else {
+                        setLastUpdate(notFoundString);
+                    }
                 });
-            });
-        });
-        console.log(lastUpdate)
-    }, [spreadsheetId, lastUpdateGID]);
+            } catch (err) {
+                console.error(err);
+                setLastUpdate(notFoundString);
+            }
+        };
 
-    return (<>{lastUpdate}</>);
+        fetchData();
+    }, [projectName]);
+
+    return <div>{lastUpdate}</div>;
 };

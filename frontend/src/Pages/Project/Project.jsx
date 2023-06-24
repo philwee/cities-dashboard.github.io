@@ -34,6 +34,7 @@ import { scrollToSection } from '../../Components/Header/MenuItemAsNavLink';
 import * as Tracking from '../../Utils/Tracking';
 
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
+import { getSheetsMetaData } from '../../ContextProviders/SheetsDataContext';
 import { LastUpdate } from '../../Utils/GoogleSheetAPI';
 
 // Custom Chip component to display metadata
@@ -58,6 +59,7 @@ const Project = ({ themePreference }) => {
   const [tab, setTab] = useContext(TabContext);
 
   const [commentCounts] = useContext(CommentCountsContext);
+  const sheetsMetaData = getSheetsMetaData();
 
   // Update the page's title
   useEffect(() => { if (project.title) document.title = `${project.title} | CITIES Dashboard`, [project] });
@@ -116,7 +118,10 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<PublishedWithChangesIcon />}
-                    label={<LastUpdate spreadsheetId={project.sheetId} lastUpdateGID={project.lastUpdateGID} />}
+                    label={
+                      sheetsMetaData[project.id] 
+                      ? sheetsMetaData[project.id] 
+                      : <LastUpdate projectName={project.id} /> }
                     tooltipTitle="Last Update" />
                 </Grid>
                 <Grid item>

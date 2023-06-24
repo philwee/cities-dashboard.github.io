@@ -9,7 +9,7 @@ import CalendarChart from './ResponsiveCalendarChart';
 
 import { useTheme } from '@mui/material/styles';
 
-const chartFilterHeightInPixel = 100;
+const chartFilterHeightInPixel = 50;
 
 const hideAnnotations = {
   stem: {
@@ -320,7 +320,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
                       vAxis: null,
                       hAxis: {
                         textPosition: 'out',
-                        textStyle: { color: theme.palette.chart.axisText }
+                        textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
                       },
                       annotations: { ...hideAnnotations },
                       legend: null,

@@ -992,7 +992,7 @@
       },
       {
         "title": "Historical Daily Food Waste (kg)",
-        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilograms of food waste. On average, a full plate of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. <b>Thus, to imagine how many full plates of food could have been saved, simply multiply the kilogram figure by two.</b>",
+        "subtitle": "Interact with this calendar to explore the amount of daily food waste (desktop recommended). The unit of measurement is in kilograms of food waste.<br><br>On average, a full plate of food weighs around 0.5kg (150g for each portion of starch, protein, and vegetable), not including other side dishes. Thus, when you hover on each cell of the calendar, you can see how many full plates of food could have been saved that day (we simply multiplied the food waste kilogram figure by two).</b>",
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",

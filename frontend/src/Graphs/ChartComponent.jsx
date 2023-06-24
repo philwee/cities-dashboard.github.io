@@ -7,6 +7,8 @@ import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './SubChart';
 
+const debounceMilliseconds = 50;
+
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for dark theme only
   ...(theme.palette.mode == "dark" && {
@@ -55,16 +57,16 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 
 
 export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
-  // Get the device orientation to make the google chart responsive
-  const isPortrait = window.matchMedia('(orientation: portrait)').matches;
-
+  const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
   ]);
 
+  // eventListener for window resize
   // redraw "Calendar" charts and charts with a time filter upon window resize.
   // Filter & Calendar charts are not automatically respnsive, so we have to redraw them.
+  // redraw other charts when device orientation changes
   useEffect(() => {
     let timeoutID = null;
 
@@ -75,25 +77,33 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       // change multiple times causing many expensive rerenders. we try to rerender at the
       // end of the resize.
       timeoutID = setTimeout(() => {
-        setWindowSize(window.innerWidth, window.innerHeight);
-      }, 400);
+        // redraw all charts on device orientation change, as the chartWrapperHeights
+        // have changed.
+        setIsPortrait(window.matchMedia('(orientation: portrait)').matches);
+
+        // we redraw Calendar/Filter type charts on ANY window resize, even if
+        // device orientation does not change.
+
+        if (chartData.chartType === "Calendar"
+          || (chartData.subcharts?.some((subchart) => subchart.filter != null)) 
+          || (chartData.filter != null)) {
+
+          setWindowSize(window.innerWidth, window.innerHeight);
+        }
+
+      }, debounceMilliseconds);
     };
+    console.log(chartData.chartType, chartData);
 
-    // only for "Calendar" type charts and charts with a filter
-    if (chartData.chartType === "Calendar"
-      || (chartData.subcharts?.some((subchart) => subchart.filter != null))) {
-
-      window.addEventListener('resize', handleWindowResize);
-    }
+    // listen to window resize events
+    window.addEventListener('resize', handleWindowResize);
 
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
 
-  // console.log("Redrawing", chartData)
-
-  if (chartData.chartType != 'Table' && !chartWrapperHeight) {
+  if (chartData.chartType != 'Table' && chartData.chartType != 'Calendar' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
@@ -176,7 +186,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
                     isHomepage={isHomepage}
                   />
                 ),
-                [windowSize]
+                [windowSize, isPortrait]
               )}
             </Box>
           ))}

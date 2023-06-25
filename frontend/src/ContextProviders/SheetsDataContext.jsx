@@ -1,14 +1,12 @@
 // disable eslint for this file
 /* eslint-disable */
 
-import React, { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import { gapi } from "gapi-script";
 
-const SheetsDataContext = createContext();
+export const SheetsDataContext = createContext();
 
-export const getSheetsMetaData = () => useContext(SheetsDataContext);
-
-export const SheetsDataProvider = ({ children }) => {
+export const SheetsDataProvider = (props) => {
     const [sheetData, setSheetData] = useState({});
 
     useEffect(() => {
@@ -31,6 +29,8 @@ export const SheetsDataProvider = ({ children }) => {
                 const response = await gapi.client.sheets.spreadsheets.get({
                     spreadsheetId: spreadsheetId,
                 });
+
+                // use batch get instead of calling get 4 times
                 for (const sheet of response.result.sheets) {
                     const sheetName = sheet.properties.title;
                     const dataResponse = await gapi.client.sheets.spreadsheets.values.get({
@@ -50,8 +50,8 @@ export const SheetsDataProvider = ({ children }) => {
     };
 
     return (
-        <SheetsDataContext.Provider value={sheetData}>
-            {children}
+        <SheetsDataContext.Provider value={[sheetData, setSheetData]}>
+            {props.children}
         </SheetsDataContext.Provider>
     );
 };

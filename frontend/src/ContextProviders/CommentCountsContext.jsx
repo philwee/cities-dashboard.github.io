@@ -46,12 +46,7 @@ export const CommentCountsProvider = (props) => {
         let commentCountsData = {};
         // loop through temp_database.json
         json_data.map((item) => {
-            commentCountsData[item.id] =
-            {
-                id: item.id,
-                commentCounts: commentCountsForAllPages && commentCountsForAllPages[item.id],
-            };
-
+            commentCountsData[item.id] = commentCountsForAllPages && commentCountsForAllPages[item.id];
             setData(commentCountsData);
         });
     }, [commentCountsForAllPages]);

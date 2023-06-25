@@ -34,8 +34,10 @@ import { scrollToSection } from '../../Components/Header/MenuItemAsNavLink';
 import * as Tracking from '../../Utils/Tracking';
 
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
-import { getSheetsMetaData } from '../../ContextProviders/SheetsDataContext';
-import { LastUpdate } from '../../Utils/GoogleSheetAPI';
+
+import { SheetsDataContext } from '../../ContextProviders/SheetsDataContext';
+
+// import { LastUpdate } from '../../Utils/GoogleSheetAPI';
 
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
@@ -59,7 +61,8 @@ const Project = ({ themePreference }) => {
   const [tab, setTab] = useContext(TabContext);
 
   const [commentCounts] = useContext(CommentCountsContext);
-  const sheetsMetaData = getSheetsMetaData();
+  const [sheetsData] = useContext(SheetsDataContext);
+
 
   // Update the page's title
   useEffect(() => { if (project.title) document.title = `${project.title} | CITIES Dashboard`, [project] });
@@ -118,10 +121,7 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<PublishedWithChangesIcon />}
-                    label={
-                      sheetsMetaData[project.id] 
-                      ? sheetsMetaData[project.id] 
-                      : <LastUpdate projectName={project.id} /> }
+                    label={sheetsData[project.id] || "Loading Last Update"}
                     tooltipTitle="Last Update" />
                 </Grid>
                 <Grid item>
@@ -143,7 +143,7 @@ const Project = ({ themePreference }) => {
                 <Grid item>
                   <CustomChip
                     icon={<CommentIcon />}
-                    label={`${commentCounts[project.id]?.commentCounts || "0"} Comment${commentCounts[project.id]?.commentCounts > 1 ? "s" : ""}`}
+                    label={`${commentCounts[project.id] || "0"} Comment${commentCounts[project.id] > 1 ? "s" : ""}`}
                     tooltipTitle="Number of Comments"
                     onClick={() => {
                       scrollToSection(jsonData.commentSection.id);

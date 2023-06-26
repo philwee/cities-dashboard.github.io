@@ -34,7 +34,10 @@ import { scrollToSection } from '../../Components/Header/MenuItemAsNavLink';
 import * as Tracking from '../../Utils/Tracking';
 
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
-import { LastUpdate } from '../../Utils/GoogleSheetAPI';
+
+import { SheetsDataContext } from '../../ContextProviders/SheetsDataContext';
+
+// import { LastUpdate } from '../../Utils/GoogleSheetAPI';
 
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
@@ -58,6 +61,11 @@ const Project = ({ themePreference }) => {
   const [tab, setTab] = useContext(TabContext);
 
   const [commentCounts] = useContext(CommentCountsContext);
+  const commentCount = commentCounts[project.id];
+
+  const [sheetsData] = useContext(SheetsDataContext);
+  const lastUpdate = sheetsData[project.id];
+
 
   // Update the page's title
   useEffect(() => { if (project.title) document.title = `${project.title} | CITIES Dashboard`, [project] });
@@ -113,12 +121,7 @@ const Project = ({ themePreference }) => {
                     clickable
                   />
                 </Grid>
-                <Grid item>
-                  <CustomChip
-                    icon={<PublishedWithChangesIcon />}
-                    label={<LastUpdate spreadsheetId={project.sheetId} lastUpdateGID={project.lastUpdateGID} />}
-                    tooltipTitle="Last Update" />
-                </Grid>
+
                 <Grid item>
                   <CustomChip
                     icon={<BarChartIcon />}
@@ -135,22 +138,34 @@ const Project = ({ themePreference }) => {
                     }}
                   />
                 </Grid>
-                <Grid item>
-                  <CustomChip
-                    icon={<CommentIcon />}
-                    label={`${commentCounts[project.id]?.commentCounts || "0"} Comment${commentCounts[project.id]?.commentCounts > 1 ? "s" : ""}`}
-                    tooltipTitle="Number of Comments"
-                    onClick={() => {
-                      scrollToSection(jsonData.commentSection.id);
-                      Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
-                        {
-                          destination_id: jsonData.commentSection.id,
-                          destination_label: jsonData.commentSection.toString(),
-                          origin_id: 'chip'
-                        })
-                    }}
-                  />
-                </Grid>
+
+                {
+                  lastUpdate &&
+                  <Grid item>
+                    <CustomChip
+                      icon={<PublishedWithChangesIcon />}
+                      label={`Last update: ${lastUpdate}`}
+                      tooltipTitle="Last Update" />
+                  </Grid>
+                }
+
+                {commentCount != null &&
+                  <Grid item>
+                    <CustomChip
+                      icon={<CommentIcon />}
+                      label={`${commentCount} Comment${commentCounts[project.id] > 1 ? "s" : ""}`}
+                      tooltipTitle="Number of Comments"
+                      onClick={() => {
+                        scrollToSection(jsonData.commentSection.id);
+                        Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                          {
+                            destination_id: jsonData.commentSection.id,
+                            destination_label: jsonData.commentSection.toString(),
+                            origin_id: 'chip'
+                          })
+                      }}
+                    />
+                  </Grid>}
               </Grid>
 
               <Typography

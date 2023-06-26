@@ -110,12 +110,12 @@ const Home = ({ themePreference, title }) => {
                                   </Typography>
                                 </Stack>
                               </Tooltip>
-                              {(commentCounts[key]?.commentCounts != null) && (
+                              {(commentCounts[key] != null) && (
                                 <Tooltip title="Number of Comments">
                                   <Stack direction="row" spacing={0.2} alignItems={"center"}>
                                     <CommentIcon sx={{ fontSize: "0.75rem", color: "text.secondary" }} />
                                     <Typography variant="caption" color="text.secondary">
-                                      {commentCounts[key].commentCounts}
+                                      {commentCounts[key]}
                                     </Typography>
                                   </Stack>
                                 </Tooltip>

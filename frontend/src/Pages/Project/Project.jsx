@@ -61,7 +61,10 @@ const Project = ({ themePreference }) => {
   const [tab, setTab] = useContext(TabContext);
 
   const [commentCounts] = useContext(CommentCountsContext);
+  const commentCount = commentCounts[project.id];
+
   const [sheetsData] = useContext(SheetsDataContext);
+  const lastUpdate = sheetsData[project.id];
 
 
   // Update the page's title
@@ -118,12 +121,7 @@ const Project = ({ themePreference }) => {
                     clickable
                   />
                 </Grid>
-                <Grid item>
-                  <CustomChip
-                    icon={<PublishedWithChangesIcon />}
-                    label={sheetsData[project.id] || "Loading Last Update"}
-                    tooltipTitle="Last Update" />
-                </Grid>
+
                 <Grid item>
                   <CustomChip
                     icon={<BarChartIcon />}
@@ -140,22 +138,34 @@ const Project = ({ themePreference }) => {
                     }}
                   />
                 </Grid>
-                <Grid item>
-                  <CustomChip
-                    icon={<CommentIcon />}
-                    label={`${commentCounts[project.id] || "0"} Comment${commentCounts[project.id] > 1 ? "s" : ""}`}
-                    tooltipTitle="Number of Comments"
-                    onClick={() => {
-                      scrollToSection(jsonData.commentSection.id);
-                      Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
-                        {
-                          destination_id: jsonData.commentSection.id,
-                          destination_label: jsonData.commentSection.toString(),
-                          origin_id: 'chip'
-                        })
-                    }}
-                  />
-                </Grid>
+
+                {
+                  lastUpdate &&
+                  <Grid item>
+                    <CustomChip
+                      icon={<PublishedWithChangesIcon />}
+                      label={`Last update: ${lastUpdate}`}
+                      tooltipTitle="Last Update" />
+                  </Grid>
+                }
+
+                {commentCount != null &&
+                  <Grid item>
+                    <CustomChip
+                      icon={<CommentIcon />}
+                      label={`${commentCount} Comment${commentCounts[project.id] > 1 ? "s" : ""}`}
+                      tooltipTitle="Number of Comments"
+                      onClick={() => {
+                        scrollToSection(jsonData.commentSection.id);
+                        Tracking.sendEventAnalytics(Tracking.Events.internalNavigation,
+                          {
+                            destination_id: jsonData.commentSection.id,
+                            destination_label: jsonData.commentSection.toString(),
+                            origin_id: 'chip'
+                          })
+                      }}
+                    />
+                  </Grid>}
               </Grid>
 
               <Typography

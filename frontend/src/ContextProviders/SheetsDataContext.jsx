@@ -18,9 +18,7 @@ export const SheetsDataProvider = (props) => {
                 ],
             }).then(() => {
                 getLastUpdateData().then((data) => {
-                    if (data && typeof data === 'object' && Object.keys(data).length > 0) {
-                        setSheetData(data);
-                    }
+                    setSheetData(data);
                 });
             }).catch(err => {
                 console.error(err);
@@ -36,8 +34,8 @@ export const SheetsDataProvider = (props) => {
 
             // Create an array of ranges
             const ranges = response.result.sheets.map(sheet => `${sheet.properties.title}!A2:A2`);
-
-            // use batchGet instead of calling get multiple times
+            // Use batchGet to get all ranges in a single Google Sheet document
+            // Avoid calling get multiple times --> Only 1 API call
             const dataResponse = await gapi.client.sheets.spreadsheets.values.batchGet({
                 spreadsheetId,
                 ranges,
@@ -57,11 +55,11 @@ export const SheetsDataProvider = (props) => {
     };
 
     const getSheetNameFromRange = (range) => {
-        return range.split('!')[0];
+        return range.split('!')[0]; // Range format: [sheetName]![A2:A2] 
     };
 
     return (
-        <SheetsDataContext.Provider value={[sheetData, setSheetData]}>
+        <SheetsDataContext.Provider value={[sheetData]}>
             {props.children}
         </SheetsDataContext.Provider>
     );

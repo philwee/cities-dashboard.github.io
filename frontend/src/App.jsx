@@ -59,6 +59,14 @@ function App() {
       : ThemePreferences.light)
   );
 
+  // set backgroundColor of 'body' element depending on theme.
+  // this is to set bg-color of left/right padding on landscape iOS devices
+  if (themePreference === ThemePreferences.dark) {
+    document.body.style = `background: ${CustomThemes.dark.palette.background.paper};`;
+  } else {
+    document.body.style = `background: ${CustomThemes.light.palette.customAlternateBackground};`;
+  }
+
   // Create theme using getDesignTokens
   const theme = useMemo(
     () => createTheme(getDesignTokens(themePreference)),

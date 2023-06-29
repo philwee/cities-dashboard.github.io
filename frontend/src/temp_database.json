@@ -134,7 +134,10 @@
                 "title": "Date Time"
               }
             },
-            "filter": "ChartRangeFilter"
+            "filter": {
+              "mobile": "DateRangeFilter",
+              "desktop": "ChartRangeFilter"
+            }
           },
           {
             "gid": 2066975752,
@@ -988,7 +991,10 @@
             "style": "area"
           }
         },
-        "filter": "ChartRangeFilter"
+        "filter": {
+          "mobile": "DateRangeFilter",
+          "desktop": "ChartRangeFilter"
+        }
       },
       {
         "title": "Historical Daily Food Waste (kg)",

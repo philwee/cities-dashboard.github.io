@@ -37,6 +37,33 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     filter: 'saturate(0.25)',
   },
 
+  // CSS for DateRangeFilter-type filter charts to look consistent with our styling
+  '& .google-visualization-controls-rangefilter': {
+    width: '100%',
+    fontSize: '0.85rem',
+  },
+
+  '& .google-visualization-controls-rangefilter .goog-inline-block': {
+    width: '100%',
+  },
+
+  '& .google-visualization-controls-rangefilter .google-visualization-controls-slider-horizontal': {
+    width: '75%',
+    margin: '0 12.5%',
+  },
+
+  '& .google-visualization-controls-rangefilter .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
+    position: 'absolute',
+    top: '1.5em',
+    left: '12.5%'
+  },
+
+  '& .google-visualization-controls-rangefilter .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
+    position: 'absolute',
+    top: '1.5em',
+    right: '12.5%'
+  },
+
   // These are the paths showing on top of the line chart 
   // and the stroke around the bar/column chart
   // when the user hovers on the legend to make the serie stand out
@@ -108,7 +135,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
   }
 
   // Assign the subcharts array for HeatMap based on the device orientation 
-  if (chartData.chartType == 'HeatMap') {
+  if (chartData.chartType == 'HeatMap' || chartData.chartType == 'ComboChart') {
     chartData = {
       ...chartData,
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],

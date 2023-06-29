@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { useState } from 'react';
 import { Chart } from 'react-google-charts';
+import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
 import HeatMap from './HeatMap';
@@ -69,7 +70,18 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
 
     default:
       let showChartFilter = false;
-      if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) showChartFilter = true;
+      let chartFilterType = null;
+      if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage == null || isHomepage == false)) {
+        showChartFilter = true;
+
+        if (isMobile) {
+          chartFilterType = chartData.filter?.mobile || chartData.subcharts?.[chartSubIndex].filter?.mobile
+        } else {
+          chartFilterType = chartData.filter?.desktop || chartData.subcharts?.[chartSubIndex].filter?.desktop
+        }
+
+        chartFilterType = chartFilterType ?? (chartData.filter || chartData.subcharts?.[chartSubIndex].filter)
+      }
       // ---- Formulate the options for this specific chart:
       // 1. Populate first with subchart's options (if any)
       options = chartData.subcharts?.[chartSubIndex].options
@@ -256,6 +268,38 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
         },
       ];
 
+      const filterUIProps = showChartFilter &&
+        chartFilterType === "ChartRangeFilter" ?
+        {
+          chartType: chartData.chartType,
+          chartView: {
+            columns:
+              chartData.columns ||
+              (chartData.subcharts &&
+                chartData.subcharts[chartSubIndex].columns) ||
+              null ||
+              null,
+          },
+          chartOptions: {
+            ...options,
+            height: chartFilterHeightInPixel,
+            vAxis: null,
+            hAxis: {
+              textPosition: 'out',
+              textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
+            },
+            annotations: { ...hideAnnotations },
+            legend: null,
+          }
+        } : chartFilterType === "DateRangeFilter" &&
+        {
+          format: {
+            pattern: "dd/MM/yyyy"
+          },
+          label: ''
+        }
+
+
       const chartProps = {
         chartType: chartData.chartType,
         chartWrapperParams: {
@@ -300,31 +344,12 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
             chartPackages: ["corechart", "controls"],
             controls: [
               {
-                controlType: chartData.filter || chartData.subcharts?.[chartSubIndex].filter,
+                controlType: chartFilterType,
                 snapToData: true,
                 options: {
                   filterColumnIndex: 0,
                   ui: {
-                    chartType: chartData.chartType,
-                    chartView: {
-                      columns:
-                        chartData.columns ||
-                        (chartData.subcharts &&
-                          chartData.subcharts[chartSubIndex].columns) ||
-                        null ||
-                        null,
-                    },
-                    chartOptions: {
-                      ...options,
-                      height: chartFilterHeightInPixel,
-                      vAxis: null,
-                      hAxis: {
-                        textPosition: 'out',
-                        textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
-                      },
-                      annotations: { ...hideAnnotations },
-                      legend: null,
-                    }
+                    ...filterUIProps
                   },
                 },
                 controlPosition: "bottom"

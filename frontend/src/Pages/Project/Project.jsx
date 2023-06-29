@@ -9,7 +9,7 @@ import ChartComponent from '../../Graphs/ChartComponent';
 import SampleDataTable from '../../Graphs/SampleDataTable';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import CommentSection from '../../Components/CommentSection';
-import { Box, Typography, Container, Divider, Chip, Grid, Tooltip } from '@mui/material';
+import { Box, Typography, Container, Divider, Chip, Grid, Tooltip, styled } from '@mui/material';
 
 import GetInTouch from '../Home/GetInTouch';
 
@@ -38,6 +38,11 @@ import { CommentCountsContext } from '../../ContextProviders/CommentCountsContex
 import { SheetsDataContext } from '../../ContextProviders/SheetsDataContext';
 
 // import { LastUpdate } from '../../Utils/GoogleSheetAPI';
+
+const BoxStyledWrapper = styled(Box)(() => ({
+  paddingLeft: `env(safe-area-inset-left)`,
+  paddingRight: `env(safe-area-inset-right)`,
+}));
 
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
@@ -99,7 +104,7 @@ const Project = ({ themePreference }) => {
     <>
       {loading && (
         <Box width="100%">
-          <Box>
+          <BoxStyledWrapper>
             <Container sx={{ pt: 4, pb: 4 }}>
 
               <UppercaseTitle text={project.title} />
@@ -197,11 +202,11 @@ const Project = ({ themePreference }) => {
                 }
               />
             </Container>
-          </Box>
+          </BoxStyledWrapper>
 
           <Box id={jsonData.charts.id}>
             {project.charts.map((element, index) => (
-              <Box
+              <BoxStyledWrapper
                 id={chartsTitlesList[index].chartID} // set the chartWrapper's ID to help Navbar in Header scroll to
                 key={index}
                 backgroundColor={
@@ -258,22 +263,22 @@ const Project = ({ themePreference }) => {
                     </Typography>
                   </Box>
                 </Container>
-              </Box>
+              </BoxStyledWrapper>
             ))}
           </Box>
 
 
           <Divider />
 
-          <Box id={jsonData.commentSection.id} sx={{ pt: 3, pb: 4 }}>
+          <BoxStyledWrapper id={jsonData.commentSection.id} sx={{ pt: 3, pb: 4 }}>
             <CommentSection pageID={project.id} />
-          </Box>
+          </BoxStyledWrapper>
 
           <Divider />
 
-          <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
+          <BoxStyledWrapper id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
             <GetInTouch />
-          </Box>
+          </BoxStyledWrapper>
         </Box>
       )}
     </>

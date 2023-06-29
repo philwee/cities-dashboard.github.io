@@ -163,7 +163,14 @@ export default function Header(props) {
       <Toolbar id={topAnchorID} sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
       } />
 
-      <Box width="100%" sx={{ pt: 4, pb: 3, backgroundColor: "customAlternateBackground" }}>
+      <Box sx={{ 
+        width: '100%',
+        paddingLeft: `env(safe-area-inset-left)`,
+        paddingRight: `env(safe-area-inset-right)`,
+        pt: 4, 
+        pb: 3, 
+        backgroundColor: "customAlternateBackground" 
+      }}>
         <Container >
           <Typography
             variant="h3"

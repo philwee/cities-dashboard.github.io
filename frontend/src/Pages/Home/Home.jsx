@@ -9,7 +9,7 @@ import { LinkContext } from '../../ContextProviders/LinkContext';
 import { DataContext } from '../../ContextProviders/HomePageContext';
 import { CommentCountsContext } from '../../ContextProviders/CommentCountsContext';
 
-import { Box, Grid, Stack, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Tooltip } from '@mui/material';
+import { Box, Grid, Stack, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Tooltip, styled } from '@mui/material';
 
 import UppercaseTitle from '../../Components/UppercaseTitle';
 
@@ -23,6 +23,11 @@ import * as Tracking from '../../Utils/Tracking';
 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CommentIcon from '@mui/icons-material/Comment';
+
+const BoxStyledWrapper = styled(Box)(() => ({
+  paddingLeft: `env(safe-area-inset-left)`,
+  paddingRight: `env(safe-area-inset-right)`,
+}));
 
 const Home = ({ themePreference, title }) => {
   // Update the page's title
@@ -41,7 +46,7 @@ const Home = ({ themePreference, title }) => {
 
   return (
     <Box width="100%">
-      <Box>
+      <BoxStyledWrapper>
         <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
 
@@ -133,19 +138,19 @@ const Home = ({ themePreference, title }) => {
             ))}
           </Grid>
         </Container>
-      </Box>
+      </BoxStyledWrapper>
 
       <Divider />
 
-      <Box id={jsonData.about.id} sx={{ pt: 3, pb: 4 }} >
+      <BoxStyledWrapper id={jsonData.about.id} sx={{ pt: 3, pb: 4 }} >
         <About />
-      </Box>
+      </BoxStyledWrapper>
 
       <Divider />
 
-      <Box id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
+      <BoxStyledWrapper id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
         <GetInTouch />
-      </Box>
+      </BoxStyledWrapper>
     </Box >
   );
 };

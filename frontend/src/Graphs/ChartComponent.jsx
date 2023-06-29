@@ -93,7 +93,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
 
       }, debounceMilliseconds);
     };
-    console.log(chartData.chartType, chartData);
 
     // listen to window resize events
     window.addEventListener('resize', handleWindowResize);

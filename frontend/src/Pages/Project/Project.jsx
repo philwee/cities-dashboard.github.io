@@ -37,8 +37,6 @@ import { CommentCountsContext } from '../../ContextProviders/CommentCountsContex
 
 import { SheetsDataContext } from '../../ContextProviders/SheetsDataContext';
 
-// import { LastUpdate } from '../../Utils/GoogleSheetAPI';
-
 const BoxStyledWrapper = styled(Box)(() => ({
   paddingLeft: `env(safe-area-inset-left)`,
   paddingRight: `env(safe-area-inset-right)`,

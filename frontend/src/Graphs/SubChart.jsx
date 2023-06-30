@@ -81,11 +81,15 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     showChartFilter = true;
     // Case: chartFilterType is different for mobile and desktop 
     chartFilterType = isMobile ?
-      chartData.filter?.mobile || chartData.subcharts?.[chartSubIndex].filter?.mobile :
-      chartData.filter?.desktop || chartData.subcharts?.[chartSubIndex].filter?.desktop;
+      chartData.filter?.mobile?.filter || chartData.subcharts?.[chartSubIndex].filter?.mobile?.filter :
+      chartData.filter?.desktop?.filter || chartData.subcharts?.[chartSubIndex].filter?.desktop?.filter;
+    filterUIProps = isMobile ?
+      chartData.filter?.mobile?.ui || chartData.subcharts?.[chartSubIndex].filter?.mobile.ui :
+      chartData.filter?.desktop?.ui || chartData.subcharts?.[chartSubIndex].filter?.desktop?.ui;
     // Case: chartFilterType is the same for all platforms
     chartFilterType = chartFilterType ?? (chartData.filter || chartData.subcharts?.[chartSubIndex].filter);
   }
+
 
   // ---- Formulate the options for this specific chart:
   // 1. Populate first with subchart's options (if any)
@@ -195,14 +199,20 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     ...options.vAxis,
     titleTextStyle: axisTitleTextStyle,
     textStyle: axisTextStyle,
-    gridlines: { color: theme.palette.chart.gridlines },
+    gridlines: {
+      ...options.vAxis?.gridlines,
+      color: theme.palette.chart.gridlines
+    },
     minorGridlines: { count: 0 },
   };
   options.hAxis = {
     ...options.hAxis,
     titleTextStyle: axisTitleTextStyle,
     textStyle: axisTextStyle,
-    gridlines: { color: theme.palette.chart.gridlines },
+    gridlines: {
+      ...options.hAxis?.gridlines,
+      color: theme.palette.chart.gridlines
+    },
     minorGridlines: {
       ...options.hAxis?.minorGridlines,
       color: theme.palette.chart.gridlines,
@@ -254,19 +264,19 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
       hAxis: {
         ...options.hAxis,
         textPosition: 'none',
-        minorGridlines: { count: 0 },
+        gridlines: { color: "transparent", count: 0 },
         titleTextStyle: {
           ...options.hAxis.titleTextStyle,
           bold: false
         }
       },
-      vAxes: {},
     };
 
   // Assign the appropriate filterUIProps based on chartFilterType (if existed)
   switch (chartFilterType) {
     case "ChartRangeFilter":
       filterUIProps = {
+        ...filterUIProps,
         chartType: chartData.chartType,
         chartView: {
           columns:
@@ -288,15 +298,8 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
           legend: null,
         }
       };
-      break;
+      console.log(filterUIProps)
 
-    case "DateRangeFilter":
-      filterUIProps = {
-        format: {
-          pattern: "dd/MM/yyyy"
-        },
-        label: ''
-      };
       break;
 
     default:

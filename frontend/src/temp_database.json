@@ -134,9 +134,31 @@
                 "title": "Date Time"
               }
             },
-            "filter": {
-              "mobile": "DateRangeFilter",
-              "desktop": "ChartRangeFilter"
+            "control": {
+              "mobile": {
+                "controlType": "DateRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "format": {
+                      "pattern": "MMM dd"
+                    },
+                    "step": "day",
+                    "label": ""
+                  }
+                }
+              },
+              "desktop": {
+                "controlType": "ChartRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "minRangeSize": 86400000
+                  }
+                }
+              }
             }
           },
           {
@@ -219,17 +241,21 @@
         "title": "Daily AQI, All Time",
         "subcharts": [
           {
-            "query": "SELECT A, C",
+            "query": "SELECT A, C, D",
             "subchartTitle": "Outdoor"
           },
           {
-            "query": "SELECT A, H",
+            "query": "SELECT A, H, I",
             "subchartTitle": "Campus Center"
           },
           {
-            "query": "SELECT A, M",
+            "query": "SELECT A, M, N",
             "subchartTitle": "Dining Hall D2"
           }
+        ],
+        "columns": [
+          0,
+          1
         ],
         "subtitle": "This calendar chart shows how the daily AQI varies throughout the year across different locations of the air quality network. Each square cell represents one day and its color corresponds to the category of the AQI. Hover over each square cell to see the specific date and its average AQI.<br><br><small><b>Note: </b>There were some gaps in our data collection. Dates where there was no recorded data are represented by empty cells.</small>",
         "gid": 584789045,
@@ -241,6 +267,17 @@
           },
           "legend": {
             "position": "none"
+          }
+        },
+        "control": {
+          "controlType": "CategoryFilter",
+          "options": {
+            "filterColumnIndex": 2,
+            "ui": {
+              "label": "Filter by AQI Category:",
+              "allowTyping": false,
+              "allowMultiple": true
+            }
           }
         }
       },
@@ -1001,20 +1038,28 @@
             "style": "area"
           }
         },
-        "filter": {
+        "control": {
           "mobile": {
-            "filter": "DateRangeFilter",
-            "ui": {
-              "step": "day",
-              "format": {
-                "pattern": "MMM yyyy"
+            "controlType": "DateRangeFilter",
+            "controlPosition": "bottom",
+            "options": {
+              "filterColumnIndex": 0,
+              "ui": {
+                "format": {
+                  "pattern": "MMM yyyy"
+                },
+                "label": ""
               }
             }
           },
           "desktop": {
-            "filter": "ChartRangeFilter",
-            "ui": {
-              "minSizeRange": 31536000000
+            "controlType": "ChartRangeFilter",
+            "controlPosition": "bottom",
+            "options": {
+              "filterColumnIndex": 0,
+              "ui": {
+                "minRangeSize": 31536000000
+              }
             }
           }
         }

@@ -70,26 +70,18 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     fontSize: responsiveFontSize
   };
 
-  // Properties for chartFilter (if existed)
-  let showChartFilter = false;
-  let chartFilterType = null;
-  let filterUIProps = null;
-  // Only show the chart filter if:
+  // Properties for chart control (if existed)
+  let showControl = false;
+  const deviceType = isMobile ? "mobile" : "desktop";
+  // Only show the chart control if:
   // It exists in the database (either for all subcharts or just for a particular subchart)
   // And if the chart is currently not shown on homePage
-  if ((chartData.filter != null || chartData.subcharts?.[chartSubIndex].filter != null) && (isHomepage != true)) {
-    showChartFilter = true;
-    // Case: chartFilterType is different for mobile and desktop 
-    chartFilterType = isMobile ?
-      chartData.filter?.mobile?.filter || chartData.subcharts?.[chartSubIndex].filter?.mobile?.filter :
-      chartData.filter?.desktop?.filter || chartData.subcharts?.[chartSubIndex].filter?.desktop?.filter;
-    filterUIProps = isMobile ?
-      chartData.filter?.mobile?.ui || chartData.subcharts?.[chartSubIndex].filter?.mobile.ui :
-      chartData.filter?.desktop?.ui || chartData.subcharts?.[chartSubIndex].filter?.desktop?.ui;
-    // Case: chartFilterType is the same for all platforms
-    chartFilterType = chartFilterType ?? (chartData.filter || chartData.subcharts?.[chartSubIndex].filter);
+  let chartControl = chartData.control || chartData.subcharts?.[chartSubIndex].control;
+  if (chartControl && (isHomepage != true)) {
+    showControl = true;
+    // Control is different for mobile and desktop if deviceType as a key exists in the database
+    if (chartControl[deviceType]) chartControl = chartControl[deviceType];
   }
-
 
   // ---- Formulate the options for this specific chart:
   // 1. Populate first with subchart's options (if any)
@@ -110,7 +102,7 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
     // if there is a filter, we make space for the chartFilter from the chart's height. 
     // value is divided in 2 because the calculation is applied twice due to how react-google-charts nest components
-    height: showChartFilter ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
+    height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
     backgroundColor: { fill: 'transparent' },
     tooltip: {
       isHtml: true,
@@ -272,39 +264,32 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
       },
     };
 
-  // Assign the appropriate filterUIProps based on chartFilterType (if existed)
-  switch (chartFilterType) {
-    case "ChartRangeFilter":
-      filterUIProps = {
-        ...filterUIProps,
-        chartType: chartData.chartType,
-        chartView: {
-          columns:
-            chartData.columns ||
-            (chartData.subcharts &&
-              chartData.subcharts[chartSubIndex].columns) ||
-            null ||
-            null,
+  // Assign the appropriate controlOptions based on controlType (if existed)
+  if (chartControl?.controlType === "ChartRangeFilter")
+    chartControl.options.ui = {
+      ...chartControl.options?.ui,
+      chartType: chartData.chartType,
+      snapToData: true,
+      chartView: {
+        columns:
+          chartData.columns ||
+          (chartData.subcharts &&
+            chartData.subcharts[chartSubIndex].columns) ||
+          null ||
+          null,
+      },
+      chartOptions: {
+        ...options,
+        height: chartFilterHeightInPixel,
+        vAxis: null,
+        hAxis: {
+          textPosition: 'out',
+          textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
         },
-        chartOptions: {
-          ...options,
-          height: chartFilterHeightInPixel,
-          vAxis: null,
-          hAxis: {
-            textPosition: 'out',
-            textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
-          },
-          annotations: { ...hideAnnotations },
-          legend: null,
-        }
-      };
-      console.log(filterUIProps)
-
-      break;
-
-    default:
-      break;
-  };
+        annotations: { ...hideAnnotations },
+        legend: null,
+      }
+    };
 
   // When chart is ready
   const chartEvents = [
@@ -356,20 +341,10 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
     // if the filter prop exists and it's not a chart on homepage:
     // add the packages and control props below
     ...(
-      showChartFilter ? {
+      showControl ? {
         chartPackages: ["corechart", "controls"],
         controls: [
-          {
-            controlType: chartFilterType,
-            snapToData: true,
-            options: {
-              filterColumnIndex: 0,
-              ui: {
-                ...filterUIProps
-              },
-            },
-            controlPosition: "bottom"
-          },
+          chartControl
         ]
       } : {}
     )

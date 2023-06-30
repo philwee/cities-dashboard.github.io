@@ -40,29 +40,39 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for DateRangeFilter-type filter charts to look consistent with our styling
   '& .google-visualization-controls-rangefilter': {
     width: '100%',
-    fontSize: '0.85rem',
+    fontSize: '0.75rem',
+    '& .goog-inline-block': {
+      width: '100%',
+    },
+    '& .google-visualization-controls-slider-horizontal': {
+      width: '75%',
+      margin: '0 12.5%',
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
+      position: 'absolute',
+      top: '1.5em',
+      left: '12.5%'
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
+      position: 'absolute',
+      top: '1.5em',
+      right: '12.5%'
+    },
+    '& .google-visualization-controls-slider-handle': {
+      background: theme.palette.primary.main
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel': {
+      color: theme.palette.text.secondary,
+      padding: 0
+    },
+    '& .google-visualization-controls-slider-thumb': {
+      background: theme.palette.primary.main,
+      border: 'unset',
+      borderRadius: '4px'
+    }
   },
 
-  '& .google-visualization-controls-rangefilter .goog-inline-block': {
-    width: '100%',
-  },
 
-  '& .google-visualization-controls-rangefilter .google-visualization-controls-slider-horizontal': {
-    width: '75%',
-    margin: '0 12.5%',
-  },
-
-  '& .google-visualization-controls-rangefilter .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
-    position: 'absolute',
-    top: '1.5em',
-    left: '12.5%'
-  },
-
-  '& .google-visualization-controls-rangefilter .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
-    position: 'absolute',
-    top: '1.5em',
-    right: '12.5%'
-  },
 
   // These are the paths showing on top of the line chart 
   // and the stroke around the bar/column chart
@@ -112,7 +122,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
         // device orientation does not change.
 
         if (chartData.chartType === "Calendar"
-          || (chartData.subcharts?.some((subchart) => subchart.filter != null)) 
+          || (chartData.subcharts?.some((subchart) => subchart.filter != null))
           || (chartData.filter != null)) {
 
           setWindowSize(window.innerWidth, window.innerHeight);

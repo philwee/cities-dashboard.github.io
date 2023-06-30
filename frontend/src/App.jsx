@@ -18,16 +18,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ThemePreferences from './Themes/ThemePreferences';
 import CustomThemes from './Themes/CustomThemes';
 
-// ----- Google Analytics with React-GA-4 -----
-// import ReactGA from "react-ga4";
-// Only run analytics on the official public-facing website citiesdashboard.com
-// (to avoid analytics being run on localhost or dev website)
-// if (window.location.hostname == 'citiesdashboard.com') {
-//   ReactGA.initialize("G-NSSWE0TJP1");
-//   ReactGA.send({ hitType: "pageview", page: document.location.pathname + document.location.search, title: document.title });
-// }
-// -----
-
 // Lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
 const Project = lazy(() => import('./Pages/Project/Project'));
@@ -59,19 +49,15 @@ function App() {
       : ThemePreferences.light)
   );
 
-  // set backgroundColor of 'body' element depending on theme.
-  // this is to set bg-color of left/right padding on landscape iOS devices
-  if (themePreference === ThemePreferences.dark) {
-    document.body.style = `background: ${CustomThemes.dark.palette.background.paper};`;
-  } else {
-    document.body.style = `background: ${CustomThemes.light.palette.customAlternateBackground};`;
-  }
-
   // Create theme using getDesignTokens
   const theme = useMemo(
     () => createTheme(getDesignTokens(themePreference)),
     [themePreference]
   );
+
+  // set backgroundColor of 'body' element depending on theme.
+  // this is to set bg-color of left/right padding on landscape iOS devices
+  document.body.style.background = theme.palette.customAlternateBackground;
 
   return (
     <BrowserRouter basename="/">

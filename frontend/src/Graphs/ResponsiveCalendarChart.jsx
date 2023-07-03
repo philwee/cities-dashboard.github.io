@@ -83,9 +83,11 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     },
   };
 
+  // additional props if there is a controlFilter present
+  if (showControl) {
   chartProps.controls = [{
     ...chartProps.controls[0],
-    controlEvents: showControl && [
+      controlEvents: [
       {
         eventName: "ready",
         callback: (({ controlWrapper }) => {
@@ -99,6 +101,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
       },
     ],
   }]
+  }
 
   return (
     <StyledChartWrapper

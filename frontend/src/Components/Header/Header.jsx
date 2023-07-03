@@ -16,6 +16,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 // import images
 
 import jsonData from '../../section_data.json';
+import FullWidthBox from '../FullWidthBox.jsx';
 import parse from 'html-react-parser';
 import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
 import { CITIESlogoLinkToHome } from './CITIESlogoLinkToHome';
@@ -163,13 +164,11 @@ export default function Header(props) {
       <Toolbar id={topAnchorID} sx={{ backgroundColor: "customAlternateBackground", height: `${toolBarHeightInRem * 1.5}rem` }
       } />
 
-      <Box sx={{ 
+      <FullWidthBox sx={{
         width: '100%',
-        paddingLeft: `env(safe-area-inset-left)`,
-        paddingRight: `env(safe-area-inset-right)`,
-        pt: 4, 
-        pb: 3, 
-        backgroundColor: "customAlternateBackground" 
+        pt: 4,
+        pb: 3,
+        backgroundColor: "customAlternateBackground"
       }}>
         <Container >
           <Typography
@@ -186,7 +185,7 @@ export default function Header(props) {
             })}
           </Typography>
         </Container>
-      </Box >
+      </FullWidthBox>
 
       <SpeedDialButton chartsTitlesList={chartsTitlesList} topAnchorID={topAnchorID} />
 

@@ -12,6 +12,7 @@ import { CommentCountsContext } from '../../ContextProviders/CommentCountsContex
 import { Box, Grid, Stack, Typography, Container, Card, CardContent, CardMedia, CardActionArea, Divider, Tooltip, styled } from '@mui/material';
 
 import UppercaseTitle from '../../Components/UppercaseTitle';
+import FullWidthBox from '../../Components/FullWidthBox.jsx';
 
 // import AtAGlance from './AtAGlance';
 import About from './About';
@@ -23,11 +24,6 @@ import * as Tracking from '../../Utils/Tracking';
 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CommentIcon from '@mui/icons-material/Comment';
-
-const BoxStyledWrapper = styled(Box)(() => ({
-  paddingLeft: `env(safe-area-inset-left)`,
-  paddingRight: `env(safe-area-inset-right)`,
-}));
 
 const Home = ({ themePreference, title }) => {
   // Update the page's title
@@ -46,7 +42,7 @@ const Home = ({ themePreference, title }) => {
 
   return (
     <Box width="100%">
-      <BoxStyledWrapper>
+      <FullWidthBox>
         <Container sx={{ pt: 3, pb: 4 }}>
           <UppercaseTitle text={'all projects'} />
 
@@ -138,19 +134,19 @@ const Home = ({ themePreference, title }) => {
             ))}
           </Grid>
         </Container>
-      </BoxStyledWrapper>
+      </FullWidthBox>
 
       <Divider />
 
-      <BoxStyledWrapper id={jsonData.about.id} sx={{ pt: 3, pb: 4 }} >
+      <FullWidthBox id={jsonData.about.id} sx={{ pt: 3, pb: 4 }} >
         <About />
-      </BoxStyledWrapper>
+      </FullWidthBox>
 
       <Divider />
 
-      <BoxStyledWrapper id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
+      <FullWidthBox id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
         <GetInTouch />
-      </BoxStyledWrapper>
+      </FullWidthBox>
     </Box >
   );
 };

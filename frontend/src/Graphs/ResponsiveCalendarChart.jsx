@@ -15,8 +15,10 @@ const StyledChartWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
-function CalendarChart({ chartData, chartProps, isPortrait }) {
-  const [chartHeight, setChartHeight] = useState("200px");
+function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
+  const [chartHeight, setChartHeight] = useState(200);
+  const [controlHeight, setControlHeight] = useState(0);
+  const [chartTotalHeight, setChartTotalHeight] = useState(200);
   const [chartWidth, setChartWidth] = useState();
   const [circleProgress, displayCircleProgress] = useState(true);
 
@@ -26,10 +28,32 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
     const renderedHeight = chartContainer.getBBox().height;
     const renderedWidth = chartContainer.getBBox().width;
 
-    const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
+    setChartHeight(renderedHeight);
     setChartWidth(renderedWidth);
-    setChartHeight(renderedHeight * (hasLegend ? 1.07 : 1.15)); // additional 7% or 15% for padding depends on if there is a legend
+
+    calculateChartTotalHeight();
   };
+
+  const updateControlHeight = (controlWrapper) => {
+    const controlContainer = controlWrapper.getControl().container;
+    const renderedHeight = controlContainer.getBoundingClientRect().height;
+
+    setControlHeight(renderedHeight);
+
+    calculateChartTotalHeight();
+  }
+
+  const calculateChartTotalHeight = () => {
+    if (!chartHeight) return; // don't calculate without main chart height
+    if (showControl && !controlHeight) return; // if theres a control but we haven't gotten value of control height yet, then don't calculate total yet
+
+    const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
+
+    let calculatedHeight = chartHeight * (hasLegend ? 1.07 : 1.15);
+    calculatedHeight += controlHeight;
+
+    setChartTotalHeight(calculatedHeight);
+  }
 
   const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
     const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
@@ -44,6 +68,7 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
 
   chartProps.options = {
     ...chartProps.options,
+    height: chartTotalHeight,
     width: chartWidth ? chartWidth : calendarDimensions.chartWidth,
     calendar: {
       cellSize: calendarDimensions.cellSize,
@@ -58,13 +83,30 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
     },
   };
 
+  chartProps.controls = [{
+    ...chartProps.controls[0],
+    controlEvents: showControl && [
+      {
+        eventName: "ready",
+        callback: (({ controlWrapper }) => {
+          updateControlHeight(controlWrapper);
+        })
+      },
+      { eventName: "statechange", 
+        callback: (({ controlWrapper }) => {
+          updateControlHeight(controlWrapper);
+        }),
+      },
+    ],
+  }]
+
   return (
     <StyledChartWrapper
       className={chartData.chartType}
       sx={{
         position: "relative",
         width: "100%",
-        height: chartHeight,
+        height: chartTotalHeight,
         overflowX: 'auto',
         overflowY: 'hidden',
       }}
@@ -82,15 +124,14 @@ function CalendarChart({ chartData, chartProps, isPortrait }) {
         chartEvents={[
           {
             eventName: 'ready',
-            callback: ({ chartWrapper }) => {
+            callback: (({ chartWrapper }) => {
               updateChartHeight(chartWrapper.getChart());
               displayCircleProgress(false);
-            }
+            })
           }
         ]}
       />
     </StyledChartWrapper>
-
   );
 }
 

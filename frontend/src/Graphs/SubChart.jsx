@@ -355,6 +355,8 @@ const SubChart = ({ chartData, chartSubIndex, isPortrait, isHomepage }) => {
       chartData={chartData}
       chartProps={chartProps}
       isPortrait={isPortrait}
+      showControl={showControl}
+      chartFilterHeightInPixel={chartFilterHeightInPixel}
     />
   )
 

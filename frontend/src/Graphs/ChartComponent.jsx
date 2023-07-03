@@ -37,6 +37,10 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     filter: 'saturate(0.25)',
   },
 
+  '& .google-visualization-controls-label': {
+    color: theme.palette.text.secondary,
+  },
+
   // CSS for DateRangeFilter-type filter charts to look consistent with our styling
   '& .google-visualization-controls-rangefilter': {
     width: '100%',

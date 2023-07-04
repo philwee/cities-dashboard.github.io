@@ -241,15 +241,15 @@
         "title": "Daily AQI, All Time",
         "subcharts": [
           {
-            "query": "SELECT A, C, D",
+            "query": "SELECT A, C, D WHERE NOT D='No Data'",
             "subchartTitle": "Outdoor"
           },
           {
-            "query": "SELECT A, H, I",
+            "query": "SELECT A, H, I WHERE NOT I='No Data'",
             "subchartTitle": "Campus Center"
           },
           {
-            "query": "SELECT A, M, N",
+            "query": "SELECT A, M, N WHERE NOT N='No Data'",
             "subchartTitle": "Dining Hall D2"
           }
         ],

@@ -79,7 +79,7 @@ function Home({ themePreference, title }) {
                         height="auto"
                         sx={{ aspectRatio: '4/3' }}
                       >
-                        project.graph
+                        {project.graph}
                       </CardMedia>
                     </Box>
 

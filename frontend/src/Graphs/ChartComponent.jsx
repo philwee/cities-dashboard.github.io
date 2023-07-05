@@ -40,7 +40,8 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 
   '& .google-visualization-controls-categoryfilter': {
     fontSize: '0.85rem',
-    marginTop: '0.25rem',
+    marginTop: '0.75rem',
+    marginBottom: '-0.75rem',
 
     '& .google-visualization-controls-label': {
       color: theme.palette.text.secondary,

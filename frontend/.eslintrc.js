@@ -21,6 +21,15 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'object-curly-newline': 0,
-    'linebreak-style': 0
+    'linebreak-style': 0,
+    'no-unused-vars': 'off', // use custom 'no-unused-vars' rule, we ignore variables that start with _
+    '@typescript-eslint/no-unused-vars': [
+      'warn', // or 'error'
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }
+    ],
   },
 };

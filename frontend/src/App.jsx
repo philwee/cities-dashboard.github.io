@@ -1,22 +1,21 @@
-// disable eslint for this file
-/* eslint-disable */
-
 // React components
 import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
-// UI components
+// MUI components
 import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
-import ScrollToTop from './Components/ScrollToTop';
-import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Footer';
-import FourOhFour from './Pages/404';
-import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
 // Theme
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ThemePreferences from './Themes/ThemePreferences';
 import CustomThemes from './Themes/CustomThemes';
+
+// UI components
+import ScrollToTop from './Components/ScrollToTop';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+import FourOhFour from './Pages/404';
+import DeviceOrientationNotification from './Components/SnackBarNotifications';
 
 // Lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
@@ -43,10 +42,9 @@ const getDesignTokens = (themePreference) => ({
 function App() {
   // Set theme preference state based on localStorage or system preference
   const [themePreference, setThemePreference] = useState(
-    localStorage.getItem('theme') ||
-    (window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? ThemePreferences.dark
-      : ThemePreferences.light)
+    localStorage.getItem('theme')
+    || (window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? ThemePreferences.dark : ThemePreferences.light)
   );
 
   // Create theme using getDesignTokens
@@ -85,13 +83,13 @@ function App() {
               <Routes>
                 <Route
                   path="/"
-                  element={<Home themePreference={themePreference} title={"CITIES Dashboard"} />}
+                  element={<Home themePreference={themePreference} title="CITIES Dashboard" />}
                 />
                 <Route
                   path="/project/:id"
                   element={<Project themePreference={themePreference} />}
                 />
-                <Route path="/404" element={<FourOhFour title={"Page Not Found | CITIES Dashboard"} />} />
+                <Route path="/404" element={<FourOhFour title="Page Not Found | CITIES Dashboard" />} />
                 <Route path="*" element={<Navigate replace to="/404" />} />
               </Routes>
             </Suspense>

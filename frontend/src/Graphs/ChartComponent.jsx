@@ -9,7 +9,7 @@ const debounceMilliseconds = 50;
 
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for dark theme only
-  ...(theme.palette.mode == 'dark' && {
+  ...(theme.palette.mode === 'dark' && {
     // De-saturate a bit
     filter: 'saturate(0.85)',
     // Invert iframe
@@ -29,7 +29,8 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   '& .Calendar .google-visualization-tooltip': {
     padding: '0.5rem',
   },
-  /* Modify the appearance of the Google chart's filter (by selecting all divs with id containing the keyword below */
+  /* Modify the appearance of the Google chart's filter
+  // (by selecting all divs with id containing the keyword below */
   '& [id^=googlechart-control]': {
     opacity: 0.75,
     filter: 'saturate(0.25)',
@@ -100,12 +101,20 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
+// eslint-disable-next-line max-len
 export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
   const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
   ]);
+
+  // use tab context
+  const [_, setTab] = useContext(TabContext);
+
+  // Props for tab panels (multiple data visualizations in the same chart area,
+  // navigate with tab panels)
+  const [indexValue, setIndexValue] = useState(0); // start with the first elem
 
   // eventListener for window resize
   // redraw "Calendar" charts and charts with a time filter upon window resize.
@@ -159,12 +168,6 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
 
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
-    // use tab context
-    const [_, setTab] = useContext(TabContext);
-
-    // Props for tab panels (multiple data visualizations in the same chart area, navigate with tab panels)
-    const [indexValue, setIndexValue] = useState(0); // start with the first elem
-
     // Handle tab change
     const handleChange = (event, newValue) => {
       // use setTab to copy the tab object and update the subIndex

@@ -72,7 +72,7 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
   // It exists in the database (either for all subcharts or just for a particular subchart)
   // And if the chart is currently not shown on homePage
   let chartControl = chartData.control || chartData.subcharts?.[chartSubIndex].control;
-  if (chartControl && (isHomepage != true)) {
+  if (chartControl && (isHomepage !== true)) {
     showControl = true;
     // Control is different for mobile and desktop if deviceType as a key exists in the database
     if (chartControl[deviceType]) chartControl = chartControl[deviceType];
@@ -96,7 +96,8 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
     },
     width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
     // if there is a filter, we make space for the chartFilter from the chart's height.
-    // value is divided in 2 because the calculation is applied twice due to how react-google-charts nest components
+    // value is divided in 2 because the calculation is applied twice due to 
+    // how react-google-charts nest components
     height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
     backgroundColor: { fill: 'transparent' },
     tooltip: {
@@ -294,7 +295,7 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
   const chartEvents = [
     {
       eventName: 'ready',
-      callback: ({ chartWrapper }) => {
+      callback: () => {
         displayCircleProgress(false);
       },
     },
@@ -348,7 +349,7 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
     )
   };
 
-  if (chartData.chartType == 'Calendar') {
+  if (chartData.chartType === 'Calendar') {
     return (
       <CalendarChart
         chartData={chartData}

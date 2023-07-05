@@ -242,7 +242,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
       position="relative"
       height={chartData.height ? chartData.height : chartWrapperHeight}
       maxHeight={
-          chartData.chartType == 'HeatMap' ? '' : chartWrapperMaxHeight
+          chartData.chartType === 'HeatMap' ? '' : chartWrapperMaxHeight
         }
     >
       <SubChart chartData={chartData} isPortrait={isPortrait} isHomepage={isHomepage} />

@@ -21,7 +21,9 @@ import * as Tracking from '../../Utils/Tracking';
 
 function Home({ themePreference, title }) {
   // Update the page's title
-  useEffect(() => document.title = title, []);
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   // useState for home page data
   // eslint-disable-next-line no-unused-vars

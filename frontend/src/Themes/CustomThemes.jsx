@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { colors } from '@mui/material';
 
 const darkShade = 400;

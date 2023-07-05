@@ -7,7 +7,7 @@ export default function FourOhFour({ title }) {
   // Update the page's title
   useEffect(() => {
     document.title = title;
-  }, []);
+  }, [title]);
 
   const [_, setCurrentPage] = useContext(LinkContext);
 

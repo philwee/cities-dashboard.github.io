@@ -1,13 +1,13 @@
-// disable eslint for this file
-/* eslint-disable */
 import { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkContext } from '../ContextProviders/LinkContext';
 import { Button, Typography, Container } from '@mui/material';
+import { LinkContext } from '../ContextProviders/LinkContext';
 
 export default function FourOhFour({ title }) {
   // Update the page's title
-  useEffect(() => document.title = title, []);
+  useEffect(() => {
+    document.title = title;
+  }, []);
 
   const [_, setCurrentPage] = useContext(LinkContext);
 
@@ -30,7 +30,7 @@ export default function FourOhFour({ title }) {
         Bad links happen to good people
       </Typography>
       <Typography variant="h5" color="text.secondary" gutterBottom>
-        Either you're lost or we're still developing this project
+        Either you&apos;re lost or we&apos;re still developing this project
       </Typography>
       <Button component={Link} to="/" variant="contained" sx={{ mt: 3 }}>
         <Typography>Return home</Typography>

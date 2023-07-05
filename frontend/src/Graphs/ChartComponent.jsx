@@ -1,5 +1,3 @@
-// disable eslint for this file
-/* eslint-disable */
 import { useState, useMemo, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
@@ -11,9 +9,9 @@ const debounceMilliseconds = 50;
 
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for dark theme only
-  ...(theme.palette.mode == "dark" && {
+  ...(theme.palette.mode == 'dark' && {
     // De-saturate a bit
-    filter: "saturate(0.85)",
+    filter: 'saturate(0.85)',
     // Invert iframe
     '& .heat-map-iframe': {
       filter: 'invert(0.848) hue-rotate(180deg)',
@@ -36,7 +34,6 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     opacity: 0.75,
     filter: 'saturate(0.25)',
   },
-  
 
   '& .google-visualization-controls-categoryfilter': {
     fontSize: '0.85rem',
@@ -85,9 +82,7 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     }
   },
 
-
-
-  // These are the paths showing on top of the line chart 
+  // These are the paths showing on top of the line chart
   // and the stroke around the bar/column chart
   // when the user hovers on the legend to make the serie stand out
   // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
@@ -104,7 +99,6 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     }
   }
 }));
-
 
 export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
   const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
@@ -134,13 +128,11 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
         // we redraw Calendar/Filter type charts on ANY window resize, even if
         // device orientation does not change.
 
-        if (chartData.chartType === "Calendar"
+        if (chartData.chartType === 'Calendar'
           || (chartData.subcharts?.some((subchart) => subchart.filter != null))
           || (chartData.filter != null)) {
-
           setWindowSize(window.innerWidth, window.innerHeight);
         }
-
       }, debounceMilliseconds);
     };
 
@@ -152,13 +144,13 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     };
   }, []);
 
-  if (chartData.chartType != 'Table' && chartData.chartType != 'Calendar' && !chartWrapperHeight) {
+  if (chartData.chartType !== 'Table' && chartData.chartType !== 'Calendar' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
 
-  // Assign the subcharts array for HeatMap based on the device orientation 
-  if (chartData.chartType == 'HeatMap' || chartData.chartType == 'ComboChart') {
+  // Assign the subcharts array for HeatMap based on the device orientation
+  if (chartData.chartType === 'HeatMap' || chartData.chartType === 'ComboChart') {
     chartData = {
       ...chartData,
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
@@ -176,9 +168,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     // Handle tab change
     const handleChange = (event, newValue) => {
       // use setTab to copy the tab object and update the subIndex
-      setTab((prevState) => {
-        return { ...prevState, [chartData.chartIndex]: newValue };
-      });
+      setTab((prevState) => ({ ...prevState, [chartData.chartIndex]: newValue }));
       setIndexValue(newValue);
     };
 
@@ -221,9 +211,9 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
               height="100%"
               width="100%"
               role="tabpanel"
-              position={(index === 0) ? "" : "absolute"}
-              top={(index === 0) ? "" : 0}
-              left={(index === 0) ? "" : 0}
+              position={(index === 0) ? '' : 'absolute'}
+              top={(index === 0) ? '' : 0}
+              left={(index === 0) ? '' : 0}
               visibility={indexValue === index ? 'visible' : 'hidden'}
             >
               {useMemo(
@@ -244,16 +234,15 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     );
   }
   // If there is only one single chart
-  else
-    return (
-      <ChartStyleWrapper
-        position="relative"
-        height={chartData.height ? chartData.height : chartWrapperHeight}
-        maxHeight={
+  return (
+    <ChartStyleWrapper
+      position="relative"
+      height={chartData.height ? chartData.height : chartWrapperHeight}
+      maxHeight={
           chartData.chartType == 'HeatMap' ? '' : chartWrapperMaxHeight
         }
-      >
-        <SubChart chartData={chartData} isPortrait={isPortrait} isHomepage={isHomepage} />
-      </ChartStyleWrapper>
-    );
+    >
+      <SubChart chartData={chartData} isPortrait={isPortrait} isHomepage={isHomepage} />
+    </ChartStyleWrapper>
+  );
 }

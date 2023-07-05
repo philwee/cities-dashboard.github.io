@@ -1,19 +1,16 @@
-// disable eslint for this file
-/* eslint-disable */
 import { useState } from 'react';
 import { Chart } from 'react-google-charts';
-import { Box, CircularProgress } from '@mui/material/';
-import { styled } from '@mui/material/';
+import { Box, CircularProgress, styled } from '@mui/material/';
 
-const StyledChartWrapper = styled(Box)(({ theme }) => ({
+const StyledChartWrapper = styled(Box)({
   // Override React Google Charts to make Calendar chart truly responsive
-  "& > div, & > div > div ": {
-    width: "100% !important"
+  '& > div, & > div > div ': {
+    width: '100% !important'
   },
-  "& > div > div > div > div": {
-    margin: "auto"
+  '& > div > div > div > div': {
+    margin: 'auto'
   }
-}));
+});
 
 function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   const [chartHeight, setChartHeight] = useState(200);
@@ -21,6 +18,20 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
   const [chartWidth, setChartWidth] = useState();
   const [circleProgress, displayCircleProgress] = useState(true);
+
+  const calculateChartTotalHeight = () => {
+    if (!chartHeight) return; // don't calculate without main chart height
+    // if theres a control but we haven't gotten value of control height yet, 
+    // then don't calculate total yet
+    if (showControl && !controlHeight) return; 
+
+    const hasLegend = chartProps.options.legend?.position !== 'none';
+
+    let calculatedHeight = chartHeight * (hasLegend ? 1.07 : 1.15);
+    calculatedHeight += controlHeight;
+
+    setChartTotalHeight(calculatedHeight);
+  };
 
   const updateChartHeight = (chartWrapper) => {
     // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.
@@ -41,25 +52,13 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     setControlHeight(renderedHeight);
 
     calculateChartTotalHeight();
-  }
-
-  const calculateChartTotalHeight = () => {
-    if (!chartHeight) return; // don't calculate without main chart height
-    if (showControl && !controlHeight) return; // if theres a control but we haven't gotten value of control height yet, then don't calculate total yet
-
-    const hasLegend = (chartProps.options.legend?.position === "none") ? false : true;
-
-    let calculatedHeight = chartHeight * (hasLegend ? 1.07 : 1.15);
-    calculatedHeight += controlHeight;
-
-    setChartTotalHeight(calculatedHeight);
-  }
+  };
 
   const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
     const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
     return {
       chartWidth: cellSize * 56, // fixed ratio
-      cellSize: cellSize,
+      cellSize,
       yearLabelFontSize: cellSize * 2
     };
   };
@@ -69,7 +68,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   chartProps.options = {
     ...chartProps.options,
     height: chartTotalHeight,
-    width: chartWidth ? chartWidth : calendarDimensions.chartWidth,
+    width: chartWidth || calendarDimensions.chartWidth,
     calendar: {
       cellSize: calendarDimensions.cellSize,
       yearLabel: {
@@ -85,30 +84,30 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
 
   // additional props if there is a controlFilter present
   if (showControl) {
-  chartProps.controls = [{
-    ...chartProps.controls[0],
+    chartProps.controls = [{
+      ...chartProps.controls[0],
       controlEvents: [
-      {
-        eventName: "ready",
-        callback: (({ controlWrapper }) => {
-          updateControlHeight(controlWrapper);
-        })
-      },
-      { eventName: "statechange", 
-        callback: (({ controlWrapper }) => {
-          updateControlHeight(controlWrapper);
-        }),
-      },
-    ],
-  }]
+        {
+          eventName: 'ready',
+          callback: (({ controlWrapper }) => {
+            updateControlHeight(controlWrapper);
+          })
+        },
+        { eventName: 'statechange',
+          callback: (({ controlWrapper }) => {
+            updateControlHeight(controlWrapper);
+          }),
+        },
+      ],
+    }];
   }
 
   return (
     <StyledChartWrapper
       className={chartData.chartType}
       sx={{
-        position: "relative",
-        width: "100%",
+        position: 'relative',
+        width: '100%',
         height: chartTotalHeight,
         overflowX: 'auto',
         overflowY: 'hidden',

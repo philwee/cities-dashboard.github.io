@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'react/no-array-index-key': 0,
+    'react/jsx-props-no-spreading': 0,
     'react/prop-types': 0,
     'no-console': 0,
     'comma-dangle': 0,

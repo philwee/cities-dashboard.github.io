@@ -169,7 +169,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
     // Handle tab change
-    const handleChange = (event, newValue) => {
+    const handleChange = (__, newValue) => {
       // use setTab to copy the tab object and update the subIndex
       setTab((prevState) => ({ ...prevState, [chartData.chartIndex]: newValue }));
       setIndexValue(newValue);

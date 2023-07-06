@@ -150,13 +150,17 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
   if (typeof options.colors === 'string' || !options.colors) options.colors = theme.palette.chart.optionsColors[options.colors || 'multiColor'];
   // 4.2. Individual color of a single serie (if given)
   if (options.series) {
-    Object.values(options.series).forEach((serie) => {
-      if (serie.color === 'default') serie.color = theme.palette.primary.main;
+    Object.values(options.series).forEach((_serie) => {
+      const serie = _serie;
+      if (serie.color === 'default') {
+        serie.color = theme.palette.primary.main;
+      }
     });
   }
   // 4.3. Color of the trendline
   if (options.trendlines) {
-    options.trendlines.forEach((item) => {
+    options.trendlines.forEach((_item) => {
+      const item = _item;
       item.color = theme.palette.primary.main;
     });
   }

@@ -12,6 +12,15 @@ const StyledChartWrapper = styled(Box)({
   }
 });
 
+const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
+  const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
+  return {
+    chartWidth: cellSize * 56, // fixed ratio
+    cellSize,
+    yearLabelFontSize: cellSize * 2
+  };
+};
+
 function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   const [chartHeight, setChartHeight] = useState(200);
   const [controlHeight, setControlHeight] = useState(0);
@@ -21,9 +30,9 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
 
   const calculateChartTotalHeight = () => {
     if (!chartHeight) return; // don't calculate without main chart height
-    // if theres a control but we haven't gotten value of control height yet, 
+    // if theres a control but we haven't gotten value of control height yet,
     // then don't calculate total yet
-    if (showControl && !controlHeight) return; 
+    if (showControl && !controlHeight) return;
 
     const hasLegend = chartProps.options.legend?.position !== 'none';
 
@@ -54,19 +63,12 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     calculateChartTotalHeight();
   };
 
-  const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
-    const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
-    return {
-      chartWidth: cellSize * 56, // fixed ratio
-      cellSize,
-      yearLabelFontSize: cellSize * 2
-    };
-  };
-
   const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 10, cellSizeMax: 18 });
 
-  chartProps.options = {
-    ...chartProps.options,
+  const calendarChartProps = chartProps;
+
+  calendarChartProps.options = {
+    ...calendarChartProps.options,
     height: chartTotalHeight,
     width: chartWidth || calendarDimensions.chartWidth,
     calendar: {
@@ -84,8 +86,8 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
 
   // additional props if there is a controlFilter present
   if (showControl) {
-    chartProps.controls = [{
-      ...chartProps.controls[0],
+    calendarChartProps.controls = [{
+      ...calendarChartProps.controls[0],
       controlEvents: [
         {
           eventName: 'ready',
@@ -122,7 +124,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
       )}
       <Chart
         style={{ margin: 'auto' }}
-        {...chartProps}
+        {...calendarChartProps}
         chartEvents={[
           {
             eventName: 'ready',

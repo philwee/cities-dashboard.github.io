@@ -387,11 +387,11 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
 }
 
 export default memo(SubChart, (prevProps, nextProps) => {
-  // console.log('subchart called');
   if (prevProps.isPortrait !== nextProps.isPortrait) return false;
   if (prevProps.isHomePage !== nextProps.isHomePage) return false;
   if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
 
-  // console.log(isEqual(prevProps.requirements, nextProps.requirements));
-  return isEqual(prevProps.requirements, nextProps.requirements);
+  // perform light calculations first before performing
+  // deep comparison for chartData object
+  return isEqual(prevProps.chartData, nextProps.chartData);
 });

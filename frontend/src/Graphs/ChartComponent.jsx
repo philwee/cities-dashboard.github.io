@@ -254,7 +254,8 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
 export default memo(ChartComponent, (prevProps, nextProps) => {
   if (prevProps.chartWrapperHeight !== nextProps.chartWrapperHeight) return false;
   if (prevProps.isHomePage !== nextProps.isHomePage) return false;
-  // console.log('memo chartcomponent called', prevProps, nextProps);
-  // console.log(isEqual(prevProps.requirements, nextProps.requirements));
-  return isEqual(prevProps.requirements, nextProps.requirements);
+
+  // perform light calculations first before performing
+  // deep comparison for chartData object
+  return isEqual(prevProps.chartData, nextProps.chartData);
 });

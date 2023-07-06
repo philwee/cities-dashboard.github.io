@@ -1,6 +1,7 @@
-import { useState, useMemo, useEffect, useContext } from 'react';
+import { useState, memo, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
+import isEqual from 'lodash.isequal';
 import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './SubChart';
@@ -102,12 +103,16 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
 }));
 
 // eslint-disable-next-line max-len
-export default function ChartComponent({ chartData, chartWrapperHeight, chartWrapperMaxHeight, isHomepage }) {
+function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passedChartWrapperHeight, isHomepage }) {
   const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
   ]);
+
+  let chartWrapperMaxHeight;
+  let chartWrapperHeight = passedChartWrapperHeight;
+  let chartData = passedChartData;
 
   // use tab context
   const [_, setTab] = useContext(TabContext);
@@ -151,7 +156,7 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     };
-  }, []);
+  }, [chartData]);
 
   if (chartData.chartType !== 'Table' && chartData.chartType !== 'Calendar' && !chartWrapperHeight) {
     chartWrapperHeight = isPortrait ? '80vw' : '35vw';
@@ -219,17 +224,13 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
               left={(index === 0) ? '' : 0}
               visibility={indexValue === index ? 'visible' : 'hidden'}
             >
-              {useMemo(
-                () => (
-                  <SubChart
-                    chartData={chartData}
-                    chartSubIndex={index}
-                    isPortrait={isPortrait}
-                    isHomepage={isHomepage}
-                  />
-                ),
-                [windowSize, isPortrait]
-              )}
+              <SubChart
+                chartData={chartData}
+                chartSubIndex={index}
+                isPortrait={isPortrait}
+                isHomepage={isHomepage}
+                windowSize={windowSize}
+              />
             </Box>
           ))}
         </Box>
@@ -249,3 +250,11 @@ export default function ChartComponent({ chartData, chartWrapperHeight, chartWra
     </ChartStyleWrapper>
   );
 }
+
+export default memo(ChartComponent, (prevProps, nextProps) => {
+  if (prevProps.chartWrapperHeight !== nextProps.chartWrapperHeight) return false;
+  if (prevProps.isHomePage !== nextProps.isHomePage) return false;
+  // console.log('memo chartcomponent called', prevProps, nextProps);
+  // console.log(isEqual(prevProps.requirements, nextProps.requirements));
+  return isEqual(prevProps.requirements, nextProps.requirements);
+});

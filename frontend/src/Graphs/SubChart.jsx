@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Chart } from 'react-google-charts';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
 import { useTheme } from '@mui/material/styles';
+import isEqual from 'lodash.isequal';
 import HeatMap from './HeatMap';
 import CalendarChart from './ResponsiveCalendarChart';
 
@@ -19,7 +20,7 @@ const hideAnnotations = {
   boxStyle: null,
 };
 
-function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
+function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
   // Get the current theme
   const theme = useTheme();
 
@@ -96,7 +97,7 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
     },
     width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
     // if there is a filter, we make space for the chartFilter from the chart's height.
-    // value is divided in 2 because the calculation is applied twice due to 
+    // value is divided in 2 because the calculation is applied twice due to
     // how react-google-charts nest components
     height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
     backgroundColor: { fill: 'transparent' },
@@ -380,8 +381,17 @@ function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
         />
       )}
       <Chart style={{ margin: 'auto' }} {...chartProps} />
+      )
     </Box>
   );
 }
 
-export default SubChart;
+export default memo(SubChart, (prevProps, nextProps) => {
+  // console.log('subchart called');
+  if (prevProps.isPortrait !== nextProps.isPortrait) return false;
+  if (prevProps.isHomePage !== nextProps.isHomePage) return false;
+  if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
+
+  // console.log(isEqual(prevProps.requirements, nextProps.requirements));
+  return isEqual(prevProps.requirements, nextProps.requirements);
+});

@@ -1,9 +1,4 @@
-// disable eslint for this file
-/* eslint-disable */
 import { Typography, Container, Box, Stack } from '@mui/material';
-
-import { Facebook, LinkedIn, Instagram, Twitter } from '@mui/icons-material/';
-import CustomLink from '../CustomLink';
 import SocialHandleGrid from './SocialHandleGrid';
 
 function getYear() {
@@ -13,10 +8,10 @@ function getYear() {
 
 export default function Footer() {
   return (
-    <Box width='100%' backgroundColor='customAlternateBackground' p={3} pt={2}>
-      <Container maxWidth={"sm"}>
+    <Box width="100%" backgroundColor="customAlternateBackground" p={3} pt={2}>
+      <Container maxWidth="sm">
         <Stack direction="column" textAlign="center">
-          <Typography variant="body1" fontWeight="bold" color='text.primary' pb={2}>
+          <Typography variant="body1" fontWeight="bold" color="text.primary" pb={2}>
             Center for Interacting Urban Networks (CITIES)
             <br />
             {getYear()}
@@ -25,6 +20,6 @@ export default function Footer() {
           <SocialHandleGrid />
         </Stack>
       </Container>
-    </Box >
+    </Box>
   );
 }

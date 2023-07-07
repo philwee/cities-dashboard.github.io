@@ -145,9 +145,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
 
 const MemoizedChart = memo(
   ({ calendarChartProps }) => <Chart style={{ margin: 'auto' }} {...calendarChartProps} />,
-  (prevProps, nextProps) => {
-    return isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps);
-  }
+  (prevProps, nextProps) => isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps)
 );
 
 export default CalendarChart;

@@ -385,9 +385,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
 
 const MemoizedChart = memo(
   ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
-  (prevProps, nextProps) => {;
-    return isEqual(prevProps.chartProps, nextProps.chartProps);
-  }
+  (prevProps, nextProps) => isEqual(prevProps.chartProps, nextProps.chartProps)
 );
 
 export default memo(SubChart, (prevProps, nextProps) => {

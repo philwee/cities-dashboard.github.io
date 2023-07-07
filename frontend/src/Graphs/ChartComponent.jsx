@@ -243,19 +243,21 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
       position="relative"
       height={chartData.height ? chartData.height : chartWrapperHeight}
       maxHeight={
-          chartData.chartType === 'HeatMap' ? '' : chartWrapperMaxHeight
-        }
+        chartData.chartType === 'HeatMap' ? '' : chartWrapperMaxHeight
+      }
     >
       <SubChart chartData={chartData} isPortrait={isPortrait} isHomepage={isHomepage} />
     </ChartStyleWrapper>
   );
 }
 
-export default memo(ChartComponent, (prevProps, nextProps) => {
-  if (prevProps.chartWrapperHeight !== nextProps.chartWrapperHeight) return false;
-  if (prevProps.isHomePage !== nextProps.isHomePage) return false;
+export default ChartComponent;
 
-  // perform light calculations first before performing
-  // deep comparison for chartData object
-  return isEqual(prevProps.chartData, nextProps.chartData);
-});
+// export default memo(ChartComponent, (prevProps, nextProps) => {
+//   if (prevProps.chartWrapperHeight !== nextProps.chartWrapperHeight) return false;
+//   if (prevProps.isHomePage !== nextProps.isHomePage) return false;
+
+//   // perform light calculations first before performing
+//   // deep comparison for chartData object
+//   return isEqual(prevProps.chartData, nextProps.chartData);
+// });

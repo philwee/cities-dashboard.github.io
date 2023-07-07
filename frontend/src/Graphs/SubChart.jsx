@@ -378,14 +378,18 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
         />
       )}
       {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
-      <MemoizedChart chartProps={chartProps} />
+      <MemoizedChart chartProps={chartProps} isPortrait={isPortrait} />
     </Box>
   );
 }
 
 const MemoizedChart = memo(
   ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
-  (prevProps, nextProps) => isEqual(prevProps.chartProps, nextProps.chartProps)
+  (prevProps, nextProps) => {
+    console.log(nextProps);
+    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
+    return isEqual(prevProps.chartProps, nextProps.chartProps);
+  }
 );
 
 export default memo(SubChart, (prevProps, nextProps) => {

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { Chart } from 'react-google-charts';
+import isEqual from 'lodash.isequal';
 import { Box, CircularProgress, styled } from '@mui/material/';
 
 const StyledChartWrapper = styled(Box)({
@@ -65,42 +66,57 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
 
   const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 10, cellSizeMax: 18 });
 
-  const calendarChartProps = chartProps;
+  // When chart is ready
+  const chartEvents = useMemo(() => [
+    {
+      eventName: 'ready',
+      callback: (({ chartWrapper }) => {
+        updateChartHeight(chartWrapper.getChart());
+        displayCircleProgress(false);
+      })
+    }
+  ], [chartHeight, controlHeight]);
 
-  calendarChartProps.options = {
-    ...calendarChartProps.options,
-    height: chartTotalHeight,
-    width: chartWidth || calendarDimensions.chartWidth,
-    calendar: {
-      cellSize: calendarDimensions.cellSize,
-      yearLabel: {
-        fontSize: calendarDimensions.yearLabelFontSize
+  const controlEvents = useMemo(() => [
+    {
+      eventName: 'ready',
+      callback: (({ controlWrapper }) => {
+        updateControlHeight(controlWrapper);
+      })
+    },
+    { eventName: 'statechange',
+      callback: (({ controlWrapper }) => {
+        updateControlHeight(controlWrapper);
+      }),
+    },
+  ], [chartHeight, controlHeight]);
+
+  const calendarChartProps = useMemo(() => ({
+    ...chartProps,
+    options: {
+      ...chartProps.options,
+      height: chartTotalHeight,
+      width: chartWidth || calendarDimensions.chartWidth,
+      calendar: {
+        cellSize: calendarDimensions.cellSize,
+        yearLabel: {
+          fontSize: calendarDimensions.yearLabelFontSize
+        },
+        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
       },
-      daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
+      noDataPattern: {
+        backgroundColor: 'none',
+        color: 'none',
+      },
     },
-    noDataPattern: {
-      backgroundColor: 'none',
-      color: 'none',
-    },
-  };
+    chartEvents
+  }), [chartProps, chartTotalHeight, calendarDimensions]);
 
   // additional props if there is a controlFilter present
   if (showControl) {
     calendarChartProps.controls = [{
       ...calendarChartProps.controls[0],
-      controlEvents: [
-        {
-          eventName: 'ready',
-          callback: (({ controlWrapper }) => {
-            updateControlHeight(controlWrapper);
-          })
-        },
-        { eventName: 'statechange',
-          callback: (({ controlWrapper }) => {
-            updateControlHeight(controlWrapper);
-          }),
-        },
-      ],
+      controlEvents,
     }];
   }
 
@@ -122,21 +138,16 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
           }}
         />
       )}
-      <Chart
-        style={{ margin: 'auto' }}
-        {...calendarChartProps}
-        chartEvents={[
-          {
-            eventName: 'ready',
-            callback: (({ chartWrapper }) => {
-              updateChartHeight(chartWrapper.getChart());
-              displayCircleProgress(false);
-            })
-          }
-        ]}
-      />
+      <MemoizedChart calendarChartProps={calendarChartProps} />
     </StyledChartWrapper>
   );
 }
+
+const MemoizedChart = memo(
+  ({ calendarChartProps }) => <Chart style={{ margin: 'auto' }} {...calendarChartProps} />,
+  (prevProps, nextProps) => {
+    return isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps);
+  }
+);
 
 export default CalendarChart;

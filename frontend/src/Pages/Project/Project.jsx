@@ -64,8 +64,6 @@ const Project = ({ themePreference }) => {
 
   const [sheetsData] = useContext(SheetsDataContext);
   const lastUpdate = sheetsData[project.id];
-  
-  console.log('Project updating')
 
   // Update the page's title
   useEffect(() => { if (project.title) document.title = `${project.title} | CITIES Dashboard`, [project] });

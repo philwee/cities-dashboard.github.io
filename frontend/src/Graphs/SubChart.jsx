@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { Chart } from 'react-google-charts';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
@@ -26,28 +26,6 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
 
   // Show CircleProgress or not
   const [circleProgress, displayCircleProgress] = useState(true);
-
-  // Early return if the chartType is HeatMap
-  if (chartData.chartType === 'HeatMap') {
-    return (
-      <Box
-        position="relative"
-        className={chartData.chartType}
-        height={chartData.height}
-        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
-        width="100%"
-        sx={{ pt: 2, pb: 2, margin: 'auto' }}
-      >
-        <HeatMap
-          publishedSheetId={chartData.publishedSheetId}
-          gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
-          range={
-            chartData.range || chartData.subcharts[chartSubIndex].range || null
-          }
-        />
-      </Box>
-    );
-  }
 
   // Options object for the chart
   let options = {};
@@ -295,16 +273,16 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
   }
 
   // When chart is ready
-  const chartEvents = [
+  const chartEvents = useMemo(() => [
     {
       eventName: 'ready',
       callback: () => {
         displayCircleProgress(false);
       },
     },
-  ];
+  ], []);
 
-  const chartProps = {
+  const chartProps = useMemo(() => ({
     chartType: chartData.chartType,
     chartWrapperParams: {
       view: {
@@ -350,7 +328,28 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
         ]
       } : {}
     )
-  };
+  }), [chartData, windowSize]);
+
+  if (chartData.chartType === 'HeatMap') {
+    return (
+      <Box
+        position="relative"
+        className={chartData.chartType}
+        height={chartData.height}
+        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
+        width="100%"
+        sx={{ pt: 2, pb: 2, margin: 'auto' }}
+      >
+        <HeatMap
+          publishedSheetId={chartData.publishedSheetId}
+          gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
+          range={
+            chartData.range || chartData.subcharts[chartSubIndex].range || null
+          }
+        />
+      </Box>
+    );
+  }
 
   if (chartData.chartType === 'Calendar') {
     return (
@@ -378,10 +377,18 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
           }}
         />
       )}
-      <Chart style={{ margin: 'auto' }} {...chartProps} />
+      {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
+      <MemoizedChart chartProps={chartProps} />
     </Box>
   );
 }
+
+const MemoizedChart = memo(
+  ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
+  (prevProps, nextProps) => {;
+    return isEqual(prevProps.chartProps, nextProps.chartProps);
+  }
+);
 
 export default memo(SubChart, (prevProps, nextProps) => {
   if (prevProps.isPortrait !== nextProps.isPortrait) return false;

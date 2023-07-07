@@ -1,6 +1,7 @@
-import { React } from 'react';
+import { memo } from 'react';
 
-export default function HeatMap({ publishedSheetId, gid, range }) {
+function HeatMap(props) {
+  const { publishedSheetId, gid, range } = props;
   const embedLink = `https://docs.google.com/spreadsheets/d/e/${publishedSheetId}/pubhtml?gid=${gid}&single=true&widget=false&headers=false&chrome=false&range=${range}`;
   return (
     <iframe
@@ -10,7 +11,8 @@ export default function HeatMap({ publishedSheetId, gid, range }) {
       src={embedLink}
     >
       Loading...
-
     </iframe>
   );
 }
+
+export default memo(HeatMap);

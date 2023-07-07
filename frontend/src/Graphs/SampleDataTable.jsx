@@ -1,3 +1,5 @@
+import { memo } from 'react';
+import isEqual from 'lodash.isequal';
 import { styled } from '@mui/material/styles';
 import Chart from 'react-google-charts';
 
@@ -17,10 +19,10 @@ const StyledTable = styled('div')(({ theme, marginBottom }) => ({
     backgroundColor: theme.palette.customAlternateBackground,
   },
   '& .table-row .table-cell:first-of-type, & .odd-table-row .table-cell:first-of-type':
-    {
-      fontWeight: 'bold',
-      backgroundColor: theme.palette.customAlternateBackground,
-    },
+  {
+    fontWeight: 'bold',
+    backgroundColor: theme.palette.customAlternateBackground,
+  },
 
   '& .frozen-column': {
     borderRightWidth: '1px !important'
@@ -61,4 +63,5 @@ function SampleDataTable(props) {
   );
 }
 
-export default SampleDataTable;
+// eslint-disable-next-line max-len
+export default memo(SampleDataTable, (prevProps, nextProps) => isEqual(prevProps.chartData, nextProps.chartData));

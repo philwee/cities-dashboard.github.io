@@ -1,20 +1,18 @@
-// disable eslint for this file
-/* eslint-disable */
-
 import { useEffect } from 'react';
-import { useLocation, useNavigationType } from 'react-router';
+import { useLocation, useNavigationType } from 'react-router-dom';
 
-const ScrollToTop = (props) => {
+function ScrollToTop({ children }) {
   const location = useLocation();
   const navigationType = useNavigationType();
+
   useEffect(() => {
     // if navigation type is pop, do not scroll to top
     if (navigationType !== 'POP') {
       window.scrollTo(0, 0);
     }
-  }, [location]);
+  }, [location, navigationType]);
 
-  return <>{props.children}</>;
-};
+  return children || null;
+}
 
 export default ScrollToTop;

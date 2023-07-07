@@ -936,12 +936,12 @@
         "title": "Mean Daily Food Waste (kg) by Week",
         "headers": 1,
         "chartType": "ComboChart",
+        "gid": 1409006115,
         "subcharts": [
           {
-            "gid": 1409006115,
             "subchartTitle": "Total (3 meals)",
             "subchartSubtitle": "<b>Adjust the slider to zoom in.</b><br><br>From this visualization of average daily food waste by month, it is evident that the absolute amount of food waste is on the rise. This might be due to several factors:<ul><li>The loosening of COVID restrictions in 2022, which allowed more people to come back to campus</li><li>An absolute increase in the number of people eating at D2 as the student population increases year-by-year</li><li>Operational changes during the hand-over period between the catering providers (ADNH: prior to July 2022, RCS: after July 2022)</li></ul>",
-            "query": "SELECT C, E, G, H, I, J WHERE A IS NOT NULL",
+            "query": "SELECT C, M, N, O, S, T WHERE A IS NOT NULL",
             "columns": [
               0,
               1,
@@ -972,28 +972,52 @@
                   "lineWidth": 3
                 }
               }
+            },
+            "control": {
+              "mobile": {
+                "controlType": "DateRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "format": {
+                      "pattern": "MMM yyyy"
+                    },
+                    "label": ""
+                  }
+                }
+              },
+              "desktop": {
+                "controlType": "ChartRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "minRangeSize": 31536000000
+                  }
+                }
+              }
             }
           },
           {
-            "gid": 1232867906,
             "subchartTitle": "by Meal (Stacked)",
             "subchartSubtitle": "When the data is broken down into the three constituent meals, the majority of food waste comes from lunch and dinner",
-            "query": "SELECT C, D, F, H, P, Q, R, S WHERE A IS NOT NULL",
+            "query": "SELECT C, D, P, G, Q, J, R, T WHERE A IS NOT NULL",
             "columns": [
               0,
               1,
               {
                 "role": "tooltip",
                 "type": "string",
-                "sourceColumn": 4
+                "sourceColumn": 2
               },
-              2,
+              3,
               {
                 "role": "tooltip",
                 "type": "string",
-                "sourceColumn": 5
+                "sourceColumn": 4
               },
-              3,
+              5,
               {
                 "role": "tooltip",
                 "type": "string",
@@ -1008,6 +1032,31 @@
             "options": {
               "seriesType": "area",
               "isStacked": true
+            },
+            "control": {
+              "mobile": {
+                "controlType": "DateRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "format": {
+                      "pattern": "MMM yyyy"
+                    },
+                    "label": ""
+                  }
+                }
+              },
+              "desktop": {
+                "controlType": "ChartRangeFilter",
+                "controlPosition": "bottom",
+                "options": {
+                  "filterColumnIndex": 0,
+                  "ui": {
+                    "minRangeSize": 31536000000
+                  }
+                }
+              }
             }
           }
         ],
@@ -1036,31 +1085,6 @@
           },
           "intervals": {
             "style": "area"
-          }
-        },
-        "control": {
-          "mobile": {
-            "controlType": "DateRangeFilter",
-            "controlPosition": "bottom",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "format": {
-                  "pattern": "MMM yyyy"
-                },
-                "label": ""
-              }
-            }
-          },
-          "desktop": {
-            "controlType": "ChartRangeFilter",
-            "controlPosition": "bottom",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "minRangeSize": 31536000000
-              }
-            }
           }
         }
       },

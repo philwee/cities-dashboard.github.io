@@ -171,9 +171,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
       case 'matchingColor':
         options.colorAxis.colors = [
           theme.palette.chart.colorAxisFirstColor,
-          theme.palette.chart.optionsColors.multiColor[
-            options.colorAxis.colorIndex
-          ],
+          theme.palette.chart.optionsColors.multiColor[options.colorAxis.colorIndex],
         ];
         break;
       case 'default':
@@ -381,7 +379,6 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
         />
       )}
       <Chart style={{ margin: 'auto' }} {...chartProps} />
-      )
     </Box>
   );
 }

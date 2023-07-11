@@ -24,16 +24,15 @@ const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
 
 function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
-  const chartHeight = useRef(200);
+  const chartHeight = useRef(0);
   const controlHeight = useRef(0);
 
   const [circleProgress, displayCircleProgress] = useState(true);
 
   const calculateChartTotalHeight = useCallback(() => {
-    // if theres a control but we haven't gotten value of control height yet,
-    // then don't calculate total yet
+    // early return if both values are not ready
+    if (!chartHeight.current) return;
     if (showControl && !controlHeight.current) return;
-
     const hasLegend = chartProps.options.legend?.position !== 'none';
 
     let calculatedHeight = chartHeight.current * (hasLegend ? 1.07 : 1.15);
@@ -92,7 +91,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     ...chartProps,
     options: {
       ...chartProps.options,
-      height: '100%',
+      height: chartTotalHeight,
       width: calendarDimensions.chartWidth,
       calendar: {
         cellSize: calendarDimensions.cellSize,

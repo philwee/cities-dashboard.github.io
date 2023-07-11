@@ -141,10 +141,9 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
         // we redraw Calendar/Filter type charts on ANY window resize, even if
         // device orientation does not change.
 
-        if (chartData.chartType === 'Calendar'
-          || (chartData.subcharts?.some((subchart) => subchart.filter != null))
-          || (chartData.filter != null)) {
-          setWindowSize(window.innerWidth, window.innerHeight);
+        if (chartData.subcharts?.some((subchart) => subchart.control != null)
+          || (chartData.control != null)) {
+          setWindowSize([window.innerWidth, window.innerHeight]);
         }
       }, debounceMilliseconds);
     };

@@ -20,7 +20,7 @@ const hideAnnotations = {
   boxStyle: null,
 };
 
-export default function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
+export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
   // Get the current theme
   const theme = useTheme();
 
@@ -358,7 +358,6 @@ export default function SubChart({ chartData, chartSubIndex, isPortrait, isHomep
         chartProps={chartProps}
         isPortrait={isPortrait}
         showControl={showControl}
-        chartFilterHeightInPixel={chartFilterHeightInPixel}
       />
     );
   }
@@ -378,7 +377,7 @@ export default function SubChart({ chartData, chartSubIndex, isPortrait, isHomep
         />
       )}
       {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
-      <MemoizedChart chartProps={chartProps} isPortrait={isPortrait} />
+      <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
     </Box>
   );
 }
@@ -386,6 +385,7 @@ export default function SubChart({ chartData, chartSubIndex, isPortrait, isHomep
 const MemoizedChart = memo(
   ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
   (prevProps, nextProps) => {
+    if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
     if (prevProps.isPortrait !== nextProps.isPortrait) return false;
     return isEqual(prevProps.chartProps, nextProps.chartProps);
   }

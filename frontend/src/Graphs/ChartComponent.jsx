@@ -1,7 +1,6 @@
-import { useState, memo, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
-import isEqual from 'lodash.isequal';
 import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './SubChart';

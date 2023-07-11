@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from 'react';
+import { useState, useMemo, useCallback, memo } from 'react';
 import { Chart } from 'react-google-charts';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
@@ -20,7 +20,7 @@ const hideAnnotations = {
   boxStyle: null,
 };
 
-function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
+export default function SubChart({ chartData, chartSubIndex, isPortrait, isHomepage }) {
   // Get the current theme
   const theme = useTheme();
 
@@ -273,16 +273,16 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
   }
 
   // When chart is ready
-  const chartEvents = useMemo(() => [
+  const chartEvents = [
     {
       eventName: 'ready',
-      callback: () => {
+      callback: useCallback(() => {
         displayCircleProgress(false);
-      },
-    },
-  ], []);
+      }, [displayCircleProgress])
+    }
+  ];
 
-  const chartProps = useMemo(() => ({
+  const chartProps = {
     chartType: chartData.chartType,
     chartWrapperParams: {
       view: {
@@ -328,7 +328,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
         ]
       } : {}
     )
-  }), [chartData, windowSize]);
+  };
 
   if (chartData.chartType === 'HeatMap') {
     return (
@@ -386,18 +386,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
 const MemoizedChart = memo(
   ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
   (prevProps, nextProps) => {
-    console.log(nextProps);
     if (prevProps.isPortrait !== nextProps.isPortrait) return false;
     return isEqual(prevProps.chartProps, nextProps.chartProps);
   }
 );
-
-export default memo(SubChart, (prevProps, nextProps) => {
-  if (prevProps.isPortrait !== nextProps.isPortrait) return false;
-  if (prevProps.isHomePage !== nextProps.isHomePage) return false;
-  if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
-
-  // perform light calculations first before performing
-  // deep comparison for chartData object
-  return isEqual(prevProps.chartData, nextProps.chartData);
-});

@@ -1,7 +1,5 @@
-import { memo } from 'react';
-import isEqual from 'lodash.isequal';
 import { styled } from '@mui/material/styles';
-import Chart from 'react-google-charts';
+import MemoizedChart from './MemoizedChart';
 
 // Styled component for the Google Table chart
 const StyledTable = styled('div')(({ theme, marginBottom }) => ({
@@ -49,7 +47,7 @@ function SampleDataTable(props) {
 
   return (
     <StyledTable marginBottom={marginBottom}>
-      <Chart
+      <MemoizedChart
         chartType="Table"
         spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${sheetId}`}
         spreadSheetQueryParameters={{
@@ -63,5 +61,4 @@ function SampleDataTable(props) {
   );
 }
 
-// eslint-disable-next-line max-len
-export default memo(SampleDataTable, (prevProps, nextProps) => isEqual(prevProps.chartData, nextProps.chartData));
+export default SampleDataTable;

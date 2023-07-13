@@ -1,7 +1,6 @@
-import { useState, useRef, memo, useCallback } from 'react';
-import { Chart } from 'react-google-charts';
-import isEqual from 'lodash.isequal';
+import { useState, useRef, useCallback } from 'react';
 import { Box, CircularProgress, styled } from '@mui/material/';
+import MemoizedChart from './MemoizedChart';
 
 const StyledChartWrapper = styled(Box)({
   // Override React Google Charts to make Calendar chart truly responsive
@@ -136,17 +135,9 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
           }}
         />
       )}
-      <MemoizedChart calendarChartProps={calendarChartProps} isPortrait={isPortrait} />
+      <MemoizedChart chartProps={calendarChartProps} isPortrait={isPortrait} />
     </StyledChartWrapper>
   );
 }
-
-const MemoizedChart = memo(
-  ({ calendarChartProps }) => <Chart style={{ margin: 'auto' }} {...calendarChartProps} />,
-  (prevProps, nextProps) => {
-    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
-    return isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps);
-  }
-);
 
 export default CalendarChart;

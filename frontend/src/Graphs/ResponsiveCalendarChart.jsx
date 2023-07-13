@@ -91,7 +91,9 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     ...chartProps,
     options: {
       ...chartProps.options,
-      height: chartTotalHeight,
+      // overcompensate the height of chart SVG element. this is OK as
+      // the chart container will clip the chart to it's expected height of {chartTotalHeight}
+      height: '1000px',
       width: calendarDimensions.chartWidth,
       calendar: {
         cellSize: calendarDimensions.cellSize,

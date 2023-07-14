@@ -45,18 +45,20 @@ function SampleDataTable(props) {
     }
   };
 
+  const chartProps = {
+    chartType: 'Table',
+    spreadSheetUrl: `https://docs.google.com/spreadsheets/d/${sheetId}`,
+    spreadSheetQueryParameters: {
+      headers: chartData.headers,
+      query: chartData.query,
+      gid: chartData.gid,
+    },
+    options
+  };
+
   return (
     <StyledTable marginBottom={marginBottom}>
-      <MemoizedChart
-        chartType="Table"
-        spreadSheetUrl={`https://docs.google.com/spreadsheets/d/${sheetId}`}
-        spreadSheetQueryParameters={{
-          headers: chartData.headers,
-          query: chartData.query,
-          gid: chartData.gid,
-        }}
-        options={options}
-      />
+      <MemoizedChart chartProps={chartProps} />
     </StyledTable>
   );
 }

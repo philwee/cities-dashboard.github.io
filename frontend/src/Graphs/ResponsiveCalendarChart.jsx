@@ -34,7 +34,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     if (showControl && !controlHeight.current) return;
     const hasLegend = chartProps.options.legend?.position !== 'none';
 
-    let calculatedHeight = chartHeight.current * (hasLegend ? 1.07 : 1.15);
+    let calculatedHeight = chartHeight.current + (hasLegend ? 30 : 60);
     calculatedHeight += controlHeight.current;
 
     setChartTotalHeight(calculatedHeight);
@@ -79,7 +79,8 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
         updateControlHeight(controlWrapper);
       }, [updateControlHeight])
     },
-    { eventName: 'statechange',
+    {
+      eventName: 'statechange',
       callback: useCallback(({ controlWrapper }) => {
         updateControlHeight(controlWrapper);
       }, [updateControlHeight]),

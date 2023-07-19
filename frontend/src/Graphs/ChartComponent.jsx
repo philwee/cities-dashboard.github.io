@@ -161,6 +161,14 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
 
+  if (chartData.identifier?.includes('student-categories-by-term')) {
+    const windowHeight = windowSize[1];
+    // If not potrait, make sure that height is always >= 40vw
+    // else, make sure that height is always >= 120vw
+    chartWrapperHeight = isPortrait ? `${windowHeight * 0.69}px` : `${windowHeight * 0.73}px`;
+    chartWrapperMaxHeight = isPortrait ? `${windowHeight * 1.5}px` : `${windowHeight * 0.75}px`;
+  }
+
   // Assign the subcharts array for HeatMap based on the device orientation
   if (chartData.chartType === 'HeatMap' || chartData.chartType === 'ComboChart') {
     chartData = {

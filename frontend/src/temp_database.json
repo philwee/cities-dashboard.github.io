@@ -1496,6 +1496,71 @@
             "isHtml": true
           }
         }
+      },
+      {
+        "title": "Comparison of Student Categories by Term",
+        "chartType": "LineChart",
+        "gid": 1803261581,
+        "headers": 1,
+        "query": "SELECT G, F, M, B, I, D, K, E, L",
+        "columns": [
+          0,
+          1,
+          {
+            "role": "tooltip",
+            "sourceColumn": 2
+          },
+          3,
+          {
+            "role": "tooltip",
+            "sourceColumn": 4
+          },
+          5,
+          {
+            "role": "tooltip",
+            "sourceColumn": 6
+          },
+          7,
+          {
+            "role": "tooltip",
+            "sourceColumn": 8
+          }
+        ],
+        "options": {
+          "pointSize": 5,
+          "hAxis": {
+            "title": "Term",
+            "format": "yyyy"
+          },
+          "vAxis": {
+            "title": "Number of Students"
+          }
+        },
+        "control": {
+          "mobile": {
+            "controlType": "DateRangeFilter",
+            "controlPosition": "bottom",
+            "options": {
+              "filterColumnIndex": 0,
+              "ui": {
+                "format": {
+                  "pattern": "yyyy"
+                },
+                "label": ""
+              }
+            }
+          },
+          "desktop": {
+            "controlType": "ChartRangeFilter",
+            "controlPosition": "bottom",
+            "options": {
+              "filterColumnIndex": 0,
+              "ui": {
+                "minRangeSize": 94608000000
+              }
+            }
+          }
+        }
       }
     ]
   },

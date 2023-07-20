@@ -1502,13 +1502,17 @@
         "chartType": "LineChart",
         "gid": 1803261581,
         "headers": 1,
-        "query": "SELECT G, F, M, B, I, D, K, E, L",
+        "query": "SELECT H, F, M, B, I, D, K, E, L, G",
         "columns": [
           0,
           1,
           {
             "role": "tooltip",
             "sourceColumn": 2
+          },
+          {
+            "role": "certainty",
+            "sourceColumn": 9
           },
           3,
           {

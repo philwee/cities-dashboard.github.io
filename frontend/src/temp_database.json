@@ -1495,7 +1495,7 @@
         "options": {
           "pointSize": 5,
           "hAxis": {
-            "title": "Term",
+            "title": "Academic Term",
             "format": "yyyy",
             "minorGridlines": {
               "count": 0

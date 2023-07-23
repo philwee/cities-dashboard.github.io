@@ -404,7 +404,7 @@
           }
         ],
         "options": {
-          "colors": "monochromatic",
+          "colors": "monochromatic2Colors",
           "vAxis": {
             "title": "PM2.5 Concentration (µg/m3)"
           },
@@ -678,7 +678,7 @@
               }
             ],
             "options": {
-              "colors": "monochromatic",
+              "colors": "monochromatic2Colors",
               "series": {
                 "0": {
                   "type": "line",
@@ -961,7 +961,7 @@
               }
             ],
             "options": {
-              "colors": "monochromatic",
+              "colors": "monochromatic2Colors",
               "seriesType": "line",
               "series": {
                 "0": {
@@ -1346,150 +1346,25 @@
     ],
     "charts": [
       {
-        "title": "New First Year Cohort Size by Academic Year (AY), with Year-by-year Growth (%)",
-        "gid": 690526695,
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ComboChart",
-        "subcharts": [
-          {
-            "subchartTitle": "Cohort Size",
-            "query": "SELECT A, B",
-            "options": {
-              "hAxis": {
-                "slantedText": true,
-                "slantedTextAngle": 60
-              },
-              "vAxis": {
-                "title": "New First Year Cohort Size (Students)",
-                "format": "decimal"
-              },
-              "colors": [
-                "#9f95a6"
-              ],
-              "seriesType": "bars",
-              "series": {
-                "0": {
-                  "targetAxisIndex": 0
-                }
-              }
-            }
-          },
-          {
-            "subchartTitle": "Year-by-Year Growth",
-            "query": "SELECT A, C",
-            "options": {
-              "hAxis": {
-                "slantedText": true,
-                "slantedTextAngle": 60
-              },
-              "vAxis": {
-                "title": "Year-by-year growth (%)",
-                "format": "#.##%",
-                "viewWindow": {
-                  "min": -0.1,
-                  "max": 0.5
-                }
-              },
-              "colors": [
-                "#57068c"
-              ],
-              "seriesType": "line",
-              "series": {
-                "1": {
-                  "targetAxisIndex": 1
-                }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "title": "Breakdown of Undegraduate Students' Citizenship (UAE and US)",
-        "gid": 1856255581,
-        "subcharts": [
-          {
-            "subchartTitle": "Percentage",
-            "query": "SELECT A, C, D, E WHERE A CONTAINS 'Fall'",
-            "options": {
-              "vAxis": {
-                "format": "#.##%"
-              }
-            }
-          },
-          {
-            "subchartTitle": "Absolute",
-            "query": "SELECT A, F, G, H WHERE A CONTAINS 'Fall'"
-          }
-        ],
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "options": {
-          "isStacked": true,
-          "colors": [
-            "#57068c",
-            "#9f95a6",
-            "#cccccc"
-          ]
-        }
-      },
-      {
-        "title": "Number of Students by Level of Education (Undergrads, Masters, PhD)",
-        "gid": 1997121971,
-        "subcharts": [
-          {
-            "subchartTitle": "Percentage",
-            "query": "SELECT A, K, L, M WHERE A CONTAINS 'Fall'",
-            "options": {
-              "vAxis": {
-                "format": "#.##%"
-              }
-            }
-          },
-          {
-            "subchartTitle": "Absolute",
-            "query": "SELECT A, B, F, G WHERE A CONTAINS 'Fall'"
-          }
-        ],
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "options": {
-          "isStacked": true
-        }
-      },
-      {
-        "title": "Comparison of Student Categories by Term",
+        "title": "Approximate Number of Students on Campus",
         "chartType": "LineChart",
         "gid": 1803261581,
         "headers": 1,
-        "query": "SELECT H, F, M, B, I, D, K, E, L, G",
+        "query": "SELECT B, C, D, E, F, G, H, I",
         "columns": [
           0,
           1,
-          {
-            "role": "tooltip",
-            "sourceColumn": 2
-          },
+          2,
+          3,
+          4,
           {
             "role": "certainty",
-            "sourceColumn": 9
+            "sourceColumn": 5
           },
-          3,
+          6,
           {
-            "role": "tooltip",
-            "sourceColumn": 4
-          },
-          5,
-          {
-            "role": "tooltip",
-            "sourceColumn": 6
-          },
-          7,
-          {
-            "role": "tooltip",
-            "sourceColumn": 8
+            "role": "certainty",
+            "sourceColumn": 7
           }
         ],
         "options": {
@@ -1538,6 +1413,112 @@
               }
             }
           }
+        }
+      },
+      {
+        "title": "Compositions of Students by Level of Education (Undergraduate, Masters, PhD), by Academic Year (AY)",
+        "gid": 1622588326,
+        "query": "SELECT A, C, H, G WHERE A CONTAINS 'Fall'",
+        "subcharts": [
+          {
+            "subchartTitle": "Absolute Numbers"
+          },
+          {
+            "subchartTitle": "Percentage",
+            "options": {
+              "isStacked": "percent",
+              "vAxis": {
+                "format": "#.##%"
+              }
+            }
+          }
+        ],
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ColumnChart"
+      },
+      {
+        "title": "Compositions of Undergraduate Student Population, by Academic Year (AY)",
+        "gid": 690526695,
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ComboChart",
+        "subcharts": [
+          {
+            "subchartTitle": "Absolute Numbers",
+            "query": "SELECT A, B, D, F",
+            "options": {
+              "vAxis": {
+                "title": "Number of Students",
+                "format": "decimal"
+              },
+              "seriesType": "bars",
+              "series": {
+                "2": {
+                  "type": "line"
+                }
+              }
+            }
+          },
+          {
+            "subchartTitle": "Percentage",
+            "query": "SELECT A, B, D",
+            "options": {
+              "vAxis": {
+                "title": "Percentage of Undergraduate Student Population",
+                "format": "#%"
+              },
+              "seriesType": "bars",
+              "isStacked": "percent"
+            }
+          },
+          {
+            "subchartTitle": "Year-by-Year Growth",
+            "query": "SELECT A, C, E, G",
+            "options": {
+              "vAxis": {
+                "title": "Year-by-year growth (%)",
+                "format": "#.##%",
+                "viewWindow": {
+                  "min": -0.1
+                }
+              },
+              "seriesType": "line"
+            }
+          }
+        ],
+        "options": {
+          "pointSize": 5,
+          "hAxis": {
+            "slantedText": true,
+            "slantedTextAngle": 45
+          }
+        }
+      },
+      {
+        "title": "Breakdown of Undergraduate Students' Citizenship (UAE and US)",
+        "gid": 1856255581,
+        "subcharts": [
+          {
+            "subchartTitle": "Percentage",
+            "query": "SELECT A, C, D, E WHERE A CONTAINS 'Fall'",
+            "options": {
+              "isStacked": true,
+              "vAxis": {
+                "format": "#.##%"
+              }
+            }
+          },
+          {
+            "subchartTitle": "Approx. Absolute Numbers",
+            "query": "SELECT A, F, G, H WHERE A CONTAINS 'Fall'"
+          }
+        ],
+        "subtitle": "",
+        "headers": 1,
+        "chartType": "ColumnChart",
+        "options": {
+          "colors": "monochromatic3Colors"
         }
       }
     ]

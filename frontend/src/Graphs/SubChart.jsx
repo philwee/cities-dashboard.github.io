@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import isEqual from 'lodash.isequal';
 import HeatMap from './HeatMap';
 import CalendarChart from './ResponsiveCalendarChart';
-import StudentPopChart from './StudentPopulation';
+// import StudentPopChart from './StudentPopulation';
 
 const chartFilterHeightInPixel = 50;
 
@@ -261,9 +261,10 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
       },
       chartOptions: {
         ...options,
+        ...chartControl.options?.ui?.chartOptions,
         height: chartFilterHeightInPixel,
-        vAxis: null,
         hAxis: {
+          ...chartControl.options?.ui?.chartOptions?.hAxis,
           textPosition: 'out',
           textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
         },
@@ -363,19 +364,19 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     );
   }
 
-  if (chartData.identifier?.includes('student-categories-by-term')) {
-    return (
-      <Box
-        position="relative"
-        className={chartData.chartType}
-        height={chartData.height}
-        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
-        sx={{ pt: 2, pb: 2, margin: 'auto' }}
-      >
-        <StudentPopChart options={chartData.options} />
-      </Box>
-    );
-  }
+  // if (chartData.identifier?.includes('student-categories-by-term')) {
+  //   return (
+  //     <Box
+  //       position="relative"
+  //       className={chartData.chartType}
+  //       height={chartData.height}
+  //       maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
+  //       sx={{ pt: 2, pb: 2, margin: 'auto' }}
+  //     >
+  //       <StudentPopChart options={chartData.options} />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box

@@ -209,7 +209,6 @@ function StudentPopChart({ options }) {
               showColorCode: true,
             },
             curveType: 'function',
-            pointSize: 5,
             legend: isPortrait ? {
               alignment: 'center',
               position: 'top',

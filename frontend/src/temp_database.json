@@ -1461,44 +1461,6 @@
       },
       {
         "title": "Comparison of Student Categories by Term",
-        "identifier": "student-categories-by-term",
-        "gid": 1570783580,
-        "headers": 1,
-        "query": "SELECT Q, B, D, E, J",
-        "options": {
-          "hAxis": {
-            "title": "Term",
-            "textStyle": {
-              "fontSize": 10
-            },
-            "gridlines": {
-              "color": "transparent"
-            },
-            "format": "yyyy"
-          },
-          "vAxis": {
-            "title": "Number of Students",
-            "format": "decimal",
-            "gridlines": {
-              "color": "transparent"
-            }
-          },
-          "colors": [
-            "#1f77b4",
-            "#a778c2",
-            "#2ca02c",
-            "#e74c3c"
-          ],
-          "maxWidth": "350px",
-          "pointSize": 5,
-          "lineWidth": 2,
-          "tooltip": {
-            "isHtml": true
-          }
-        }
-      },
-      {
-        "title": "Comparison of Student Categories by Term",
         "chartType": "LineChart",
         "gid": 1803261581,
         "headers": 1,
@@ -1534,7 +1496,10 @@
           "pointSize": 5,
           "hAxis": {
             "title": "Term",
-            "format": "yyyy"
+            "format": "yyyy",
+            "minorGridlines": {
+              "count": 0
+            }
           },
           "vAxis": {
             "title": "Number of Students"
@@ -1560,7 +1525,13 @@
             "options": {
               "filterColumnIndex": 0,
               "ui": {
-                "minRangeSize": 94608000000
+                "minRangeSize": 94608000000,
+                "chartOptions": {
+                  "pointSize": 3,
+                  "hAxis": {
+                    "format": "yyyy"
+                  }
+                }
               }
             }
           }

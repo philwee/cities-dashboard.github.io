@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { colors } from '@mui/material';
+import { light } from '@mui/material/styles/createPalette';
 
 const darkShade = 400;
 const lightShade = 600;
@@ -57,7 +58,11 @@ const CustomThemes = {
         axisTitle: colors.grey[darkShade - 100],
         axisText: colors.grey[darkShade],
         gridlines: colors.grey[darkShade + 200],
-        annotationBoxFill: colors.blueGrey[600]
+        annotationBoxFill: colors.blueGrey[600],
+        tooltip: {
+          background: colors.grey[darkShade - 200],
+          text: colors.grey[darkShade + 300]
+        }
       }
     }
   },
@@ -91,7 +96,11 @@ const CustomThemes = {
         axisTitle: colors.grey[lightShade + 100],
         axisText: colors.grey[lightShade],
         gridlines: colors.grey[lightShade - 200],
-        annotationBoxFill: colors.blueGrey[800]
+        annotationBoxFill: colors.blueGrey[800],
+        tooltip: {
+          background: colors.common.white,
+          text: colors.grey[lightShade]
+        }
       }
     }
   },

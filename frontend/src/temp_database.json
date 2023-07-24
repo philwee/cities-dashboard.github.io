@@ -548,49 +548,109 @@
     "id": "athletics-fabs-membership",
     "title": "Athletics FABS Membership",
     "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
-    "description": "This dataset visualizes the number of unique memberships registered in the Fitness and Athletics Booking (FABS) system by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS members can access on-campus Athletic facilities, such as the fitness center, women’s-only gym, faculty pool, 50m pool, 400m track and indoor track.<br><br>While there are 11 different types of FABS accounts, our data visualizations simplify them into <b>four distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate student</li><li>Graduate student and alumni</li><li>Staff affiliation (consisting of faculty, staff, and family member)</li><li>Other and external (consiting of community, contract, external instructor, guest, and Tamkeen)</li></ul>",
+    "description": "This dataset visualizes the number of unique memberships registered in the Fitness and Athletics Booking (FABS) system by academic year (AY). For example, AY 2022-2023 spanned from September 1, 2022 to August 31, 2023.<br><br>FABS members can access on-campus Athletic facilities, such as the fitness center, women’s-only gym, faculty pool, 50m pool, 400m track and indoor track.<br><br>While there are 11 different types of FABS accounts, our data visualizations simplify them into <b>four distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate student</li><li>Graduate student and Alumni</li><li>Staff affiliation (consisting of faculty, staff, and family member)</li><li>External and Other (consiting of community, contract, external instructor, guest, and Tamkeen)</li></ul>",
     "owner": "Department of Athletics",
     "contact": "nyuad.athletics@nyu.edu",
     "rawDataTables": [
       {
         "gid": 560722866,
-        "headers": 1
+        "headers": 1,
+        "query": "SELECT * ORDER BY A OFFSET 1"
       }
     ],
     "charts": [
       {
         "title": "Number of Unique FABS Memberships",
-        "subtitle": "As the university population continues to grow, registrations have exhibited a clear upward trend. However, there was a significant decrease in staff affiliated and guest memberships in AY20-21 during the height of the COVID-19 pandemic when remote working policies and campus access restrictions were in place. Undergraduate students saw only a 14% year-by-year decrease in 2020 as most students were allowed to stay on-campus, followed by an almost two-fold increase in AY21-22.",
+        "subtitle": "As the <a href='./student-population'>university population</a> continues to grow, FABS membership registrations have generally exhibited an upward trend, except for a 40% decline in AY20-21. During this period, the university introduced remote working policies and campus access restrictions to combat the COVID-19 pandemic. As a result, there was a significant decrease in Staff affiliated together with External and Other memberships; meanwhile, undergraduate student memberships only decreased by 14% in AY20-21 as most students were allowed to stay on-campus.<br><br>AY21-22 and AY22-23 saw a remarkable rebounce in the number of memberships that exceeded pre-COVID figures across all demographic categories. Notably, the number of External and Other memberships (consisting of guests and other external communities) almost quadrupled in AY21-22, following the relaxation of most COVID restrictions for indoor places.",
         "gid": 337720664,
+        "chartType": "ComboChart",
         "headers": 1,
-        "columns": [
-          0,
-          1,
+        "subcharts": [
           {
-            "role": "tooltip",
-            "sourceColumn": 17
+            "subchartTitle": "Absolute Numbers",
+            "query": "SELECT A, B, C, D, E, F, V, W, X, Y, Z",
+            "columns": [
+              0,
+              1,
+              {
+                "role": "tooltip",
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 6
+              },
+              2,
+              {
+                "role": "tooltip",
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 7
+              },
+              3,
+              {
+                "role": "tooltip",
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 8
+              },
+              4,
+              {
+                "role": "tooltip",
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 9
+              },
+              5,
+              {
+                "role": "tooltip",
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 10
+              }
+            ],
+            "options": {
+              "vAxis": {
+                "title": "Number of Unique FABS Memberships"
+              },
+              "seriesType": "bars",
+              "series": {
+                "4": {
+                  "type": "line",
+                  "lineWidth": 3,
+                  "pointSize": 5
+                }
+              }
+            }
           },
-          2,
           {
-            "role": "tooltip",
-            "sourceColumn": 18
-          },
-          3,
-          {
-            "role": "tooltip",
-            "sourceColumn": 19
-          },
-          4,
-          {
-            "role": "tooltip",
-            "sourceColumn": 20
+            "subchartTitle": "Year-by-Year Change",
+            "query": "SELECT A, O, P, Q, R, S",
+            "options": {
+              "vAxis": {
+                "title": "Percentage Year-by-Year Change",
+                "format": "#%",
+                "viewWindow": {
+                  "min": -1
+                }
+              },
+              "seriesType": "line",
+              "curveType": "none",
+              "pointSize": 3,
+              "lineWidth": 1.5,
+              "series": {
+                "4": {
+                  "lineWidth": 3,
+                  "pointSize": 6
+                }
+              }
+            }
           }
         ],
-        "chartType": "ColumnChart",
         "options": {
-          "vAxis": {
-            "title": "Number of Unique FABS Memberships"
-          },
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"
           }
@@ -600,34 +660,35 @@
         "title": "Percentage of Demographic Groups in FABS",
         "subtitle": "Undergraduate students have remained the largest group of FABS in recent years, representing around two-thirds of all memberships.",
         "gid": 337720664,
+        "query": "SELECT A, B, C, D, E, G, H, I, K",
         "headers": 1,
         "columns": [
           0,
-          6,
+          1,
           {
             "calc": "stringify",
             "type": "string",
             "role": "annotation",
-            "sourceColumn": 6
+            "sourceColumn": 5
           },
-          7,
-          8,
+          2,
+          3,
           {
             "calc": "stringify",
             "type": "string",
             "role": "annotation",
-            "sourceColumn": 8
+            "sourceColumn": 7
           },
-          9
+          4
         ],
         "chartType": "ColumnChart",
         "options": {
           "bar": {
             "groupWidth": "40%"
           },
-          "isStacked": true,
+          "isStacked": "percent",
           "vAxis": {
-            "format": "#.##%"
+            "format": "#.#%"
           },
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"
@@ -779,7 +840,7 @@
           "colors": "rainbow",
           "vAxis": {
             "title": "Relative Number of Check-in, Normalized to Day with the Highest Number of Each Year",
-            "format": "#.##%"
+            "format": "#.#%"
           },
           "hAxis": {
             "title": "Year"
@@ -1194,7 +1255,7 @@
           "isStacked": true,
           "vAxis": {
             "title": "Percentage",
-            "format": "#.##%"
+            "format": "#.#%"
           },
           "hAxis": {
             "title": "Quarter - Year"
@@ -1347,7 +1408,7 @@
     "charts": [
       {
         "title": "Approximate Number of Students on Campus",
-        "chartType": "LineChart",
+        "chartType": "ComboChart",
         "gid": 1803261581,
         "headers": 1,
         "query": "SELECT B, C, D, E, F, G, H, I",
@@ -1428,7 +1489,7 @@
             "options": {
               "isStacked": "percent",
               "vAxis": {
-                "format": "#.##%"
+                "format": "#.#%"
               }
             }
           }
@@ -1478,7 +1539,7 @@
             "options": {
               "vAxis": {
                 "title": "Year-by-year growth (%)",
-                "format": "#.##%",
+                "format": "#.#%",
                 "viewWindow": {
                   "min": -0.1
                 }
@@ -1505,7 +1566,7 @@
             "options": {
               "isStacked": true,
               "vAxis": {
-                "format": "#.##%"
+                "format": "#.#%"
               }
             }
           },

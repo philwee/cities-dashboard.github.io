@@ -1411,21 +1411,56 @@
         "chartType": "ComboChart",
         "gid": 1803261581,
         "headers": 1,
-        "query": "SELECT B, C, D, E, F, G, H, I",
+        "query": "SELECT B, C, D, E, F, G, H, I, L, M, N, O, P",
         "columns": [
           0,
           1,
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 8
+          },
           2,
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 9
+          },
           3,
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 10
+          },
           4,
           {
             "role": "certainty",
             "sourceColumn": 5
           },
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 11
+          },
           6,
           {
             "role": "certainty",
             "sourceColumn": 7
+          },
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 12
           }
         ],
         "options": {

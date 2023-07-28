@@ -253,7 +253,7 @@
           "colors": "aqi",
           "intervals": {
             "style": "area",
-            "fillOpacity": 0.6
+            "fillOpacity": 0.5
           },
           "lineWidth": 0,
           "areaOpacity": 1,

@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { colors } from '@mui/material';
+import { light } from '@mui/material/styles/createPalette';
 
 const darkShade = 400;
 const lightShade = 600;
@@ -40,11 +41,13 @@ const CustomThemes = {
       },
       chart: {
         optionsColors: {
-          monochromatic: [colors.purple[darkShade - 100], colors.purple[darkShade + 200]],
+          monochromatic2Colors: [colors.purple[darkShade - 100], colors.purple[darkShade + 200]],
+          monochromatic3Colors: [colors.purple[darkShade + 200], colors.purple[darkShade - 100], colors.grey[darkShade + 100]],
           multiColor: [colors.blue[darkShade], colors.pink[darkShade], colors.amber[darkShade], colors.teal[darkShade], colors.grey[darkShade]],
           grayscale: [colors.grey[darkShade + 100], colors.grey[darkShade + 300]],
-          rainbow: [colors.red[darkShade], colors.orange[darkShade], colors.amber[darkShade], colors.green[darkShade], colors.blue[darkShade], colors.indigo[darkShade], colors.deepPurple[darkShade]],
-          aqi: [colors.green[darkShade], colors.yellow[darkShade + 200], colors.orange[darkShade], colors.red[darkShade], colors.purple[darkShade], maroon[darkShade], maroon[darkShade], colors.grey[darkShade], colors.grey[darkShade + 200]]
+          rainbow: [colors.red[darkShade], colors.orange[darkShade], colors.amber[darkShade], colors.green[darkShade], colors.blue[darkShade], colors.indigo[darkShade], colors.blue[darkShade]],
+          aqi: [colors.green[darkShade], colors.yellow[darkShade + 200], colors.orange[darkShade], colors.red[darkShade], colors.purple[darkShade], maroon[darkShade], maroon[darkShade], colors.grey[darkShade], colors.grey[darkShade + 200]],
+          studentPopulation: [colors.grey[darkShade + 200], '#111111', colors.red[darkShade], colors.amber[darkShade], colors.teal[darkShade]]
         },
         colorAxisFirstColor: colors.grey[darkShadeColorAxis],
         aqiColorAxis: {
@@ -56,7 +59,11 @@ const CustomThemes = {
         axisTitle: colors.grey[darkShade - 100],
         axisText: colors.grey[darkShade],
         gridlines: colors.grey[darkShade + 200],
-        annotationBoxFill: colors.blueGrey[600]
+        annotationBoxFill: colors.blueGrey[600],
+        tooltip: {
+          background: colors.grey[darkShade - 200],
+          text: colors.grey[darkShade + 300]
+        }
       }
     }
   },
@@ -73,11 +80,13 @@ const CustomThemes = {
       },
       chart: {
         optionsColors: {
-          monochromatic: [colors.purple[lightShade], colors.purple[lightShade - 300]],
+          monochromatic2Colors: [colors.purple[lightShade], colors.purple[lightShade - 300]],
+          monochromatic3Colors: [colors.purple[darkShade + 200], colors.purple[darkShade - 100], colors.grey[lightShade - 100]],
           multiColor: [colors.blue[lightShade], colors.pink[lightShade], colors.amber[lightShade], colors.teal[lightShade], colors.grey[lightShade]],
           grayscale: [colors.grey[lightShade - 100], colors.grey[lightShade + 200]],
           rainbow: [colors.red[lightShade], colors.orange[lightShade], colors.amber[lightShade], colors.green[lightShade], colors.blue[lightShade], colors.indigo[lightShade], colors.deepPurple[lightShade]],
-          aqi: [colors.green[lightShade], colors.yellow[lightShade], colors.orange[lightShade - 100], colors.red[lightShade], colors.purple[lightShade], maroon[lightShade], maroon[lightShade], colors.grey[lightShade], colors.grey[lightShade + 200]]
+          aqi: [colors.green[lightShade], colors.yellow[lightShade], colors.orange[lightShade - 100], colors.red[lightShade], colors.purple[lightShade], maroon[lightShade], maroon[lightShade], colors.grey[lightShade], colors.grey[lightShade + 200]],
+          studentPopulation: [colors.grey[lightShade], '#333333', colors.red[lightShade], colors.amber[lightShade], colors.teal[lightShade]]
         },
         colorAxisFirstColor: colors.common.white,
         aqiColorAxis: {
@@ -89,7 +98,11 @@ const CustomThemes = {
         axisTitle: colors.grey[lightShade + 100],
         axisText: colors.grey[lightShade],
         gridlines: colors.grey[lightShade - 200],
-        annotationBoxFill: colors.blueGrey[800]
+        annotationBoxFill: colors.blueGrey[800],
+        tooltip: {
+          background: colors.common.white,
+          text: colors.grey[lightShade]
+        }
       }
     }
   },

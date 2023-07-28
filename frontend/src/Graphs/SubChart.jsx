@@ -1,12 +1,13 @@
-import { useState, memo } from 'react';
+import { useState, useMemo, useCallback, memo } from 'react';
 import { Chart } from 'react-google-charts';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import isEqual from 'lodash.isequal';
 import HeatMap from './HeatMap';
 import CalendarChart from './ResponsiveCalendarChart';
+// import StudentPopChart from './StudentPopulation';
 
 const chartFilterHeightInPixel = 50;
 
@@ -20,34 +21,110 @@ const hideAnnotations = {
   boxStyle: null,
 };
 
-function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
+const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
+  // CSS for Google Charts' HTML tooltip (can't be formatted using options parameter)
+  '& .google-visualization-tooltip': {
+    width: 'unset !important',
+    maxWidth: '300px',
+    height: 'unset',
+    padding: '1em',
+    fontSize: `${isPortrait ? 9 : 12}px`,
+    color: theme.palette.chart.tooltip.text,
+    background: theme.palette.chart.tooltip.background,
+    borderRadius: theme.spacing(1 / 2),
+    '& ul': {
+      margin: '0 !important',
+      '& li': {
+        margin: '0 !important',
+        padding: '0 !important',
+        '& span': {
+          fontSize: `${isPortrait ? 9 : 12}px !important`,
+          color: `${theme.palette.chart.tooltip.text} !important`,
+        }
+      }
+    }
+  },
+  '& .Calendar .google-visualization-tooltip': {
+    padding: '0.5rem',
+  },
+  /* Modify the appearance of the Google chart's filter
+  // (by selecting all divs with id containing the keyword below */
+  '& [id^=googlechart-control]': {
+    opacity: 0.75,
+    filter: 'saturate(0.25)',
+  },
+
+  '& .google-visualization-controls-categoryfilter': {
+    fontSize: '0.85rem',
+    marginTop: '0.75rem',
+    marginBottom: '-0.75rem',
+
+    '& .google-visualization-controls-label': {
+      color: theme.palette.text.secondary,
+      verticalAlign: 'middle',
+      marginBottom: '0.5rem'
+    },
+  },
+
+  // CSS for DateRangeFilter-type filter charts to look consistent with our styling
+  '& .google-visualization-controls-rangefilter': {
+    width: '100%',
+    fontSize: '0.75rem',
+    '& .goog-inline-block': {
+      width: '100%',
+    },
+    '& .google-visualization-controls-slider-horizontal': {
+      width: '75%',
+      margin: '0 12.5%',
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
+      position: 'absolute',
+      top: '1.5em',
+      left: '12.5%'
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
+      position: 'absolute',
+      top: '1.5em',
+      right: '12.5%'
+    },
+    '& .google-visualization-controls-slider-handle': {
+      background: theme.palette.primary.main
+    },
+    '& .google-visualization-controls-rangefilter-thumblabel': {
+      color: theme.palette.text.secondary,
+      padding: 0
+    },
+    '& .google-visualization-controls-slider-thumb': {
+      background: theme.palette.primary.main,
+      border: 'unset',
+      borderRadius: '4px'
+    }
+  },
+
+  // These are the paths showing on top of the line chart
+  // and the stroke around the bar/column chart
+  // when the user hovers on the legend to make the serie stand out
+  // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
+  '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
+    stroke: theme.palette.text.primary,
+    strokeWidth: 3
+  },
+
+  // Cursor of series in legends
+  '& [column-id]:not(:empty)': {
+    cursor: 'pointer',
+    ':hover': {
+      fontWeight: 600
+    }
+  }
+}));
+
+export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
   // Get the current theme
   const theme = useTheme();
 
   // Show CircleProgress or not
   const [circleProgress, displayCircleProgress] = useState(true);
-
-  // Early return if the chartType is HeatMap
-  if (chartData.chartType === 'HeatMap') {
-    return (
-      <Box
-        position="relative"
-        className={chartData.chartType}
-        height={chartData.height}
-        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
-        width="100%"
-        sx={{ pt: 2, pb: 2, margin: 'auto' }}
-      >
-        <HeatMap
-          publishedSheetId={chartData.publishedSheetId}
-          gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
-          range={
-            chartData.range || chartData.subcharts[chartSubIndex].range || null
-          }
-        />
-      </Box>
-    );
-  }
 
   // Options object for the chart
   let options = {};
@@ -90,6 +167,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
     ...options,
     ...chartData.options,
     theme: 'material',
+    curveType: options.curveType || chartData.options?.curveType || 'function',
     crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
     chartArea: {
       width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
@@ -103,10 +181,8 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
     backgroundColor: { fill: 'transparent' },
     tooltip: {
       isHtml: true,
-      showColorCode: true
-
+      showColorCode: false
     },
-    curveType: 'function',
     legend: {
       alignment: isPortrait ? 'center' : 'start',
       position:
@@ -240,6 +316,7 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
   if (isHomepage) {
     options = {
       ...options,
+      pointSize: 0,
       enableInteractivity: false,
       annotations: {
         ...options.annotations,
@@ -282,9 +359,10 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
       },
       chartOptions: {
         ...options,
+        ...chartControl.options?.ui?.chartOptions,
         height: chartFilterHeightInPixel,
-        vAxis: null,
         hAxis: {
+          ...chartControl.options?.ui?.chartOptions?.hAxis,
           textPosition: 'out',
           textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
         },
@@ -298,10 +376,10 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
   const chartEvents = [
     {
       eventName: 'ready',
-      callback: () => {
+      callback: useCallback(({ chartWrapper }) => {
         displayCircleProgress(false);
-      },
-    },
+      }, [displayCircleProgress])
+    }
   ];
 
   const chartProps = {
@@ -352,6 +430,27 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
     )
   };
 
+  if (chartData.chartType === 'HeatMap') {
+    return (
+      <Box
+        position="relative"
+        className={chartData.chartType}
+        height={chartData.height}
+        maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
+        width="100%"
+        sx={{ pt: 2, pb: 2, margin: 'auto' }}
+      >
+        <HeatMap
+          publishedSheetId={chartData.publishedSheetId}
+          gid={chartData.gid || chartData.subcharts[chartSubIndex].gid || null}
+          range={
+            chartData.range || chartData.subcharts[chartSubIndex].range || null
+          }
+        />
+      </Box>
+    );
+  }
+
   if (chartData.chartType === 'Calendar') {
     return (
       <CalendarChart
@@ -359,13 +458,13 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
         chartProps={chartProps}
         isPortrait={isPortrait}
         showControl={showControl}
-        chartFilterHeightInPixel={chartFilterHeightInPixel}
       />
     );
   }
 
   return (
-    <Box
+    <SubChartStyleWrapper
+      isPortrait={isPortrait}
       position="relative"
       className={chartData.chartType}
       height="100%"
@@ -378,17 +477,17 @@ function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage
           }}
         />
       )}
-      <Chart style={{ margin: 'auto' }} {...chartProps} />
-    </Box>
+      {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
+      <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
+    </SubChartStyleWrapper>
   );
 }
 
-export default memo(SubChart, (prevProps, nextProps) => {
-  if (prevProps.isPortrait !== nextProps.isPortrait) return false;
-  if (prevProps.isHomePage !== nextProps.isHomePage) return false;
-  if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
-
-  // perform light calculations first before performing
-  // deep comparison for chartData object
-  return isEqual(prevProps.chartData, nextProps.chartData);
-});
+const MemoizedChart = memo(
+  ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
+  (prevProps, nextProps) => {
+    if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
+    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
+    return isEqual(prevProps.chartProps, nextProps.chartProps);
+  }
+);

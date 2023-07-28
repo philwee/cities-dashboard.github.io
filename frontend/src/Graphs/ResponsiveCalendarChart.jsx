@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, memo, useCallback } from 'react';
 import { Chart } from 'react-google-charts';
+import isEqual from 'lodash.isequal';
 import { Box, CircularProgress, styled } from '@mui/material/';
 
 const StyledChartWrapper = styled(Box)({
@@ -22,85 +23,96 @@ const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
 };
 
 function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
-  const [chartHeight, setChartHeight] = useState(200);
-  const [controlHeight, setControlHeight] = useState(0);
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
-  const [chartWidth, setChartWidth] = useState();
+  const chartHeight = useRef(0);
+  const controlHeight = useRef(0);
+
   const [circleProgress, displayCircleProgress] = useState(true);
 
-  const calculateChartTotalHeight = () => {
-    if (!chartHeight) return; // don't calculate without main chart height
-    // if theres a control but we haven't gotten value of control height yet,
-    // then don't calculate total yet
-    if (showControl && !controlHeight) return;
-
+  const calculateChartTotalHeight = useCallback(() => {
+    // early return if both values are not ready
+    if (!chartHeight.current) return;
+    if (showControl && !controlHeight.current) return;
     const hasLegend = chartProps.options.legend?.position !== 'none';
 
-    let calculatedHeight = chartHeight * (hasLegend ? 1.07 : 1.15);
-    calculatedHeight += controlHeight;
+    let calculatedHeight = chartHeight.current * (hasLegend ? 1.07 : 1.15);
+    calculatedHeight += controlHeight.current;
 
     setChartTotalHeight(calculatedHeight);
-  };
+  }, [chartProps.options.legend?.position, showControl]);
 
-  const updateChartHeight = (chartWrapper) => {
+  const updateChartHeight = useCallback((chartWrapper) => {
     // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.
     const chartContainer = chartWrapper.container.querySelector('svg > g:nth-of-type(1)');
     const renderedHeight = chartContainer.getBBox().height;
-    const renderedWidth = chartContainer.getBBox().width;
 
-    setChartHeight(renderedHeight);
-    setChartWidth(renderedWidth);
+    chartHeight.current = renderedHeight;
 
     calculateChartTotalHeight();
-  };
+  }, [calculateChartTotalHeight]);
 
-  const updateControlHeight = (controlWrapper) => {
+  const updateControlHeight = useCallback((controlWrapper) => {
     const controlContainer = controlWrapper.getControl().container;
     const renderedHeight = controlContainer.getBoundingClientRect().height;
 
-    setControlHeight(renderedHeight);
+    controlHeight.current = renderedHeight;
 
     calculateChartTotalHeight();
-  };
+  }, [calculateChartTotalHeight]);
 
   const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 10, cellSizeMax: 18 });
 
-  const calendarChartProps = chartProps;
+  // When chart is ready
+  const chartEvents = [
+    {
+      eventName: 'ready',
+      callback: useCallback(({ chartWrapper }) => {
+        updateChartHeight(chartWrapper.getChart());
+        displayCircleProgress(false);
+      }, [updateChartHeight])
+    }
+  ];
 
-  calendarChartProps.options = {
-    ...calendarChartProps.options,
-    height: chartTotalHeight,
-    width: chartWidth || calendarDimensions.chartWidth,
-    calendar: {
-      cellSize: calendarDimensions.cellSize,
-      yearLabel: {
-        fontSize: calendarDimensions.yearLabelFontSize
+  const controlEvents = [
+    {
+      eventName: 'ready',
+      callback: useCallback(({ controlWrapper }) => {
+        updateControlHeight(controlWrapper);
+      }, [updateControlHeight])
+    },
+    { eventName: 'statechange',
+      callback: useCallback(({ controlWrapper }) => {
+        updateControlHeight(controlWrapper);
+      }, [updateControlHeight]),
+    },
+  ];
+
+  const calendarChartProps = {
+    ...chartProps,
+    options: {
+      ...chartProps.options,
+      height: chartTotalHeight,
+      width: calendarDimensions.chartWidth,
+      calendar: {
+        cellSize: calendarDimensions.cellSize,
+        yearLabel: {
+          fontSize: calendarDimensions.yearLabelFontSize
+        },
+        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
       },
-      daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
+      noDataPattern: {
+        backgroundColor: 'none',
+        color: 'none',
+      },
     },
-    noDataPattern: {
-      backgroundColor: 'none',
-      color: 'none',
-    },
+    chartEvents
   };
 
   // additional props if there is a controlFilter present
   if (showControl) {
     calendarChartProps.controls = [{
       ...calendarChartProps.controls[0],
-      controlEvents: [
-        {
-          eventName: 'ready',
-          callback: (({ controlWrapper }) => {
-            updateControlHeight(controlWrapper);
-          })
-        },
-        { eventName: 'statechange',
-          callback: (({ controlWrapper }) => {
-            updateControlHeight(controlWrapper);
-          }),
-        },
-      ],
+      controlEvents,
     }];
   }
 
@@ -122,21 +134,17 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
           }}
         />
       )}
-      <Chart
-        style={{ margin: 'auto' }}
-        {...calendarChartProps}
-        chartEvents={[
-          {
-            eventName: 'ready',
-            callback: (({ chartWrapper }) => {
-              updateChartHeight(chartWrapper.getChart());
-              displayCircleProgress(false);
-            })
-          }
-        ]}
-      />
+      <MemoizedChart calendarChartProps={calendarChartProps} isPortrait={isPortrait} />
     </StyledChartWrapper>
   );
 }
+
+const MemoizedChart = memo(
+  ({ calendarChartProps }) => <Chart style={{ margin: 'auto' }} {...calendarChartProps} />,
+  (prevProps, nextProps) => {
+    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
+    return isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps);
+  }
+);
 
 export default CalendarChart;

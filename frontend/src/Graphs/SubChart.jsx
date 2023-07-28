@@ -167,7 +167,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     ...options,
     ...chartData.options,
     theme: 'material',
-    curveType: options.curveType || chartData.options || 'function',
+    curveType: options.curveType || chartData.options?.curveType || 'function',
     crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
     chartArea: {
       width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),

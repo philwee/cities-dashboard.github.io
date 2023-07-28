@@ -120,6 +120,8 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
 }));
 
 export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
+  // Formulate the className
+  const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
   // Get the current theme
   const theme = useTheme();
 
@@ -270,7 +272,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     textStyle: axisTextStyle,
     gridlines: {
       ...options.vAxis?.gridlines,
-      color: theme.palette.chart.gridlines
+      color: options.vAxis?.gridlines?.color || theme.palette.chart.gridlines
     },
     minorGridlines: { count: 0 },
   };
@@ -280,11 +282,11 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     textStyle: axisTextStyle,
     gridlines: {
       ...options.hAxis?.gridlines,
-      color: theme.palette.chart.gridlines
+      color: options.hAxis?.gridlines?.color || theme.palette.chart.gridlines
     },
     minorGridlines: {
       ...options.hAxis?.minorGridlines,
-      color: theme.palette.chart.gridlines,
+      color: options.hAxis?.gridlines?.color || theme.palette.chart.gridlines,
     },
   };
   options.legend = {
@@ -341,6 +343,12 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
         }
       },
     };
+    // Disable interactivity for all series if these series are specified in options.series
+    if (options.series) {
+      Object.keys(options.series).forEach((serie) => {
+        options.series[serie].enableInteractivity = false;
+      });
+    }
   }
 
   // Assign the appropriate controlOptions based on controlType (if existed)
@@ -434,7 +442,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     return (
       <Box
         position="relative"
-        className={chartData.chartType}
+        className={className}
         height={chartData.height}
         maxWidth={chartData.maxWidth ? chartData.maxWidth : '100%'}
         width="100%"
@@ -466,7 +474,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     <SubChartStyleWrapper
       isPortrait={isPortrait}
       position="relative"
-      className={chartData.chartType}
+      className={className}
       height="100%"
       width="100%"
     >

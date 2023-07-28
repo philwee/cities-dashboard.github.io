@@ -67,37 +67,50 @@
           1,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 2
           },
           3,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 4
           },
           5,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 6
           },
           7,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 8
           },
           9,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 10
           },
           11,
           {
             "role": "tooltip",
+            "properties": {
+              "html": true
+            },
             "sourceColumn": 12
-          },
-          13,
-          {
-            "role": "tooltip",
-            "sourceColumn": 14
           }
         ],
         "options": {
@@ -127,10 +140,14 @@
           {
             "gid": 184715989,
             "subchartTitle": "Hourly (Last 30 Days)",
+            "query": "SELECT A, E, F, G, H, I, J, B, C, D",
             "subchartSubtitle": "<b>Adjust the slider to zoom in.</b><br><br>Explore the <b>latest</b> hourly average AQI over the past month to see the differences in the air quality between different locations on the NYUAD campus.",
             "options": {
               "hAxis": {
-                "title": "Date Time"
+                "title": "Date Time",
+                "gridlines": {
+                  "color": "transparent"
+                }
               }
             },
             "control": {
@@ -152,7 +169,7 @@
                 "controlType": "ChartRangeFilter",
                 "controlPosition": "bottom",
                 "options": {
-                  "filterColumnIndex": 7,
+                  "filterColumnIndex": 0,
                   "ui": {
                     "minRangeSize": 172800000
                   }
@@ -163,115 +180,51 @@
           {
             "gid": 2066975752,
             "subchartTitle": "Monthly (All Time)",
-            "query": "SELECT A, L, O, R, U, V, W, X, Y , Z",
+            "query": "SELECT A, U, V, W, X, Y, Z, L, O, R",
             "subchartSubtitle": "Looking at the monthly average of the AQIs, it is clear that in terms of how bad PM2.5 air pollution is: outdoors > the Dining Hall D2 > the Campus Center. Indoor air quality in the Dining Hall D2 and Campus Center also exhibits similar increasing/decreasing trends with the outside air. More comments on seasonal and spatial trends can be found on the next charts.",
             "options": {
+              "pointSize": 3,
               "hAxis": {
                 "title": "Month"
               }
             }
           }
         ],
-        "subtitle": "",
         "headers": 1,
         "chartType": "ComboChart",
-        "columns": [
-          7,
-          1,
-          {
-            "id": "good",
-            "role": "interval",
-            "sourceColumn": 0
-          },
-          {
-            "id": "good",
-            "role": "interval",
-            "sourceColumn": 1
-          },
-          2,
-          {
-            "id": "moderate",
-            "role": "interval",
-            "sourceColumn": 1
-          },
-          {
-            "id": "moderate",
-            "role": "interval",
-            "sourceColumn": 2
-          },
-          3,
-          {
-            "id": "unhealthy-sensitive",
-            "role": "interval",
-            "sourceColumn": 2
-          },
-          {
-            "id": "unhealthy-sensitive",
-            "role": "interval",
-            "sourceColumn": 3
-          },
-          4,
-          {
-            "id": "unhealthy",
-            "role": "interval",
-            "sourceColumn": 3
-          },
-          {
-            "id": "unhealthy",
-            "role": "interval",
-            "sourceColumn": 4
-          },
-          5,
-          {
-            "id": "very-unhealthy",
-            "role": "interval",
-            "sourceColumn": 4
-          },
-          {
-            "id": "very-unhealthy",
-            "role": "interval",
-            "sourceColumn": 5
-          },
-          6,
-          {
-            "id": "hazardous",
-            "role": "interval",
-            "sourceColumn": 5
-          },
-          {
-            "id": "hazardous",
-            "role": "interval",
-            "sourceColumn": 6
-          },
-          6,
-          8,
-          9,
-          10
-        ],
+        "customClassName": "historical-snapshot-aqi",
         "options": {
+          "colors": "reverseAqi",
           "seriesType": "area",
-          "colors": "aqi",
-          "intervals": {
-            "style": "area",
-            "fillOpacity": 0.5
-          },
           "lineWidth": 0,
           "areaOpacity": 1,
           "enableInteractivity": false,
           "series": {
-            "6": {
-              "type": "area",
-              "areaOpacity": 1,
-              "color": "#fff",
-              "visibleInLegend": false
+            "0": {
+              "pointSize": 0
             },
-            "7": {
-              "lineWidth": 1,
+            "1": {
+              "pointSize": 0
+            },
+            "2": {
+              "pointSize": 0
+            },
+            "3": {
+              "pointSize": 0
+            },
+            "4": {
+              "pointSize": 0
+            },
+            "5": {
+              "pointSize": 0
+            },
+            "6": {
+              "lineWidth": 1.5,
               "type": "line",
               "enableInteractivity": true,
               "color": "#000"
             },
-            "8": {
+            "7": {
               "lineWidth": 1,
               "type": "line",
               "enableInteractivity": true,
@@ -281,7 +234,7 @@
                 2
               ]
             },
-            "9": {
+            "8": {
               "lineWidth": 1,
               "type": "line",
               "enableInteractivity": true,
@@ -293,7 +246,10 @@
             }
           },
           "vAxis": {
-            "title": "US AQI"
+            "title": "US AQI",
+            "gridlines": {
+              "count": 0
+            }
           }
         }
       },

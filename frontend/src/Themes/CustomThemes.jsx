@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { colors } from '@mui/material';
-import { light } from '@mui/material/styles/createPalette';
+import { dark, light } from '@mui/material/styles/createPalette';
 
 const darkShade = 400;
 const lightShade = 600;
@@ -21,6 +21,19 @@ const maroon = {
   A200: 'ff4e5a',
   A400: 'ff1b2a',
   A700: 'ff0212'
+};
+
+const getAQIPalette = ({ increasingOrder, isDark }) => {
+  const shadeValue = isDark ? darkShade : lightShade;
+  const array = [
+    colors.green[shadeValue],
+    colors.yellow[isDark ? darkShade + 200 : lightShade],
+    colors.orange[isDark ? darkShade : lightShade - 100],
+    colors.red[shadeValue],
+    colors.purple[shadeValue],
+    maroon[shadeValue]
+  ];
+  return increasingOrder ? array : array.reverse();
 };
 
 const CustomThemes = {
@@ -46,7 +59,8 @@ const CustomThemes = {
           multiColor: [colors.blue[darkShade], colors.pink[darkShade], colors.amber[darkShade], colors.teal[darkShade], colors.grey[darkShade]],
           grayscale: [colors.grey[darkShade + 100], colors.grey[darkShade + 300]],
           rainbow: [colors.red[darkShade], colors.orange[darkShade], colors.amber[darkShade], colors.green[darkShade], colors.blue[darkShade], colors.indigo[darkShade], colors.blue[darkShade]],
-          aqi: [colors.green[darkShade], colors.yellow[darkShade + 200], colors.orange[darkShade], colors.red[darkShade], colors.purple[darkShade], maroon[darkShade], maroon[darkShade], colors.grey[darkShade], colors.grey[darkShade + 200]],
+          aqi: getAQIPalette({ increasingOrder: true, isDark: true }),
+          reverseAqi: getAQIPalette({ increasingOrder: false, isDark: true }),
           studentPopulation: [colors.grey[darkShade + 200], '#111111', colors.red[darkShade], colors.amber[darkShade], colors.teal[darkShade]]
         },
         colorAxisFirstColor: colors.grey[darkShadeColorAxis],
@@ -85,7 +99,8 @@ const CustomThemes = {
           multiColor: [colors.blue[lightShade], colors.pink[lightShade], colors.amber[lightShade], colors.teal[lightShade], colors.grey[lightShade]],
           grayscale: [colors.grey[lightShade - 100], colors.grey[lightShade + 200]],
           rainbow: [colors.red[lightShade], colors.orange[lightShade], colors.amber[lightShade], colors.green[lightShade], colors.blue[lightShade], colors.indigo[lightShade], colors.deepPurple[lightShade]],
-          aqi: [colors.green[lightShade], colors.yellow[lightShade], colors.orange[lightShade - 100], colors.red[lightShade], colors.purple[lightShade], maroon[lightShade], maroon[lightShade], colors.grey[lightShade], colors.grey[lightShade + 200]],
+          aqi: getAQIPalette({ increasingOrder: true, isDark: false }),
+          reverseAqi: getAQIPalette({ increasingOrder: false, isDark: false }),
           studentPopulation: [colors.grey[lightShade], '#333333', colors.red[lightShade], colors.amber[lightShade], colors.teal[lightShade]]
         },
         colorAxisFirstColor: colors.common.white,

@@ -16,7 +16,11 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     '& .heat-map-iframe': {
       filter: 'invert(0.848) hue-rotate(180deg)',
     }
-  })
+  }),
+  // Special CSS for historical-snapshot-aqi chart
+  '& .historical-snapshot-aqi svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(1), .historical-snapshot-aqi [id*="googlechart-control"] svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(2)': {
+    opacity: 0.5
+  }
 }));
 
 // eslint-disable-next-line max-len

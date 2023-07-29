@@ -19,7 +19,7 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   }),
   // Special CSS for historical-snapshot-aqi chart
   '& .historical-snapshot-aqi svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(1), .historical-snapshot-aqi [id*="googlechart-control"] svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(2)': {
-    opacity: 0.5
+    opacity: 0.6
   }
 }));
 

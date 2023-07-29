@@ -171,7 +171,9 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     theme: 'material',
     curveType: options.curveType || chartData.options?.curveType || 'function',
     crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
+    backgroundColor: { fill: 'transparent' },
     chartArea: {
+      ...chartData.options?.chartArea,
       width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
       height: isPortrait ? '60%' : '70%'
     },
@@ -180,12 +182,12 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     // value is divided in 2 because the calculation is applied twice due to
     // how react-google-charts nest components
     height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
-    backgroundColor: { fill: 'transparent' },
     tooltip: {
       isHtml: true,
       showColorCode: false
     },
     legend: {
+      backgroundColor: '#fff',
       alignment: isPortrait ? 'center' : 'start',
       position:
         chartData.options?.legend?.position

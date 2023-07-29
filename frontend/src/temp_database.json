@@ -195,6 +195,9 @@
         "customClassName": "historical-snapshot-aqi",
         "options": {
           "colors": "reverseAqi",
+          "chartArea": {
+            "backgroundColor": "#fff"
+          },
           "seriesType": "area",
           "lineWidth": 0,
           "areaOpacity": 1,
@@ -222,26 +225,26 @@
               "lineWidth": 1.5,
               "type": "line",
               "enableInteractivity": true,
-              "color": "#000"
+              "color": "#555"
             },
             "7": {
-              "lineWidth": 1,
+              "lineWidth": 1.25,
               "type": "line",
               "enableInteractivity": true,
-              "color": "#000",
+              "color": "#555",
               "lineDashStyle": [
                 5,
-                2
+                1.5
               ]
             },
             "8": {
-              "lineWidth": 1,
+              "lineWidth": 1.25,
               "type": "line",
               "enableInteractivity": true,
-              "color": "#000",
+              "color": "#555",
               "lineDashStyle": [
-                1,
-                1
+                1.25,
+                0.75
               ]
             }
           },

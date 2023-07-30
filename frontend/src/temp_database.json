@@ -11,7 +11,7 @@
       {
         "gid": 584789045,
         "headers": 1,
-        "query": "SELECT A, B, C, D, G, H, I, L, M, N ORDER BY A DESC LIMIT 10"
+        "query": "SELECT A, B, C, D ORDER BY A DESC LIMIT 10"
       }
     ],
     "homepageChartIndex": 1,
@@ -260,28 +260,35 @@
       },
       {
         "title": "Daily AQI, All Time",
+        "subtitle": "This calendar chart shows how the daily AQI varies throughout the year across different locations of the air quality network. Each square cell represents one day and its color corresponds to the category of the AQI. Hover over each square cell to see the specific date and its average AQI.<br><br><small><b>Note: </b>There were some gaps in our data collection. Dates where there was no recorded data are represented by empty cells.</small>",
+        "gid": 1764126775,
+        "headers": 1,
+        "chartType": "Calendar",
         "subcharts": [
           {
-            "query": "SELECT A, C, D WHERE NOT D='No Data'",
+            "query": "SELECT A, B, E, I WHERE NOT E='No Data'",
             "subchartTitle": "Outdoor"
           },
           {
-            "query": "SELECT A, H, I WHERE NOT I='No Data'",
+            "query": "SELECT A, C, F, J WHERE NOT F='No Data'",
             "subchartTitle": "Campus Center"
           },
           {
-            "query": "SELECT A, M, N WHERE NOT N='No Data'",
+            "query": "SELECT A, D, G, K WHERE NOT G='No Data'",
             "subchartTitle": "Dining Hall D2"
           }
         ],
         "columns": [
           0,
-          1
+          1,
+          {
+            "role": "tooltip",
+            "properties": {
+              "html": true
+            },
+            "sourceColumn": 3
+          }
         ],
-        "subtitle": "This calendar chart shows how the daily AQI varies throughout the year across different locations of the air quality network. Each square cell represents one day and its color corresponds to the category of the AQI. Hover over each square cell to see the specific date and its average AQI.<br><br><small><b>Note: </b>There were some gaps in our data collection. Dates where there was no recorded data are represented by empty cells.</small>",
-        "gid": 584789045,
-        "headers": 1,
-        "chartType": "Calendar",
         "options": {
           "colorAxis": {
             "colors": "aqi"
@@ -1173,15 +1180,19 @@
         "gid": 1952244844,
         "headers": 1,
         "chartType": "Calendar",
+        "query": "SELECT A, F, L, C, I, D, J, E, K",
         "subcharts": [
           {
             "subchartTitle": "Total (3 meals)",
             "columns": [
               0,
-              5,
+              1,
               {
                 "role": "tooltip",
-                "sourceColumn": 11
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 2
               }
             ],
             "options": {
@@ -1194,10 +1205,13 @@
             "subchartTitle": "Breakfast",
             "columns": [
               0,
-              2,
+              3,
               {
                 "role": "tooltip",
-                "sourceColumn": 8
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 4
               }
             ],
             "options": {
@@ -1211,10 +1225,13 @@
             "subchartTitle": "Lunch",
             "columns": [
               0,
-              3,
+              5,
               {
                 "role": "tooltip",
-                "sourceColumn": 9
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 6
               }
             ],
             "options": {
@@ -1228,10 +1245,13 @@
             "subchartTitle": "Dinner",
             "columns": [
               0,
-              4,
+              7,
               {
                 "role": "tooltip",
-                "sourceColumn": 10
+                "properties": {
+                  "html": true
+                },
+                "sourceColumn": 8
               }
             ],
             "options": {

@@ -457,12 +457,15 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
 
   if (chartData.chartType === 'Calendar') {
     return (
-      <CalendarChart
-        chartData={chartData}
-        chartProps={chartProps}
-        isPortrait={isPortrait}
-        showControl={showControl}
-      />
+      <SubChartStyleWrapper>
+        <CalendarChart
+          chartData={chartData}
+          chartProps={chartProps}
+          isPortrait={isPortrait}
+          showControl={showControl}
+        />
+      </SubChartStyleWrapper>
+
     );
   }
 

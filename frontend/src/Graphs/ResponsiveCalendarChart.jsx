@@ -80,7 +80,8 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
         updateControlHeight(controlWrapper);
       }, [updateControlHeight])
     },
-    { eventName: 'statechange',
+    {
+      eventName: 'statechange',
       callback: useCallback(({ controlWrapper }) => {
         updateControlHeight(controlWrapper);
       }, [updateControlHeight]),

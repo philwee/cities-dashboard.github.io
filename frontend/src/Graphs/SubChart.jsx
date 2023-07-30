@@ -1,13 +1,11 @@
-import { useState, useMemo, useCallback, memo } from 'react';
-import { Chart } from 'react-google-charts';
+import { useState, useCallback } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
 import { useTheme, styled } from '@mui/material/styles';
-import isEqual from 'lodash.isequal';
 import HeatMap from './HeatMap';
 import CalendarChart from './ResponsiveCalendarChart';
-// import StudentPopChart from './StudentPopulation';
+import MemoizedChart from './MemoizedChart';
 
 const chartFilterHeightInPixel = 50;
 
@@ -489,12 +487,3 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     </SubChartStyleWrapper>
   );
 }
-
-const MemoizedChart = memo(
-  ({ chartProps }) => <Chart style={{ margin: 'auto' }} {...chartProps} />,
-  (prevProps, nextProps) => {
-    if (!isEqual(prevProps.windowSize, nextProps.windowSize)) return false;
-    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
-    return isEqual(prevProps.chartProps, nextProps.chartProps);
-  }
-);

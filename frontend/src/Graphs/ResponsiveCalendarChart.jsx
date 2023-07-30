@@ -1,7 +1,6 @@
-import { useState, useRef, memo, useCallback } from 'react';
-import { Chart } from 'react-google-charts';
-import isEqual from 'lodash.isequal';
+import { useState, useRef, useCallback } from 'react';
 import { Box, CircularProgress, styled } from '@mui/material/';
+import MemoizedChart from './MemoizedChart';
 
 const StyledChartWrapper = styled(Box)({
   // Override React Google Charts to make Calendar chart truly responsive
@@ -35,7 +34,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     if (showControl && !controlHeight.current) return;
     const hasLegend = chartProps.options.legend?.position !== 'none';
 
-    let calculatedHeight = chartHeight.current * (hasLegend ? 1.07 : 1.15);
+    let calculatedHeight = chartHeight.current + (hasLegend ? 30 : 60);
     calculatedHeight += controlHeight.current;
 
     setChartTotalHeight(calculatedHeight);
@@ -92,7 +91,9 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     ...chartProps,
     options: {
       ...chartProps.options,
-      height: chartTotalHeight,
+      // overcompensate the height of chart SVG element. this is OK as
+      // the chart container will clip the chart to it's expected height of {chartTotalHeight}
+      height: '1000px',
       width: calendarDimensions.chartWidth,
       calendar: {
         cellSize: calendarDimensions.cellSize,
@@ -135,17 +136,9 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
           }}
         />
       )}
-      <MemoizedChart calendarChartProps={calendarChartProps} isPortrait={isPortrait} />
+      <MemoizedChart chartProps={calendarChartProps} isPortrait={isPortrait} />
     </StyledChartWrapper>
   );
 }
-
-const MemoizedChart = memo(
-  ({ calendarChartProps }) => <Chart style={{ margin: 'auto' }} {...calendarChartProps} />,
-  (prevProps, nextProps) => {
-    if (prevProps.isPortrait !== nextProps.isPortrait) return false;
-    return isEqual(prevProps.calendarChartProps, nextProps.calendarChartProps);
-  }
-);
 
 export default CalendarChart;

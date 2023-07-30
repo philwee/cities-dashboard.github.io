@@ -345,12 +345,6 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
         }
       },
     };
-    // Disable interactivity for all series if these series are specified in options.series
-    if (options.series) {
-      Object.keys(options.series).forEach((serie) => {
-        options.series[serie].enableInteractivity = false;
-      });
-    }
   }
 
   // Assign the appropriate controlOptions based on controlType (if existed)

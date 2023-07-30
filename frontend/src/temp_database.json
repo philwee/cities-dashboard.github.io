@@ -201,36 +201,39 @@
           "seriesType": "area",
           "lineWidth": 0,
           "areaOpacity": 1,
-          "enableInteractivity": false,
           "series": {
             "0": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "1": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "2": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "3": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "4": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "5": {
-              "pointSize": 0
+              "pointSize": 0,
+              "visibleInLegend": false
             },
             "6": {
               "lineWidth": 1.5,
               "type": "line",
-              "enableInteractivity": true,
               "color": "#555"
             },
             "7": {
               "lineWidth": 1.25,
               "type": "line",
-              "enableInteractivity": true,
               "color": "#555",
               "lineDashStyle": [
                 5,
@@ -240,7 +243,6 @@
             "8": {
               "lineWidth": 1.25,
               "type": "line",
-              "enableInteractivity": true,
               "color": "#555",
               "lineDashStyle": [
                 1.25,
@@ -680,7 +682,7 @@
         "title": "Percentage of Demographic Groups in FABS",
         "subtitle": "Undergraduate students have remained the largest group of FABS in recent years, representing around two-thirds of all memberships.",
         "gid": 337720664,
-        "query": "SELECT A, B, C, D, E, G, H, I, K",
+        "query": "SELECT A, B, C, D, E, I, J, K , L",
         "headers": 1,
         "columns": [
           0,

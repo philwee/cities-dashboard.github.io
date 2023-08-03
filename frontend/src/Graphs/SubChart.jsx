@@ -380,13 +380,16 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
         displayCircleProgress(false);
-        // On right click, enable default context menu
-        const chart = chartWrapper.getChart();
+        // If chart is on homepage, on right click, enable default context menu
         // eslint-disable-next-line no-undef
-        google.visualization.events.addListener(chart, 'rightclick', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        });
+        if (isHomepage && google) {
+          const chart = chartWrapper.getChart();
+          // eslint-disable-next-line no-undef
+          google.visualization.events.addListener(chart, 'rightclick', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        }
       }, [displayCircleProgress])
     }
   ];

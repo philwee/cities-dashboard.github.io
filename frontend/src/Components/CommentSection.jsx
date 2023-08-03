@@ -1,5 +1,5 @@
 import { Box, Typography, Container, Paper } from '@mui/material';
-import { Embed } from 'hyvor-talk-react';
+import { Comments } from '@hyvor/hyvor-talk-react';
 
 import { styled, useTheme } from '@mui/material/styles';
 
@@ -10,9 +10,18 @@ import { replacePlainHTMLWithMuiComponents, capitalizePhrase } from '../Utils/Ut
 
 export const WEBSITE_ID = 9021; // Hyvor Talk's website ID
 
-const StyledHyvorTalk = styled(Box)(() => ({
-  '& #hyvor-talk-iframe': {
-    marginBottom: '-50px'
+const StyledHyvorTalk = styled(Box)(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
+  '& *': {
+    color: theme.palette.text.secondary
+  },
+  '& hyvor-talk-comments': {
+    '--ht-color-accent': theme.palette.primary.main,
+    '--ht-color-accent-text': theme.palette.primary.contrastText,
+    '--ht-color-box': theme.palette.customBackground,
+    '--ht-color-box-text': theme.palette.text.secondary,
+    '--ht-color-box-text-light': theme.palette.text.secondaryRGB,
+    '--ht-button-radius': theme.spacing(1)
   }
 }));
 
@@ -30,24 +39,13 @@ function CommentSection({ pageID }) {
               replace: replacePlainHTMLWithMuiComponents,
             })}
           </Typography>
-          <Box sx={{ mx: -3 }}>
-            <StyledHyvorTalk>
-              <Embed
-                websiteId={WEBSITE_ID}
-                id={pageID}
-                palette={{
-                  accent: theme.palette.primary.main,
-                  accentText: theme.palette.primary.contrastText,
-                  box: theme.palette.customAlternateBackground,
-                  boxText: theme.palette.text.secondaryRGB,
-                  backgroundText: theme.palette.text.secondaryRGB,
-                  footerHeader: theme.palette.customBackground,
-                  footerHeaderText: theme.palette.text.secondaryRGB,
-                }}
-              />
-            </StyledHyvorTalk>
-
-          </Box>
+          <StyledHyvorTalk>
+            <Comments
+              website-id={WEBSITE_ID}
+              page-id={pageID}
+              loading="lazy"
+            />
+          </StyledHyvorTalk>
         </Paper>
       </Box>
     </Container>

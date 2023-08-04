@@ -17,6 +17,8 @@ import ExpandableSection from './ExpandableSection';
 
 import ThemePreferences from '../../Themes/ThemePreferences';
 
+import AirQualityIndexLegendQuickGlance from '../../Components/AirQualityHelper';
+
 import data from '../../temp_database.json';
 import jsonData from '../../section_data.json';
 
@@ -97,6 +99,10 @@ const Project = ({ themePreference }) => {
     <>
       {loading && (
         <Box width="100%">
+          {
+            project.id === 'air-quality' && <AirQualityIndexLegendQuickGlance />
+          }
+
           <FullWidthBox>
             <Container sx={{ pt: 4, pb: 4 }}>
 
@@ -259,7 +265,6 @@ const Project = ({ themePreference }) => {
               </FullWidthBox>
             ))}
           </Box>
-
 
           <Divider />
 

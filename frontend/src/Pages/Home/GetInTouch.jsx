@@ -49,10 +49,10 @@ function GetInTouch() {
             >
               <LaunchIcon sx={{ fontSize: '1rem' }} />
               &nbsp;
-              OPEN FORM IN SEPARATE TAB
+              OPEN FORM
             </Button>
           </Container>
-          <IFrameWrapper>
+          {/* <IFrameWrapper>
             <iframe
               title="Survey Google Form Link"
               src={`${googleFormLink}viewform?embedded=true`}
@@ -61,7 +61,7 @@ function GetInTouch() {
             >
               Loading...
             </iframe>
-          </IFrameWrapper>
+          </IFrameWrapper> */}
         </Paper>
       </Box>
     </Container>

@@ -603,6 +603,7 @@
               1,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -611,6 +612,7 @@
               2,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -619,6 +621,7 @@
               3,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -627,6 +630,7 @@
               4,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -635,6 +639,7 @@
               5,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1201,6 +1206,7 @@
               1,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1220,6 +1226,7 @@
               3,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1240,6 +1247,7 @@
               5,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1260,6 +1268,7 @@
               7,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },

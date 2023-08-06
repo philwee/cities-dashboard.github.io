@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useState, useCallback } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
@@ -125,6 +127,9 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
 
   // Show CircleProgress or not
   const [circleProgress, displayCircleProgress] = useState(true);
+
+  // Keep track of the displayed columns (series)
+  const [shownColumns, setShownColumns] = useState(null);
 
   // Options object for the chart
   let options = {};
@@ -379,7 +384,29 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     {
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
+        // Hide the circleProgress when chart finishes loading
         displayCircleProgress(false);
+
+        // Update the initial DataView's columns (often, all of the series are displayed initially)
+        var initialView = chartWrapper.getView();
+        // If (optional) columns is not specified in database
+        // Assign it from DataTable
+        if (initialView.columns == null) {
+          const viewFromDataTable = new google.visualization.DataView(chartWrapper.getDataTable());
+          chartWrapper.setView({
+            columns: viewFromDataTable.columns
+          });
+          initialView = chartWrapper.getView();
+          // chartWrapper.draw()
+        }
+        console.log(chartWrapper.getView());
+        var seriesNames = [];
+        for (var col = 1; col < initialDataView.getNumberOfColumns(); col++) {
+          seriesNames.push(initialDataView.getColumnLabel(col));
+        }
+        console.log(seriesNames);
+        setShownColumns(initialView);
+
         // If chart is on homepage, on right click, enable default context menu
         // eslint-disable-next-line no-undef
         if (isHomepage && google) {
@@ -391,6 +418,33 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
           });
         }
       }, [displayCircleProgress])
+    },
+    {
+      eventName: 'select',
+      callback: ({ chartWrapper }) => {
+
+        if (chartData.subcharts?.[chartSubIndex].subchartTitle !== 'Absolute Numbers') return
+        // Chart is ready, print out all series data
+        var dataTable = chartWrapper.getDataTable();
+
+
+        var columns = [
+          0,
+          1,
+          {
+            role: "tooltip",
+            type: "string",
+            properties: {
+              html: true
+            },
+            sourceColumn: 6
+          }
+        ];
+        chartWrapper.setView({
+          columns: columns
+        });
+        chartWrapper.draw()
+      }
     }
   ];
 

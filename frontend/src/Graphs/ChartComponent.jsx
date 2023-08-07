@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
 
-import SubChart from './SubChart';
+import SubChart from './Subchart/SubChart';
 
 const debounceMilliseconds = 50;
 
@@ -18,7 +18,7 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
     }
   }),
   // Special CSS for historical-snapshot-aqi chart
-  '& .historical-snapshot-aqi svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(1), .historical-snapshot-aqi [id*="googlechart-control"] svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-child(2)': {
+  '& .historical-snapshot-aqi svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-of-type(1), .historical-snapshot-aqi [id*="googlechart-control"] svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-of-type(2)': {
     opacity: 0.6
   }
 }));

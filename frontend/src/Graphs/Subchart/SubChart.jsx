@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
 import CalendarChart from '../ResponsiveCalendarChart';
 import MemoizedChart from '../MemoizedChart';
-import SeriesSelector from '../SeriesSelector';
+import SeriesSelector from './SeriesSelector';
 
 import SubChartStyleWrapper from './SubChartStyleWrapper';
 
@@ -38,7 +38,6 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   // Keep track of the columns (series) of the chart
-  const [allColumns, setAllColumns] = useState([]);
   const [dataColumns, setDataColumns] = useState([]);
 
   // Options object for the chart
@@ -311,7 +310,6 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             columns: viewFromDataTable.columns
           });
           initialView = chartWrapper.getView();
-          // chartWrapper.draw();
         }
 
         var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
@@ -335,9 +333,9 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
           return col;
         });
 
+        // Only get the 'data' columns to track selection
         setDataColumns(allInitialColumns.filter(col => col.role === 'data'));
 
-        setAllColumns(allInitialColumns);
         setchartWrapperRef(chartWrapper);
 
         // If chart is on homepage, on right click, enable default context menu
@@ -355,33 +353,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   ];
 
   const handleSeriesSelection = (newDataColumns) => {
-    // Update dataColumns
     setDataColumns(newDataColumns);
-
-    // In the initial allColumns array, a dataColumn can be immediately followed by optional supporting columns
-    // for example, columns whose 'role' is 'tooltip' or 'annotation' ...
-    // Since newDataColumns only contains dataColumns, we have to reference back to the initial allColumns array
-    // to append after SELECTED dataColumn its (optional) supporting columns
-    // let newDataViewColumns = [];
-    // for (const dataColumn of newDataColumns) {
-    //   if (dataColumn.selected) {
-    //     newDataViewColumns.push(dataColumn);
-    //     // Find associated columns that support this dataColumn
-    //     for (let i = dataColumn.originalColumnIndex + 1; i < allColumns.length; i++) {
-    //       const supportingColumns = allColumns[i];
-    //       if (supportingColumns.role === 'data')
-    //         break; // stop looking for supporting columns when another dataColumn is encountered
-    //       else
-    //         newDataViewColumns.push(supportingColumns);
-    //     }
-    //   }
-    // }
-    // chartWrapperRef.setView({
-    //   columns: [
-    //     allColumns[0], // always include the index 0 column because it is the domain column (x-axis)
-    //     ...newDataViewColumns // append the rest of the columns calculated above
-    //   ]
-    // });
   };
 
   useEffect(() => {
@@ -396,10 +368,14 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     });
 
     if (!chartWrapperRef) return;
-    chartWrapperRef.setOption('series', {
-      ...options.series,
-      ...hiddenSeriesObject
-    })
+
+    chartWrapperRef.setOptions({
+      ...options,
+      series: {
+        ...options.series,
+        ...hiddenSeriesObject
+      }
+    });
     // Call draw to apply the new DataView and 'refresh' the chart
     chartWrapperRef.draw();
   }, [dataColumns])

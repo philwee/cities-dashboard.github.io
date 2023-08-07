@@ -311,7 +311,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             columns: viewFromDataTable.columns
           });
           initialView = chartWrapper.getView();
-          chartWrapper.draw();
+          // chartWrapper.draw();
         }
 
         var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
@@ -350,7 +350,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             e.stopPropagation();
           });
         }
-      }, [isFirstRender])
+      }, [isFirstRender]) // will be render twice because isFirstRender is flipped
     }
   ];
 
@@ -362,30 +362,47 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     // for example, columns whose 'role' is 'tooltip' or 'annotation' ...
     // Since newDataColumns only contains dataColumns, we have to reference back to the initial allColumns array
     // to append after SELECTED dataColumn its (optional) supporting columns
-    let newDataViewColumns = [];
-    for (const dataColumn of newDataColumns) {
-      if (dataColumn.selected) {
-        newDataViewColumns.push(dataColumn);
-        // Find associated columns that support this dataColumn
-        for (let i = dataColumn.originalColumnIndex + 1; i < allColumns.length; i++) {
-          const supportingColumns = allColumns[i];
-          if (supportingColumns.role === 'data')
-            break; // stop looking for supporting columns when another dataColumn is encountered
-          else
-            newDataViewColumns.push(supportingColumns);
-        }
-      }
-    }
-    chartWrapperRef.setView({
-      columns: [
-        allColumns[0], // always include the index 0 column because it is the domain column (x-axis)
-        ...newDataViewColumns // append the rest of the columns calculated above
-      ]
+    // let newDataViewColumns = [];
+    // for (const dataColumn of newDataColumns) {
+    //   if (dataColumn.selected) {
+    //     newDataViewColumns.push(dataColumn);
+    //     // Find associated columns that support this dataColumn
+    //     for (let i = dataColumn.originalColumnIndex + 1; i < allColumns.length; i++) {
+    //       const supportingColumns = allColumns[i];
+    //       if (supportingColumns.role === 'data')
+    //         break; // stop looking for supporting columns when another dataColumn is encountered
+    //       else
+    //         newDataViewColumns.push(supportingColumns);
+    //     }
+    //   }
+    // }
+    // chartWrapperRef.setView({
+    //   columns: [
+    //     allColumns[0], // always include the index 0 column because it is the domain column (x-axis)
+    //     ...newDataViewColumns // append the rest of the columns calculated above
+    //   ]
+    // });
+  };
+
+  useEffect(() => {
+    const hiddenSeriesObject = {};
+    dataColumns.forEach((col, index) => {
+      if (!col.selected)
+        hiddenSeriesObject[index] = {
+          color: 'transparent',
+          enableInteractivity: false,
+          visibleInLegend: false
+        }; // 'hide' the serie
     });
 
+    if (!chartWrapperRef) return;
+    chartWrapperRef.setOption('series', {
+      ...options.series,
+      ...hiddenSeriesObject
+    })
     // Call draw to apply the new DataView and 'refresh' the chart
     chartWrapperRef.draw();
-  };
+  }, [dataColumns])
 
   const chartProps = {
     chartType: chartData.chartType,

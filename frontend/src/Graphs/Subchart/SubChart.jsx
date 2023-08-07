@@ -4,10 +4,13 @@ import { useState, useCallback } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
-import { useTheme, styled } from '@mui/material/styles';
-import HeatMap from './HeatMap';
-import CalendarChart from './ResponsiveCalendarChart';
-import MemoizedChart from './MemoizedChart';
+import { useTheme } from '@mui/material/styles';
+import HeatMap from '../HeatMap';
+import CalendarChart from '../ResponsiveCalendarChart';
+import MemoizedChart from '../MemoizedChart';
+import SeriesSelector from '../SeriesSelector';
+
+import SubChartStyleWrapper from './SubChartStyleWrapper';
 
 const chartFilterHeightInPixel = 50;
 
@@ -21,115 +24,22 @@ const hideAnnotations = {
   boxStyle: null,
 };
 
-const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
-  // CSS for Google Charts' HTML tooltip (can't be formatted using options parameter)
-  '& .google-visualization-tooltip': {
-    width: 'unset !important',
-    maxWidth: '300px',
-    height: 'unset',
-    padding: '1em',
-    fontSize: `${isPortrait ? 9 : 12}px`,
-    color: theme.palette.chart.tooltip.text,
-    background: theme.palette.chart.tooltip.background,
-    borderRadius: theme.spacing(1 / 2),
-    '& ul': {
-      margin: '0 !important',
-      '& li': {
-        margin: '0 !important',
-        padding: '0 !important',
-        '& span': {
-          fontSize: `${isPortrait ? 9 : 12}px !important`,
-          color: `${theme.palette.chart.tooltip.text} !important`,
-        }
-      }
-    }
-  },
-  '& .Calendar .google-visualization-tooltip': {
-    padding: '0.5rem',
-  },
-  /* Modify the appearance of the Google chart's filter
-  // (by selecting all divs with id containing the keyword below */
-  '& [id^=googlechart-control]': {
-    opacity: 0.75,
-    filter: 'saturate(0.25)',
-  },
-
-  '& .google-visualization-controls-categoryfilter': {
-    fontSize: '0.85rem',
-    marginTop: '0.75rem',
-    marginBottom: '-0.75rem',
-
-    '& .google-visualization-controls-label': {
-      color: theme.palette.text.secondary,
-      verticalAlign: 'middle',
-      marginBottom: '0.5rem'
-    },
-  },
-
-  // CSS for DateRangeFilter-type filter charts to look consistent with our styling
-  '& .google-visualization-controls-rangefilter': {
-    width: '100%',
-    fontSize: '0.75rem',
-    '& .goog-inline-block': {
-      width: '100%',
-    },
-    '& .google-visualization-controls-slider-horizontal': {
-      width: '75%',
-      margin: '0 12.5%',
-    },
-    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
-      position: 'absolute',
-      top: '1.5em',
-      left: '12.5%'
-    },
-    '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
-      position: 'absolute',
-      top: '1.5em',
-      right: '12.5%'
-    },
-    '& .google-visualization-controls-slider-handle': {
-      background: theme.palette.primary.main
-    },
-    '& .google-visualization-controls-rangefilter-thumblabel': {
-      color: theme.palette.text.secondary,
-      padding: 0
-    },
-    '& .google-visualization-controls-slider-thumb': {
-      background: theme.palette.primary.main,
-      border: 'unset',
-      borderRadius: '4px'
-    }
-  },
-
-  // These are the paths showing on top of the line chart
-  // and the stroke around the bar/column chart
-  // when the user hovers on the legend to make the serie stand out
-  // by Google Chart's default doesn't change color based on light/dark theme, but we modify here:
-  '& path[stroke-opacity="0.3"], path[stroke-opacity="0.1"], path[stroke-opacity="0.05"], rect[stroke-opacity]': {
-    stroke: theme.palette.text.primary,
-    strokeWidth: 3
-  },
-
-  // Cursor of series in legends
-  '& [column-id]:not(:empty)': {
-    cursor: 'pointer',
-    ':hover': {
-      fontWeight: 600
-    }
-  }
-}));
-
 export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
+  // Store the chartWrapper reference
+  const [chartWrapperRef, setchartWrapperRef] = useState();
+
   // Formulate the className
   const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
   // Get the current theme
   const theme = useTheme();
 
-  // Show CircleProgress or not
-  const [circleProgress, displayCircleProgress] = useState(true);
+  // Property to determine if this is the first time the chart is rendered
+  // to show/hide the loading CircularProgress
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
-  // Keep track of the displayed columns (series)
-  const [shownColumns, setShownColumns] = useState(null);
+  // Keep track of the columns (series) of the chart
+  const [allColumns, setAllColumns] = useState([]);
+  const [dataColumns, setDataColumns] = useState([]);
 
   // Options object for the chart
   let options = {};
@@ -384,28 +294,48 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     {
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
+        if (!isFirstRender) return;
         // Hide the circleProgress when chart finishes loading
-        displayCircleProgress(false);
+        setIsFirstRender(false);
 
         // Update the initial DataView's columns (often, all of the series are displayed initially)
+        const dataTable = chartWrapper.getDataTable();
         var initialView = chartWrapper.getView();
         // If (optional) columns is not specified in database
         // Assign it from DataTable
         if (initialView.columns == null) {
-          const viewFromDataTable = new google.visualization.DataView(chartWrapper.getDataTable());
+          const viewFromDataTable = new google.visualization.DataView(dataTable);
           chartWrapper.setView({
             columns: viewFromDataTable.columns
           });
           initialView = chartWrapper.getView();
-          // chartWrapper.draw()
+          chartWrapper.draw();
         }
-        console.log(chartWrapper.getView());
-        var seriesNames = [];
-        for (var col = 1; col < initialDataView.getNumberOfColumns(); col++) {
-          seriesNames.push(initialDataView.getColumnLabel(col));
-        }
-        console.log(seriesNames);
-        setShownColumns(initialView);
+
+        var shouldAssignDomainRoleToFistColumn = true;
+        const allInitialColumns = initialView.columns.map(col => {
+          const sourceColumn = (typeof col === 'number') ? col : col.sourceColumn;
+          const columnLabel = dataTable.getColumnLabel(sourceColumn);
+
+          var col = (typeof col === 'number')
+            ? {
+              label: columnLabel,
+              role: shouldAssignDomainRoleToFistColumn ? 'domain' : 'data',
+              sourceColumn: sourceColumn
+            }
+            : { label: columnLabel, ...col };
+          shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
+
+          // Set the visibility of data column, initially, all data columns are selected
+          (col.role === 'data') && (col.selected = true);
+          return col;
+        });
+        // needs to be memoized---------------------
+        // initialView.columns = initialColumns; // re-draw the charts
+        setDataColumns(allInitialColumns.filter(col => col.role === 'data'));
+
+        setAllColumns(allInitialColumns);
+        setchartWrapperRef(chartWrapper);
 
         // If chart is on homepage, on right click, enable default context menu
         // eslint-disable-next-line no-undef
@@ -417,36 +347,20 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             e.stopPropagation();
           });
         }
-      }, [displayCircleProgress])
-    },
-    {
-      eventName: 'select',
-      callback: ({ chartWrapper }) => {
-
-        if (chartData.subcharts?.[chartSubIndex].subchartTitle !== 'Absolute Numbers') return
-        // Chart is ready, print out all series data
-        var dataTable = chartWrapper.getDataTable();
-
-
-        var columns = [
-          0,
-          1,
-          {
-            role: "tooltip",
-            type: "string",
-            properties: {
-              html: true
-            },
-            sourceColumn: 6
-          }
-        ];
-        chartWrapper.setView({
-          columns: columns
-        });
-        chartWrapper.draw()
-      }
+      }, [isFirstRender, setIsFirstRender, allColumns, setAllColumns])
     }
   ];
+
+  const handleSeriesSelection = (newData) => {
+    setDataColumns(newData);
+    chartWrapperRef.setView({
+      columns: [
+        allColumns[0], // always include the index 0 column because it is the domain column (x-axis)
+        ...newData.filter(item => item.selected === true) // append the rest of the columns whose selected property is true
+      ]
+    });
+    chartWrapperRef.draw(); // call draw to apply the new DataView and 'refresh' the chart
+  };
 
   const chartProps = {
     chartType: chartData.chartType,
@@ -532,22 +446,30 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   }
 
   return (
-    <SubChartStyleWrapper
-      isPortrait={isPortrait}
-      position="relative"
-      className={className}
-      height="100%"
-      width="100%"
-    >
-      {circleProgress && (
-        <CircularProgress
-          sx={{
-            display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
-          }}
-        />
-      )}
-      {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
-      <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
-    </SubChartStyleWrapper>
+    <Box>
+      <SeriesSelector
+        items={dataColumns}
+        selectorID={`${chartData.title}-selector`}
+        onSeriesSelection={handleSeriesSelection}
+      />
+      <SubChartStyleWrapper
+        isPortrait={isPortrait}
+        position="relative"
+        className={className}
+        height="100%"
+        width="100%"
+      >
+        {isFirstRender && (
+          <CircularProgress
+            sx={{
+              display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
+            }}
+          />
+        )}
+        {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
+        <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
+      </SubChartStyleWrapper>
+    </Box>
+
   );
 }

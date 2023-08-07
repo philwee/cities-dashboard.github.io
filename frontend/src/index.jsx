@@ -8,6 +8,7 @@ import { HomePageProvider } from './ContextProviders/HomePageContext';
 import { CommentCountsProvider } from './ContextProviders/CommentCountsContext';
 import { TabProvider } from './ContextProviders/TabContext';
 import { SheetsDataProvider } from './ContextProviders/SheetsDataContext';
+import { VisibilityProvider } from './ContextProviders/VisibilityContext';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +17,9 @@ ReactDOM.render(
         <SheetsDataProvider>
           <LinkProvider>
             <TabProvider>
-              <App />
+              <VisibilityProvider>
+                <App />
+              </VisibilityProvider>
             </TabProvider>
           </LinkProvider>
         </SheetsDataProvider>

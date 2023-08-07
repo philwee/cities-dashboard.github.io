@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
@@ -295,7 +295,9 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
         if (!isFirstRender) return;
-        // Hide the circleProgress when chart finishes loading
+        // ------ DO THE BELOW IF THIS IS THE FIRST TIME THE CHART IS RENDERED
+
+        // Hide the circleProgress when chart finishes rendering the first time
         setIsFirstRender(false);
 
         // Update the initial DataView's columns (often, all of the series are displayed initially)
@@ -312,26 +314,27 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
           chartWrapper.draw();
         }
 
-        var shouldAssignDomainRoleToFistColumn = true;
-        const allInitialColumns = initialView.columns.map(col => {
+        var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
+        const allInitialColumns = initialView.columns.map((col, index) => {
           const sourceColumn = (typeof col === 'number') ? col : col.sourceColumn;
           const columnLabel = dataTable.getColumnLabel(sourceColumn);
 
+          // A column can either be a number (that denotes the index of the sourceColumn) or an object
+          // The code below harmonize all columns to be an object to store crucial data to toggle their visibility
           var col = (typeof col === 'number')
             ? {
               label: columnLabel,
               role: shouldAssignDomainRoleToFistColumn ? 'domain' : 'data',
-              sourceColumn: sourceColumn
+              sourceColumn: sourceColumn,
+              originalColumnIndex: index
             }
-            : { label: columnLabel, ...col };
+            : { label: columnLabel, originalColumnIndex: index, ...col };
           shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
-
           // Set the visibility of data column, initially, all data columns are selected
           (col.role === 'data') && (col.selected = true);
           return col;
         });
-        // needs to be memoized---------------------
-        // initialView.columns = initialColumns; // re-draw the charts
+
         setDataColumns(allInitialColumns.filter(col => col.role === 'data'));
 
         setAllColumns(allInitialColumns);
@@ -347,19 +350,41 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             e.stopPropagation();
           });
         }
-      }, [isFirstRender, setIsFirstRender, allColumns, setAllColumns])
+      }, [isFirstRender])
     }
   ];
 
-  const handleSeriesSelection = (newData) => {
-    setDataColumns(newData);
+  const handleSeriesSelection = (newDataColumns) => {
+    // Update dataColumns
+    setDataColumns(newDataColumns);
+
+    // In the initial allColumns array, a dataColumn can be immediately followed by optional supporting columns
+    // for example, columns whose 'role' is 'tooltip' or 'annotation' ...
+    // Since newDataColumns only contains dataColumns, we have to reference back to the initial allColumns array
+    // to append after SELECTED dataColumn its (optional) supporting columns
+    let newDataViewColumns = [];
+    for (const dataColumn of newDataColumns) {
+      if (dataColumn.selected) {
+        newDataViewColumns.push(dataColumn);
+        // Find associated columns that support this dataColumn
+        for (let i = dataColumn.originalColumnIndex + 1; i < allColumns.length; i++) {
+          const supportingColumns = allColumns[i];
+          if (supportingColumns.role === 'data')
+            break; // stop looking for supporting columns when another dataColumn is encountered
+          else
+            newDataViewColumns.push(supportingColumns);
+        }
+      }
+    }
     chartWrapperRef.setView({
       columns: [
         allColumns[0], // always include the index 0 column because it is the domain column (x-axis)
-        ...newData.filter(item => item.selected === true) // append the rest of the columns whose selected property is true
+        ...newDataViewColumns // append the rest of the columns calculated above
       ]
     });
-    chartWrapperRef.draw(); // call draw to apply the new DataView and 'refresh' the chart
+
+    // Call draw to apply the new DataView and 'refresh' the chart
+    chartWrapperRef.draw();
   };
 
   const chartProps = {
@@ -441,7 +466,6 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
           showControl={showControl}
         />
       </SubChartStyleWrapper>
-
     );
   }
 

@@ -1,20 +1,18 @@
-import { useEffect } from 'react';
-import { Box, Fade } from '@mui/material';
-import { useVisibility } from '../../ContextProviders/VisibilityContext';
+import { Box, useScrollTrigger, Fade } from '@mui/material';
 
-// eslint-disable-next-line import/prefer-default-export
+export const { innerHeight } = window;
+
 export function FadeInButtonForSpeedDial(props) {
-  const { children, distanceFromBottomOfWindow } = props;
+  const { children, window, distanceFromBottomOfWindow, triggerThreshold } = props;
 
-  // Get the visibility state from the context.
-  const { isVisible } = useVisibility();
-
-  useEffect(() => {
-    console.log('isVisible', isVisible);
-  }, [isVisible]);
+  const trigger = useScrollTrigger({
+    target: window,
+    disableHysteresis: true,
+    threshold: innerHeight * (triggerThreshold || 0.5),
+  });
 
   return (
-    <Fade in={isVisible}>
+    <Fade in={trigger}>
       <Box
         role="presentation"
         sx={{

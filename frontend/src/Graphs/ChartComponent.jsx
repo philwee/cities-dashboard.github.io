@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Tabs, Tab } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
+import { useVisibility } from '../ContextProviders/VisibilityContext';
 
 import SubChart from './SubChart';
 
@@ -83,13 +84,13 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
     chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
   }
 
-  if (chartData.identifier?.includes('student-categories-by-term')) {
-    const windowHeight = windowSize[1];
-    // If not potrait, make sure that height is always >= 40vw
-    // else, make sure that height is always >= 120vw
-    chartWrapperHeight = isPortrait ? `${windowHeight * 0.69}px` : `${windowHeight * 0.73}px`;
-    chartWrapperMaxHeight = isPortrait ? `${windowHeight * 1.5}px` : `${windowHeight * 0.75}px`;
-  }
+  // if (chartData.identifier?.includes('student-categories-by-term')) {
+  //   const windowHeight = windowSize[1];
+  //   // If not potrait, make sure that height is always >= 40vw
+  //   // else, make sure that height is always >= 120vw
+  //   chartWrapperHeight = isPortrait ? `${windowHeight * 0.69}px` : `${windowHeight * 0.73}px`;
+  //   chartWrapperMaxHeight = isPortrait ? `${windowHeight * 1.5}px` : `${windowHeight * 0.75}px`;
+  // }
 
   // Assign the subcharts array for HeatMap based on the device orientation
   if (chartData.chartType === 'HeatMap' || chartData.chartType === 'ComboChart') {
@@ -98,6 +99,34 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
     };
   }
+
+  const chartRef = useRef(null);
+  const { setIsVisible } = useVisibility();
+  useEffect(() => {
+    let observer;
+
+    if (chartData.callsAQIHelper && chartRef.current) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // console.log(`chart is visible: ${chartData.title}`);
+          }
+        },
+        {
+          threshold: 0.5,
+        }
+      );
+
+      observer.observe(chartRef.current);
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [chartData, setIsVisible, chartRef]);
 
   // Check if there are multiple subcharts
   if (chartData.subcharts) {
@@ -133,6 +162,7 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
           )
         }
         <Box
+          ref={chartRef}
           position="relative"
           height={chartData.height ? chartData.height : chartWrapperHeight}
           maxHeight={

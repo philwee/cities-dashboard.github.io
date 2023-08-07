@@ -136,7 +136,7 @@
       },
       {
         "title": "Historical Snapshots of AQI",
-        "identifier": "historical-aqi-snapshots",
+        "callsAQIHelper": true,
         "subcharts": [
           {
             "gid": 184715989,

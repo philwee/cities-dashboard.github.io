@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Box, CircularProgress } from '@mui/material/';
 
@@ -6,6 +6,8 @@ import { useTheme, styled } from '@mui/material/styles';
 import HeatMap from './HeatMap';
 import CalendarChart from './ResponsiveCalendarChart';
 import MemoizedChart from './MemoizedChart';
+
+import { useVisibility } from '../ContextProviders/VisibilityContext';
 
 const chartFilterHeightInPixel = 50;
 
@@ -380,6 +382,16 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
         displayCircleProgress(false);
+        // If chart is on homepage, on right click, enable default context menu
+        // eslint-disable-next-line no-undef
+        if (isHomepage && google) {
+          const chart = chartWrapper.getChart();
+          // eslint-disable-next-line no-undef
+          google.visualization.events.addListener(chart, 'rightclick', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        }
       }, [displayCircleProgress])
     }
   ];
@@ -432,6 +444,37 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     )
   };
 
+  const chartRef = useRef(null);
+  const { setIsVisible } = useVisibility();
+  useEffect(() => {
+    let observer;
+
+    if (chartData.identifier?.includes('historical-aqi-snapshots') && chartRef.current) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // console.log('chart is visible');
+          } else {
+            setIsVisible(false);
+            // console.log('chart is NOT visible');
+          }
+        },
+        {
+          threshold: 1.0,
+        }
+      );
+
+      observer.observe(chartRef.current);
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [chartData, setIsVisible, chartRef]);
+
   if (chartData.chartType === 'HeatMap') {
     return (
       <Box
@@ -469,6 +512,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
 
   return (
     <SubChartStyleWrapper
+      ref={chartRef}
       isPortrait={isPortrait}
       position="relative"
       className={className}

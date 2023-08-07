@@ -1,3 +1,4 @@
+// disable eslint for this file
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
@@ -5,7 +6,6 @@ import { Box, Fab, Popover, Typography, Table, TableBody, TableCell, TableHead, 
 import { useTheme } from '@mui/material/styles';
 import AirIcon from '@mui/icons-material/Air';
 import { FadeInButtonForSpeedDial } from './Header/FadeInButtonForSpeedDial';
-import { useVisibility } from '../ContextProviders/VisibilityContext';
 
 import * as Tracking from '../Utils/Tracking';
 
@@ -20,7 +20,6 @@ const StyledTable = styled(Table)(({ theme }) => ({
 }));
 
 export default function AirQualityIndexLegendQuickGlance(props) {
-  const { isVisible } = useVisibility();
   // Mechanism for opening and closing the Quick Glance on hover
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
@@ -34,8 +33,6 @@ export default function AirQualityIndexLegendQuickGlance(props) {
 
   // Air quality index legend
   const theme = useTheme();
-
-  if (!isVisible) return null;
 
   const airQualityIndexCategories = [
     {

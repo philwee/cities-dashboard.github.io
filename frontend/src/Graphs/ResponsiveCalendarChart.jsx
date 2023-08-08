@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Box, CircularProgress, styled } from '@mui/material/';
 import MemoizedChart from './MemoizedChart';
 
@@ -27,6 +27,45 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
   const controlHeight = useRef(0);
 
   const [circleProgress, displayCircleProgress] = useState(true);
+
+  /**
+   * State and ref to track if the component is visible in the viewport.
+   * Chart only renders when it is visible to prevent expensive rendering.
+   * Helps alleviate a performance-related issue while loading the page containing the chart.
+  */
+  const [isVisible, setIsVisible] = useState(false);
+  const componentRef = useRef(null);
+
+  useEffect(() => {
+    /**
+     * JavaScript IntersectionObserver API used to detect when chart is visible on screen.
+    */
+    const currentRef = componentRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      {
+        rootMargin: '0px',
+        threshold: 0.1 // Low threshold to start rendering chart as soon as it is visible
+      }
+    );
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    /**
+     * Cleanup function to remove observer when component is unmounted.
+     */
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [componentRef]);
 
   const calculateChartTotalHeight = useCallback(() => {
     // early return if both values are not ready
@@ -118,26 +157,36 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     }];
   }
 
+  /**
+ * Render logic for the CalendarChart component.
+ * If the component is not visible, a placeholder div is rendered for observation.
+ * placeholder div needed to observe visibility since it contains the componentRef.
+ * Once visible, the complete CalendarChart component is rendered.
+ * @returns {JSX.Element} The CalendarChart component or a placeholder div.
+ */
   return (
-    <StyledChartWrapper
-      className={chartData.chartType}
-      sx={{
-        position: 'relative',
-        width: '100%',
-        height: chartTotalHeight,
-        overflowX: 'auto',
-        overflowY: 'hidden',
-      }}
-    >
-      {circleProgress && (
-        <CircularProgress
-          sx={{
-            display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
-          }}
-        />
-      )}
-      <MemoizedChart chartProps={calendarChartProps} isPortrait={isPortrait} />
-    </StyledChartWrapper>
+    isVisible ? (
+      <StyledChartWrapper
+        ref={componentRef}
+        className={chartData.chartType}
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: chartTotalHeight,
+          overflowX: 'auto',
+          overflowY: 'hidden',
+        }}
+      >
+        {circleProgress && (
+          <CircularProgress
+            sx={{
+              display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
+            }}
+          />
+        )}
+        <MemoizedChart chartProps={calendarChartProps} isPortrait={isPortrait} />
+      </StyledChartWrapper>
+    ) : <div ref={componentRef} />
   );
 }
 

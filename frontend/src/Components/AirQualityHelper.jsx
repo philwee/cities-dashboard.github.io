@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { Box, Fab, Popover, Typography, Table, TableBody, TableCell, TableHead, TableRow, Stack, styled } from '@mui/material';
+import { Box, Fab, Fade, Popper, Paper, Typography, Table, TableBody, TableCell, TableHead, TableRow, Stack, styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import AirIcon from '@mui/icons-material/Air';
 import { FadeInButtonForSpeedDial } from './Header/FadeInButtonForSpeedDial';
@@ -22,11 +22,11 @@ const StyledTable = styled(Table)(({ theme }) => ({
 export default function AirQualityIndexLegendQuickGlance(props) {
   // Mechanism for opening and closing the Quick Glance on hover
   const [anchorEl, setAnchorEl] = useState(null);
-  const handlePopoverOpen = (event) => {
+  const handlePopperOpen = (event) => {
     setAnchorEl(event.currentTarget);
     Tracking.sendEventAnalytics(Tracking.Events.airQualityIndexLegendQuickGlance);
   };
-  const handlePopoverClose = () => {
+  const handlePopperClose = () => {
     setAnchorEl(null);
   };
   const open = Boolean(anchorEl);
@@ -80,9 +80,9 @@ export default function AirQualityIndexLegendQuickGlance(props) {
           sx={{ mt: 1 }}
           aria-owns={open ? Tracking.Events.airQualityIndexLegendQuickGlance : undefined}
           aria-haspopup="true"
-          onMouseEnter={handlePopoverOpen}
-          onMouseLeave={handlePopoverClose}
-          onClick={(event) => isMobile && (open ? handlePopoverClose() : handlePopoverOpen(event))}
+          onMouseEnter={handlePopperOpen}
+          onMouseLeave={handlePopperClose}
+          onClick={(event) => isMobile && (open ? handlePopperClose() : handlePopperOpen(event))}
           aria-label={Tracking.Events.airQualityIndexLegendQuickGlance}
           color="primary"
         >
@@ -95,7 +95,7 @@ export default function AirQualityIndexLegendQuickGlance(props) {
         </Fab>
       </FadeInButtonForSpeedDial>
 
-      <Popover
+      <Popper
         id={Tracking.Events.airQualityIndexLegendQuickGlance}
         sx={{
           pointerEvents: 'none',
@@ -103,55 +103,56 @@ export default function AirQualityIndexLegendQuickGlance(props) {
         }}
         open={open}
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: '100',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        onClose={handlePopoverClose}
+        placement="top-end"
+        onClose={handlePopperClose}
         disableRestoreFocus
+        transition
       >
-        <Typography sx={{ mx: 2, mt: 1 }} color="text.disabled" variant="body1" fontWeight={500}>
-          AQI at quick glance
-        </Typography>
-        <StyledTable size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Stack direction="row" alignItems="center">
-                  <Box sx={{ width: '2em', height: '1em', marginRight: '4px' }} />
-                  Category
-                </Stack>
-              </TableCell>
-              <TableCell align="right">US AQI</TableCell>
-              <TableCell align="right">Raw PM2.5 Concentration</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {airQualityIndexCategories.reverse().map((element) => (
-              <TableRow
-                key={element.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Stack direction="row" alignItems="center">
-                    <Box sx={{ width: '2em', height: '1em', marginRight: '4px', backgroundColor: element.color }} />
-                    {element.name}
-                  </Stack>
-                </TableCell>
-                <TableCell align="right">{element.aqi}</TableCell>
-                <TableCell align="right">
-                  {element.rawPM2_5}
-                  (µg/m3)
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </StyledTable>
-      </Popover>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper elevation={8} sx={{ py: 0.5, mb: 1 }}>
+              <Typography sx={{ mx: 2, mt: 1 }} color="text.disabled" variant="body1" fontWeight={500}>
+                AQI at quick glance
+              </Typography>
+              <StyledTable size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Stack direction="row" alignItems="center">
+                        <Box sx={{ width: '2em', height: '1em', marginRight: '4px' }} />
+                        Category
+                      </Stack>
+                    </TableCell>
+                    <TableCell align="right">US AQI</TableCell>
+                    <TableCell align="right">Raw PM2.5 Concentration</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {airQualityIndexCategories.reverse().map((element) => (
+                    <TableRow
+                      key={element.name}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        <Stack direction="row" alignItems="center">
+                          <Box sx={{ width: '2em', height: '1em', marginRight: '4px', backgroundColor: element.color }} />
+                          {element.name}
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">{element.aqi}</TableCell>
+                      <TableCell align="right">
+                        {element.rawPM2_5}
+                        (µg/m3)
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </StyledTable>
+            </Paper>
+          </Fade>
+        )}
+
+      </Popper>
     </>
   );
 }

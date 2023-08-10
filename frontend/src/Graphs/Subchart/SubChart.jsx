@@ -7,7 +7,7 @@ import { Box, CircularProgress } from '@mui/material/';
 import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
 import CalendarChart from '../ResponsiveCalendarChart';
-import MemoizedChart from '../MemoizedChart';
+import Chart from 'react-google-charts';
 import SeriesSelector from './SeriesSelector';
 
 import SubChartStyleWrapper from './SubChartStyleWrapper';
@@ -25,8 +25,46 @@ const hideAnnotations = {
 };
 
 export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
+  const [dataTable, setDataTable] = useState();
   // Store the chartWrapper reference
   const [chartWrapperRef, setChartWrapperRef] = useState();
+
+  const handleGoogleChartLibraryLoad = (chartWrapper, google) => {
+    const handleQueryResponse = (response) => {
+      if (response.isError()) {
+        alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+      }
+      chartWrapper.setDataTable(response.getDataTable());
+      setDataTable(dataTable);
+      chartWrapper.draw();
+    };
+
+    const params =
+      chartSubIndex == null
+        ? {
+          headers: chartData.headers,
+          query: chartData.query,
+          gid: chartData.gid,
+        }
+        : {
+          headers:
+            chartData.headers
+            || chartData.subcharts[chartSubIndex].headers
+            || null,
+          query:
+            chartData.query
+            || chartData.subcharts[chartSubIndex].query
+            || null,
+          gid:
+            chartData.gid
+            || chartData.subcharts[chartSubIndex].gid
+            || null,
+        };
+    const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}/gviz/tq?gid=${params.gid}&headers=${params.headers}&tq=${params.query && encodeURIComponent(params.query)}`;
+    const query = new google.visualization.Query(url);
+    query.send(handleQueryResponse);
+  };
 
   // Formulate the className
   const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
@@ -305,7 +343,8 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   const chartEvents = [
     {
       eventName: 'ready',
-      callback: useCallback(({ chartWrapper }) => {
+      callback: ({ chartWrapper }) => {
+        console.log('ready')
         // ------ DO THE BELOW IF THIS IS THE FIRST TIME THE CHART IS RENDERED
         if (!isFirstRender) return;
 
@@ -325,7 +364,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             e.stopPropagation();
           });
         }
-      }, [isFirstRender])
+      }
     }
   ];
 
@@ -397,6 +436,10 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   };
 
   const chartProps = {
+    getChartWrapper: (chartWrapper, google) => {
+      handleGoogleChartLibraryLoad(chartWrapper, google);
+    },
+    data: dataTable,
     chartType: chartData.chartType,
     chartWrapperParams: {
       view: {
@@ -408,28 +451,6 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
           || null,
       },
     },
-    spreadSheetUrl: `https://docs.google.com/spreadsheets/d/${chartData.sheetId}`,
-    spreadSheetQueryParameters:
-      chartSubIndex == null
-        ? {
-          headers: chartData.headers,
-          query: chartData.query,
-          gid: chartData.gid,
-        }
-        : {
-          headers:
-            chartData.headers
-            || chartData.subcharts[chartSubIndex].headers
-            || null,
-          query:
-            chartData.query
-            || chartData.subcharts[chartSubIndex].query
-            || null,
-          gid:
-            chartData.gid
-            || chartData.subcharts[chartSubIndex].gid
-            || null,
-        },
     options: chartOptions,
     chartEvents,
     // if the filter prop exists and it's not a chart on homepage:
@@ -499,9 +520,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             }}
           />
         )}
-        {chartOptions && (
-          <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
-        )}
+        <Chart {...chartProps} />
       </SubChartStyleWrapper>
     </Box>
 

@@ -38,7 +38,7 @@ function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
     calculatedHeight += controlHeight.current;
 
     setChartTotalHeight(calculatedHeight);
-  }, [chartProps.options.legend?.position, showControl]);
+  }, [chartProps.options?.legend?.position, showControl]);
 
   const updateChartHeight = useCallback((chartWrapper) => {
     // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.

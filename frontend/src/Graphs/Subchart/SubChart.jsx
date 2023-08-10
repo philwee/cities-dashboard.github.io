@@ -26,7 +26,7 @@ const hideAnnotations = {
 
 export default function SubChart({ chartData, chartSubIndex, windowSize, isPortrait, isHomepage }) {
   // Store the chartWrapper reference
-  const [chartWrapperRef, setchartWrapperRef] = useState();
+  const [chartWrapperRef, setChartWrapperRef] = useState();
 
   // Formulate the className
   const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
@@ -41,7 +41,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
   const [dataColumns, setDataColumns] = useState([]);
 
   // Options object for the chart
-  let options = {};
+  const [chartOptions, setChartOptions] = useState();
 
   // Define some shared styling rules for the chart
   const responsiveFontSize = isPortrait ? 9 : 12;
@@ -72,7 +72,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
 
   // ---- Formulate the options for this specific chart:
   // 1. Populate first with subchart's options (if any)
-  options = chartData.subcharts?.[chartSubIndex].options
+  let options = chartData.subcharts?.[chartSubIndex].options
     ? { ...chartData.subcharts[chartSubIndex].options }
     : {};
 
@@ -288,55 +288,32 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
     };
   }
 
+  // Set the chart's options once at the beginning
+  useEffect(() => {
+    setChartOptions(options);
+  }, [isPortrait]);
+
+  // works for isPortrait change, but the charts re-render again making it not changed
+  useEffect(() => {
+    // This function also setOptions without re-rendering
+    handleSeriesSelection(dataColumns);
+    // Code for when handleSeriesSelection is not turned on for this chart
+    // ...
+  }, [theme, isPortrait]);
+
   // When chart is ready
   const chartEvents = [
     {
       eventName: 'ready',
       callback: useCallback(({ chartWrapper }) => {
-        if (!isFirstRender) return;
         // ------ DO THE BELOW IF THIS IS THE FIRST TIME THE CHART IS RENDERED
+        if (!isFirstRender) return;
 
         // Hide the circleProgress when chart finishes rendering the first time
         setIsFirstRender(false);
 
-        // Update the initial DataView's columns (often, all of the series are displayed initially)
-        const dataTable = chartWrapper.getDataTable();
-        var initialView = chartWrapper.getView();
-        // If (optional) columns is not specified in database
-        // Assign it from DataTable
-        if (initialView.columns == null) {
-          const viewFromDataTable = new google.visualization.DataView(dataTable);
-          chartWrapper.setView({
-            columns: viewFromDataTable.columns
-          });
-          initialView = chartWrapper.getView();
-        }
-
-        var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
-        const allInitialColumns = initialView.columns.map((col, index) => {
-          const sourceColumn = (typeof col === 'number') ? col : col.sourceColumn;
-          const columnLabel = dataTable.getColumnLabel(sourceColumn);
-
-          // A column can either be a number (that denotes the index of the sourceColumn) or an object
-          // The code below harmonize all columns to be an object to store crucial data to toggle their visibility
-          var col = (typeof col === 'number')
-            ? {
-              label: columnLabel,
-              role: shouldAssignDomainRoleToFistColumn ? 'domain' : 'data',
-              sourceColumn: sourceColumn,
-              originalColumnIndex: index
-            }
-            : { label: columnLabel, originalColumnIndex: index, ...col };
-          shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
-          // Set the visibility of data column, initially, all data columns are selected
-          (col.role === 'data') && (col.selected = true);
-          return col;
-        });
-
-        // Only get the 'data' columns to track selection
-        setDataColumns(allInitialColumns.filter(col => col.role === 'data'));
-
-        setchartWrapperRef(chartWrapper);
+        // 
+        getInitialColumns(chartWrapper);
 
         // If chart is on homepage, on right click, enable default context menu
         // eslint-disable-next-line no-undef
@@ -348,17 +325,57 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             e.stopPropagation();
           });
         }
-      }, [isFirstRender]) // will be render twice because isFirstRender is flipped
+      }, [isFirstRender])
     }
   ];
 
-  const handleSeriesSelection = (newDataColumns) => {
-    setDataColumns(newDataColumns);
+  const getInitialColumns = (chartWrapper) => {
+    // Update the initial DataView's columns (often, all of the series are displayed initially)
+    const dataTable = chartWrapper.getDataTable();
+    var initialView = chartWrapper.getView();
+    // If (optional) columns is not specified in database
+    // Assign it from DataTable
+    if (initialView.columns == null) {
+      const viewFromDataTable = new google.visualization.DataView(dataTable);
+      chartWrapper.setView({
+        columns: viewFromDataTable.columns
+      });
+      initialView = chartWrapper.getView();
+    }
+
+    var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
+    const allInitialColumns = initialView.columns.map((col, index) => {
+      const sourceColumn = (typeof col === 'number') ? col : col.sourceColumn;
+      const columnLabel = dataTable.getColumnLabel(sourceColumn);
+
+      // A column can either be a number (that denotes the index of the sourceColumn) or an object
+      // The code below harmonize all columns to be an object to store crucial data to toggle their visibility
+      var col = (typeof col === 'number')
+        ? {
+          label: columnLabel,
+          role: shouldAssignDomainRoleToFistColumn ? 'domain' : 'data',
+          sourceColumn: sourceColumn,
+          originalColumnIndex: index
+        }
+        : { label: columnLabel, originalColumnIndex: index, ...col };
+      shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
+      // Set the visibility of data column, initially, all data columns are selected
+      (col.role === 'data') && (col.selected = true);
+      return col;
+    });
+
+    // Only get the 'data' columns to track selection
+    setDataColumns(allInitialColumns.filter(col => col.role === 'data'));
+
+    setChartWrapperRef(chartWrapper);
+
   };
 
-  useEffect(() => {
+  const handleSeriesSelection = (newDataColumns) => {
+    setDataColumns(newDataColumns);
+
     const hiddenSeriesObject = {};
-    dataColumns.forEach((col, index) => {
+    newDataColumns.forEach((col, index) => {
       if (!col.selected)
         hiddenSeriesObject[index] = {
           color: 'transparent',
@@ -367,18 +384,17 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
         }; // 'hide' the serie
     });
 
-    if (!chartWrapperRef) return;
-
-    chartWrapperRef.setOptions({
+    chartWrapperRef?.setOptions({
       ...options,
       series: {
         ...options.series,
         ...hiddenSeriesObject
       }
     });
+
     // Call draw to apply the new DataView and 'refresh' the chart
-    chartWrapperRef.draw();
-  }, [dataColumns])
+    chartWrapperRef?.draw();
+  };
 
   const chartProps = {
     chartType: chartData.chartType,
@@ -414,7 +430,7 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             || chartData.subcharts[chartSubIndex].gid
             || null,
         },
-    options,
+    options: chartOptions,
     chartEvents,
     // if the filter prop exists and it's not a chart on homepage:
     // add the packages and control props below
@@ -483,8 +499,9 @@ export default function SubChart({ chartData, chartSubIndex, windowSize, isPortr
             }}
           />
         )}
-        {/* <Chart style={{ margin: 'auto' }} {...chartProps} /> */}
-        <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
+        {chartOptions && (
+          <MemoizedChart chartProps={chartProps} windowSize={windowSize} isPortrait={isPortrait} />
+        )}
       </SubChartStyleWrapper>
     </Box>
 

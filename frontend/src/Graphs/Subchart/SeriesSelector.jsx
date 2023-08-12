@@ -1,22 +1,27 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import { Stack, Grid, OutlinedInput, InputLabel, MenuItem, FormControl, Select, Chip, Checkbox, Typography } from "@mui/material";
+import { Box, Stack, Grid, MenuItem, FormControl, Select, Chip, Checkbox, Typography, Switch } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
 
-const SELECT_ALL = "Select All Series";
+const SELECT_ALL = 'Select All Series';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
+      marginTop: '0.25rem',
+      maxHeight: ITEM_HEIGHT * 5.55 + ITEM_PADDING_TOP,
+      maxWidth: '65vw',
+      overflow: 'visible !important'
     }
   }
 };
 
 export default function SeriesSelector(props) {
   const { items: itemsFromChart, selectorID, onSeriesSelection } = props;
+
+  const theme = useTheme();
 
   const [items, setItems] = useState(itemsFromChart);
   const [selectAll, setSelectAll] = useState(true); // default: all is selected
@@ -77,16 +82,6 @@ export default function SeriesSelector(props) {
           renderValue={(selected) => `${selected.length} serie${selected.length > 1 ? "s" : ""} selected${selectAll ? " (all)" : ""}`}
           sx={{ fontSize: '0.75em' }}
         >
-          {/* Show the option to select all */}
-          <MenuItem key={SELECT_ALL} value={SELECT_ALL} >
-            <Checkbox
-              checked={selectAll}
-              onClick={() => handleItemToggle(SELECT_ALL)}
-              sx={{ p: 0.25, transform: 'scale(0.8)' }}
-            />
-            <Typography fontWeight={500} variant='caption'>{SELECT_ALL}</Typography>
-          </MenuItem>
-
           {/* Display all available items, together with checkbox for each item to select from */}
           {items.map((item) => (
             <MenuItem
@@ -97,7 +92,14 @@ export default function SeriesSelector(props) {
                 (items.filter(item => item.selected).length === 1 && item.selected) ? true : false
               }
               key={item.label}
-              value={item.label}>
+              value={item.label}
+              sx={{
+                backgroundColor: 'unset !important',
+                "&:hover": {
+                  backgroundColor: 'inherit !important',
+                }
+              }}
+            >
               <Checkbox
                 checked={item.selected}
                 onClick={() => handleItemToggle(item)}
@@ -106,6 +108,26 @@ export default function SeriesSelector(props) {
               <Typography variant='caption'>{item.label}</Typography>
             </MenuItem>
           ))}
+
+          {/* Show the option to select all */}
+          <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
+            borderTop: 'solid 0.5px', borderColor: theme.palette.text.secondary,
+            position: 'sticky', bottom: 0, zIndex: 9999, marginBottom: theme.spacing(-1),
+            background: theme.palette.background.paper,
+            "&:hover": {
+              background: theme.palette.background.paper
+            }
+          }}>
+            <Stack direction='row' width='100%' alignItems='center' justifyContent='space-between'>
+              <Typography fontWeight={500} variant='caption' sx={{ pl: 1 }}>{SELECT_ALL}</Typography>
+              <Switch
+                checked={selectAll}
+                onClick={() => handleItemToggle(SELECT_ALL)}
+                sx={{ transform: 'scale(0.8)' }}
+              />
+            </Stack>
+          </MenuItem>
+
         </Select>
       </FormControl>
 

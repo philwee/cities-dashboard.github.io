@@ -1,16 +1,13 @@
-import { useState, useRef, useCallback } from 'react';
-import { Box, CircularProgress, styled } from '@mui/material/';
-import MemoizedChart from './MemoizedChart';
+/* eslint-disable */
 
-const StyledChartWrapper = styled(Box)({
-  // Override React Google Charts to make Calendar chart truly responsive
-  '& > div, & > div > div ': {
-    width: '100% !important'
-  },
-  '& > div > div > div > div': {
-    margin: 'auto'
-  }
-});
+import { GoogleContext } from '../ContextProviders/GoogleContext';
+
+import { fetchDataFromSheet, generateRandomID, returnCalendarChartOptions } from './GoogleChartHelper';
+
+import SubChartStyleWrapper from './Subchart/SubChartStyleWrapper';
+import { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import { Box, CircularProgress, styled } from '@mui/material/';
+import { useTheme } from '@mui/material/styles';
 
 const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
   const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
@@ -21,124 +18,137 @@ const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
   };
 };
 
-function CalendarChart({ chartData, chartProps, isPortrait, showControl }) {
+function ResponsiveCalendarChart(props) {
+  const { chartData, subchartIndex, windowSize } = props;
+  const showControl = false;
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
   const chartHeight = useRef(0);
   const controlHeight = useRef(0);
 
-  const [circleProgress, displayCircleProgress] = useState(true);
+  const [chartWrapper, setChartWrapper] = useState(null);
+  const [google, _] = useContext(GoogleContext);
 
-  const calculateChartTotalHeight = useCallback(() => {
-    // early return if both values are not ready
-    if (!chartHeight.current) return;
-    if (showControl && !controlHeight.current) return;
-    const hasLegend = chartProps.options.legend?.position !== 'none';
+  // Get the current theme
+  const theme = useTheme();
 
-    let calculatedHeight = chartHeight.current + (hasLegend ? 30 : 60);
-    calculatedHeight += controlHeight.current;
+  // Property to determine if this is the first time the chart is rendered
+  // to show/hide the loading CircularProgress
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
-    setChartTotalHeight(calculatedHeight);
-  }, [chartProps.options?.legend?.position, showControl]);
+  const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 14, cellSizeMax: 18 });
 
-  const updateChartHeight = useCallback((chartWrapper) => {
-    // from the chartWrapper, querySelector is used to select the first 'g' element in the svg.
-    const chartContainer = chartWrapper.container.querySelector('svg > g:nth-of-type(1)');
-    const renderedHeight = chartContainer.getBBox().height;
+  const options = returnCalendarChartOptions({ ...props, calendarDimensions, theme });
 
-    chartHeight.current = renderedHeight;
+  // const updateControlHeight = useEffect((controlWrapper) => {
+  //   const controlContainer = controlWrapper.getControl().container;
+  //   const renderedHeight = controlContainer.getBoundingClientRect().height;
 
-    calculateChartTotalHeight();
-  }, [calculateChartTotalHeight]);
+  //   controlHeight.current = renderedHeight;
 
-  const updateControlHeight = useCallback((controlWrapper) => {
-    const controlContainer = controlWrapper.getControl().container;
-    const renderedHeight = controlContainer.getBoundingClientRect().height;
+  //   calculateChartTotalHeight, chartWrapper();
+  // }, [calculateChartTotalHeight]);
 
-    controlHeight.current = renderedHeight;
 
-    calculateChartTotalHeight();
-  }, [calculateChartTotalHeight]);
+  // const controlEvents = [
+  //   {
+  //     eventName: 'ready',
+  //     callback: useCallback(({ controlWrapper }) => {
+  //       updateControlHeight(controlWrapper);
+  //     }, [updateControlHeight])
+  //   },
+  //   {
+  //     eventName: 'statechange',
+  //     callback: useCallback(({ controlWrapper }) => {
+  //       updateControlHeight(controlWrapper);
+  //     }, [updateControlHeight]),
+  //   },
+  // ];
 
-  const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 10, cellSizeMax: 18 });
+  // // additional props if there is a controlFilter present
+  // if (showControl) {
+  //   calendarChartProps.controls = [{
+  //     ...calendarChartProps.controls[0],
+  //     controlEvents,
+  //   }];
+  // }
 
-  // When chart is ready
-  const chartEvents = [
-    {
-      eventName: 'ready',
-      callback: useCallback(({ chartWrapper }) => {
-        updateChartHeight(chartWrapper.getChart());
-        displayCircleProgress(false);
-      }, [updateChartHeight])
+  // Define the DOM container's ID for drawing the google chart inside
+  const [randomID, setRandomID] = useState(generateRandomID());
+
+  // Call this function to fetch the data and draw the initial chart
+  useEffect(() => {
+    if (google && !chartWrapper) {
+      fetchDataFromSheet({ chartData: chartData, subchartIndex: subchartIndex })
+        .then(response => {
+          const dataTable = response.getDataTable();
+          const wrapper = new google.visualization.ChartWrapper({
+            chartType: chartData.chartType,
+            dataTable: dataTable,
+            options: options,
+            view: {
+              columns:
+                chartData.columns
+                || (chartData.subcharts
+                  && chartData.subcharts[subchartIndex].columns)
+                || null
+                || null,
+            },
+            containerId: randomID
+          });
+          setChartWrapper(wrapper);
+          google.visualization.events.addListener(wrapper, 'ready', onChartReady);
+
+          wrapper.draw();
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
-  ];
+  }, [google]);
 
-  const controlEvents = [
-    {
-      eventName: 'ready',
-      callback: useCallback(({ controlWrapper }) => {
-        updateControlHeight(controlWrapper);
-      }, [updateControlHeight])
-    },
-    {
-      eventName: 'statechange',
-      callback: useCallback(({ controlWrapper }) => {
-        updateControlHeight(controlWrapper);
-      }, [updateControlHeight]),
-    },
-  ];
+  const onChartReady = () => {
+    // querySelector is used to select the first 'g' element in the svg
+    // this is to get the height of the non-responsive element
+    // to set the CalendarChart's height to make it resonsive
+    const chartDOMContainer = document.getElementById(randomID).querySelector('svg > g:nth-of-type(1)');
+    const renderedHeight = chartDOMContainer.getBBox().height;
+    setChartTotalHeight(renderedHeight);
 
-  const calendarChartProps = {
-    ...chartProps,
-    options: {
-      ...chartProps.options,
-      // overcompensate the height of chart SVG element. this is OK as
-      // the chart container will clip the chart to it's expected height of {chartTotalHeight}
-      height: '1000px',
-      width: calendarDimensions.chartWidth,
-      calendar: {
-        cellSize: calendarDimensions.cellSize,
-        yearLabel: {
-          fontSize: calendarDimensions.yearLabelFontSize
-        },
-        daysOfWeek: isPortrait ? '' : 'SMTWTFS' // hide dayOfWeek label on mobile to save space
-      },
-      noDataPattern: {
-        backgroundColor: 'none',
-        color: 'none',
-      },
-    },
-    chartEvents
-  };
-
-  // additional props if there is a controlFilter present
-  if (showControl) {
-    calendarChartProps.controls = [{
-      ...calendarChartProps.controls[0],
-      controlEvents,
-    }];
+    if (!isFirstRender) return;
+    // Hide the circleProgress when chart finishes rendering the first time
+    setIsFirstRender(false);
   }
 
+  // Set new options prop and re-render the chart if theme or isPortrait changes
+  // This is also enough to make the CalendarChart's responsive: width and height wise
+  useEffect(() => {
+    if (!chartWrapper || !chartTotalHeight)
+      console.log(chartTotalHeight)
+    chartWrapper?.setOptions({ ...options, height: chartTotalHeight });
+    chartWrapper?.draw();
+  }, [theme, windowSize, chartTotalHeight]);
+
   return (
-    <StyledChartWrapper
+    <SubChartStyleWrapper
       className={chartData.chartType}
       sx={{
         position: 'relative',
         width: '100%',
-        height: chartTotalHeight,
+        minHeight: '400px',
         overflowX: 'auto',
         overflowY: 'hidden',
-      }}
-    >
-      {circleProgress && (
+      }}>
+
+      {isFirstRender && (
         <CircularProgress
           sx={{
             display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
           }}
         />
       )}
-      <MemoizedChart chartProps={calendarChartProps} isPortrait={isPortrait} />
-    </StyledChartWrapper>
+      <Box id={randomID} />
+    </SubChartStyleWrapper>
   );
 }
 
-export default CalendarChart;
+export default ResponsiveCalendarChart;

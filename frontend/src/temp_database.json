@@ -136,6 +136,7 @@
       },
       {
         "title": "Historical Snapshots of AQI",
+        "customClassName": "historical-snapshot-aqi",
         "subcharts": [
           {
             "gid": 184715989,
@@ -192,8 +193,8 @@
         ],
         "headers": 1,
         "chartType": "ComboChart",
-        "customClassName": "historical-snapshot-aqi",
         "options": {
+          "seriesSelector": true,
           "colors": "reverseAqi",
           "chartArea": {
             "backgroundColor": "#fff"
@@ -468,6 +469,7 @@
         "headers": 2,
         "chartType": "LineChart",
         "options": {
+          "seriesSelector": true,
           "colors": "grayscale",
           "vAxis": {
             "title": "PM2.5 Concentration (µg/m3)"
@@ -648,6 +650,7 @@
               }
             ],
             "options": {
+              "seriesSelector": true,
               "vAxis": {
                 "title": "Number of Unique FABS Memberships"
               },
@@ -1134,6 +1137,7 @@
               }
             ],
             "options": {
+              "seriesSelector": true,
               "seriesType": "area",
               "isStacked": true
             },

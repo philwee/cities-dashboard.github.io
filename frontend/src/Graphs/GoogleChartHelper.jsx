@@ -1,0 +1,316 @@
+/* eslint-disable */
+// Async function to fetch data from sheet using Google Visualization query language
+export const fetchDataFromSheet = ({ chartData, subchartIndex }) => {
+  const urlParams =
+    subchartIndex == null
+      ? {
+        headers: chartData.headers || 1,
+        query: chartData.query,
+        gid: chartData.gid,
+      }
+      : {
+        headers:
+          chartData.headers
+          || chartData.subcharts[subchartIndex].headers
+          || null,
+        query:
+          chartData.query
+          || chartData.subcharts[subchartIndex].query
+          || null,
+        gid:
+          chartData.gid
+          || chartData.subcharts[subchartIndex].gid
+          || null,
+      };
+
+  const url = `https://docs.google.com/spreadsheets/d/${chartData.sheetId}/gviz/tq?gid=${urlParams.gid}&headers=${urlParams.headers}&tqx${urlParams.query ? `&tq=${encodeURIComponent(urlParams.query)}` : ''}`;
+  const query = new google.visualization.Query(url);
+
+  return new Promise((resolve, reject) => {
+    query.send(response => {
+      if (response.isError()) {
+        reject(response.getMessage() + ' ' + response.getDetailedMessage());
+      } else {
+        resolve(response);
+      }
+    });
+  });
+};
+
+// Function to generate a random ID for the google chart container
+export const generateRandomID = () => {
+  return Math.random().toString(36).substr(2, 9); // Generates a random string of length 9
+}
+
+// -------- Chart options --------
+
+export const returnGenericOptions = (subChartProps) => {
+  const { chartData, subchartIndex, isPortrait, isHomepage, theme, showControl } = subChartProps;
+
+  // Define some shared styling rules for the chart
+  const responsiveFontSize = isPortrait ? 9 : 12;
+  const responsiveFontSizeSmall = isPortrait ? 7 : 10;
+  const axisTitleTextStyle = {
+    italic: false,
+    bold: true,
+    color: theme.palette.chart.axisTitle,
+    fontSize: responsiveFontSize
+  };
+  const axisTextStyle = {
+    color: theme.palette.chart.axisText,
+    fontSize: responsiveFontSize
+  };
+  const chartFilterHeightInPixel = 50;
+  const hideAnnotations = {
+    stem: {
+      length: 0,
+    },
+    textStyle: {
+      opacity: 0,
+    },
+    boxStyle: null,
+  };
+
+  // ---- Formulate the options for this specific chart:
+  // 1. Populate first with subchart's options (if any)
+  let options = chartData.subcharts?.[subchartIndex].options
+    ? { ...chartData.subcharts[subchartIndex].options }
+    : {};
+
+  // 2. Append own chart's options and then populate with universal options for all charts
+  options = {
+    ...options,
+    ...chartData.options,
+    theme: 'material',
+    curveType: options.curveType || chartData.options?.curveType || 'function',
+    crosshair: { orientation: 'both', trigger: 'focus', opacity: 0.5 },
+    backgroundColor: { fill: 'transparent' },
+    chartArea: {
+      ...chartData.options?.chartArea,
+      width: isPortrait ? (chartData.options?.chartArea?.width?.portrait || '80%') : (chartData.options?.chartArea?.width?.landscape || '75%'),
+      height: isPortrait ? '60%' : '70%'
+    },
+    width: isPortrait ? (chartData.options?.width?.portrait || '100%') : (chartData.options?.width?.landscape || '100%'),
+    // if there is a filter, we make space for the chartFilter from the chart's height.
+    // value is divided in 2 because the calculation is applied twice due to
+    // how react-google-charts nest components
+    height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
+    tooltip: {
+      isHtml: true,
+      showColorCode: false
+    },
+    legend: {
+      backgroundColor: '#fff',
+      alignment: isPortrait ? 'center' : 'start',
+      position:
+        chartData.options?.legend?.position
+        ?? (isPortrait ? 'top' : 'right'),
+      scrollArrows: {
+        activeColor: theme.palette.chart.axisTitle,
+        inactiveColor: theme.palette.text.secondary,
+      },
+      pagingTextStyle: {
+        fontSize: 12,
+        color: theme.palette.chart.axisTitle,
+        bold: true,
+      }
+    }
+  };
+
+  // 3. Append to vAxis and hAxis properties
+  options.vAxis = {
+    ...options.vAxis,
+    format: options.vAxis?.format ?? 'decimal',
+    title: options.vAxis?.title ?? '',
+    viewWindow: {
+      min: options.vAxis?.viewWindow?.min ?? 0,
+    },
+  };
+  options.hAxis = {
+    ...options.hAxis,
+    title: options.hAxis?.title ?? '',
+  };
+  // 3.1. If in portrait mode, slant the text of the hAxis
+  if (isPortrait) {
+    options.hAxis = {
+      ...options.hAxis,
+      slantedText: true,
+      slantedTextAngle: 30,
+    };
+  }
+
+  // 4. Override with custom colors:
+  // 4.1. Color scheme of all the series of this chart
+  if (typeof options.colors === 'string' || !options.colors) options.colors = theme.palette.chart.optionsColors[options.colors || 'multiColor'];
+  // 4.2. Individual color of a single serie (if given)
+  if (options.series) {
+    Object.values(options.series).forEach((_serie) => {
+      const serie = _serie;
+      if (serie.color === 'default') {
+        serie.color = theme.palette.primary.main;
+      }
+    });
+  }
+  // 4.3. Color of the trendline
+  if (options.trendlines) {
+    options.trendlines.forEach((_item) => {
+      const item = _item;
+      item.color = theme.palette.primary.main;
+    });
+  }
+  // 4.4. Color axis of the Calendar chart
+  if (options.colorAxis) {
+    switch (options.colorAxis.colors) {
+      case 'matchingColor':
+        options.colorAxis.colors = [
+          theme.palette.chart.colorAxisFirstColor,
+          theme.palette.chart.optionsColors.multiColor[options.colorAxis.colorIndex],
+        ];
+        break;
+      case 'default':
+        options.colorAxis.colors = [
+          theme.palette.chart.colorAxisFirstColor,
+          theme.palette.NYUpurple,
+        ];
+        break;
+      case 'aqi':
+        options.colorAxis = theme.palette.chart.aqiColorAxis;
+        break;
+      default:
+        break;
+    }
+  }
+  // 4.5. Colors of other elements of the chart (typographies and gridlines)
+  options.vAxis = {
+    ...options.vAxis,
+    titleTextStyle: axisTitleTextStyle,
+    textStyle: axisTextStyle,
+    gridlines: {
+      ...options.vAxis?.gridlines,
+      color: options.vAxis?.gridlines?.color || theme.palette.chart.gridlines
+    },
+    minorGridlines: { count: 0 },
+  };
+  options.hAxis = {
+    ...options.hAxis,
+    titleTextStyle: axisTitleTextStyle,
+    textStyle: axisTextStyle,
+    gridlines: {
+      ...options.hAxis?.gridlines,
+      color: options.hAxis?.gridlines?.color || theme.palette.chart.gridlines
+    },
+    minorGridlines: {
+      ...options.hAxis?.minorGridlines,
+      color: options.hAxis?.gridlines?.color || theme.palette.chart.gridlines,
+    },
+  };
+  options.legend = {
+    ...options.legend,
+    textStyle: axisTextStyle,
+  };
+  options.annotations = {
+    ...options.annotations,
+    highContrast: true,
+    textStyle: {
+      color: theme.palette.primary.contrastText,
+      fontSize: responsiveFontSizeSmall,
+      opacity: 0.8
+    },
+    stem: {
+      ...options.annotations?.stem,
+      color: theme.palette.chart.axisTitle,
+      thickness: 2
+    },
+    boxStyle: {
+      rx: theme.shape.borderRadius, // rounded corners
+      ry: theme.shape.borderRadius,
+      fill: theme.palette.chart.annotationBoxFill,
+      fillOpacity: 0.5
+    },
+  };
+
+  // 5. If the chart is displayed on the homepage, override the options with:
+  if (isHomepage) {
+    options = {
+      ...options,
+      seriesSelector: false,
+      pointSize: 0,
+      enableInteractivity: false,
+      annotations: {
+        ...options.annotations,
+        ...hideAnnotations
+      },
+      legend: 'none',
+      vAxis: {
+        ...options.vAxis,
+        textPosition: 'none',
+        titleTextStyle: {
+          ...options.vAxis.titleTextStyle,
+          bold: false
+        }
+      },
+      hAxis: {
+        ...options.hAxis,
+        textPosition: 'none',
+        gridlines: { color: 'transparent', count: 0 },
+        titleTextStyle: {
+          ...options.hAxis.titleTextStyle,
+          bold: false
+        }
+      },
+    };
+  }
+
+  // Assign the appropriate controlOptions based on controlType (if existed)
+  // if (chartControl?.controlType === 'ChartRangeFilter') {
+  //   chartControl.options.ui = {
+  //     ...chartControl.options?.ui,
+  //     chartType: chartData.chartType,
+  //     snapToData: true,
+  //     chartView: {
+  //       columns:
+  //         chartData.columns
+  //         || (chartData.subcharts
+  //           && chartData.subcharts[subchartIndex].columns)
+  //         || null
+  //         || null,
+  //     },
+  //     chartOptions: {
+  //       ...options,
+  //       ...chartControl.options?.ui?.chartOptions,
+  //       height: chartFilterHeightInPixel,
+  //       hAxis: {
+  //         ...chartControl.options?.ui?.chartOptions?.hAxis,
+  //         textPosition: 'out',
+  //         textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
+  //       },
+  //       annotations: { ...hideAnnotations },
+  //       legend: null,
+  //     }
+  //   };
+  // }
+
+  return options;
+}
+
+export const returnCalendarChartOptions = (subChartProps) => {
+  let options = returnGenericOptions(subChartProps);
+
+  const { calendarDimensions } = subChartProps;
+  return {
+    ...options,
+    // overcompensate the height of chart SVG element. this is OK as
+    // the chart container will clip the chart to it's expected height of {chartTotalHeight}
+    width: calendarDimensions.chartWidth,
+    calendar: {
+      cellSize: calendarDimensions.cellSize,
+      yearLabel: {
+        fontSize: calendarDimensions.yearLabelFontSize
+      }
+    },
+    noDataPattern: {
+      backgroundColor: 'none',
+      color: 'none',
+    },
+  }
+}

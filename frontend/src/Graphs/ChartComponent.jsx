@@ -56,17 +56,12 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
       // change multiple times causing many expensive rerenders. we try to rerender at the
       // end of the resize.
       timeoutID = setTimeout(() => {
-        // redraw all charts on device orientation change, as the chartWrapperHeights
+        // Redraw all charts on device orientation change, as the chartWrapperHeights
         // have changed.
         setIsPortrait(window.matchMedia('(orientation: portrait)').matches);
 
-        // we redraw Calendar/Filter type charts on ANY window resize, even if
-        // device orientation does not change.
-
-        if (chartData.subcharts?.some((subchart) => subchart.control != null)
-          || (chartData.control != null)) {
-          setWindowSize([window.innerWidth, window.innerHeight]);
-        }
+        // Redraw all charts on window resized
+        setWindowSize([window.innerWidth, window.innerHeight]);
       }, debounceMilliseconds);
     };
 
@@ -154,7 +149,7 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
             >
               <SubChart
                 chartData={chartData}
-                chartSubIndex={index}
+                subchartIndex={index}
                 isPortrait={isPortrait}
                 isHomepage={isHomepage}
                 windowSize={windowSize}
@@ -174,7 +169,12 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
         chartData.chartType === 'HeatMap' ? '' : chartWrapperMaxHeight
       }
     >
-      <SubChart chartData={chartData} isPortrait={isPortrait} isHomepage={isHomepage} />
+      <SubChart
+        chartData={chartData}
+        isPortrait={isPortrait}
+        isHomepage={isHomepage}
+        windowSize={windowSize}
+      />
     </ChartStyleWrapper>
   );
 }

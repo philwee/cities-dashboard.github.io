@@ -192,8 +192,7 @@ const Project = ({ themePreference }) => {
                     {project.rawDataTables.map((element, index) => (
                       <SampleDataTable
                         key={index}
-                        chartData={element}
-                        sheetId={project.sheetId}
+                        chartData={{ sheetId: project.sheetId, ...element }}
                         marginBottom={(index < project.rawDataTables.length - 1) ? 3 : 1}
                       />
                     ))}

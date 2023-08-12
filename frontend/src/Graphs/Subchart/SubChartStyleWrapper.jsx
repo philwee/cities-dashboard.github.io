@@ -2,10 +2,10 @@ import { Box } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 
 const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
-  // CSS for Google Charts' HTML tooltip (can't be formatted using options parameter)
+  // CSS for HTML tooltip
   '& .google-visualization-tooltip': {
     width: 'unset !important',
-    maxWidth: '300px',
+    maxWidth: '350px',
     height: 'unset',
     padding: '1em',
     fontSize: `${isPortrait ? 9 : 12}px`,
@@ -24,8 +24,8 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
       }
     }
   },
-  '& .Calendar .google-visualization-tooltip': {
-    padding: '0.5rem',
+  '& .Calendar [dir]:not(:empty)': {
+    margin: 'auto'
   },
   /* Modify the appearance of the Google chart's filter
   // (by selecting all divs with id containing the keyword below */

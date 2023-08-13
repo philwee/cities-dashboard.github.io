@@ -9,21 +9,23 @@ const SELECT_ALL = 'Select All Series';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      marginTop: '0.25rem',
-      maxHeight: ITEM_HEIGHT * 5.55 + ITEM_PADDING_TOP,
-      maxWidth: '65vw',
-      overflow: 'visible !important'
-    }
-  }
-};
 
 export default function SeriesSelector(props) {
   const { items: itemsFromChart, selectorID, onSeriesSelection, isPortrait } = props;
 
   const theme = useTheme();
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        marginTop: '0.25rem',
+        maxHeight: ITEM_HEIGHT * 5.55 + ITEM_PADDING_TOP,
+        maxWidth: '65vw',
+        overflow: 'visible !important',
+        background: theme.palette.customAlternateBackground
+      }
+    }
+  };
 
   const [items, setItems] = useState(itemsFromChart);
   const [selectAll, setSelectAll] = useState(true); // default: all is selected
@@ -126,9 +128,9 @@ export default function SeriesSelector(props) {
           <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
             borderTop: 'solid 0.5px', borderColor: theme.palette.text.secondary,
             position: 'sticky', bottom: 0, zIndex: 9999, marginBottom: theme.spacing(-1),
-            background: theme.palette.background.paper,
+            background: theme.palette.customAlternateBackground,
             "&:hover": {
-              background: theme.palette.background.paper
+              background: theme.palette.customAlternateBackground
             }
           }}>
             <Stack direction='row' width='100%' alignItems='center' justifyContent='space-between'>

@@ -1,4 +1,10 @@
 /* eslint-disable */
+
+export const ChartControlType = {
+  CategoryFilter: { position: 'top', stackDirection: 'column' },
+  DateRangeFilter: { position: 'bottom', stackDirection: 'column-reverse' },
+  ChartRangeFilter: { position: 'bottom', stackDirection: 'column-reverse' }
+}
 // Async function to fetch data from sheet using Google Visualization query language
 export const fetchDataFromSheet = ({ chartData, subchartIndex }) => {
   const urlParams =
@@ -44,31 +50,36 @@ export const generateRandomID = () => {
 
 // -------- Chart options --------
 
-export const returnGenericOptions = (subChartProps) => {
-  const { chartData, subchartIndex, isPortrait, isHomepage, theme, showControl } = subChartProps;
+const chartFilterHeightInPixel = 50;
+const hideAnnotations = {
+  stem: {
+    length: 0,
+  },
+  textStyle: {
+    opacity: 0,
+  },
+  boxStyle: null,
+};
+
+const returnResponsiveFontSizeInPixels = ({ isPortrait, isSmaller }) => {
+  return (
+    isSmaller ? (isPortrait ? 6 : 8) : (isPortrait ? 8 : 10)
+  );
+}
+
+export const returnGenericOptions = (props) => {
+  const { chartData, subchartIndex, isPortrait, isHomepage, theme, showControl } = props;
 
   // Define some shared styling rules for the chart
-  const responsiveFontSize = isPortrait ? 9 : 12;
-  const responsiveFontSizeSmall = isPortrait ? 7 : 10;
   const axisTitleTextStyle = {
     italic: false,
     bold: true,
     color: theme.palette.chart.axisTitle,
-    fontSize: responsiveFontSize
+    fontSize: returnResponsiveFontSizeInPixels({ isPortrait })
   };
   const axisTextStyle = {
     color: theme.palette.chart.axisText,
-    fontSize: responsiveFontSize
-  };
-  const chartFilterHeightInPixel = 50;
-  const hideAnnotations = {
-    stem: {
-      length: 0,
-    },
-    textStyle: {
-      opacity: 0,
-    },
-    boxStyle: null,
+    fontSize: returnResponsiveFontSizeInPixels({ isPortrait })
   };
 
   // ---- Formulate the options for this specific chart:
@@ -110,7 +121,7 @@ export const returnGenericOptions = (subChartProps) => {
         inactiveColor: theme.palette.text.secondary,
       },
       pagingTextStyle: {
-        fontSize: 12,
+        fontSize: 10,
         color: theme.palette.chart.axisTitle,
         bold: true,
       }
@@ -213,7 +224,7 @@ export const returnGenericOptions = (subChartProps) => {
     highContrast: true,
     textStyle: {
       color: theme.palette.primary.contrastText,
-      fontSize: responsiveFontSizeSmall,
+      fontSize: returnResponsiveFontSizeInPixels({ isPortrait, isSmaller: true }),
       opacity: 0.8
     },
     stem: {
@@ -261,42 +272,13 @@ export const returnGenericOptions = (subChartProps) => {
     };
   }
 
-  // Assign the appropriate controlOptions based on controlType (if existed)
-  // if (chartControl?.controlType === 'ChartRangeFilter') {
-  //   chartControl.options.ui = {
-  //     ...chartControl.options?.ui,
-  //     chartType: chartData.chartType,
-  //     snapToData: true,
-  //     chartView: {
-  //       columns:
-  //         chartData.columns
-  //         || (chartData.subcharts
-  //           && chartData.subcharts[subchartIndex].columns)
-  //         || null
-  //         || null,
-  //     },
-  //     chartOptions: {
-  //       ...options,
-  //       ...chartControl.options?.ui?.chartOptions,
-  //       height: chartFilterHeightInPixel,
-  //       hAxis: {
-  //         ...chartControl.options?.ui?.chartOptions?.hAxis,
-  //         textPosition: 'out',
-  //         textStyle: { color: theme.palette.chart.axisText, fontSize: responsiveFontSizeSmall }
-  //       },
-  //       annotations: { ...hideAnnotations },
-  //       legend: null,
-  //     }
-  //   };
-  // }
-
   return options;
 }
 
-export const returnCalendarChartOptions = (subChartProps) => {
-  let options = returnGenericOptions(subChartProps);
+export const returnCalendarChartOptions = (props) => {
+  let options = returnGenericOptions(props);
 
-  const { calendarDimensions } = subChartProps;
+  const { calendarDimensions } = props;
   return {
     ...options,
     // overcompensate the height of chart SVG element. this is OK as
@@ -313,4 +295,38 @@ export const returnCalendarChartOptions = (subChartProps) => {
       color: 'none',
     },
   }
+}
+
+export const returnChartControlUI = (props) => {
+  const { chartControl, mainChartData, mainChartOptions, subchartIndex, theme, isPortrait } = props;
+  let chartControlUI;
+  // Assign the appropriate UI for chartControl based on controlType (if existed)
+  if (chartControl.controlType === 'ChartRangeFilter') {
+    chartControlUI = {
+      ...chartControl.options?.ui,
+      chartType: mainChartData.chartType,
+      snapToData: true,
+      chartView: {
+        columns:
+          mainChartData.columns
+          || (mainChartData.subcharts
+            && mainChartData.subcharts[subchartIndex].columns)
+          || null
+          || null,
+      },
+      chartOptions: {
+        ...mainChartOptions,
+        ...chartControl.options?.ui?.chartOptions,
+        height: chartFilterHeightInPixel,
+        hAxis: {
+          ...chartControl.options?.ui?.chartOptions?.hAxis,
+          textPosition: 'out',
+          textStyle: { color: theme.palette.chart.axisText, fontSize: returnResponsiveFontSizeInPixels({ isPortrait, isSmaller: true }) }
+        },
+        annotations: hideAnnotations,
+        legend: null,
+      }
+    };
+  }
+  return chartControlUI;
 }

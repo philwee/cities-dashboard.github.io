@@ -5,13 +5,13 @@ import { useState, useEffect, useContext } from 'react';
 import { GoogleContext } from '../../ContextProviders/GoogleContext';
 
 import { isMobile } from 'react-device-detect';
-import { Box, CircularProgress } from '@mui/material/';
+import { Box, Stack, CircularProgress } from '@mui/material/';
 
 import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
 import SeriesSelector from './SeriesSelector';
 
-import { fetchDataFromSheet, generateRandomID, returnGenericOptions } from '../GoogleChartHelper';
+import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnChartControlUI, ChartControlType } from '../GoogleChartHelper';
 
 import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
 
@@ -55,7 +55,10 @@ export default function SubChart(props) {
     );
   }
 
-  const [chartWrapper, setChartWrapper] = useState(null);
+  const [chartWrapper, setChartWrapper] = useState();
+  const [dashboardWrapper, setDashboardWrapper] = useState();
+  const [controlWrapper, setControlWrapper] = useState();
+
   const [google, _] = useContext(GoogleContext);
 
   // Get the current theme
@@ -70,38 +73,24 @@ export default function SubChart(props) {
 
 
   // Properties for chart control (if existed)
-  let showControl = false;
+  let hasChartControl = false;
+  let chartControlOptions;
   const deviceType = isMobile ? 'mobile' : 'desktop';
   // Only show the chart control if:
   // It exists in the database (either for all subcharts or just for a particular subchart)
   // And if the chart is currently not shown on homePage
   let chartControl = chartData.control || chartData.subcharts?.[subchartIndex].control;
   if (chartControl && (isHomepage !== true)) {
-    showControl = true;
+    hasChartControl = true;
     // Control is different for mobile and desktop if deviceType as a key exists in the database
     if (chartControl[deviceType]) chartControl = chartControl[deviceType];
   }
-
-  // const chartProps = {
-
-  //   chartEvents,
-  //   // if the filter prop exists and it's not a chart on homepage:
-  //   // add the packages and control props below
-  //   ...(
-  //     showControl ? {
-  //       chartPackages: ['corechart', 'controls'],
-  //       controls: [
-  //         chartControl
-  //       ]
-  //     } : {}
-  //   )
-  // };
 
   // Define the DOM container's ID for drawing the google chart inside
   const [randomID, setRandomID] = useState(generateRandomID());
 
   // Get the generic options for chart
-  const options = returnGenericOptions({ ...props, theme, showControl });
+  const options = returnGenericOptions({ ...props, theme, hasChartControl });
 
   // Properties for selecting (showing or hiding) the serie(s)
   const seriesSelector = options.seriesSelector || false;
@@ -110,8 +99,10 @@ export default function SubChart(props) {
   useEffect(() => {
     if (seriesSelector) handleSeriesSelection(dataColumns); // this function set new options, too
     else {
-      chartWrapper?.setOptions(options);
       chartWrapper?.draw();
+      if (hasChartControl) {
+        controlWrapper?.draw();
+      }
     }
   }, [theme, isPortrait, windowSize]);
 
@@ -159,7 +150,6 @@ export default function SubChart(props) {
     const dataColumns = allInitialColumns.filter((col, index) => {
       return col.role === 'data' && options.series?.[index - 1]?.visibleInLegend !== false;
     });
-    console.log(dataColumns)
     setDataColumns(dataColumns);
   };
 
@@ -186,6 +176,10 @@ export default function SubChart(props) {
 
     // Call draw to apply the new DataView and 'refresh' the chart
     chartWrapper?.draw();
+
+    if (hasChartControl) {
+      controlWrapper?.draw();
+    }
   };
 
   // Call this function to fetch the data and draw the initial chart
@@ -194,9 +188,9 @@ export default function SubChart(props) {
       fetchDataFromSheet({ chartData: chartData, subchartIndex: subchartIndex })
         .then(response => {
           const dataTable = response.getDataTable();
-          const wrapper = new google.visualization.ChartWrapper({
+          const thisChartWrapper = new google.visualization.ChartWrapper({
             chartType: chartData.chartType,
-            dataTable: dataTable,
+            dataTable: (!hasChartControl) ? dataTable : undefined,
             options: options,
             view: {
               columns:
@@ -208,17 +202,63 @@ export default function SubChart(props) {
             },
             containerId: randomID
           });
-          setChartWrapper(wrapper);
-          google.visualization.events.addListener(wrapper, 'ready', onChartReady);
+          setChartWrapper(thisChartWrapper);
 
-          wrapper.draw();
-          if (seriesSelector) getInitialColumns(wrapper);
+          if (hasChartControl) {
+            const thisDashboardWrapper = new google.visualization.Dashboard(
+              document.getElementById(`dashboard-${randomID}`));
+            setDashboardWrapper(thisDashboardWrapper);
+
+            google.visualization.events.addListener(thisDashboardWrapper, 'ready', onChartReady);
+
+            chartControlOptions = {
+              ...chartControl.options,
+              ui: returnChartControlUI({
+                chartControl,
+                mainChartData: chartData,
+                mainChartOptions: options,
+                subchartIndex,
+                theme,
+                isPortrait
+              })
+            };
+            const thisControlWrapper = new google.visualization.ControlWrapper({
+              controlType: chartControl.controlType,
+              options: chartControlOptions,
+              containerId: `control-${randomID}`
+            });
+            setControlWrapper(thisControlWrapper);
+
+            // Establish dependencies
+            thisDashboardWrapper.bind(thisControlWrapper, thisChartWrapper);
+
+            thisDashboardWrapper.draw(dataTable);
+          }
+          else {
+            google.visualization.events.addListener(thisChartWrapper, 'ready', onChartReady);
+
+            thisChartWrapper.draw();
+          }
+
+          if (seriesSelector) getInitialColumns(thisChartWrapper);
         })
         .catch(error => {
           console.log(error);
         });
     }
   }, [google]);
+
+  const renderChart = () => {
+    if (hasChartControl) {
+      return (
+        <Stack id={`dashboard-${randomID}`} direction={ChartControlType[chartControl.chartType]?.stackDirection || 'column-reverse'}>
+          <Box id={`control-${randomID}`} />
+          <Box id={randomID} sx={{ height: "100%" }} />
+        </Stack>
+      )
+    }
+    else return <Box id={randomID} sx={{ height: "100%" }} />;
+  }
 
   const onChartReady = () => {
     if (!isFirstRender) return;
@@ -252,17 +292,14 @@ export default function SubChart(props) {
         height="100%"
       >
         {isFirstRender && (
-          <CircularProgress
+          <CircularProgress disableShrink size="1.5rem"
             sx={{
               display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
             }}
           />
         )}
-        <Box id={randomID} sx={{
-          height: "100%"
-        }} />
+        {renderChart()}
       </SubChartStyleWrapper>
     </Box>
-
   );
 }

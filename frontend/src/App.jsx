@@ -117,7 +117,7 @@ function LoadingText() {
         alignItems="center"
         spacing={1}
       >
-        <CircularProgress />
+        <CircularProgress disableShrink size="1.5rem" />
         <Typography variant="h6" textAlign="center" color="text.primary">
           Loading
         </Typography>

@@ -122,8 +122,7 @@ function ResponsiveCalendarChart(props) {
   // Set new options prop and re-render the chart if theme or isPortrait changes
   // This is also enough to make the CalendarChart's responsive: width and height wise
   useEffect(() => {
-    if (!chartWrapper || !chartTotalHeight)
-      console.log(chartTotalHeight)
+    if (!chartWrapper || !chartTotalHeight) return;
     chartWrapper?.setOptions({ ...options, height: chartTotalHeight });
     chartWrapper?.draw();
   }, [theme, windowSize, chartTotalHeight]);
@@ -140,7 +139,7 @@ function ResponsiveCalendarChart(props) {
       }}>
 
       {isFirstRender && (
-        <CircularProgress
+        <CircularProgress disableShrink size="1.5rem"
           sx={{
             display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
           }}

@@ -154,7 +154,6 @@
             "control": {
               "mobile": {
                 "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {
@@ -168,7 +167,6 @@
               },
               "desktop": {
                 "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {
@@ -1074,7 +1072,6 @@
             "control": {
               "mobile": {
                 "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {
@@ -1087,7 +1084,6 @@
               },
               "desktop": {
                 "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {
@@ -1144,7 +1140,6 @@
             "control": {
               "mobile": {
                 "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {
@@ -1157,7 +1152,6 @@
               },
               "desktop": {
                 "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
                 "options": {
                   "filterColumnIndex": 0,
                   "ui": {

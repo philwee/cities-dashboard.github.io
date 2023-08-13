@@ -280,18 +280,6 @@ export default function SubChart(props) {
     setIsFirstRender(false);
   };
 
-  // On homepage, allow rightclick on google chart component
-  useEffect(() => {
-    if (!isHomepage) return;
-    if (!isFirstRender && chartWrapper) {
-      const chart = chartWrapper.getChart();
-      google.visualization.events.addListener(chart, 'rightclick', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      });
-    }
-  }, [isFirstRender])
-
   return (
     <Box height="100%">
       {seriesSelector && (

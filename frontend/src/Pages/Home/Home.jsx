@@ -77,7 +77,7 @@ function Home({ themePreference, title }) {
                       <CardMedia
                         className="noPointerEvent"
                         height="auto"
-                        sx={{ aspectRatio: '4/3' }}
+                        sx={{ aspectRatio: '4/3', pointerEvents: 'none' }}
                       >
                         {project.graph}
                       </CardMedia>

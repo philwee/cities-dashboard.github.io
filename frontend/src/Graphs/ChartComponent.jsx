@@ -5,7 +5,7 @@ import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './Subchart/SubChart';
 
-const debounceMilliseconds = 50;
+const debounceMilliseconds = 100;
 
 const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // CSS for dark theme only
@@ -23,16 +23,29 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
+const StyledTabs = styled(Tabs)(({ theme }) => ({
+  '& .MuiTabScrollButton-root': {
+    color: theme.palette.text.primary
+  },
+  '& .MuiTab-root': {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.caption.fontSize,
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1)
+    },
+  }
+}));
+
 // eslint-disable-next-line max-len
-function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passedChartWrapperHeight, isHomepage }) {
+function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHeight, isHomepage }) {
   const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
     window.innerHeight,
   ]);
 
-  let chartWrapperMaxHeight;
-  let chartWrapperHeight = passedChartWrapperHeight;
+  let chartMaxHeight;
+  let chartHeight = passedChartHeight;
   let chartData = passedChartData;
 
   // use tab context
@@ -73,17 +86,9 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
     };
   }, [chartData]);
 
-  if (chartData.chartType !== 'Table' && chartData.chartType !== 'Calendar' && !chartWrapperHeight) {
-    chartWrapperHeight = isPortrait ? '80vw' : '35vw';
-    chartWrapperMaxHeight = isPortrait ? '800px' : '500px';
-  }
-
-  if (chartData.identifier?.includes('student-categories-by-term')) {
-    const windowHeight = windowSize[1];
-    // If not potrait, make sure that height is always >= 40vw
-    // else, make sure that height is always >= 120vw
-    chartWrapperHeight = isPortrait ? `${windowHeight * 0.69}px` : `${windowHeight * 0.73}px`;
-    chartWrapperMaxHeight = isPortrait ? `${windowHeight * 1.5}px` : `${windowHeight * 0.75}px`;
+  if (chartData.chartType !== 'Table' && chartData.chartType !== 'Calendar' && !chartHeight) {
+    chartHeight = isPortrait ? '80vw' : '35vw';
+    chartMaxHeight = isPortrait ? '800px' : '500px';
   }
 
   // Assign the subcharts array for HeatMap based on the device orientation
@@ -94,7 +99,10 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
     };
   }
 
-  // Check if there are multiple subcharts
+  let renderedComponent;
+
+  // Display multiple subcharts
+  // but not in homepage
   if (chartData.subcharts) {
     // Handle tab change
     const handleChange = (__, newValue) => {
@@ -103,80 +111,91 @@ function ChartComponent({ chartData: passedChartData, chartWrapperHeight: passed
       setIndexValue(newValue);
     };
 
-    return (
-      <ChartStyleWrapper height="100%">
-        {
-          // Hide the subcharts Tabs selector if in homepage
-          isHomepage ? (
-            ''
-          ) : (
-            <Tabs
-              value={indexValue}
-              onChange={handleChange}
-              variant="scrollable"
-              scrollButtons
-              allowScrollButtonsMobile
-            >
-              {chartData.subcharts.map((element, index) => (
-                <Tab
-                  key={index}
-                  value={index}
-                  label={chartData.subcharts[index].subchartTitle}
-                />
-              ))}
-            </Tabs>
-          )
-        }
-        <Box
-          position="relative"
-          height={chartData.height ? chartData.height : chartWrapperHeight}
-          maxHeight={
-            ['HeatMap', 'Calendar'].includes(chartData.chartType)
-              ? ''
-              : chartWrapperMaxHeight
-          }
-        >
-          {chartData.subcharts.map((element, index) => (
-            <Box
-              key={index}
-              height="100%"
-              width="100%"
-              role="tabpanel"
-              position={(index === 0) ? '' : 'absolute'}
-              top={(index === 0) ? '' : 0}
-              left={(index === 0) ? '' : 0}
-              visibility={indexValue === index ? 'visible' : 'hidden'}
-            >
-              <SubChart
-                chartData={chartData}
-                subchartIndex={index}
-                isPortrait={isPortrait}
-                isHomepage={isHomepage}
-                windowSize={windowSize}
+    // If the chart in in homepage, just display the first subChart
+    if (isHomepage) {
+      renderedComponent = (
+        <ChartStyleWrapper position="relative" height="100%">
+          <SubChart
+            chartData={chartData}
+            subchartIndex={0}
+            isPortrait={isPortrait}
+            isHomepage={isHomepage}
+            windowSize={windowSize}
+            height={chartData.height ? chartData.height : chartHeight}
+            maxHeight={
+              chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
+            }
+          />
+        </ChartStyleWrapper>
+      );
+    } else {
+      renderedComponent = (
+        <ChartStyleWrapper height="100%">
+          <StyledTabs
+            value={indexValue}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            allowScrollButtonsMobile
+          >
+            {chartData.subcharts.map((element, index) => (
+              <Tab
+                key={index}
+                value={index}
+                label={chartData.subcharts[index].subchartTitle}
               />
-            </Box>
-          ))}
-        </Box>
+            ))}
+          </StyledTabs>
+          <Box position="relative">
+            {chartData.subcharts.map((__, index) => (
+              <Box
+                key={index}
+                width="100%"
+                height="100%"
+                role="tabpanel"
+                position={(index === 0) ? '' : 'absolute'}
+                top={(index === 0) ? '' : 0}
+                left={(index === 0) ? '' : 0}
+                visibility={indexValue === index ? 'visible' : 'hidden'}
+              >
+                <SubChart
+                  chartData={chartData}
+                  subchartIndex={index}
+                  isPortrait={isPortrait}
+                  isHomepage={isHomepage}
+                  windowSize={windowSize}
+                  height={chartData.height ? chartData.height : chartHeight}
+                  maxHeight={
+                    ['HeatMap', 'Calendar'].includes(chartData.chartType)
+                      ? ''
+                      : chartMaxHeight
+                  }
+                />
+              </Box>
+            ))}
+          </Box>
+        </ChartStyleWrapper>
+      );
+    }
+  } else {
+    // If there is only one single chart
+    renderedComponent = (
+      <ChartStyleWrapper position="relative">
+        <SubChart
+          chartData={chartData}
+          isPortrait={isPortrait}
+          isHomepage={isHomepage}
+          windowSize={windowSize}
+          height={chartData.height ? chartData.height : chartHeight}
+          maxHeight={
+            chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
+          }
+        />
       </ChartStyleWrapper>
     );
   }
-  // If there is only one single chart
-  return (
-    <ChartStyleWrapper
-      position="relative"
-      height={chartData.height ? chartData.height : chartWrapperHeight}
-      maxHeight={
-        chartData.chartType === 'HeatMap' ? '' : chartWrapperMaxHeight
-      }
-    >
-      <SubChart
-        chartData={chartData}
-        isPortrait={isPortrait}
-        isHomepage={isHomepage}
-        windowSize={windowSize}
-      />
-    </ChartStyleWrapper>
-  );
+
+  return renderedComponent;
 }
 
 export default ChartComponent;

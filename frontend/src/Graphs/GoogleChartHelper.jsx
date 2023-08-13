@@ -3,7 +3,8 @@
 export const ChartControlType = {
   CategoryFilter: { position: 'top', stackDirection: 'column' },
   DateRangeFilter: { position: 'bottom', stackDirection: 'column-reverse' },
-  ChartRangeFilter: { position: 'bottom', stackDirection: 'column-reverse' }
+  ChartRangeFilter: { position: 'bottom', stackDirection: 'column-reverse' },
+  NumberRangeFilter: { position: 'top', stackDirection: 'column' }
 }
 // Async function to fetch data from sheet using Google Visualization query language
 export const fetchDataFromSheet = ({ chartData, subchartIndex }) => {
@@ -50,7 +51,6 @@ export const generateRandomID = () => {
 
 // -------- Chart options --------
 
-const chartFilterHeightInPixel = 50;
 const hideAnnotations = {
   stem: {
     length: 0,
@@ -68,7 +68,7 @@ const returnResponsiveFontSizeInPixels = ({ isPortrait, isSmaller }) => {
 }
 
 export const returnGenericOptions = (props) => {
-  const { chartData, subchartIndex, isPortrait, isHomepage, theme, showControl } = props;
+  const { chartData, subchartIndex, isPortrait, isHomepage, theme } = props;
 
   // Define some shared styling rules for the chart
   const axisTitleTextStyle = {
@@ -105,7 +105,7 @@ export const returnGenericOptions = (props) => {
     // if there is a filter, we make space for the chartFilter from the chart's height.
     // value is divided in 2 because the calculation is applied twice due to
     // how react-google-charts nest components
-    height: showControl ? `calc(100% - (${chartFilterHeightInPixel}px / 2))` : '100%',
+    height: '100%',
     tooltip: {
       isHtml: true,
       showColorCode: false
@@ -299,13 +299,16 @@ export const returnCalendarChartOptions = (props) => {
 
 export const returnChartControlUI = (props) => {
   const { chartControl, mainChartData, mainChartOptions, subchartIndex, theme, isPortrait } = props;
-  let chartControlUI;
+  let chartControlUI = {
+    ...chartControl.options?.ui,
+    snapToData: true
+  };
+
   // Assign the appropriate UI for chartControl based on controlType (if existed)
   if (chartControl.controlType === 'ChartRangeFilter') {
     chartControlUI = {
-      ...chartControl.options?.ui,
+      ...chartControlUI,
       chartType: mainChartData.chartType,
-      snapToData: true,
       chartView: {
         columns:
           mainChartData.columns
@@ -317,11 +320,13 @@ export const returnChartControlUI = (props) => {
       chartOptions: {
         ...mainChartOptions,
         ...chartControl.options?.ui?.chartOptions,
-        height: chartFilterHeightInPixel,
         hAxis: {
           ...chartControl.options?.ui?.chartOptions?.hAxis,
           textPosition: 'out',
           textStyle: { color: theme.palette.chart.axisText, fontSize: returnResponsiveFontSizeInPixels({ isPortrait, isSmaller: true }) }
+        },
+        vAxis: {
+          title: null
         },
         annotations: hideAnnotations,
         legend: null,

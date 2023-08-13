@@ -2,11 +2,13 @@
 
 import { GoogleContext } from '../ContextProviders/GoogleContext';
 
-import { fetchDataFromSheet, generateRandomID, returnCalendarChartOptions } from './GoogleChartHelper';
+import { fetchDataFromSheet, generateRandomID, returnCalendarChartOptions, ChartControlType, returnChartControlUI } from './GoogleChartHelper';
+
+import { isMobile } from 'react-device-detect';
 
 import SubChartStyleWrapper from './Subchart/SubChartStyleWrapper';
 import { useState, useEffect, useRef, useCallback, useContext } from 'react';
-import { Box, CircularProgress, styled } from '@mui/material/';
+import { Stack, Box, CircularProgress } from '@mui/material/';
 import { useTheme } from '@mui/material/styles';
 
 const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
@@ -19,14 +21,18 @@ const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
 };
 
 function ResponsiveCalendarChart(props) {
-  const { chartData, subchartIndex, windowSize } = props;
-  const showControl = false;
+  const { chartData, subchartIndex, windowSize, isPortrait, isHomepage, height, maxHeight } = props;
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
   const chartHeight = useRef(0);
   const controlHeight = useRef(0);
 
-  const [chartWrapper, setChartWrapper] = useState(null);
   const [google, _] = useContext(GoogleContext);
+
+  const [chartWrapper, setChartWrapper] = useState();
+  const [dashboardWrapper, setDashboardWrapper] = useState();
+  const [controlWrapper, setControlWrapper] = useState();
+
+  const [dataTable, setDataTable] = useState();
 
   // Get the current theme
   const theme = useTheme();
@@ -38,6 +44,33 @@ function ResponsiveCalendarChart(props) {
   const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 14, cellSizeMax: 18 });
 
   const options = returnCalendarChartOptions({ ...props, calendarDimensions, theme });
+
+
+  // Properties for chart control (if existed)
+  let hasChartControl = false;
+  let chartControlOptions;
+  const deviceType = isMobile ? 'mobile' : 'desktop';
+  // Only show the chart control if:
+  // It exists in the database (either for all subcharts or just for a particular subchart)
+  // And if the chart is currently not shown on homePage
+  let chartControl = chartData.control || chartData.subcharts?.[subchartIndex].control;
+  if (chartControl && (isHomepage !== true)) {
+    hasChartControl = true;
+    // Control is different for mobile and desktop if deviceType as a key exists in the database
+    if (chartControl[deviceType]) chartControl = chartControl[deviceType];
+    // Get the options for chartControl if hasChartControl
+    chartControlOptions = {
+      ...chartControl.options,
+      ui: returnChartControlUI({
+        chartControl,
+        mainChartData: chartData,
+        mainChartOptions: options,
+        subchartIndex,
+        theme,
+        isPortrait
+      })
+    };
+  }
 
   // const updateControlHeight = useEffect((controlWrapper) => {
   //   const controlContainer = controlWrapper.getControl().container;
@@ -80,10 +113,10 @@ function ResponsiveCalendarChart(props) {
     if (google && !chartWrapper) {
       fetchDataFromSheet({ chartData: chartData, subchartIndex: subchartIndex })
         .then(response => {
-          const dataTable = response.getDataTable();
-          const wrapper = new google.visualization.ChartWrapper({
+          const thisDataTable = response.getDataTable();
+          const thisChartWrapper = new google.visualization.ChartWrapper({
             chartType: chartData.chartType,
-            dataTable: dataTable,
+            dataTable: thisDataTable,
             options: options,
             view: {
               columns:
@@ -95,10 +128,31 @@ function ResponsiveCalendarChart(props) {
             },
             containerId: randomID
           });
-          setChartWrapper(wrapper);
-          google.visualization.events.addListener(wrapper, 'ready', onChartReady);
+          setChartWrapper(thisChartWrapper);
 
-          wrapper.draw();
+          if (hasChartControl) {
+            const thisDashboardWrapper = new google.visualization.Dashboard(
+              document.getElementById(`dashboard-${randomID}`));
+            setDashboardWrapper(thisDashboardWrapper);
+
+            google.visualization.events.addListener(thisDashboardWrapper, 'ready', onChartReady);
+
+            const thisControlWrapper = new google.visualization.ControlWrapper({
+              controlType: chartControl.controlType,
+              options: chartControlOptions,
+              containerId: `control-${randomID}`
+            });
+            setControlWrapper(thisControlWrapper);
+
+            // Establish dependencies
+            thisDashboardWrapper.bind(thisControlWrapper, thisChartWrapper);
+
+            thisDashboardWrapper.draw(thisDataTable);
+          }
+          else {
+            google.visualization.events.addListener(thisChartWrapper, 'ready', onChartReady);
+            thisChartWrapper.draw();
+          }
         })
         .catch(error => {
           console.log(error);
@@ -111,7 +165,8 @@ function ResponsiveCalendarChart(props) {
     // this is to get the height of the non-responsive element
     // to set the CalendarChart's height to make it resonsive
     const chartDOMContainer = document.getElementById(randomID).querySelector('svg > g:nth-of-type(1)');
-    const renderedHeight = chartDOMContainer.getBBox().height;
+    let renderedHeight = chartDOMContainer.getBBox().height;
+    if (options.legend.position === 'none') renderedHeight += 50;
     setChartTotalHeight(renderedHeight);
 
     if (!isFirstRender) return;
@@ -126,6 +181,29 @@ function ResponsiveCalendarChart(props) {
     chartWrapper?.setOptions({ ...options, height: chartTotalHeight });
     chartWrapper?.draw();
   }, [theme, windowSize, chartTotalHeight]);
+
+  const renderChart = () => {
+    if (hasChartControl) {
+      return (
+        <Stack
+          id={`dashboard-${randomID}`}
+          direction={ChartControlType[chartControl.controlType]?.stackDirection || 'column-reverse'}
+          sx={{ height: '100%' }}
+        >
+          <Box
+            id={`control-${randomID}`}
+            sx={{
+              height: `calc(${height} / 8)`,
+              opacity: 0.8,
+              filter: 'saturate(0.3)'
+            }}
+          />
+          <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />
+        </Stack>
+      )
+    }
+    else return <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />;
+  }
 
   return (
     <SubChartStyleWrapper
@@ -145,7 +223,7 @@ function ResponsiveCalendarChart(props) {
           }}
         />
       )}
-      <Box id={randomID} />
+      {renderChart()}
     </SubChartStyleWrapper>
   );
 }

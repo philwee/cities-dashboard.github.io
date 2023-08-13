@@ -1,7 +1,9 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import { Box, Stack, Grid, MenuItem, FormControl, Select, Chip, Checkbox, Typography, Switch } from "@mui/material";
+import { Stack, Grid, MenuItem, FormControl, Select, Chip, Checkbox, Typography, Switch } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const SELECT_ALL = 'Select All Series';
 
@@ -19,7 +21,7 @@ const MenuProps = {
 };
 
 export default function SeriesSelector(props) {
-  const { items: itemsFromChart, selectorID, onSeriesSelection } = props;
+  const { items: itemsFromChart, selectorID, onSeriesSelection, isPortrait } = props;
 
   const theme = useTheme();
 
@@ -69,8 +71,19 @@ export default function SeriesSelector(props) {
     onSeriesSelection(updatedItems);
   };
 
+  const renderedLabel = (selected) => {
+    return (
+      <Stack direction="row" alignItems="center" spacing={0.5}>
+        <VisibilityIcon fontSize="1.5rem" sx={{ color: theme.palette.text.secondary }} />
+        <Typography variant="caption" color="text.secondary">
+          {`${selected.length} serie${selected.length > 1 ? "s" : ""} displayed${selectAll ? ` (all)` : ""}`}
+        </Typography>
+      </Stack>
+    )
+  };
+
   return (
-    <Stack sx={{ m: 1, mb: 0 }} spacing={1} direction="row">
+    <Stack sx={{ mt: 2, ml: 5 }} spacing={1} direction="row">
       <FormControl sx={{ width: 300 }} size="small">
         <Select
           labelId={`${selectorID}-label`}
@@ -79,7 +92,7 @@ export default function SeriesSelector(props) {
           value={items.filter(item => item.selected).map(item => item.label)}
           onChange={handleChange}
           MenuProps={MenuProps}
-          renderValue={(selected) => `${selected.length} serie${selected.length > 1 ? "s" : ""} selected${selectAll ? " (all)" : ""}`}
+          renderValue={(selected) => renderedLabel(selected)}
           sx={{ fontSize: '0.75em' }}
         >
           {/* Display all available items, together with checkbox for each item to select from */}
@@ -131,18 +144,21 @@ export default function SeriesSelector(props) {
         </Select>
       </FormControl>
 
-      {/* Only display selected items in the Grids */}
-      <Grid container spacing={1}>
-        {items.filter(item => item.selected).map((item) => (
-          <Grid item key={item.label}>
-            <Chip
-              label={<Typography variant='caption'>{item.label}</Typography>}
-              size="small"
-              {...(items.filter(item => item.selected).length !== 1 && { onDelete: () => handleItemToggle(item) })}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {/* Display only selected items in the Grids, and only in landscape mode */}
+      {isPortrait === false &&
+        <Grid container spacing={1}>
+          {items.filter(item => item.selected).map((item) => (
+            <Grid item key={item.label}>
+              <Chip
+                label={<Typography variant='caption'>{item.label}</Typography>}
+                size="small"
+                {...(items.filter(item => item.selected).length !== 1 && { onDelete: () => handleItemToggle(item) })}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      }
+
     </Stack>
   );
 }

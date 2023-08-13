@@ -24,29 +24,55 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
       }
     }
   },
+
+  // Center Calendar chart in wrapper
   '& .Calendar [dir]:not(:empty)': {
     margin: 'auto'
   },
-  /* Modify the appearance of the Google chart's filter
-  // (by selecting all divs with id containing the keyword below */
-  '& [id^=googlechart-control]': {
-    opacity: 0.75,
-    filter: 'saturate(0.25)',
+
+  // -------- chartControl's additional stylings
+  '& .goog-menuitem-highlight, .goog-menuitem-hover': {
+    backgroundColor: `${theme.palette.primary} !important`
   },
 
+  // CategoryFilter
   '& .google-visualization-controls-categoryfilter': {
     fontSize: '0.85rem',
     marginTop: '0.75rem',
     marginBottom: '-0.75rem',
 
+    '& .goog-menu-button-hover .goog-menu-button-outer-box, .goog-menu-button-hover .goog-menu-button-inner-box': {
+      borderColor: 'inherit !important'
+    },
+
     '& .google-visualization-controls-label': {
       color: theme.palette.text.secondary,
+      fontWeight: 500,
       verticalAlign: 'middle',
       marginBottom: '0.5rem'
     },
+    '& .goog-menu-button-outer-box': {
+      backgroundColor: theme.palette.background.paper,
+      border: 'unset',
+
+      '& .goog-menu-button-inner-box': {
+        paddingTop: theme.spacing(0.5),
+        paddingBottom: theme.spacing(0.5),
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        border: 'solid',
+        borderWidth: '0.5px',
+        borderRadius: theme.spacing(0.5),
+        borderColor: theme.palette.text.secondary,
+
+        '& .goog-menu-button-caption': {
+          color: theme.palette.text.secondary
+        }
+      }
+    }
   },
 
-  // CSS for DateRangeFilter-type filter charts to look consistent with our styling
+  // DateRangeFilter
   '& .google-visualization-controls-rangefilter': {
     width: '100%',
     fontSize: '0.75rem',
@@ -54,25 +80,26 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
       width: '100%',
     },
     '& .google-visualization-controls-slider-horizontal': {
-      width: '75%',
-      margin: '0 12.5%',
+      width: '90%',
+      margin: '0 5%',
     },
     '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(1)': {
       position: 'absolute',
       top: '1.5em',
-      left: '12.5%'
+      left: '5%'
     },
     '& .google-visualization-controls-rangefilter-thumblabel:nth-of-type(2)': {
       position: 'absolute',
       top: '1.5em',
-      right: '12.5%'
+      right: '5%'
     },
     '& .google-visualization-controls-slider-handle': {
       background: theme.palette.primary.main
     },
     '& .google-visualization-controls-rangefilter-thumblabel': {
       color: theme.palette.text.secondary,
-      padding: 0
+      padding: 0,
+      fontWeight: 500
     },
     '& .google-visualization-controls-slider-thumb': {
       background: theme.palette.primary.main,

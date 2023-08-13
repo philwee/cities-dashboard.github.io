@@ -30,7 +30,7 @@ export function HomePageProvider({ children }) {
                 sheetId: item.sheetId,
                 ...item.charts[item.homepageChartIndex || 0],
               }}
-              chartWrapperHeight="100%"
+              chartHeight="100%"
               isHomepage
             />
           ) : <ComingSoonBanner />

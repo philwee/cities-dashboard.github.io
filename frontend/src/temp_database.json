@@ -648,7 +648,6 @@
               }
             ],
             "options": {
-              "seriesSelector": true,
               "vAxis": {
                 "title": "Number of Unique FABS Memberships"
               },
@@ -686,6 +685,7 @@
           }
         ],
         "options": {
+          "seriesSelector": true,
           "curveType": "none",
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"
@@ -1133,7 +1133,6 @@
               }
             ],
             "options": {
-              "seriesSelector": true,
               "seriesType": "area",
               "isStacked": true
             },
@@ -1553,7 +1552,6 @@
         "control": {
           "mobile": {
             "controlType": "DateRangeFilter",
-            "controlPosition": "bottom",
             "options": {
               "filterColumnIndex": 0,
               "ui": {
@@ -1566,7 +1564,6 @@
           },
           "desktop": {
             "controlType": "ChartRangeFilter",
-            "controlPosition": "bottom",
             "options": {
               "filterColumnIndex": 0,
               "ui": {

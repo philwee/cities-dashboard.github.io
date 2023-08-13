@@ -18,7 +18,7 @@ import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
 import SubChartStyleWrapper from './SubChartStyleWrapper';
 
 export default function SubChart(props) {
-  const { chartData, subchartIndex, windowSize, isPortrait, isHomepage } = props;
+  const { chartData, subchartIndex, windowSize, isPortrait, isHomepage, height, maxHeight } = props;
 
   if (chartData.chartType === 'Calendar') {
     return (
@@ -54,12 +54,13 @@ export default function SubChart(props) {
       </Box>
     );
   }
+  const [google, _] = useContext(GoogleContext);
 
   const [chartWrapper, setChartWrapper] = useState();
   const [dashboardWrapper, setDashboardWrapper] = useState();
   const [controlWrapper, setControlWrapper] = useState();
 
-  const [google, _] = useContext(GoogleContext);
+  const [dataTable, setDataTable] = useState();
 
   // Get the current theme
   const theme = useTheme();
@@ -71,6 +72,11 @@ export default function SubChart(props) {
   // Keep track of the columns (series) of the chart
   const [dataColumns, setDataColumns] = useState([]);
 
+  // Define the DOM container's ID for drawing the google chart inside
+  const [randomID, setRandomID] = useState(generateRandomID());
+
+  // Get the generic options for chart
+  const options = returnGenericOptions({ ...props, theme });
 
   // Properties for chart control (if existed)
   let hasChartControl = false;
@@ -84,13 +90,19 @@ export default function SubChart(props) {
     hasChartControl = true;
     // Control is different for mobile and desktop if deviceType as a key exists in the database
     if (chartControl[deviceType]) chartControl = chartControl[deviceType];
+    // Get the options for chartControl if hasChartControl
+    chartControlOptions = {
+      ...chartControl.options,
+      ui: returnChartControlUI({
+        chartControl,
+        mainChartData: chartData,
+        mainChartOptions: options,
+        subchartIndex,
+        theme,
+        isPortrait
+      })
+    };
   }
-
-  // Define the DOM container's ID for drawing the google chart inside
-  const [randomID, setRandomID] = useState(generateRandomID());
-
-  // Get the generic options for chart
-  const options = returnGenericOptions({ ...props, theme, hasChartControl });
 
   // Properties for selecting (showing or hiding) the serie(s)
   const seriesSelector = options.seriesSelector || false;
@@ -99,17 +111,18 @@ export default function SubChart(props) {
   useEffect(() => {
     if (seriesSelector) handleSeriesSelection(dataColumns); // this function set new options, too
     else {
+      chartWrapper?.setOptions(options);
       chartWrapper?.draw();
       if (hasChartControl) {
+        controlWrapper?.setOptions(chartControlOptions);
         controlWrapper?.draw();
       }
     }
   }, [theme, isPortrait, windowSize]);
 
 
-  const getInitialColumns = (chartWrapper) => {
+  const getInitialColumns = ({ chartWrapper, dataTable }) => {
     // Update the initial DataView's columns (often, all of the series are displayed initially)
-    const dataTable = chartWrapper.getDataTable();
     var initialView = chartWrapper.getView();
     // If (optional) columns is not specified in database
     // Assign it from DataTable
@@ -187,10 +200,11 @@ export default function SubChart(props) {
     if (google && !chartWrapper) {
       fetchDataFromSheet({ chartData: chartData, subchartIndex: subchartIndex })
         .then(response => {
-          const dataTable = response.getDataTable();
+          const thisDataTable = response.getDataTable();
+          setDataTable(thisDataTable);
           const thisChartWrapper = new google.visualization.ChartWrapper({
             chartType: chartData.chartType,
-            dataTable: (!hasChartControl) ? dataTable : undefined,
+            dataTable: (!hasChartControl) ? thisDataTable : undefined,
             options: options,
             view: {
               columns:
@@ -211,17 +225,6 @@ export default function SubChart(props) {
 
             google.visualization.events.addListener(thisDashboardWrapper, 'ready', onChartReady);
 
-            chartControlOptions = {
-              ...chartControl.options,
-              ui: returnChartControlUI({
-                chartControl,
-                mainChartData: chartData,
-                mainChartOptions: options,
-                subchartIndex,
-                theme,
-                isPortrait
-              })
-            };
             const thisControlWrapper = new google.visualization.ControlWrapper({
               controlType: chartControl.controlType,
               options: chartControlOptions,
@@ -232,15 +235,15 @@ export default function SubChart(props) {
             // Establish dependencies
             thisDashboardWrapper.bind(thisControlWrapper, thisChartWrapper);
 
-            thisDashboardWrapper.draw(dataTable);
+            thisDashboardWrapper.draw(thisDataTable);
           }
           else {
             google.visualization.events.addListener(thisChartWrapper, 'ready', onChartReady);
-
             thisChartWrapper.draw();
           }
 
-          if (seriesSelector) getInitialColumns(thisChartWrapper);
+          if (seriesSelector) getInitialColumns({ chartWrapper: thisChartWrapper, dataTable: thisDataTable });
+
         })
         .catch(error => {
           console.log(error);
@@ -251,13 +254,24 @@ export default function SubChart(props) {
   const renderChart = () => {
     if (hasChartControl) {
       return (
-        <Stack id={`dashboard-${randomID}`} direction={ChartControlType[chartControl.chartType]?.stackDirection || 'column-reverse'}>
-          <Box id={`control-${randomID}`} />
-          <Box id={randomID} sx={{ height: "100%" }} />
+        <Stack
+          id={`dashboard-${randomID}`}
+          direction={ChartControlType[chartControl.controlType]?.stackDirection || 'column-reverse'}
+          sx={{ height: '100%' }}
+        >
+          <Box
+            id={`control-${randomID}`}
+            sx={{
+              height: `calc(${height} / 8)`,
+              opacity: 0.8,
+              filter: 'saturate(0.3)'
+            }}
+          />
+          <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />
         </Stack>
       )
     }
-    else return <Box id={randomID} sx={{ height: "100%" }} />;
+    else return <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />;
   }
 
   const onChartReady = () => {
@@ -268,6 +282,7 @@ export default function SubChart(props) {
 
   // On homepage, allow rightclick on google chart component
   useEffect(() => {
+    if (!isHomepage) return;
     if (!isFirstRender && chartWrapper) {
       const chart = chartWrapper.getChart();
       google.visualization.events.addListener(chart, 'rightclick', (e) => {
@@ -284,6 +299,7 @@ export default function SubChart(props) {
           items={dataColumns}
           selectorID={`${chartData.title}-selector`}
           onSeriesSelection={handleSeriesSelection}
+          isPortrait={isPortrait}
         />
       )}
       <SubChartStyleWrapper

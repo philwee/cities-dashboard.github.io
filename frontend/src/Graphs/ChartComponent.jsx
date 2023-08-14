@@ -86,13 +86,13 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
     };
   }, [chartData]);
 
-  if (chartData.chartType !== 'Table' && chartData.chartType !== 'Calendar' && !chartHeight) {
+  if (chartData.chartType !== 'Calendar' && !chartHeight) {
     chartHeight = isPortrait ? '80vw' : '35vw';
     chartMaxHeight = isPortrait ? '800px' : '500px';
   }
 
   // Assign the subcharts array for HeatMap based on the device orientation
-  if (chartData.chartType === 'HeatMap' || chartData.chartType === 'ComboChart') {
+  if (chartData.chartType === 'HeatMap') {
     chartData = {
       ...chartData,
       ...chartData[isPortrait ? 'subchartsPortrait' : 'subchartsLandscape'],
@@ -114,23 +114,21 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
     // If the chart in in homepage, just display the first subChart
     if (isHomepage) {
       renderedComponent = (
-        <ChartStyleWrapper position="relative" height="100%">
-          <SubChart
-            chartData={chartData}
-            subchartIndex={0}
-            isPortrait={isPortrait}
-            isHomepage={isHomepage}
-            windowSize={windowSize}
-            height={chartData.height ? chartData.height : chartHeight}
-            maxHeight={
-              chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
-            }
-          />
-        </ChartStyleWrapper>
+        <SubChart
+          chartData={chartData}
+          subchartIndex={0}
+          isPortrait={isPortrait}
+          isHomepage={isHomepage}
+          windowSize={windowSize}
+          height={chartData.height ? chartData.height : chartHeight}
+          maxHeight={
+            chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
+          }
+        />
       );
     } else {
       renderedComponent = (
-        <ChartStyleWrapper height="100%">
+        <>
           <StyledTabs
             value={indexValue}
             onChange={handleChange}
@@ -174,28 +172,30 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
               </Box>
             ))}
           </Box>
-        </ChartStyleWrapper>
+        </>
       );
     }
   } else {
     // If there is only one single chart
     renderedComponent = (
-      <ChartStyleWrapper position="relative">
-        <SubChart
-          chartData={chartData}
-          isPortrait={isPortrait}
-          isHomepage={isHomepage}
-          windowSize={windowSize}
-          height={chartData.height ? chartData.height : chartHeight}
-          maxHeight={
-            chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
-          }
-        />
-      </ChartStyleWrapper>
+      <SubChart
+        chartData={chartData}
+        isPortrait={isPortrait}
+        isHomepage={isHomepage}
+        windowSize={windowSize}
+        height={chartData.height ? chartData.height : chartHeight}
+        maxHeight={
+          chartData.chartType === 'HeatMap' ? '' : chartMaxHeight
+        }
+      />
     );
   }
 
-  return renderedComponent;
+  return (
+    <ChartStyleWrapper height="100%">
+      {renderedComponent}
+    </ChartStyleWrapper>
+  );
 }
 
 export default ChartComponent;

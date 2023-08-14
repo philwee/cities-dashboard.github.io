@@ -326,6 +326,7 @@ export const returnChartControlUI = (props) => {
           textStyle: { color: theme.palette.chart.axisText, fontSize: returnResponsiveFontSizeInPixels({ isPortrait, isSmaller: true }) }
         },
         vAxis: {
+          ...chartControl.options?.ui?.chartOptions?.vAxis,
           title: null
         },
         annotations: hideAnnotations,

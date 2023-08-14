@@ -75,7 +75,6 @@ function Home({ themePreference, title }) {
                   >
                     <Box className={themePreference ? 'dark-mode' : ''}>
                       <CardMedia
-                        className="noPointerEvent"
                         height="auto"
                         sx={{ aspectRatio: '4/3', pointerEvents: 'none' }}
                       >

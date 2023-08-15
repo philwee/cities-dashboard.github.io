@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from 'react';
 
 import { GoogleContext } from '../../ContextProviders/GoogleContext';
 
-import { isMobile } from 'react-device-detect';
 import { Box, Stack, CircularProgress } from '@mui/material/';
 
 import { useTheme } from '@mui/material/styles';
@@ -81,15 +80,13 @@ export default function SubChart(props) {
   // Properties for chart control (if existed)
   let hasChartControl = false;
   let chartControlOptions;
-  const deviceType = isMobile ? 'mobile' : 'desktop';
   // Only show the chart control if:
   // It exists in the database (either for all subcharts or just for a particular subchart)
   // And if the chart is currently not shown on homePage
   let chartControl = chartData.control || chartData.subcharts?.[subchartIndex].control;
   if (chartControl && (isHomepage !== true)) {
     hasChartControl = true;
-    // Control is different for mobile and desktop if deviceType as a key exists in the database
-    if (chartControl[deviceType]) chartControl = chartControl[deviceType];
+
     // Get the options for chartControl if hasChartControl
     chartControlOptions = {
       ...chartControl.options,
@@ -102,6 +99,68 @@ export default function SubChart(props) {
         isPortrait
       })
     };
+
+    // Swap touch events for mouse events on ChartRangeControl
+    // as it doesn't support touch events on mobile
+    if (chartControl.controlType === 'ChartRangeFilter') {
+      useEffect(() => {
+        let isMounted = true; // Flag to track component's mount status
+
+        if (!controlWrapper) return;
+
+        const controlDOM = document.querySelector(`#control-${randomID}`);
+        if (!controlDOM) return;
+
+        ['touchstart', 'touchmove', 'touchend', 'touchcancel']
+          .forEach((touchEvent) => {
+            controlDOM.addEventListener(touchEvent, touchHandler, { capture: true });
+          });
+
+        return () => {
+          isMounted = false; // Component is unmounting
+
+          ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach((touchEvent) => {
+            controlDOM.removeEventListener(touchEvent, touchHandler, { capture: true });
+          });
+        };
+
+        function touchHandler(event) {
+          var touches = event.changedTouches,
+            first = touches[0],
+            type = '';
+
+          switch (event.type) {
+            case 'touchstart':
+              type = 'mousedown';
+              break;
+            case 'touchmove':
+              type = 'mousemove';
+              break;
+            case 'touchend':
+              type = 'mouseup';
+              break;
+            default:
+              return;
+          }
+
+          var simulatedEvent = new MouseEvent(type, {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+            detail: 1,
+            screenX: first.screenX,
+            screenY: first.screenY,
+            clientX: first.clientX,
+            clientY: first.clientY,
+            button: 0, // left button
+            relatedTarget: null,
+          });
+
+          first.target.dispatchEvent(simulatedEvent);
+          event.preventDefault();
+        }
+      }, [controlWrapper]);
+    }
   }
 
   // Properties for selecting (showing or hiding) the serie(s)
@@ -293,6 +352,7 @@ export default function SubChart(props) {
       <SubChartStyleWrapper
         isPortrait={isPortrait}
         className={className}
+        position="relative"
         height="100%"
       >
         {isFirstRender && (

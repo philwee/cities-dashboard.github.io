@@ -152,26 +152,11 @@
               }
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM dd"
-                    },
-                    "step": "day",
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 172800000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 172800000
                 }
               }
             }
@@ -1070,25 +1055,11 @@
               }
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM yyyy"
-                    },
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 31536000000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 31536000000
                 }
               }
             }
@@ -1137,25 +1108,11 @@
               "isStacked": true
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM yyyy"
-                    },
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 31536000000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 31536000000
                 }
               }
             }
@@ -1551,36 +1508,22 @@
           }
         },
         "control": {
-          "mobile": {
-            "controlType": "DateRangeFilter",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "format": {
-                  "pattern": "yyyy"
+          "controlType": "ChartRangeFilter",
+          "options": {
+            "filterColumnIndex": 0,
+            "ui": {
+              "minRangeSize": 94608000000,
+              "chartOptions": {
+                "pointSize": 3,
+                "hAxis": {
+                  "format": "yyyy",
+                  "minorGridlines": {
+                    "count": 0
+                  }
                 },
-                "label": ""
-              }
-            }
-          },
-          "desktop": {
-            "controlType": "ChartRangeFilter",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "minRangeSize": 94608000000,
-                "chartOptions": {
-                  "pointSize": 3,
-                  "hAxis": {
-                    "format": "yyyy",
-                    "minorGridlines": {
-                      "count": 0
-                    }
-                  },
-                  "vAxis": {
-                    "viewWindow": {
-                      "min": 0
-                    }
+                "vAxis": {
+                  "viewWindow": {
+                    "min": 0
                   }
                 }
               }

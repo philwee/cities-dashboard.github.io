@@ -208,6 +208,7 @@ function ResponsiveCalendarChart(props) {
   return (
     <SubChartStyleWrapper
       className={chartData.chartType}
+      position="relative"
       sx={{
         position: 'relative',
         width: '100%',

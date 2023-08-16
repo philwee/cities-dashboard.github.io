@@ -193,26 +193,30 @@ export default function SubChart(props) {
       initialView = chartWrapper.getView();
     }
 
-    var shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
+    let shouldAssignDomainRoleToFistColumn = true; // variable to only assign type: 'domain' to the very first column
+    let dataSeriesIndex = 0;
     const allInitialColumns = initialView.columns.map((col, index) => {
       const sourceColumn = (typeof col === 'number') ? col : col.sourceColumn;
       const columnLabel = dataTable.getColumnLabel(sourceColumn);
 
       // A column can either be a number (that denotes the index of the sourceColumn) or an object
       // The code below harmonize all columns to be an object to store crucial data to toggle their visibility
-      var col = (typeof col === 'number')
+      let newCol = (typeof col === 'number')
         ? {
           label: columnLabel,
           role: shouldAssignDomainRoleToFistColumn ? 'domain' : 'data',
-          sourceColumn: sourceColumn,
-          originalColumnIndex: index
+          sourceColumn: sourceColumn
         }
-        : { label: columnLabel, originalColumnIndex: index, ...col };
+        : { label: columnLabel, ...col };
       shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
 
       // Set the visibility of data column, initially, all data columns are selected
-      if (col.role === 'data') col.selected = true;
-      return col;
+      if (newCol.role === 'data') {
+        newCol.selected = true;
+        newCol.seriesIndex = dataSeriesIndex;
+        dataSeriesIndex++
+      }
+      return newCol;
     });
 
 
@@ -222,6 +226,7 @@ export default function SubChart(props) {
     const dataColumns = allInitialColumns.filter((col, index) => {
       return col.role === 'data' && options.series?.[index - 1]?.visibleInLegend !== false;
     });
+    console.log(dataColumns)
     setDataColumns(dataColumns);
   };
 
@@ -231,11 +236,11 @@ export default function SubChart(props) {
     const hiddenSeriesObject = {};
     newDataColumns.forEach((col) => {
       if (!col.selected)
-        hiddenSeriesObject[col.originalColumnIndex - 1] = {
+        hiddenSeriesObject[col.seriesIndex] = {
           color: 'transparent',
           enableInteractivity: false,
           visibleInLegend: false
-        }; // 'hide' the serie, using col.originalColumnIndex - 1 because sourceColumnIndex 0 is the domain
+        }; // 'hide' the serie by making it transparent
     });
 
     chartWrapper?.setOptions({

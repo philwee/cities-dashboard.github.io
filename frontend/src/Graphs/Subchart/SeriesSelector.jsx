@@ -20,7 +20,6 @@ export default function SeriesSelector(props) {
       style: {
         marginTop: '0.25rem',
         maxHeight: ITEM_HEIGHT * 5.55 + ITEM_PADDING_TOP,
-        maxWidth: '65vw',
         overflow: 'visible !important',
         background: theme.palette.customAlternateBackground
       }
@@ -85,8 +84,15 @@ export default function SeriesSelector(props) {
   };
 
   return (
-    <Stack sx={{ mt: 2, ml: 5 }} spacing={1} direction="row">
-      <FormControl sx={{ width: 300 }} size="small">
+    <Stack
+      sx={{
+        pl: 5,
+        [theme.breakpoints.down('md')]: {
+          pr: 5
+        },
+      }}
+      spacing={1} direction="row" alignItems="center">
+      <FormControl sx={{ width: 300, '& .MuiInputBase-root': { mt: 1, borderRadius: theme.spacing(1) } }} size="small">
         <Select
           labelId={`${selectorID}-label`}
           id={selectorID}
@@ -147,19 +153,24 @@ export default function SeriesSelector(props) {
       </FormControl>
 
       {/* Display only selected items in the Grids, and only in landscape mode */}
-      {isPortrait === false &&
-        <Grid container spacing={1}>
-          {items.filter(item => item.selected).map((item) => (
-            <Grid item key={item.label}>
-              <Chip
-                label={<Typography variant='caption'>{item.label}</Typography>}
-                size="small"
-                {...(items.filter(item => item.selected).length !== 1 && { onDelete: () => handleItemToggle(item) })}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      }
+      <Grid container spacing={1}
+        sx={{
+          [theme.breakpoints.down('md')]: {
+            display: 'none'
+          },
+        }}
+      >
+        {items.filter(item => item.selected).map((item) => (
+          <Grid item key={item.label}>
+            <Chip
+              label={<Typography variant='caption'>{item.label}</Typography>}
+              size="small"
+              {...(items.filter(item => item.selected).length !== 1 && { onDelete: () => handleItemToggle(item) })}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
 
     </Stack>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, lazy, Suspense } from 'react';
 
 import { GoogleContext } from '../../ContextProviders/GoogleContext';
 
@@ -26,6 +26,24 @@ export default function SubChart(props) {
           {...props}
         />
       </SubChartStyleWrapper>
+    );
+  }
+
+  const chartSubstituteComponent = chartData.subcharts?.[subchartIndex].chartSubstituteComponent;
+  if (chartSubstituteComponent) {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        {(() => {
+          const ChartSubstituteComponent = lazy(() =>
+            import(`../ChartSubstituteComponents/${chartSubstituteComponent}`)
+          );
+          return (
+            <Box sx={{ m: 3 }}>
+              <ChartSubstituteComponent />
+            </Box>
+          );
+        })()}
+      </Suspense>
     );
   }
 

@@ -544,11 +544,11 @@
             }
           },
           {
-            "subchartTitle": "Year-by-Year Change",
+            "subchartTitle": "Year-over-Year Change",
             "query": "SELECT A, O, P, Q, R, S",
             "options": {
               "vAxis": {
-                "title": "Percentage Year-by-Year Change",
+                "title": "YoY Change (%)",
                 "format": "#%",
                 "viewWindow": {
                   "min": -1
@@ -815,7 +815,7 @@
             },
             {
               "subchartTitle": "2021",
-              "range": "L2:T21"
+              "range": "L2:U21"
             },
             {
               "subchartTitle": "2020",
@@ -1318,11 +1318,11 @@
     ]
   },
   {
-    "isActive": false,
+    "isActive": true,
     "id": "student-population",
     "title": "Student Population",
     "sheetId": "1xRuDQem0jvTil1MfXXI4sptWU37Q53VkTwVunqdnSY0",
-    "description": "",
+    "description": "This dataset provides a comprehensive view of the student population at NYUAD. It visualizes the number enrolled of students in each term since Fall 2010, including those visiting from other NYU campuses, those studying abroad, as well as the number of students registered for on-campus housing. It also presents data on student compositions based on education levels and countries of origin.<br><br>This dataset serves as a foundational for assessing the impact of the student population on various campus metrics such as the number of <a href='/project/athletics-fabs-membership'>Athletics FABS Memberships</a>, the number of <a href='/project/athletic-facilities-check-in'>Athletic Facilities Check-in</a>, and the amount of <a href='/project/food-waste'>Food Waste</a> in dining facilities. It is important to note, however, that the dataset estimates the theoretical maximum of on-campus students every semester and actual numbers may vary.<br><br>In a somewhat familiar vein, NYUAD also publish student enrollment data on its <a href='https://nyuad.nyu.edu/en/about/nyuad-at-a-glance/fast-facts.html'>Fast Fact</a> public page, albeit with less detailed historical statistics.",
     "owner": "NYU Institutional Research",
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdate": null,
@@ -1336,6 +1336,7 @@
     "charts": [
       {
         "title": "Approximate Number of Students on Campus",
+        "subtitle": "This visualization combines stacked columns and lines to illustrate the estimated size and composition of the <i>on-campus</i> student community. <br>The columns represent the student compositions data obtained from Institutional Research, from top to bottom:<br><ol type='a'><li><b>Visiting students</b> from other campuses (New York and Shanghai) </li><li><b>Total enrolled NYUAD students</b>, consisting of Undergraduates, Master's, and PhD students</li><li><b>NYUAD undergraduates studying abroad</b> at NYU global sites</li></ol>The lines illustrate the approximate number of students on-campus from two different data sources:<ul><li><b>Institutional Research: </b> the student compositions mentioned above can be used to estimate the student population on-campus with the following formula:<br><span style='margin-left: 1rem'><i>Theoretical maximum number of students on-campus</i> = a. Visiting students + b. NYUAD Students - c. NYUAD undergrads abroad</span></li><li><b>Residential Education (ResEd): </b> the number of students registered for NYUAD on-campus housing</li></ul>These data sources offer estimates of <i>on-campus</i> student presence each semester, influenced by variables that cannot be accurately measured. These variables include weekend home visits of some Emirati students, off-campus residency of some PhD students, mid-semester leave-of-absence, and  COVID-19 housing disruptions affecting data reliability between Spring 2020 and Spring 2021. Nonetheless, under typical conditions, these figures effectively demonstrate the growth of the student population and a reduced on-campus presence in Spring semesters when more undergraduates study abroad. Despite disruptions from the COVID-19 pandemic, the chart shows a steady increase in on-campus student numbers, reflecting NYUAD's growth and resilience, especially post Fall 2022 when the campus community largely returned.",
         "chartType": "ComboChart",
         "gid": 1803261581,
         "headers": 1,
@@ -1471,45 +1472,21 @@
         }
       },
       {
-        "title": "Compositions of Students by Level of Education (Undergraduate, Masters, PhD), by Academic Year (AY)",
-        "gid": 1622588326,
-        "query": "SELECT A, C, H, G WHERE A CONTAINS 'Fall'",
-        "subcharts": [
-          {
-            "subchartTitle": "Absolute Numbers"
-          },
-          {
-            "subchartTitle": "Percentage",
-            "options": {
-              "isStacked": "percent",
-              "vAxis": {
-                "format": "#.#%"
-              }
-            }
-          }
-        ],
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ColumnChart"
-      },
-      {
-        "title": "Compositions of Undergraduate Student Population, by Academic Year (AY)",
-        "gid": 690526695,
-        "subtitle": "",
+        "title": "Compositions of Students by Level of Education (Undergraduate, Master's, PhD), by Academic Year (AY)",
+        "gid": 1652589087,
+        "subtitle": "Charting NYUAD's expansion since Fall 2010, this visualization dissects the student population by level of education: Undergraduate, Master's, and Global PhD students. Overall, the majority of NYUAD students are undergraduates, representing around <b>95%</b> of the entire student body in recent years. Despite undergraduates maintaining consistent yearly growths of around 10-20% since Fall 2014, the figure is projected to stabilize at around <b>2,200 undergraduate students</b>, according to the university's target <sup>[1][2]</sup>. As of Fall 2022, the figure already exceeded the 2,100 mark. <br><br>Meanwhile, with a target of <b>600 graduate students</b> <sup>[2]</sup>, the number of Master's and Global PhD students is expected to continue its growth in the near future. The first Global PhD cohort in Fall 2013 and first Master's in Fall 2020 started out small, comprising only 8 and 7 students, respectively. However, by Fall 2022, the number of Global PhD students had grown over 10-time to almost 100 students, while the number of Master's students more than doubled. A gradual expansion in the number of graduate students highlights the institution's growing academic diversity and depth.",
+        "reference": "[1] \"Class of 2023: NYUAD's Tenth and Largest Incoming Class\". NYU Abu Dhabi, Oct 2019, <a href='https://nyuad.nyu.edu/en/news/latest-news/community-life/2019/october/class-of-2023.html'>https://nyuad.nyu.edu/en/news/latest-news/community-life/2019/october/class-of-2023.html</a><br>[2] \"NYU Abu Dhabi Backgrounder\". NYU Abu Dhabi, May 2021, <a href='https://nyuad.nyu.edu/content/dam/nyuad/news/documents/NYU%20Abu%20Dhabi%202021%20Backgrounder%20-%20Updated%20May%202021.pdf'>https://nyuad.nyu.edu/content/dam/nyuad/news/documents/NYU%20Abu%20Dhabi%202021%20Backgrounder%20-%20Updated%20May%202021.pdf</a>",
         "headers": 1,
         "chartType": "ComboChart",
         "subcharts": [
           {
             "subchartTitle": "Absolute Numbers",
-            "query": "SELECT A, B, D, F",
+            "query": "SELECT A, B, C, D",
             "options": {
-              "vAxis": {
-                "title": "Number of Students",
-                "format": "decimal"
-              },
               "seriesType": "bars",
+              "pointSize": 5,
               "series": {
-                "2": {
+                "3": {
                   "type": "line"
                 }
               }
@@ -1517,7 +1494,58 @@
           },
           {
             "subchartTitle": "Percentage",
-            "query": "SELECT A, B, D",
+            "query": "SELECT A, B, C, D",
+            "options": {
+              "seriesType": "bars",
+              "isStacked": "percent",
+              "vAxis": {
+                "format": "#.#%"
+              }
+            }
+          },
+          {
+            "subchartTitle": "Year-over-Year Change",
+            "query": "SELECT A, F, G, H",
+            "options": {
+              "seriesType": "line",
+              "vAxis": {
+                "title": "YoY Change Change (%)",
+                "format": "#.#%",
+                "viewWindow": {
+                  "min": -0.1
+                }
+              },
+              "pointSize": 5
+            }
+          }
+        ]
+      },
+      {
+        "title": "Compositions of Undergraduate Student Population, by Academic Year (AY)",
+        "gid": 690526695,
+        "subtitle": "The following visualizations explore the composition of undergraduate students at NYUAD over the years. Although first-year students made up a significant percentage of undergraduate student body during the early years, it has stabilized to around <b>30%</b> of the undergraduate student population since AY16-17. This figure will likely approach 25% in the future as the undergraduate student population tops out at around 2,200 students, as mentioned above.",
+        "headers": 1,
+        "chartType": "ComboChart",
+        "subcharts": [
+          {
+            "subchartTitle": "Absolute Numbers",
+            "query": "SELECT A, B, C, D",
+            "options": {
+              "vAxis": {
+                "title": "Number of Students",
+                "format": "decimal"
+              },
+              "seriesType": "bars",
+              "series": {
+                "0": {
+                  "type": "line"
+                }
+              }
+            }
+          },
+          {
+            "subchartTitle": "Percentage",
+            "query": "SELECT A, C, D",
             "options": {
               "vAxis": {
                 "title": "Percentage of Undergraduate Student Population",
@@ -1528,11 +1556,11 @@
             }
           },
           {
-            "subchartTitle": "Year-by-Year Growth",
-            "query": "SELECT A, C, E, G",
+            "subchartTitle": "Year-over-Year Change",
+            "query": "SELECT A, F, G, H",
             "options": {
               "vAxis": {
-                "title": "Year-by-year growth (%)",
+                "title": "YoY Change Change (%)",
                 "format": "#.#%",
                 "viewWindow": {
                   "min": -0.1
@@ -1551,30 +1579,48 @@
         }
       },
       {
-        "title": "Breakdown of Undergraduate Students' Citizenship (UAE and US)",
+        "title": "Breakdown of Undergraduate Students' Citizenship (UAE and US)*",
+        "subtitle": "This visualization showcases a rising proportion of Emirati students in the makeup of the NYUAD undergraduate student body, from a mere <b>4%</b> in the very first year (Fall 2020) to a whopping <b>20%</b> in Fall 2022. As a result, in recent years, Emirati citizens make up the largest group of students by nationality, reflecting the NYUAD's deepening roots in the UAE. Conversely, the absolute number of US citizen undergraduates has plateaued over the last seven years (around 170 students), resulting in a relative decline in their representation within the expanding student population.<br><br><small><i>*Due to privacy policies, detailed reports on other nationalities apart from Emirati and US citizen is not reported.<br>**The source data on undergraduate students' citizenship is reported in percentage points rounded to the nearest whole numbers. Thus, the absolute number of students based on citizenship is estimated by multiplying the percentage with the total number of enrolled students.</i></small>",
         "gid": 1856255581,
+        "chartType": "ComboChart",
+        "headers": 1,
+        "options": {
+          "colors": "monochromatic3Colors"
+        },
         "subcharts": [
           {
             "subchartTitle": "Percentage",
-            "query": "SELECT A, C, D, E WHERE A CONTAINS 'Fall'",
+            "query": "SELECT A, B, C, D",
             "options": {
               "isStacked": true,
+              "seriesType": "bars",
               "vAxis": {
                 "format": "#.#%"
               }
             }
           },
           {
-            "subchartTitle": "Approx. Absolute Numbers",
-            "query": "SELECT A, F, G, H WHERE A CONTAINS 'Fall'"
+            "subchartTitle": "Approx. Absolute Numbers **",
+            "query": "SELECT A, F, G, H",
+            "options": {
+              "seriesType": "bars"
+            }
+          },
+          {
+            "subchartTitle": "Year-over-Year Change",
+            "query": "SELECT A, J, K, L",
+            "options": {
+              "seriesType": "line",
+              "pointSize": 5,
+              "vAxis": {
+                "format": "#.#%",
+                "viewWindow": {
+                  "min": -0.15
+                }
+              }
+            }
           }
-        ],
-        "subtitle": "",
-        "headers": 1,
-        "chartType": "ColumnChart",
-        "options": {
-          "colors": "monochromatic3Colors"
-        }
+        ]
       }
     ]
   },

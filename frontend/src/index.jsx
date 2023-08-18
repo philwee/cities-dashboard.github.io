@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import App from './App';
+import { GoogleProvider } from './ContextProviders/GoogleContext';
 import { LinkProvider } from './ContextProviders/LinkContext';
 import { HomePageProvider } from './ContextProviders/HomePageContext';
 import { CommentCountsProvider } from './ContextProviders/CommentCountsContext';
@@ -11,17 +12,19 @@ import { SheetsDataProvider } from './ContextProviders/SheetsDataContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <HomePageProvider>
-      <CommentCountsProvider>
-        <SheetsDataProvider>
-          <LinkProvider>
-            <TabProvider>
-              <App />
-            </TabProvider>
-          </LinkProvider>
-        </SheetsDataProvider>
-      </CommentCountsProvider>
-    </HomePageProvider>
+    <GoogleProvider>
+      <HomePageProvider>
+        <CommentCountsProvider>
+          <SheetsDataProvider>
+            <LinkProvider>
+              <TabProvider>
+                <App />
+              </TabProvider>
+            </LinkProvider>
+          </SheetsDataProvider>
+        </CommentCountsProvider>
+      </HomePageProvider>
+    </GoogleProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

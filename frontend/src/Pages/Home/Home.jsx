@@ -101,28 +101,28 @@ function Home({ themePreference, title }) {
                         {
                           project.isActive
                           && (
-                          <Grid item>
-                            <Stack direction="row" spacing={1.5}>
-                              <Tooltip title="Number of Charts">
-                                <Stack direction="row" spacing={0.2} alignItems="center">
-                                  <BarChartIcon sx={{ fontSize: '0.75rem', color: 'text.secondary' }} />
-                                  <Typography variant="caption" color="text.secondary">
-                                    {project.chartCounts}
-                                  </Typography>
-                                </Stack>
-                              </Tooltip>
-                              {(commentCounts[key] != null) && (
-                              <Tooltip title="Number of Comments">
-                                <Stack direction="row" spacing={0.2} alignItems="center">
-                                  <CommentIcon sx={{ fontSize: '0.75rem', color: 'text.secondary' }} />
-                                  <Typography variant="caption" color="text.secondary">
-                                    {commentCounts[key]}
-                                  </Typography>
-                                </Stack>
-                              </Tooltip>
-                              )}
-                            </Stack>
-                          </Grid>
+                            <Grid item>
+                              <Stack direction="row" spacing={1.5}>
+                                <Tooltip title="Number of Charts">
+                                  <Stack direction="row" spacing={0.2} alignItems="center">
+                                    <BarChartIcon sx={{ fontSize: '0.75rem', color: 'text.secondary' }} />
+                                    <Typography variant="caption" color="text.secondary">
+                                      {project.chartCounts}
+                                    </Typography>
+                                  </Stack>
+                                </Tooltip>
+                                {(commentCounts[key] != null) && (
+                                  <Tooltip title="Number of Comments">
+                                    <Stack direction="row" spacing={0.2} alignItems="center">
+                                      <CommentIcon sx={{ fontSize: '0.75rem', color: 'text.secondary' }} />
+                                      <Typography variant="caption" color="text.secondary">
+                                        {commentCounts[key]}
+                                      </Typography>
+                                    </Stack>
+                                  </Tooltip>
+                                )}
+                              </Stack>
+                            </Grid>
                           )
                         }
                       </Grid>

@@ -1,5 +1,60 @@
+import { useState, useEffect, useContext } from 'react';
+import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import MemoizedChart from './MemoizedChart';
+import { fetchDataFromSheet, generateRandomID } from './GoogleChartHelper';
+import { GoogleContext } from '../ContextProviders/GoogleContext';
+
+function SampleDataTable(props) {
+  const { chartData, marginBottom } = props;
+  const [google, _] = useContext(GoogleContext);
+  const [chartWrapper, setChartWrapper] = useState(null);
+
+  const [randomID, __] = useState(generateRandomID());
+
+  // Call this function to fetch the data and draw the initial chart
+  useEffect(() => {
+    if (google && !chartWrapper) {
+      fetchDataFromSheet({ chartData })
+        .then((response) => {
+          const dataTable = response.getDataTable();
+
+          const wrapper = new google.visualization.ChartWrapper({
+            chartType: 'Table',
+            dataTable,
+            options: {
+              width: '100%',
+              sortAscending: true,
+              frozenColumns: 1,
+              cssClassNames: {
+                headerRow: 'header-row',
+                tableRow: 'table-row',
+                oddTableRow: 'odd-table-row',
+                selectedTableRow: 'selected-table-row',
+                hoverTableRow: 'hover-table-row',
+                headerCell: 'header-cell',
+                tableCell: 'table-cell',
+              }
+            },
+            view: {
+              columns: chartData.columns
+            },
+            containerId: randomID
+          });
+          setChartWrapper(wrapper);
+          wrapper.draw();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [google]);
+
+  return (
+    <StyledTable marginBottom={marginBottom}>
+      <Box id={randomID} />
+    </StyledTable>
+  );
+}
 
 // Styled component for the Google Table chart
 const StyledTable = styled('div')(({ theme, marginBottom }) => ({
@@ -26,41 +81,5 @@ const StyledTable = styled('div')(({ theme, marginBottom }) => ({
     borderRightWidth: '1px !important'
   }
 }));
-
-function SampleDataTable(props) {
-  const { chartData, sheetId, marginBottom } = props;
-
-  const options = {
-    width: '100%',
-    sortAscending: true,
-    frozenColumns: 1,
-    cssClassNames: {
-      headerRow: 'header-row',
-      tableRow: 'table-row',
-      oddTableRow: 'odd-table-row',
-      selectedTableRow: 'selected-table-row',
-      hoverTableRow: 'hover-table-row',
-      headerCell: 'header-cell',
-      tableCell: 'table-cell',
-    }
-  };
-
-  const chartProps = {
-    chartType: 'Table',
-    spreadSheetUrl: `https://docs.google.com/spreadsheets/d/${sheetId}`,
-    spreadSheetQueryParameters: {
-      headers: chartData.headers,
-      query: chartData.query,
-      gid: chartData.gid,
-    },
-    options
-  };
-
-  return (
-    <StyledTable marginBottom={marginBottom}>
-      <MemoizedChart chartProps={chartProps} />
-    </StyledTable>
-  );
-}
 
 export default SampleDataTable;

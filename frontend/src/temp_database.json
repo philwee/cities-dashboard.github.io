@@ -24,6 +24,7 @@
       },
       {
         "title": "Historical Snapshots of AQI",
+        "customClassName": "historical-snapshot-aqi",
         "subcharts": [
           {
             "gid": 184715989,
@@ -39,28 +40,11 @@
               }
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM dd"
-                    },
-                    "step": "day",
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 172800000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 172800000
                 }
               }
             }
@@ -80,8 +64,8 @@
         ],
         "headers": 1,
         "chartType": "ComboChart",
-        "customClassName": "historical-snapshot-aqi",
         "options": {
+          "seriesSelector": true,
           "colors": "reverseAqi",
           "chartArea": {
             "backgroundColor": "#fff"
@@ -331,7 +315,8 @@
         }
       },
       {
-        "title": "Hourly Average PM2.5 Concentration (µg/m<sup>3</sup>) by Month",
+        "title": "Hourly Average PM2.5 Concentration (µg/m3) by Month",
+        "query": "SELECT A, B, C, D, E, F, G, H, I, J, K, L, M, N",
         "subcharts": [
           {
             "gid": 1768452772,
@@ -350,14 +335,15 @@
             "subchartSubtitle": "<ul><li>In the Dining Hall, the concentration gradually builds up throughout the day, hitting bigger peaks after each meal (breakfast, lunch, and dinner) with small troughs in-between meals. This might be explained by cooking activities, especially grilling, that produce volatile microscopic particles, and to a lesser extent, people repeatedly entering and exiting the building.</li><li>For those with a sharp eye for <b>anomalies</b>, it is instantly clear that an influx of students <b>every September</b> causes a remarkable deterioration of the air quality during lunch when students usually hang out with friends. And as the semester progresses, more and more students opt for take-outs for convenience. During the past two Ramadans (May 2020 and Apr 2021), similar deteriorations are observed during dinner and Suhur (before sunrise) compared to other months.</li></ul>"
           }
         ],
-        "subtitle": "The graph shows the average hourly PM2.5 concentration (µg/m<sup>3</sup>) throughout a 24-period for each month. <b>Each thin line represents a calendar month, while the highlighted line represents the all-time average.</b><br>Here are some clear trends:",
-        "vAxisTitle": "PM2.5 Concentration (µg/m<sup>3</sup>)",
+        "subtitle": "The graph shows the average hourly PM2.5 concentration (µg/m3) throughout a 24-period for each month. <b>Each thin line represents a calendar month, while the highlighted line represents the all-time average.</b><br>Here are some clear trends:",
+        "vAxisTitle": "PM2.5 Concentration (µg/m3)",
         "headers": 2,
         "chartType": "LineChart",
         "options": {
+          "seriesSelector": true,
           "colors": "grayscale",
           "vAxis": {
-            "title": "PM2.5 Concentration (µg/m<sup>3</sup>)"
+            "title": "PM2.5 Concentration (µg/m3)"
           },
           "hAxis": {
             "title": "Hour of the Day",
@@ -491,6 +477,7 @@
               1,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -499,6 +486,7 @@
               2,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -507,6 +495,7 @@
               3,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -515,6 +504,7 @@
               4,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -523,6 +513,7 @@
               5,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -567,6 +558,7 @@
           }
         ],
         "options": {
+          "seriesSelector": true,
           "curveType": "none",
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"
@@ -951,27 +943,11 @@
               }
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM yyyy"
-                    },
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 31536000000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 31536000000
                 }
               }
             }
@@ -1020,27 +996,11 @@
               "isStacked": true
             },
             "control": {
-              "mobile": {
-                "controlType": "DateRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "format": {
-                      "pattern": "MMM yyyy"
-                    },
-                    "label": ""
-                  }
-                }
-              },
-              "desktop": {
-                "controlType": "ChartRangeFilter",
-                "controlPosition": "bottom",
-                "options": {
-                  "filterColumnIndex": 0,
-                  "ui": {
-                    "minRangeSize": 31536000000
-                  }
+              "controlType": "ChartRangeFilter",
+              "options": {
+                "filterColumnIndex": 0,
+                "ui": {
+                  "minRangeSize": 31536000000
                 }
               }
             }
@@ -1089,6 +1049,7 @@
               1,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1108,6 +1069,7 @@
               3,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1128,6 +1090,7 @@
               5,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1148,6 +1111,7 @@
               7,
               {
                 "role": "tooltip",
+                "type": "string",
                 "properties": {
                   "html": true
                 },
@@ -1432,38 +1396,22 @@
           }
         },
         "control": {
-          "mobile": {
-            "controlType": "DateRangeFilter",
-            "controlPosition": "bottom",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "format": {
-                  "pattern": "yyyy"
+          "controlType": "ChartRangeFilter",
+          "options": {
+            "filterColumnIndex": 0,
+            "ui": {
+              "minRangeSize": 94608000000,
+              "chartOptions": {
+                "pointSize": 3,
+                "hAxis": {
+                  "format": "yyyy",
+                  "minorGridlines": {
+                    "count": 0
+                  }
                 },
-                "label": ""
-              }
-            }
-          },
-          "desktop": {
-            "controlType": "ChartRangeFilter",
-            "controlPosition": "bottom",
-            "options": {
-              "filterColumnIndex": 0,
-              "ui": {
-                "minRangeSize": 94608000000,
-                "chartOptions": {
-                  "pointSize": 3,
-                  "hAxis": {
-                    "format": "yyyy",
-                    "minorGridlines": {
-                      "count": 0
-                    }
-                  },
-                  "vAxis": {
-                    "viewWindow": {
-                      "min": 0
-                    }
+                "vAxis": {
+                  "viewWindow": {
+                    "min": 0
                   }
                 }
               }

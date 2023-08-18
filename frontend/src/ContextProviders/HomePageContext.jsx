@@ -30,7 +30,7 @@ export function HomePageProvider({ children }) {
                 sheetId: item.sheetId,
                 ...item.charts[item.homepageChartIndex || 0],
               }}
-              chartWrapperHeight="100%"
+              chartHeight="100%"
               isHomepage
             />
           ) : <ComingSoonBanner />
@@ -57,7 +57,7 @@ function ComingSoonBanner() {
   return (
     <Grid container height="100%" justifyContent="center" alignItems="center">
       <Grid item>
-        <Typography variant="h4" color="text.secondary">
+        <Typography variant="h5" fontWeight={400} color="text.secondary">
           Coming Soon
         </Typography>
       </Grid>

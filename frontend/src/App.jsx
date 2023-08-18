@@ -3,7 +3,7 @@ import { React, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 // MUI components
-import { Box, Typography, Container, CircularProgress, Stack } from '@mui/material/';
+import { Box } from '@mui/material/';
 
 // Theme
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -16,6 +16,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
+import LoadingText from './Components/LoadingText';
 
 // Lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
@@ -79,7 +80,7 @@ function App() {
             []
           )}
           <Box flex={1} display="flex" width="100%">
-            <Suspense fallback={<LoadingText />}>
+            <Suspense fallback={<LoadingText optionalText="Loading Dashboard" />}>
               <Routes>
                 <Route
                   path="/"
@@ -103,26 +104,6 @@ function App() {
         </Box>
       </ThemeProvider>
     </BrowserRouter>
-  );
-}
-
-// Loading text for suspense fallback
-function LoadingText() {
-  return (
-    <Container>
-      <Stack
-        p={4}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={1}
-      >
-        <CircularProgress disableShrink size="1.5rem" />
-        <Typography variant="h6" textAlign="center" color="text.primary">
-          Loading
-        </Typography>
-      </Stack>
-    </Container>
   );
 }
 

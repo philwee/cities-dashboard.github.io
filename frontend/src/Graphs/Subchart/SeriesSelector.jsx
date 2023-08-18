@@ -95,7 +95,7 @@ export default function SeriesSelector(props) {
     <Stack spacing={1} direction="row" alignItems="center">
       <FormControl sx={{
         [theme.breakpoints.down('sm')]: { width: '100%' },
-        minWidth: 'fit-content',
+        minWidth: '200px',
         '& .MuiInputBase-root': { mt: 1, borderRadius: theme.spacing(1) }
       }} size="small">
         <Select
@@ -160,7 +160,7 @@ export default function SeriesSelector(props) {
       {/* Display only selected items in the Grids, and only in landscape mode */}
       <Grid container spacing={1}
         sx={{
-          [theme.breakpoints.down('md')]: {
+          [theme.breakpoints.down('sm')]: {
             display: 'none'
           },
         }}

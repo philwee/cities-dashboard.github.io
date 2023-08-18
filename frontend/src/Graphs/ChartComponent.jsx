@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Tabs, Tab } from '@mui/material/';
+import { Box, Tabs, Tab, useMediaQuery } from '@mui/material/';
 import { TabContext } from '../ContextProviders/TabContext';
 
 import SubChart from './Subchart/SubChart';
@@ -29,7 +29,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   },
   '& .MuiTab-root': {
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.625rem',
+      fontSize: '0.75rem',
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1)
     },
@@ -38,6 +38,8 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 
 // eslint-disable-next-line max-len
 function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHeight, isHomepage }) {
+  const isSmallWidth = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   const [isPortrait, setIsPortrait] = useState(window.matchMedia('(orientation: portrait)').matches);
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
@@ -132,7 +134,7 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
           <StyledTabs
             value={indexValue}
             onChange={handleChange}
-            variant={isPortrait ? 'fullWidth' : 'standard'}
+            variant={isSmallWidth ? 'fullWidth' : 'standard'}
           >
             {chartData.subcharts.map((element, index) => (
               <Tab

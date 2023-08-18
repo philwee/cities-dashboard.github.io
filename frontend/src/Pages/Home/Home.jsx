@@ -73,14 +73,12 @@ function Home({ themePreference, title }) {
                       );
                     }}
                   >
-                    <Box className={themePreference ? 'dark-mode' : ''}>
-                      <CardMedia
-                        height="auto"
-                        sx={{ aspectRatio: '4/3', pointerEvents: 'none' }}
-                      >
-                        {project.graph}
-                      </CardMedia>
-                    </Box>
+                    <CardMedia
+                      height="auto"
+                      sx={{ aspectRatio: '4/3', pointerEvents: 'none' }}
+                    >
+                      {project.graph}
+                    </CardMedia>
 
                     <Divider />
                     <CardContent>

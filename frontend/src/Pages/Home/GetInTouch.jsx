@@ -17,7 +17,7 @@ const IFrameWrapper = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
   height: '90vh',
   maxHeight: '980px',
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     marginLeft: theme.spacing(-2),
     marginRight: theme.spacing(-2),
   },

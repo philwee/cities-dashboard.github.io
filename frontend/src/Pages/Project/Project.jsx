@@ -40,6 +40,8 @@ import { CommentCountsContext } from '../../ContextProviders/CommentCountsContex
 
 import { SheetsDataContext } from '../../ContextProviders/SheetsDataContext';
 
+import ChartSubstituteComponentLoader from '../../Graphs/ChartSubstituteComponents/ChartSubstituteComponentLoader';
+
 // Custom Chip component to display metadata
 const CustomChip = (props) => {
   const { tooltipTitle, ...otherProps } = props;
@@ -223,28 +225,17 @@ const Project = ({ themePreference }) => {
                   </Typography>
 
                   {/* Either display the regular ChartComponent, or substitute with a customized component in ../../Graphs/ChartSubstituteComponents/ (if specified) */}
-                  {element.chartSubstituteComponent ? (
-                    <Suspense fallback={<div>Loading...</div>}>
-                      {(() => {
-                        const ChartSubstituteComponent = lazy(() =>
-                          import(`../../Graphs/ChartSubstituteComponents/${element.chartSubstituteComponent}`)
-                        );
-                        return (
-                          <Box sx={{ my: 3 }}>
-                            <ChartSubstituteComponent />
-                          </Box>
-                        );
-                      })()}
-                    </Suspense>
-                  ) : (
-                    <ChartComponent
-                      chartData={{
-                        chartIndex: index,
-                        sheetId: project.sheetId,
-                        ...element,
-                      }}
-                    />
-                  )}
+                  {element.chartSubstituteComponentName ?
+                    <ChartSubstituteComponentLoader chartSubstituteComponentName={element.chartSubstituteComponentName} />
+                    : (
+                      <ChartComponent
+                        chartData={{
+                          chartIndex: index,
+                          sheetId: project.sheetId,
+                          ...element,
+                        }}
+                      />
+                    )}
 
                   <Box sx={{ my: 3 }}>
                     <Typography

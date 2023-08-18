@@ -24,7 +24,7 @@
         "subcharts": [
           {
             "subchartTitle": "Explanation Table",
-            "chartSubstituteComponent": "AirQualityIndexTable"
+            "chartSubstituteComponentName": "AirQualityIndexTable"
           },
           {
             "subchartTitle": "US Air Quality Index (AQI)",

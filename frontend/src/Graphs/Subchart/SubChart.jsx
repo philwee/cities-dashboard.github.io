@@ -16,6 +16,7 @@ import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
 
 import SubChartStyleWrapper from './SubChartStyleWrapper';
 
+import ChartSubstituteComponentLoader from '../ChartSubstituteComponents/ChartSubstituteComponentLoader';
 export default function SubChart(props) {
   const { chartData, subchartIndex, windowSize, isPortrait, isHomepage, height, maxHeight } = props;
 
@@ -29,22 +30,9 @@ export default function SubChart(props) {
     );
   }
 
-  const chartSubstituteComponent = chartData.subcharts?.[subchartIndex].chartSubstituteComponent;
-  if (chartSubstituteComponent) {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        {(() => {
-          const ChartSubstituteComponent = lazy(() =>
-            import(`../ChartSubstituteComponents/${chartSubstituteComponent}`)
-          );
-          return (
-            <Box sx={{ m: 3 }}>
-              <ChartSubstituteComponent />
-            </Box>
-          );
-        })()}
-      </Suspense>
-    );
+  const chartSubstituteComponentName = chartData.subcharts?.[subchartIndex].chartSubstituteComponentName;
+  if (chartSubstituteComponentName) {
+    return <ChartSubstituteComponentLoader chartSubstituteComponentName={chartSubstituteComponentName} />;
   }
 
   // Formulate the className

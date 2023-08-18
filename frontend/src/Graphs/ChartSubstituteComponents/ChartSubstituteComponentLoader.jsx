@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
-import LoadingText from '../../Components/LoadingText';
+import LoadingAnimation from '../../Components/LoadingAnimation';
 
 export default function ChartSubstituteComponentLoader({ chartSubstituteComponentName }) {
   return (
-    <Suspense fallback={<LoadingText />}>
+    <Suspense fallback={<LoadingAnimation />}>
       {(() => {
         const ChartSubstituteComponent = lazy(
           () => import(`./${chartSubstituteComponentName}`)

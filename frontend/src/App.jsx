@@ -16,7 +16,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import FourOhFour from './Pages/404';
 import DeviceOrientationNotification from './Components/SnackBarNotifications';
-import LoadingText from './Components/LoadingText';
+import LoadingAnimation from './Components/LoadingAnimation';
 
 // Lazy load pages
 const Home = lazy(() => import('./Pages/Home/Home'));
@@ -80,7 +80,7 @@ function App() {
             []
           )}
           <Box flex={1} display="flex" width="100%">
-            <Suspense fallback={<LoadingText optionalText="Loading Dashboard" />}>
+            <Suspense fallback={<LoadingAnimation optionalText="Loading Dashboard" />}>
               <Routes>
                 <Route
                   path="/"

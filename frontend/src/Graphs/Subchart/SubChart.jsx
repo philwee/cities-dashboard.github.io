@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-import { useState, useEffect, useContext, lazy, Suspense } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { GoogleContext } from '../../ContextProviders/GoogleContext';
 
-import { Box, Stack, CircularProgress } from '@mui/material/';
+import { Box, Stack } from '@mui/material/';
 
 import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
@@ -15,6 +15,8 @@ import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnChart
 import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
 
 import SubChartStyleWrapper from './SubChartStyleWrapper';
+
+import LoadingAnimation from '../../Components/LoadingAnimation';
 
 import ChartSubstituteComponentLoader from '../ChartSubstituteComponents/ChartSubstituteComponentLoader';
 export default function SubChart(props) {
@@ -71,7 +73,7 @@ export default function SubChart(props) {
   const theme = useTheme();
 
   // Property to determine if this is the first time the chart is rendered
-  // to show/hide the loading CircularProgress
+  // to show/hide the LoadingAnimation
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   // Keep track of the columns (series) of the chart
@@ -351,8 +353,21 @@ export default function SubChart(props) {
   };
 
   return (
-    <Box height="100%">
-      {seriesSelector && (
+    <SubChartStyleWrapper
+      isPortrait={isPortrait}
+      className={className}
+      position="relative"
+      height="100%"
+    >
+      {/* Conditionally display loading animation here */}
+      {isFirstRender && (
+        <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+          <LoadingAnimation />
+        </Box>
+      )}
+
+      {/* Conditionally display seriesSelector here */}
+      {(seriesSelector && !isFirstRender) && (
         <SeriesSelector
           items={dataColumns}
           selectorID={`${chartData.title}-selector`}
@@ -360,21 +375,9 @@ export default function SubChart(props) {
           isPortrait={isPortrait}
         />
       )}
-      <SubChartStyleWrapper
-        isPortrait={isPortrait}
-        className={className}
-        position="relative"
-        height="100%"
-      >
-        {isFirstRender && (
-          <CircularProgress disableShrink size="1.5rem"
-            sx={{
-              display: 'block', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto',
-            }}
-          />
-        )}
-        {renderChart()}
-      </SubChartStyleWrapper>
-    </Box>
+
+      {/* Display chart here */}
+      {renderChart()}
+    </SubChartStyleWrapper>
   );
 }

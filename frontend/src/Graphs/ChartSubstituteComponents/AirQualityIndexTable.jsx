@@ -1,14 +1,16 @@
 import { Box, Table, TableBody, TableCell, TableHead, TableRow, Stack, styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-export const StyledTable = styled(Table)(({ theme, customFontSize }) => ({
+export const StyledTable = styled(Table)(({ theme, isTiny }) => ({
+  minWidth: isTiny || 700,
   '& th, td': {
-    fontSize: customFontSize,
+    fontSize: isTiny ? '0.5rem' : '0.6875rem',
     color: theme.palette.text.secondary
   },
   '& th': {
     fontWeight: 500,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    lineHeight: '1rem'
   }
 }));
 
@@ -70,7 +72,7 @@ function AirQualityIndexTable(props) {
 
   return (
     <Box overflow="auto">
-      <StyledTable size="small" customFontSize={isTableSmall ? '0.5rem' : '0.6875rem'}>
+      <StyledTable size="small" isTableSmall={isTableSmall}>
         <TableHead>
           <TableRow>
             <TableCell sx={{ pr: 0 }}>
@@ -79,15 +81,15 @@ function AirQualityIndexTable(props) {
             <TableCell sx={{ pl: 1 }}>
               Category
             </TableCell>
-            <TableCell align="right">US Air Quality Index</TableCell>
+            <TableCell align="right">US AQI</TableCell>
             <TableCell align="right">
-              Raw PM2.5 Concentration
+              PM2.5 Concentration
               (µg/m
               <sup>3</sup>
               )
             </TableCell>
             {!hideAQIDescription && <TableCell align="left">Description</TableCell>}
-            {!hideAQIDescription && <TableCell align="left">CITIESair&apos;s Suggested Actions</TableCell>}
+            {!hideAQIDescription && <TableCell align="left">CITIESair&apos; Suggested Actions</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>

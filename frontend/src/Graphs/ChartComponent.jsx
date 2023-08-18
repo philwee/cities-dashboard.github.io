@@ -29,7 +29,7 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   },
   '& .MuiTab-root': {
     [theme.breakpoints.down('sm')]: {
-      fontSize: theme.typography.caption.fontSize,
+      fontSize: '0.625rem',
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1)
     },
@@ -132,9 +132,7 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
           <StyledTabs
             value={indexValue}
             onChange={handleChange}
-            variant="scrollable"
-            scrollButtons
-            allowScrollButtonsMobile
+            variant={isPortrait ? 'fullWidth' : 'standard'}
           >
             {chartData.subcharts.map((element, index) => (
               <Tab

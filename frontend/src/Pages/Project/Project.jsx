@@ -226,11 +226,10 @@ const Project = ({ themePreference }) => {
                       ...element,
                     }}
                   />
-                  <Box sx={{ m: 3 }}>
+                  <Box sx={{ my: 3 }}>
                     <Typography
                       variant="body1"
                       color="text.secondary"
-                      sx={{ mb: 2 }}
                     >
                       {element.subtitle && parse(element.subtitle, {
                         replace: replacePlainHTMLWithMuiComponents,

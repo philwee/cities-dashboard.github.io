@@ -230,7 +230,7 @@ const Project = ({ themePreference }) => {
                           import(`../../Graphs/ChartSubstituteComponents/${element.chartSubstituteComponent}`)
                         );
                         return (
-                          <Box sx={{ m: 3 }}>
+                          <Box sx={{ my: 3 }}>
                             <ChartSubstituteComponent />
                           </Box>
                         );
@@ -246,11 +246,10 @@ const Project = ({ themePreference }) => {
                     />
                   )}
 
-                  <Box sx={{ m: 3 }}>
+                  <Box sx={{ my: 3 }}>
                     <Typography
                       variant="body1"
                       color="text.secondary"
-                      sx={{ mb: 2 }}
                     >
                       {element.subtitle && parse(element.subtitle, {
                         replace: replacePlainHTMLWithMuiComponents,

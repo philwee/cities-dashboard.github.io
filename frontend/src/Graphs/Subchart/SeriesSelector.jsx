@@ -18,12 +18,20 @@ export default function SeriesSelector(props) {
   const MenuProps = {
     PaperProps: {
       style: {
-        marginTop: '0.25rem',
         maxHeight: ITEM_HEIGHT * 5.55 + ITEM_PADDING_TOP,
         overflow: 'visible !important',
         background: theme.palette.customAlternateBackground
       }
-    }
+    },
+    anchorOrigin: {
+      vertical: -6,
+      horizontal: "left"
+    },
+    transformOrigin: {
+      vertical: "bottom",
+      horizontal: "left"
+    },
+    getContentAnchorEl: null
   };
 
   const [items, setItems] = useState(itemsFromChart);
@@ -84,15 +92,12 @@ export default function SeriesSelector(props) {
   };
 
   return (
-    <Stack
-      sx={{
-        pl: 5,
-        [theme.breakpoints.down('md')]: {
-          pr: 5
-        },
-      }}
-      spacing={1} direction="row" alignItems="center">
-      <FormControl sx={{ width: 300, '& .MuiInputBase-root': { mt: 1, borderRadius: theme.spacing(1) } }} size="small">
+    <Stack spacing={1} direction="row" alignItems="center">
+      <FormControl sx={{
+        [theme.breakpoints.down('sm')]: { width: '100%' },
+        minWidth: 'fit-content',
+        '& .MuiInputBase-root': { mt: 1, borderRadius: theme.spacing(1) }
+      }} size="small">
         <Select
           labelId={`${selectorID}-label`}
           id={selectorID}

@@ -1,6 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import { LinkContext } from '../../ContextProviders/LinkContext';
 import { TabContext } from '../../ContextProviders/TabContext';
@@ -9,7 +9,7 @@ import ChartComponent from '../../Graphs/ChartComponent';
 import SampleDataTable from '../../Graphs/SampleDataTable';
 import UppercaseTitle from '../../Components/UppercaseTitle';
 import CommentSection from '../../Components/CommentSection';
-import { Box, Typography, Container, Divider, Chip, Grid, Tooltip, styled } from '@mui/material';
+import { Box, Typography, Container, Divider, Chip, Grid, Tooltip } from '@mui/material';
 
 import GetInTouch from '../Home/GetInTouch';
 
@@ -218,15 +218,35 @@ const Project = ({ themePreference }) => {
                   className={themePreference === ThemePreferences.dark ? 'dark' : ''}
                 >
                   <Typography variant="h6" color="text.primary">
-                    {index + 1}. {element.title}
+                    {index + 1}. {parse(element.title, {
+                      replace: replacePlainHTMLWithMuiComponents,
+                    })}
                   </Typography>
-                  <ChartComponent
-                    chartData={{
-                      chartIndex: index,
-                      sheetId: project.sheetId,
-                      ...element,
-                    }}
-                  />
+
+                  {/* Either display the regular ChartComponent, or substitute with a customized component in ../../Graphs/ChartSubstituteComponents/ (if specified) */}
+                  {element.chartSubstituteComponent ? (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      {(() => {
+                        const ChartSubstituteComponent = lazy(() =>
+                          import(`../../Graphs/ChartSubstituteComponents/${element.chartSubstituteComponent}`)
+                        );
+                        return (
+                          <Box sx={{ m: 3 }}>
+                            <ChartSubstituteComponent />
+                          </Box>
+                        );
+                      })()}
+                    </Suspense>
+                  ) : (
+                    <ChartComponent
+                      chartData={{
+                        chartIndex: index,
+                        sheetId: project.sheetId,
+                        ...element,
+                      }}
+                    />
+                  )}
+
                   <Box sx={{ m: 3 }}>
                     <Typography
                       variant="body1"

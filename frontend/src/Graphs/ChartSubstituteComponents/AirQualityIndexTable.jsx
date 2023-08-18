@@ -6,7 +6,10 @@ export const StyledTable = styled(Table)(({ theme, isTiny }) => ({
   minWidth: isTiny || 700,
   '& th, td': {
     fontSize: isTiny ? '0.625rem' : '0.6875rem',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: isTiny ? '0.5rem' : '0.6875rem',
+    },
   },
   '& th': {
     fontWeight: 500,

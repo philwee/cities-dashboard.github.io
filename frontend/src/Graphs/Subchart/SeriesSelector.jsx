@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-const SELECT_ALL = 'Select All Series';
+const SELECT_ALL = 'Display All Series';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -85,7 +85,7 @@ export default function SeriesSelector(props) {
       <Stack direction="row" alignItems="center" spacing={0.5}>
         <VisibilityIcon fontSize="1.5rem" sx={{ color: theme.palette.text.secondary }} />
         <Typography variant="caption" color="text.secondary">
-          {`${selected.length} serie${selected.length > 1 ? "s" : ""} displayed${selectAll ? ` (all)` : ""}`}
+          {`${selected.length} series displayed${selectAll ? ` (all)` : ""}`}
         </Typography>
       </Stack>
     )

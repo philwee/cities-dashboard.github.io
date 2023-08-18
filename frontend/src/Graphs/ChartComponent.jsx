@@ -151,10 +151,12 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
                 width="100%"
                 height="100%"
                 role="tabpanel"
-                position={(index === 0) ? '' : 'absolute'}
-                top={(index === 0) ? '' : 0}
-                left={(index === 0) ? '' : 0}
-                visibility={indexValue === index ? 'visible' : 'hidden'}
+                sx={{
+                  transition: '0.35s',
+                  position: (index === 0) ? '' : 'absolute',
+                  opacity: indexValue === index ? '1' : '0',
+                  top: (index === 0) ? '' : 0
+                }}
               >
                 <SubChart
                   chartData={chartData}

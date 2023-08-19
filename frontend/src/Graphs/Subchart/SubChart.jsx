@@ -77,7 +77,7 @@ export default function SubChart(props) {
   // Calendar chart's properties
   const [chartTotalHeight, setChartTotalHeight] = useState(200);
 
-  // Get the generic options for chart
+  // Get the options object for chart
   let options = returnGenericOptions({ ...props, theme });
   if (chartData.chartType === 'Calendar') options = returnCalendarChartOptions(options);
 
@@ -121,7 +121,11 @@ export default function SubChart(props) {
   useEffect(() => {
     if (seriesSelector) handleSeriesSelection(dataColumns); // this function set new options, too
     else {
-      chartWrapper?.setOptions({ ...options, height: chartTotalHeight || options.height || null });
+      chartWrapper?.setOptions({
+        ...options,
+        ...(chartData.chartType === 'Calendar' && { height: chartTotalHeight })
+      });
+
       chartWrapper?.draw();
       if (hasChartControl) {
         controlWrapper?.setOptions(chartControlOptions);

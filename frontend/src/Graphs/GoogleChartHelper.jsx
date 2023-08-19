@@ -341,3 +341,60 @@ const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
     yearLabelFontSize: cellSize * 2
   };
 };
+
+export const addTouchEventListenerForChartControl = ({ controlWrapper, chartID }) => {
+  const touchHandler = (event) => {
+    var touches = event.changedTouches,
+      first = touches[0],
+      type = '';
+
+    switch (event.type) {
+      case 'touchstart':
+        type = 'mousedown';
+        break;
+      case 'touchmove':
+        type = 'mousemove';
+        break;
+      case 'touchend':
+        type = 'mouseup';
+        break;
+      default:
+        return;
+    }
+
+    var simulatedEvent = new MouseEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      detail: 1,
+      screenX: first.screenX,
+      screenY: first.screenY,
+      clientX: first.clientX,
+      clientY: first.clientY,
+      button: 0, // left button
+      relatedTarget: null,
+    });
+
+    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+  }
+
+  let isMounted = true; // Flag to track component's mount status
+  if (!controlWrapper) return;
+
+  const controlDOM = document.querySelector(`#control-${chartID}`);
+  if (!controlDOM) return;
+
+  ['touchstart', 'touchmove', 'touchend', 'touchcancel']
+    .forEach((touchEvent) => {
+      controlDOM.addEventListener(touchEvent, touchHandler, { capture: true });
+    });
+
+  return () => {
+    isMounted = false; // Component is unmounting
+
+    ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach((touchEvent) => {
+      controlDOM.removeEventListener(touchEvent, touchHandler, { capture: true });
+    });
+  };
+}

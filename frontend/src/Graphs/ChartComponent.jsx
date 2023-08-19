@@ -155,6 +155,7 @@ function ChartComponent({ chartData: passedChartData, chartHeight: passedChartHe
                   transition: '0.35s',
                   position: (index === 0) ? '' : 'absolute',
                   opacity: indexValue === index ? '1' : '0',
+                  pointerEvents: indexValue === index ? 'auto' : 'none',
                   top: (index === 0) ? '' : 0
                 }}
               >

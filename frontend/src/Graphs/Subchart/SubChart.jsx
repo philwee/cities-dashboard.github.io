@@ -10,27 +10,19 @@ import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
 import SeriesSelector from './SeriesSelector';
 
-import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnChartControlUI, ChartControlType } from '../GoogleChartHelper';
-
-import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
+import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnCalendarChartOptions, returnChartControlUI, ChartControlType } from '../GoogleChartHelper';
 
 import SubChartStyleWrapper from './SubChartStyleWrapper';
 
 import LoadingAnimation from '../../Components/LoadingAnimation';
 
 import ChartSubstituteComponentLoader from '../ChartSubstituteComponents/ChartSubstituteComponentLoader';
+
 export default function SubChart(props) {
   const { chartData, subchartIndex, windowSize, isPortrait, isHomepage, height, maxHeight } = props;
 
-  if (chartData.chartType === 'Calendar') {
-    return (
-      <SubChartStyleWrapper>
-        <ResponsiveCalendarChart
-          {...props}
-        />
-      </SubChartStyleWrapper>
-    );
-  }
+  // Calendar chart's properties
+  const [chartTotalHeight, setChartTotalHeight] = useState(200);
 
   const chartSubstituteComponentName = chartData.subcharts?.[subchartIndex].chartSubstituteComponentName;
   if (chartSubstituteComponentName) {
@@ -80,10 +72,11 @@ export default function SubChart(props) {
   const [dataColumns, setDataColumns] = useState([]);
 
   // Define the DOM container's ID for drawing the google chart inside
-  const [randomID, setRandomID] = useState(generateRandomID());
+  const [randomID, __] = useState(generateRandomID());
 
   // Get the generic options for chart
-  const options = returnGenericOptions({ ...props, theme });
+  let options = returnGenericOptions({ ...props, theme });
+  if (chartData.chartType === 'Calendar') options = returnCalendarChartOptions(options);
 
   // Properties for chart control (if existed)
   let hasChartControl = false;
@@ -178,14 +171,14 @@ export default function SubChart(props) {
   useEffect(() => {
     if (seriesSelector) handleSeriesSelection(dataColumns); // this function set new options, too
     else {
-      chartWrapper?.setOptions(options);
+      chartWrapper?.setOptions({ ...options, height: chartTotalHeight || options.height || null });
       chartWrapper?.draw();
       if (hasChartControl) {
         controlWrapper?.setOptions(chartControlOptions);
         controlWrapper?.draw();
       }
     }
-  }, [theme, isPortrait, windowSize]);
+  }, [theme, isPortrait, windowSize, chartTotalHeight]);
 
 
   const getInitialColumns = ({ chartWrapper, dataTable }) => {
@@ -347,6 +340,16 @@ export default function SubChart(props) {
   }
 
   const onChartReady = () => {
+    if (chartData.chartType === 'Calendar') {
+      // querySelector is used to select the first 'g' element in the svg
+      // this is to get the height of the non-responsive element
+      // to set the CalendarChart's height to make it resonsive
+      const chartDOMContainer = document.getElementById(randomID).querySelector('svg > g:nth-of-type(1)');
+      let renderedHeight = chartDOMContainer.getBBox().height;
+      if (options.legend.position === 'none') renderedHeight += 50;
+      setChartTotalHeight(renderedHeight);
+    }
+
     if (!isFirstRender) return;
     // Hide the circleProgress when chart finishes rendering the first time
     setIsFirstRender(false);

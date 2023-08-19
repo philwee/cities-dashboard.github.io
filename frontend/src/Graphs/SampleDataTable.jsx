@@ -9,7 +9,7 @@ function SampleDataTable(props) {
   const [google, _] = useContext(GoogleContext);
   const [chartWrapper, setChartWrapper] = useState(null);
 
-  const [randomID, __] = useState(generateRandomID());
+  const [chartID, __] = useState(generateRandomID());
 
   // Call this function to fetch the data and draw the initial chart
   useEffect(() => {
@@ -38,7 +38,7 @@ function SampleDataTable(props) {
             view: {
               columns: chartData.columns
             },
-            containerId: randomID
+            containerId: chartID
           });
           setChartWrapper(wrapper);
           wrapper.draw();
@@ -51,7 +51,7 @@ function SampleDataTable(props) {
 
   return (
     <StyledTable marginBottom={marginBottom}>
-      <Box id={randomID} />
+      <Box id={chartID} />
     </StyledTable>
   );
 }

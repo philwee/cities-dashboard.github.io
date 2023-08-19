@@ -25,11 +25,6 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
     }
   },
 
-  // Center Calendar chart in wrapper
-  '& .Calendar [dir]:not(:empty)': {
-    margin: 'auto'
-  },
-
   // -------- chartControl's additional stylings
   '& .goog-menuitem-highlight, .goog-menuitem-hover': {
     backgroundColor: `${theme.palette.primary} !important`

@@ -20,7 +20,11 @@ const ChartStyleWrapper = styled(Box)(({ theme }) => ({
   // Special CSS for historical-snapshot-aqi chart
   '& .historical-snapshot-aqi svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-of-type(1), .historical-snapshot-aqi [id*="googlechart-control"] svg [clip-path*="ABSTRACT_RENDERER"] > g:nth-of-type(2)': {
     opacity: 0.6
-  }
+  },
+  // Center Calendar chart in wrapper
+  '& .Calendar [dir]:not(:empty)': {
+    margin: 'auto'
+  },
 }));
 
 const StyledTabs = styled(Tabs)(({ theme }) => ({

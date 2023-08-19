@@ -1,7 +1,7 @@
 import { Box } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 
-const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
+const GoogleChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
   // CSS for HTML tooltip
   '& .google-visualization-tooltip': {
     width: 'unset !important',
@@ -121,4 +121,4 @@ const SubChartStyleWrapper = styled(Box)(({ theme, isPortrait }) => ({
   }
 }));
 
-export default SubChartStyleWrapper;
+export default GoogleChartStyleWrapper;

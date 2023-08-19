@@ -12,7 +12,7 @@ import SeriesSelector from './SeriesSelector';
 
 import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnCalendarChartOptions, returnChartControlUI, ChartControlType, addTouchEventListenerForChartControl } from '../GoogleChartHelper';
 
-import SubChartStyleWrapper from './SubChartStyleWrapper';
+import GoogleChartStyleWrapper from './GoogleChartStyleWrapper';
 
 import LoadingAnimation from '../../Components/LoadingAnimation';
 
@@ -27,6 +27,9 @@ export default function SubChart(props) {
   if (chartSubstituteComponentName) {
     return <ChartSubstituteComponentLoader chartSubstituteComponentName={chartSubstituteComponentName} />;
   }
+
+  // Formulate the className
+  const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
 
   // Early return for 'HeatMap' chartType
   if (chartData.chartType === 'HeatMap') {
@@ -49,9 +52,6 @@ export default function SubChart(props) {
       </Box>
     );
   }
-
-  // Formulate the className
-  const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
 
   // Use GoogleContext for loading and manipulating the Google Charts
   const [google, _] = useContext(GoogleContext);
@@ -310,7 +310,7 @@ export default function SubChart(props) {
   };
 
   return (
-    <SubChartStyleWrapper
+    <GoogleChartStyleWrapper
       isPortrait={isPortrait}
       className={className}
       position="relative"
@@ -336,6 +336,6 @@ export default function SubChart(props) {
 
       {/* Display chart here */}
       {renderChart()}
-    </SubChartStyleWrapper>
+    </GoogleChartStyleWrapper>
   );
 }

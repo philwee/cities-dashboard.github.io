@@ -275,14 +275,10 @@ export const returnGenericOptions = (props) => {
   return options;
 }
 
-export const returnCalendarChartOptions = (props) => {
-  let options = returnGenericOptions(props);
-
-  const { calendarDimensions } = props;
+export const returnCalendarChartOptions = (existingOptions) => {
+  const calendarDimensions = calculateCalendarDimensions({ cellSizeMin: 14, cellSizeMax: 18 });
   return {
-    ...options,
-    // overcompensate the height of chart SVG element. this is OK as
-    // the chart container will clip the chart to it's expected height of {chartTotalHeight}
+    ...existingOptions,
     width: calendarDimensions.chartWidth,
     calendar: {
       cellSize: calendarDimensions.cellSize,
@@ -335,4 +331,70 @@ export const returnChartControlUI = (props) => {
     };
   }
   return chartControlUI;
+}
+
+const calculateCalendarDimensions = ({ cellSizeMin, cellSizeMax }) => {
+  const cellSize = Math.min(Math.max((window.innerWidth * 0.9) / 58, cellSizeMin), cellSizeMax);
+  return {
+    chartWidth: cellSize * 56, // fixed ratio
+    cellSize,
+    yearLabelFontSize: cellSize * 2
+  };
+};
+
+export const addTouchEventListenerForChartControl = ({ controlWrapper, chartID }) => {
+  const touchHandler = (event) => {
+    var touches = event.changedTouches,
+      first = touches[0],
+      type = '';
+
+    switch (event.type) {
+      case 'touchstart':
+        type = 'mousedown';
+        break;
+      case 'touchmove':
+        type = 'mousemove';
+        break;
+      case 'touchend':
+        type = 'mouseup';
+        break;
+      default:
+        return;
+    }
+
+    var simulatedEvent = new MouseEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      detail: 1,
+      screenX: first.screenX,
+      screenY: first.screenY,
+      clientX: first.clientX,
+      clientY: first.clientY,
+      button: 0, // left button
+      relatedTarget: null,
+    });
+
+    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+  }
+
+  let isMounted = true; // Flag to track component's mount status
+  if (!controlWrapper) return;
+
+  const controlDOM = document.querySelector(`#control-${chartID}`);
+  if (!controlDOM) return;
+
+  ['touchstart', 'touchmove', 'touchend', 'touchcancel']
+    .forEach((touchEvent) => {
+      controlDOM.addEventListener(touchEvent, touchHandler, { capture: true });
+    });
+
+  return () => {
+    isMounted = false; // Component is unmounting
+
+    ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach((touchEvent) => {
+      controlDOM.removeEventListener(touchEvent, touchHandler, { capture: true });
+    });
+  };
 }

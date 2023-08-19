@@ -10,28 +10,19 @@ import { useTheme } from '@mui/material/styles';
 import HeatMap from '../HeatMap';
 import SeriesSelector from './SeriesSelector';
 
-import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnChartControlUI, ChartControlType } from '../GoogleChartHelper';
+import { fetchDataFromSheet, generateRandomID, returnGenericOptions, returnCalendarChartOptions, returnChartControlUI, ChartControlType, addTouchEventListenerForChartControl } from '../GoogleChartHelper';
 
-import ResponsiveCalendarChart from '../ResponsiveCalendarChart';
-
-import SubChartStyleWrapper from './SubChartStyleWrapper';
+import GoogleChartStyleWrapper from './GoogleChartStyleWrapper';
 
 import LoadingAnimation from '../../Components/LoadingAnimation';
 
 import ChartSubstituteComponentLoader from '../ChartSubstituteComponents/ChartSubstituteComponentLoader';
+
 export default function SubChart(props) {
+  // Props
   const { chartData, subchartIndex, windowSize, isPortrait, isHomepage, height, maxHeight } = props;
 
-  if (chartData.chartType === 'Calendar') {
-    return (
-      <SubChartStyleWrapper>
-        <ResponsiveCalendarChart
-          {...props}
-        />
-      </SubChartStyleWrapper>
-    );
-  }
-
+  // Early return if this doesn't contain a normal Google Chart but a chartSubstituteComponent
   const chartSubstituteComponentName = chartData.subcharts?.[subchartIndex].chartSubstituteComponentName;
   if (chartSubstituteComponentName) {
     return <ChartSubstituteComponentLoader chartSubstituteComponentName={chartSubstituteComponentName} />;
@@ -40,7 +31,7 @@ export default function SubChart(props) {
   // Formulate the className
   const className = chartData.customClassName ? `${chartData.chartType} ${chartData.customClassName}` : chartData.chartType;
 
-  // Special return for 'HeatMap' chartType
+  // Early return for 'HeatMap' chartType
   if (chartData.chartType === 'HeatMap') {
     return (
       <Box
@@ -61,29 +52,34 @@ export default function SubChart(props) {
       </Box>
     );
   }
+
+  // Use GoogleContext for loading and manipulating the Google Charts
   const [google, _] = useContext(GoogleContext);
 
+  // States of the Google Charts
+  const [dataTable, setDataTable] = useState();
   const [chartWrapper, setChartWrapper] = useState();
   const [dashboardWrapper, setDashboardWrapper] = useState();
   const [controlWrapper, setControlWrapper] = useState();
 
-  const [dataTable, setDataTable] = useState();
-
   // Get the current theme
   const theme = useTheme();
 
-  // Property to determine if this is the first time the chart is rendered
-  // to show/hide the LoadingAnimation
+  // To determine the first time the chart renders to show/hide the LoadingAnimation
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   // Keep track of the columns (series) of the chart
   const [dataColumns, setDataColumns] = useState([]);
 
   // Define the DOM container's ID for drawing the google chart inside
-  const [randomID, setRandomID] = useState(generateRandomID());
+  const [chartID, __] = useState(generateRandomID());
 
-  // Get the generic options for chart
-  const options = returnGenericOptions({ ...props, theme });
+  // Calendar chart's properties
+  const [chartTotalHeight, setChartTotalHeight] = useState(200);
+
+  // Get the options object for chart
+  let options = returnGenericOptions({ ...props, theme });
+  if (chartData.chartType === 'Calendar') options = returnCalendarChartOptions(options);
 
   // Properties for chart control (if existed)
   let hasChartControl = false;
@@ -112,61 +108,8 @@ export default function SubChart(props) {
     // as it doesn't support touch events on mobile
     if (chartControl.controlType === 'ChartRangeFilter') {
       useEffect(() => {
-        let isMounted = true; // Flag to track component's mount status
-
-        if (!controlWrapper) return;
-
-        const controlDOM = document.querySelector(`#control-${randomID}`);
-        if (!controlDOM) return;
-
-        ['touchstart', 'touchmove', 'touchend', 'touchcancel']
-          .forEach((touchEvent) => {
-            controlDOM.addEventListener(touchEvent, touchHandler, { capture: true });
-          });
-
-        return () => {
-          isMounted = false; // Component is unmounting
-
-          ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach((touchEvent) => {
-            controlDOM.removeEventListener(touchEvent, touchHandler, { capture: true });
-          });
-        };
-
-        function touchHandler(event) {
-          var touches = event.changedTouches,
-            first = touches[0],
-            type = '';
-
-          switch (event.type) {
-            case 'touchstart':
-              type = 'mousedown';
-              break;
-            case 'touchmove':
-              type = 'mousemove';
-              break;
-            case 'touchend':
-              type = 'mouseup';
-              break;
-            default:
-              return;
-          }
-
-          var simulatedEvent = new MouseEvent(type, {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-            detail: 1,
-            screenX: first.screenX,
-            screenY: first.screenY,
-            clientX: first.clientX,
-            clientY: first.clientY,
-            button: 0, // left button
-            relatedTarget: null,
-          });
-
-          first.target.dispatchEvent(simulatedEvent);
-          event.preventDefault();
-        }
+        const cleanupTouchEventListener = addTouchEventListenerForChartControl({ controlWrapper, chartID });
+        return cleanupTouchEventListener;
       }, [controlWrapper]);
     }
   }
@@ -178,14 +121,18 @@ export default function SubChart(props) {
   useEffect(() => {
     if (seriesSelector) handleSeriesSelection(dataColumns); // this function set new options, too
     else {
-      chartWrapper?.setOptions(options);
+      chartWrapper?.setOptions({
+        ...options,
+        ...(chartData.chartType === 'Calendar' && { height: chartTotalHeight })
+      });
+
       chartWrapper?.draw();
       if (hasChartControl) {
         controlWrapper?.setOptions(chartControlOptions);
         controlWrapper?.draw();
       }
     }
-  }, [theme, isPortrait, windowSize]);
+  }, [theme, isPortrait, windowSize, chartTotalHeight]);
 
 
   const getInitialColumns = ({ chartWrapper, dataTable }) => {
@@ -286,13 +233,13 @@ export default function SubChart(props) {
                 || null
                 || null,
             },
-            containerId: randomID
+            containerId: chartID
           });
           setChartWrapper(thisChartWrapper);
 
           if (hasChartControl) {
             const thisDashboardWrapper = new google.visualization.Dashboard(
-              document.getElementById(`dashboard-${randomID}`));
+              document.getElementById(`dashboard-${chartID}`));
             setDashboardWrapper(thisDashboardWrapper);
 
             google.visualization.events.addListener(thisDashboardWrapper, 'ready', onChartReady);
@@ -300,7 +247,7 @@ export default function SubChart(props) {
             const thisControlWrapper = new google.visualization.ControlWrapper({
               controlType: chartControl.controlType,
               options: chartControlOptions,
-              containerId: `control-${randomID}`
+              containerId: `control-${chartID}`
             });
             setControlWrapper(thisControlWrapper);
 
@@ -327,37 +274,48 @@ export default function SubChart(props) {
     if (hasChartControl) {
       return (
         <Stack
-          id={`dashboard-${randomID}`}
+          id={`dashboard-${chartID}`}
           direction={ChartControlType[chartControl.controlType]?.stackDirection || 'column-reverse'}
           sx={{ height: '100%' }}
         >
           <Box
-            id={`control-${randomID}`}
+            id={`control-${chartID}`}
             sx={{
               height: `calc(${height} / 8)`,
               opacity: 0.8,
               filter: 'saturate(0.3)'
             }}
           />
-          <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />
+          <Box id={chartID} sx={{ height: height, maxHeight: maxHeight }} />
         </Stack>
       )
     }
-    else return <Box id={randomID} sx={{ height: height, maxHeight: maxHeight }} />;
+    else return <Box id={chartID} sx={{ height: height, maxHeight: maxHeight }} />;
   }
 
   const onChartReady = () => {
+    if (chartData.chartType === 'Calendar') {
+      // querySelector is used to select the first 'g' element in the svg
+      // this is to get the height of the non-responsive element
+      // to set the CalendarChart's height to make it resonsive
+      const chartDOMContainer = document.getElementById(chartID).querySelector('svg > g:nth-of-type(1)');
+      let renderedHeight = chartDOMContainer.getBBox().height;
+      if (options.legend.position === 'none') renderedHeight += 50;
+      setChartTotalHeight(renderedHeight);
+    }
+
     if (!isFirstRender) return;
     // Hide the circleProgress when chart finishes rendering the first time
     setIsFirstRender(false);
   };
 
   return (
-    <SubChartStyleWrapper
+    <GoogleChartStyleWrapper
       isPortrait={isPortrait}
       className={className}
       position="relative"
       height="100%"
+      minHeight="20vh"
     >
       {/* Conditionally display loading animation here */}
       {isFirstRender && (
@@ -378,6 +336,6 @@ export default function SubChart(props) {
 
       {/* Display chart here */}
       {renderChart()}
-    </SubChartStyleWrapper>
+    </GoogleChartStyleWrapper>
   );
 }

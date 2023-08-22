@@ -316,7 +316,7 @@
         }
       },
       {
-        "title": "Hourly Average PM2.5 Concentration (µg/m3) by Month",
+        "title": "Hourly Average PM2.5 Concentration (µg/m<sup>3</sup>) by Month",
         "query": "SELECT A, B, C, D, E, F, G, H, I, J, K, L, M, N",
         "subcharts": [
           {

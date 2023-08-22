@@ -12,14 +12,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import * as Tracking from '../../Utils/Tracking';
 
-// import ReactGA from 'react-ga4';
-
 const StyledAccordion = styled(MuiAccordion)(({ theme, expanded }) => ({
     color: theme.palette.text.secondary,
     backgroundImage: 'none',
     backgroundColor: expanded ? theme.palette.background.default : 'transparent',
     boxShadow: expanded ? theme.shadows : 'none',
-    transition: theme.transitions,
+    transition: 'none',
 }));
 
 const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme, expanded }) => ({
@@ -29,7 +27,7 @@ const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme, expanded })
     '& .MuiTypography-root': {
         color: theme.palette.text.primary,
         textDecoration: 'underline',
-        transition: theme.transitions,
+        transition: 'none',
         '&:hover': {
             color: theme.palette.primary.main,
         },
@@ -50,6 +48,7 @@ const ExpandableSection = ({ title, content }) => {
             <StyledAccordion
                 expanded={expanded === "panel1"}
                 onChange={handleAccordionChange("panel1")}
+                transitionDuration={0}
             >
                 <StyledAccordionSummary expanded={expanded} expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                     <Tooltip title={expanded ? "Click to collapse" : "Click to expand"}>

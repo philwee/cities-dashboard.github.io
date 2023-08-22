@@ -39,7 +39,7 @@ const StyledIcon = styled(Box)(({ theme }) => ({
 export const scrollToSection = (scrollToSectionID) => {
   const section = document.getElementById(scrollToSectionID);
   if (section) {
-    section.scrollIntoView({ behavior: 'instant' });
+    section.scrollIntoView({ behavior: 'smooth' });
   }
 };
 

@@ -1,4 +1,5 @@
 import { Box, Fab, Tooltip } from '@mui/material';
+import parse from 'html-react-parser';
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
@@ -41,7 +42,14 @@ export default function SpeedDialButton(props) {
       key={index}
       behavior={NavLinkBehavior.scrollTo}
       scrollToSectionID={element.chartID}
-      label={`${element.chartID}. ${element.chartTitle}`}
+      label={(
+        <>
+          {index + 1}
+          .
+          &nbsp;
+          {parse(element.chartTitle)}
+        </>
+      )}
       analyticsOriginID="speed-dial"
       analyticsDestinationLabel={element.chartTitle}
       sx={{ fontSize: '0.8rem' }}

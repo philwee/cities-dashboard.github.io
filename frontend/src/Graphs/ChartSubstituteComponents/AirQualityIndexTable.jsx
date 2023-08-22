@@ -120,35 +120,37 @@ function AirQualityIndexTable(props) {
           </TableBody>
         </StyledTable>
       </Box>
-      <ChartComponent
-        chartHeight="4rem"
-        chartData={
-          {
-            sheetId: '157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc',
-            gid: 1958405288,
-            query: 'SELECT * WHERE A = "US AQI"',
-            headers: 1,
-            chartType: 'BarChart',
-            columns: [0, 1, 3, 5, 7, 9, 11],
-            options: {
-              legend: { position: 'none' },
-              enableInteractivity: false,
-              hAxis: {
-                ticks: [0, 50, 100, 150, 200, 300, 500]
-              },
-              chartArea:
+      {!hideAQIDescription
+        && (
+          <ChartComponent
+            chartHeight="4rem"
+            chartData={
               {
-                width: { portrait: '98%', landscape: '50%' },
-                height: { portrait: '20%', landscape: '30%' }
-              },
-              isStacked: true,
-              colors: 'aqi',
-              bar: { groupWidth: '100%' }
+                sheetId: '157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc',
+                gid: 1958405288,
+                query: 'SELECT * WHERE A = "US AQI"',
+                headers: 1,
+                chartType: 'BarChart',
+                columns: [0, 1, 3, 5, 7, 9, 11],
+                options: {
+                  legend: { position: 'none' },
+                  enableInteractivity: false,
+                  hAxis: {
+                    ticks: [0, 50, 100, 150, 200, 300, 500]
+                  },
+                  chartArea:
+                  {
+                    width: { portrait: '98%', landscape: '50%' },
+                    height: { portrait: '20%', landscape: '30%' }
+                  },
+                  isStacked: true,
+                  colors: 'aqi',
+                  bar: { groupWidth: '100%' }
+                }
+              }
             }
-          }
-        }
-      />
-
+          />
+        )}
     </>
 
   );

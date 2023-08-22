@@ -57,6 +57,7 @@ export default function AirQualityIndexLegendQuickGlance(props) {
         anchorEl={anchorEl}
         placement="top-end"
         onClose={handlePopperClose}
+        keepMounted
         disableRestoreFocus
         transition
       >

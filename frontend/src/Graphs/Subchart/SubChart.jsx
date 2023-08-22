@@ -315,7 +315,6 @@ export default function SubChart(props) {
       className={className}
       position="relative"
       height="100%"
-      minHeight="20vh"
     >
       {/* Conditionally display loading animation here */}
       {isFirstRender && (

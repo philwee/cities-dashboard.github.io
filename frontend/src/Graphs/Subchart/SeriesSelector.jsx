@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import { Stack, Grid, MenuItem, FormControl, Select, Chip, Checkbox, Typography, Switch } from "@mui/material";
+import { Stack, Grid, MenuItem, FormControl, Select, Chip, Radio, Checkbox, Typography, Switch } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -11,9 +11,11 @@ const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
 export default function SeriesSelector(props) {
-  const { items: itemsFromChart, selectorID, onSeriesSelection, isPortrait } = props;
+  const { items: itemsFromChart, selectorID, selectorType = "multiple", onSeriesSelection, isPortrait } = props;
 
   const theme = useTheme();
+
+  const isMultiSelect = selectorType === "multiple" ? true : false;
 
   const MenuProps = {
     PaperProps: {
@@ -35,7 +37,7 @@ export default function SeriesSelector(props) {
   };
 
   const [items, setItems] = useState(itemsFromChart);
-  const [selectAll, setSelectAll] = useState(true); // default: all is selected
+  const [selectAll, setSelectAll] = useState(isMultiSelect); // default: all is selected if multiSelect is true
 
   useEffect(() => {
     setItems(itemsFromChart);
@@ -85,7 +87,10 @@ export default function SeriesSelector(props) {
       <Stack direction="row" alignItems="center" spacing={0.5}>
         <VisibilityIcon fontSize="1.5rem" sx={{ color: theme.palette.text.secondary }} />
         <Typography variant="caption" color="text.secondary">
-          {`${selected.length} series displayed${selectAll ? ` (all)` : ""}`}
+          { /* show # of series selected if multiSelect. show cur selected serie if singleSelect */ }
+          {isMultiSelect ? `${selected.length} series displayed${selectAll ? ` (all)` : ""}`
+          : selected
+          }
         </Typography>
       </Stack>
     )
@@ -101,7 +106,7 @@ export default function SeriesSelector(props) {
         <Select
           labelId={`${selectorID}-label`}
           id={selectorID}
-          multiple
+          multiple={isMultiSelect}
           value={items.filter(item => item.selected).map(item => item.label)}
           onChange={handleChange}
           MenuProps={MenuProps}
@@ -126,17 +131,24 @@ export default function SeriesSelector(props) {
                 }
               }}
             >
-              <Checkbox
+              { /* checkboxes for MultiSelect, radioButtons for singleSelect*/}
+              {isMultiSelect ? <Checkbox
                 checked={item.selected}
                 onClick={() => handleItemToggle(item)}
 
                 sx={{ p: 0.25, transform: 'scale(0.8)' }} />
+              : <Radio
+                checked={item.selected}
+                onChange={() => handleChange(item)}
+                
+                sx={{ p: 0.25, transform: 'scale(0.8)' }} />
+              }
               <Typography variant='caption'>{item.label}</Typography>
             </MenuItem>
           ))}
 
-          {/* Show the option to select all */}
-          <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
+          {/* Show the option to select all if multiSelect is true*/}
+          {isMultiSelect && <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
             borderTop: 'solid 0.5px', borderColor: theme.palette.text.secondary,
             position: 'sticky', bottom: 0, zIndex: 9999, marginBottom: theme.spacing(-1),
             background: theme.palette.customAlternateBackground,
@@ -152,13 +164,13 @@ export default function SeriesSelector(props) {
                 sx={{ transform: 'scale(0.8)' }}
               />
             </Stack>
-          </MenuItem>
-
+          </MenuItem> 
+          }
         </Select>
       </FormControl>
 
-      {/* Display only selected items in the Grids, and only in landscape mode */}
-      <Grid container spacing={1}
+      {/* Display only selected items in the Grids, and only in landscape mode and if multiSelect is true*/}
+      { isMultiSelect && <Grid container spacing={1}
         sx={{
           [theme.breakpoints.down('sm')]: {
             display: 'none'
@@ -174,7 +186,7 @@ export default function SeriesSelector(props) {
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> }
 
 
     </Stack>

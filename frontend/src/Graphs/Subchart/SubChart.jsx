@@ -165,9 +165,19 @@ export default function SubChart(props) {
         : { label: columnLabel, ...col };
       shouldAssignDomainRoleToFistColumn = shouldAssignDomainRoleToFistColumn && false;
 
-      // Set the visibility of data column, initially, all data columns are selected
+      // Set the visibility of data column, 
       if (newCol.role === 'data') {
-        newCol.selected = true;
+        // initially, all data columns are selected if multiple series are selectable
+        if (seriesSelector === 'multiple') {
+          newCol.selected = true;
+        } else if (seriesSelector === 'single') { 
+          // else for single serie selector, only first data column is selected
+          if (dataSeriesIndex === 0) {
+            newCol.selected = true;
+          } else {
+            newCol.selected = false;
+          }
+        }
         newCol.seriesIndex = dataSeriesIndex;
         dataSeriesIndex++
       }
@@ -181,7 +191,6 @@ export default function SubChart(props) {
     const dataColumns = allInitialColumns.filter((col, index) => {
       return col.role === 'data' && options.series?.[index - 1]?.visibleInLegend !== false;
     });
-    console.log(dataColumns)
     setDataColumns(dataColumns);
   };
 
@@ -327,6 +336,7 @@ export default function SubChart(props) {
       {(seriesSelector && !isFirstRender) && (
         <SeriesSelector
           items={dataColumns}
+          selectorType={seriesSelector}
           selectorID={`${chartData.title}-selector`}
           onSeriesSelection={handleSeriesSelection}
           isPortrait={isPortrait}

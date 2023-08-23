@@ -66,7 +66,7 @@
         "headers": 1,
         "chartType": "ComboChart",
         "options": {
-          "seriesSelector": true,
+          "seriesSelector": "multiple",
           "colors": "reverseAqi",
           "chartArea": {
             "backgroundColor": "#fff"
@@ -341,7 +341,7 @@
         "headers": 2,
         "chartType": "LineChart",
         "options": {
-          "seriesSelector": true,
+          "seriesSelector": "multiple",
           "colors": "grayscale",
           "vAxis": {
             "title": "PM2.5 Concentration (µg/m3)"
@@ -559,7 +559,7 @@
           }
         ],
         "options": {
-          "seriesSelector": true,
+          "seriesSelector": "single",
           "curveType": "none",
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"

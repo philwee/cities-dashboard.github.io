@@ -170,7 +170,7 @@ export default function SubChart(props) {
         // initially, all data columns are selected if multiple series are selectable
         if (seriesSelector === 'multiple') {
           newCol.selected = true;
-        } else if (seriesSelector === 'single') { 
+        } else if (seriesSelector === 'single') {
           // else for single serie selector, only first data column is selected
           if (dataSeriesIndex === 0) {
             newCol.selected = true;
@@ -192,9 +192,10 @@ export default function SubChart(props) {
       return col.role === 'data' && options.series?.[index - 1]?.visibleInLegend !== false;
     });
     setDataColumns(dataColumns);
+    return dataColumns;
   };
 
-  const handleSeriesSelection = (newDataColumns) => {
+  const handleSeriesSelection = (newDataColumns, _chartWrapper = chartWrapper) => {
     setDataColumns(newDataColumns);
 
     const hiddenSeriesObject = {};
@@ -207,7 +208,7 @@ export default function SubChart(props) {
         }; // 'hide' the serie by making it transparent
     });
 
-    chartWrapper?.setOptions({
+    _chartWrapper?.setOptions({
       ...options,
       series: {
         ...options.series,
@@ -216,7 +217,7 @@ export default function SubChart(props) {
     });
 
     // Call draw to apply the new DataView and 'refresh' the chart
-    chartWrapper?.draw();
+    _chartWrapper?.draw();
 
     if (hasChartControl) {
       controlWrapper?.draw();
@@ -270,7 +271,10 @@ export default function SubChart(props) {
             thisChartWrapper.draw();
           }
 
-          if (seriesSelector) getInitialColumns({ chartWrapper: thisChartWrapper, dataTable: thisDataTable });
+          if (seriesSelector) {
+            const initColumns = getInitialColumns({ chartWrapper: thisChartWrapper, dataTable: thisDataTable });
+            handleSeriesSelection(initColumns, thisChartWrapper);
+          }
 
         })
         .catch(error => {

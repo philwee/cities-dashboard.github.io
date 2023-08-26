@@ -29,7 +29,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import CommentIcon from '@mui/icons-material/Comment';
 
 import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
-import { DatasetDownloadButton } from './DatasetDownloadButton';
+import DatasetDownloadDialog from '../../Components/DatasetDownload/DatasetDownloadDialog';
 
 import { scrollToSection } from '../../Components/Header/MenuItemAsNavLink';
 import FullWidthBox from '../../Components/FullWidthBox';
@@ -185,7 +185,7 @@ const Project = ({ themePreference }) => {
                 })}
               </Typography>
 
-              <DatasetDownloadButton project={project} />
+              <DatasetDownloadDialog project={project} />
 
               <ExpandableSection
                 title="Sample Data"

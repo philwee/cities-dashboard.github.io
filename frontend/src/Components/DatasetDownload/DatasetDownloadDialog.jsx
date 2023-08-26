@@ -63,40 +63,16 @@ const datasetMetadata = {
       id: "30903651",
       versions: [
         {
-          "name": "latest-name",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-29",
-          "size": "0.24 KB"
-        },
-        {
-          "name": "super-long-name-name-name",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/7f6a0600091ecd87b8f2fb254e4aef8a61461eee/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-28",
-          "size": "1.6 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/027dfe06de674884ea832cec464e1c4e7f68ed53/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-27",
-          "size": "0.24 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-26",
-          "size": "0.24 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/7f6a0600091ecd87b8f2fb254e4aef8a61461eee/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-25",
-          "size": "0.16 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/027dfe06de674884ea832cec464e1c4e7f68ed53/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
+          "name": "daily",
+          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/air-quality/air-quality-daily.csv",
           "version": "2023-08-24",
-          "size": "0.24 KB"
+          "size": "58.12 kB"
+        },
+        {
+          "name": "daily",
+          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/112d782ab553a5d2269fb487e5a8753ae5f5c15f/air-quality/air-quality-daily.csv",
+          "version": "2023-08-24-v2",
+          "size": "58.03 kB"
         }
       ]
     }
@@ -182,7 +158,7 @@ const DatasetSelectorAndPreviewer = (props) => {
   }, [datasets]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={3}>
+    <Grid container justifyContent="center" alignItems="start" spacing={3}>
       <Grid item sm={12} md={6}>
         <DatasetsTable
           datasets={datasets}
@@ -341,7 +317,7 @@ const Dataset = (props) => {
 
 const PreviewDataset = (props) => {
   const { previewingDataset, previewingDatasetId, project, smallScreen } = props;
-  const downloadDatasetName = `${previewingDataset?.name}-[${previewingDataset?.version}].csv`;
+  const downloadDatasetName = `[${project.id}] ${previewingDataset?.name}-${previewingDataset?.version}.csv`;
 
   const theme = useTheme();
 
@@ -359,17 +335,62 @@ const PreviewDataset = (props) => {
     document.body.removeChild(downloadLink);
   };
 
+  const [formattedData, setFormattedData] = useState('');
+  const [rowIndices, setRowIndices] = useState('');
+  const numFirstLastRowsToPreview = 5;
+
+  useEffect(() => {
+    if (!previewingDataset?.fetchedDataset) return;
+
+    const csvData = previewingDataset?.fetchedDataset;
+    const lines = csvData.split('\n');
+    const numRows = lines.length;
+
+    if (numRows <= numFirstLastRowsToPreview) {
+      setFormattedData(csvData);
+      setRowIndices(Array.from({ length: numRows }, (_, index) => index + 1).join('\n')); // +1 because rowNumber starts at 1 while index starts at 0
+    } else {
+
+      const firstRows = lines.slice(0, numFirstLastRowsToPreview);
+      const lastRows = lines.slice(numRows - numFirstLastRowsToPreview);
+
+      const numOfHiddenRows = numRows - 2 * numFirstLastRowsToPreview;
+
+      const middleRow = [`... [${numOfHiddenRows} rows hidden] ...`];
+
+      setFormattedData(firstRows.concat(middleRow).concat(lastRows).join('\n'));
+      setRowIndices(
+        Array.from({
+          length: numFirstLastRowsToPreview * 2 + 1 // +1 to account for the middleRow
+        },
+          (_, index) => {
+            const rowIndex = index + 1; // +1 because rowNumber starts at 1 while index starts at 0
+            // Indices for the first rows
+            if (rowIndex < numFirstLastRowsToPreview + 1) {
+              return rowIndex;
+            }
+            // No index for the middle row
+            else if (rowIndex == numFirstLastRowsToPreview + 1) {
+              return '';
+            }
+            // Indices for the last rows
+            else {
+              return numOfHiddenRows + rowIndex - 1;
+            }
+          })
+          .join('\n'));
+    }
+
+  }, [previewingDataset]);
+
   return (
     <Stack spacing={1}>
-      <Box >
+      <Box sx={{ '& *': { fontFamily: "monospace !important" } }}>
         <Chip
           icon={<VisibilityIcon />}
           label="Preview"
           size="small"
           sx={{
-            '& .MuiChip-label': {
-              fontFamily: "monospace !important"
-            },
             backgroundColor: theme.palette.customBackground,
             borderRadius: 0,
             borderTopLeftRadius: theme.spacing(1),
@@ -389,16 +410,21 @@ const PreviewDataset = (props) => {
             borderRadius: theme.spacing(1),
             borderTopLeftRadius: 0,
             minHeight: "5rem",
-            fontFamily: "monospace !important",
             width: smallScreen ? '100%' : 'unset',
             marginTop: 0
           }}
         >
-          {previewingDataset?.fetchedDataset}
+          <Stack direction="row">
+            <Box sx={{ mr: 2, userSelect: 'none' }}>
+              {rowIndices}
+            </Box>
+            <Box>
+              {formattedData}
+            </Box>
+          </Stack>
         </Box>
       </Box>
-
-      <Box textAlign="center">
+      <Box textAlign="center" >
         <Button
           variant="contained"
           sx={{
@@ -418,8 +444,8 @@ const PreviewDataset = (props) => {
             });
           }}
         >
-          <DownloadIcon sx={{ fontSize: '1.25rem' }} />&nbsp;
-          {downloadDatasetName} <Box sx={{ ml: 2 }}>({previewingDataset?.size})</Box>
+          <DownloadIcon sx={{ fontSize: '1.25rem', mr: 0.5 }} />
+          {downloadDatasetName}
         </Button>
       </Box>
     </Stack >

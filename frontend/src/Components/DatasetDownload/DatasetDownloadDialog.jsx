@@ -1,9 +1,10 @@
 // disable eslint for this file
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import { Box, Stack, Select, FormControl, MenuItem, Grid, Chip, Container, Dialog, Button, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { useTheme, styled } from '@mui/material/styles';
+import { Box, Typography, Stack, Select, FormControl, MenuItem, Grid, Chip, Dialog, Button, DialogActions, DialogContent, DialogTitle, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import DownloadIcon from '@mui/icons-material/Download';
 
 import * as Tracking from '../../Utils/Tracking';
@@ -139,12 +140,19 @@ export default function DatasetDownloadDialog(props) {
         fullScreen={smallScreen}
         keepMounted
       >
-        <DialogTitle sx={{ px: smallScreen ? 1.5 : 3 }}>
-          <Chip label={project.title} size="small" />
-          <br />
-          Preview and download raw dataset(s)
-        </DialogTitle>
-        <DialogContent sx={{ px: smallScreen ? 1 : 3 }}>
+        <DialogContent sx={{
+          px: smallScreen ? 2 : 3,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%'
+        }}>
+          <Typography variant="h6" textAlign="left" width="100%" sx={{ mb: 3 }}>
+            <Chip label={project.title} size="small" />
+            <br />
+            Preview and download raw dataset(s)
+          </Typography>
           <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} project={project} />
         </DialogContent>
         <DialogActions>
@@ -174,7 +182,7 @@ const DatasetSelectorAndPreviewer = (props) => {
   }, [datasets]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={1}>
+    <Grid container justifyContent="center" alignItems="center" spacing={3}>
       <Grid item sm={12} md={6}>
         <DatasetsTable
           datasets={datasets}
@@ -185,14 +193,13 @@ const DatasetSelectorAndPreviewer = (props) => {
           setPreviewingDatasetId={setPreviewingDatasetId}
         />
       </Grid>
-      <Grid item sm={12} md={6}>
-        <Container>
-          <PreviewDataset
-            previewingDataset={previewingDataset}
-            previewingDatasetId={previewingDatasetId}
-            project={project}
-          />
-        </Container>
+      <Grid item sm={12} md={6} maxWidth={smallScreen ? '100%' : 'unset'}>
+        <PreviewDataset
+          previewingDataset={previewingDataset}
+          previewingDatasetId={previewingDatasetId}
+          project={project}
+          smallScreen={smallScreen}
+        />
       </Grid>
       <Grid item>
       </Grid>
@@ -295,7 +302,6 @@ const Dataset = (props) => {
           sx={{
             pl: 1,
             cursor: 'pointer',
-            textDecoration: isPreviewing && 'underline',
             background: isPreviewing && theme.palette.background.NYUpurpleLight
           }}
           onClick={setThisDatasetToPreview}>
@@ -333,19 +339,11 @@ const Dataset = (props) => {
   )
 }
 
-const CodeBlock = styled('pre')(({ theme }) => ({
-  overflowX: 'auto',
-  color: theme.palette.text.secondary,
-  backgroundColor: theme.palette.customBackground,
-  padding: theme.spacing(2),
-  borderRadius: theme.shape.borderRadius,
-  minHeight: "5rem",
-  fontFamily: "monospace !important"
-}));
-
 const PreviewDataset = (props) => {
-  const { previewingDataset, previewingDatasetId, project } = props;
+  const { previewingDataset, previewingDatasetId, project, smallScreen } = props;
   const downloadDatasetName = `${previewingDataset?.name}-[${previewingDataset?.version}].csv`;
+
+  const theme = useTheme();
 
   const downloadPreviewingDataset = () => {
     if (!previewingDataset?.fetchedDataset) return;
@@ -362,11 +360,45 @@ const PreviewDataset = (props) => {
   };
 
   return (
-    <Stack>
-      <CodeBlock>
-        {previewingDataset?.fetchedDataset}
-      </CodeBlock>
-      <Stack alignItems="center">
+    <Stack spacing={1}>
+      <Box >
+        <Chip
+          icon={<VisibilityIcon />}
+          label="Preview"
+          size="small"
+          sx={{
+            '& .MuiChip-label': {
+              fontFamily: "monospace !important"
+            },
+            backgroundColor: theme.palette.customBackground,
+            borderRadius: 0,
+            borderTopLeftRadius: theme.spacing(1),
+            borderTopRightRadius: theme.spacing(1),
+            p: 1,
+            pb: 0,
+            mb: -1
+          }}
+        />
+        <Box
+          component="pre"
+          sx={{
+            overflowX: 'auto',
+            color: theme.palette.text.secondary,
+            backgroundColor: theme.palette.customBackground,
+            p: 2,
+            borderRadius: theme.spacing(1),
+            borderTopLeftRadius: 0,
+            minHeight: "5rem",
+            fontFamily: "monospace !important",
+            width: smallScreen ? '100%' : 'unset',
+            marginTop: 0
+          }}
+        >
+          {previewingDataset?.fetchedDataset}
+        </Box>
+      </Box>
+
+      <Box textAlign="center">
         <Button
           variant="contained"
           sx={{
@@ -389,7 +421,7 @@ const PreviewDataset = (props) => {
           <DownloadIcon sx={{ fontSize: '1.25rem' }} />&nbsp;
           {downloadDatasetName} <Box sx={{ ml: 2 }}>({previewingDataset?.size})</Box>
         </Button>
-      </Stack>
+      </Box>
     </Stack >
 
   )

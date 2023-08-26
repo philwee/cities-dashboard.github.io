@@ -122,7 +122,9 @@ export default function DatasetDownloadDialog(props) {
       <Button
         onClick={() => {
           handleOpen();
-          Tracking.sendEventAnalytics(Tracking.Events.rawDatasetButtonClicked);
+          Tracking.sendEventAnalytics(Tracking.Events.rawDatasetButtonClicked, {
+            project_id: project.id
+          });
         }}
         variant="contained"
       >
@@ -143,7 +145,7 @@ export default function DatasetDownloadDialog(props) {
           Preview and download raw dataset(s)
         </DialogTitle>
         <DialogContent sx={{ px: smallScreen ? 1 : 3 }}>
-          <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} />
+          <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} project={project} />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
@@ -156,7 +158,7 @@ export default function DatasetDownloadDialog(props) {
 }
 
 const DatasetSelectorAndPreviewer = (props) => {
-  const { datasets, smallScreen } = props;
+  const { datasets, smallScreen, project } = props;
   const [previewingDataset, setPreviewingDataset] = useState();
   const [previewingDatasetId, setPreviewingDatasetId] = useState();
 
@@ -187,6 +189,8 @@ const DatasetSelectorAndPreviewer = (props) => {
         <Container>
           <PreviewDataset
             previewingDataset={previewingDataset}
+            previewingDatasetId={previewingDatasetId}
+            project={project}
           />
         </Container>
       </Grid>
@@ -236,12 +240,11 @@ const DatasetsTable = (props) => {
 }
 
 const Dataset = (props) => {
-  const { smallScreen, dataset, previewingDataset, setPreviewingDataset, isPreviewing, previewingDatasetId, setPreviewingDatasetId } = props;
+  const { dataset, setPreviewingDataset, isPreviewing, previewingDatasetId, setPreviewingDatasetId } = props;
 
   const [fetchedDatasets, setFetchedDatasets] = useState({});
 
   const latestVersionOfThisDataset = dataset?.versions[0] || {};
-
   const [selectedVersionOfThisDataset, setSelectedVersionOfThisDataset] = useState(latestVersionOfThisDataset);
 
   const handleVersionChange = (event) => {
@@ -251,13 +254,12 @@ const Dataset = (props) => {
     });
     setSelectedVersionOfThisDataset(selectedVersion);
     setPreviewingDatasetId(dataset.id);
-
     setPreviewingDataset(selectedVersion);
 
-    updateFetchedDataset(selectedVersion);
+    fetchThisDataset(selectedVersion);
   };
 
-  const updateFetchedDataset = (selectedVersion) => {
+  const fetchThisDataset = (selectedVersion) => {
     // If this dataset version hasn't been fetched yet,
     // fetch it and append it into the object fetchedDatasets
     if (!fetchedDatasets[selectedVersion.version]) {
@@ -280,7 +282,7 @@ const Dataset = (props) => {
     if (previewingDatasetId !== dataset.id) {
       setPreviewingDatasetId(dataset.id);
       setPreviewingDataset(selectedVersionOfThisDataset);
-      updateFetchedDataset(selectedVersionOfThisDataset);
+      fetchThisDataset(selectedVersionOfThisDataset);
     }
   }
 
@@ -339,11 +341,10 @@ const CodeBlock = styled('pre')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   minHeight: "5rem",
   fontFamily: "monospace !important"
-
 }));
 
 const PreviewDataset = (props) => {
-  const { previewingDataset } = props;
+  const { previewingDataset, previewingDatasetId, project } = props;
   const downloadDatasetName = `${previewingDataset?.name}-[${previewingDataset?.version}].csv`;
 
   const downloadPreviewingDataset = () => {
@@ -376,8 +377,13 @@ const PreviewDataset = (props) => {
             py: 1
           }}
           onClick={() => {
-            // Tracking.sendEventAnalytics(Tracking.Events.rawDatasetButtonClicked);
             downloadPreviewingDataset();
+            Tracking.sendEventAnalytics(Tracking.Events.rawDatasetDownloaded, {
+              project_id: project.id,
+              dataset_id: previewingDatasetId,
+              dataset_name: previewingDataset.name,
+              dataset_version: previewingDataset.version
+            });
           }}
         >
           <DownloadIcon sx={{ fontSize: '1.25rem' }} />&nbsp;

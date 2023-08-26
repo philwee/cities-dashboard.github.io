@@ -1,13 +1,10 @@
 // disable eslint for this file
 /* eslint-disable */
 import { useState, useEffect } from 'react';
-import { Stack, IconButton, Select, FormControl, MenuItem, Grid, Chip, Container, Dialog, Button, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Stack, Select, FormControl, MenuItem, Grid, Chip, Container, Dialog, Button, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
 
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import HistoryIcon from '@mui/icons-material/History';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import * as Tracking from '../../Utils/Tracking';
 import { fetchDataFromURL } from './DatasetFetcher';
@@ -213,17 +210,13 @@ const DatasetsTable = (props) => {
     >
       <TableHead>
         <TableRow>
-          <TableCell sx={{ p: 0, width: '2rem' }} />
           <TableCell sx={{ pl: 1 }}>
             Dataset
           </TableCell>
           <TableCell sx={{ width: smallScreen ? '6.5rem' : '8rem' }}>Version</TableCell>
-          {
-            !smallScreen &&
-            <TableCell sx={{ width: '6rem' }}>
-              Size
-            </TableCell>
-          }
+          <TableCell sx={{ width: smallScreen ? '5rem' : '6rem' }}>
+            Size
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -291,56 +284,23 @@ const Dataset = (props) => {
     }
   }
 
-  const downloadThisDatasetVersion = () => {
-    if (!fetchedDatasets[selectedVersionOfThisDataset.version]) {
-      fetchDataFromURL(selectedVersionOfThisDataset.rawLink).then((data) => {
-        const selectedVersionWithFetchedDataset = { ...selectedVersionOfThisDataset, fetchedDataset: data };
-        setPreviewingDatasetId(dataset.id);
-        setPreviewingDataset(selectedVersionWithFetchedDataset);
-        setFetchedDatasets({
-          ...fetchedDatasets,
-          [selectedVersionWithFetchedDataset.version]: selectedVersionWithFetchedDataset
-        });
-        const blob = new Blob([data], { type: 'application/octet-stream' }); // create a Blob with the raw data
-        const url = URL.createObjectURL(blob); // create a download link for the Blob
-        const downloadLink = document.createElement('a');
-        downloadLink.href = url;
-        downloadLink.download = `raw_dataset.csv`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click(); // simulate a click on the download link
-        URL.revokeObjectURL(url); // clean up by revoking the object URL
-        document.body.removeChild(downloadLink);
-      });
-    }
-    // If it has been fetched before, simply get it from memory 
-    else {
-      setPreviewingDataset(fetchedDatasets[selectedVersionOfThisDataset.version]);
-    }
-  };
+  const theme = useTheme();
 
   return (
     <>
       <TableRow key={dataset.id}>
-        <TableCell sx={{ p: 0 }}>
-          <IconButton
-            sx={{ opacity: 0.5, ':hover': { color: 'primary.main', opacity: 1 } }}
-            onClick={downloadThisDatasetVersion}
-          >
-            <CloudDownloadIcon fontSize="small" />
-          </IconButton>
-        </TableCell>
-
         <TableCell
           sx={{
             pl: 1,
             cursor: 'pointer',
-            textDecoration: isPreviewing && 'underline'
+            textDecoration: isPreviewing && 'underline',
+            background: isPreviewing && theme.palette.background.NYUpurpleLight
           }}
           onClick={setThisDatasetToPreview}>
           {selectedVersionOfThisDataset?.name}
         </TableCell>
 
-        <TableCell>
+        <TableCell sx={{ background: isPreviewing && theme.palette.background.NYUpurpleLight }}>
           <FormControl size="small">
             <Select
               value={selectedVersionOfThisDataset?.version}
@@ -363,12 +323,9 @@ const Dataset = (props) => {
             </Select>
           </FormControl>
         </TableCell>
-        {
-          !smallScreen &&
-          <TableCell>
-            {selectedVersionOfThisDataset?.size}
-          </TableCell>
-        }
+        <TableCell sx={{ background: isPreviewing && theme.palette.background.NYUpurpleLight }}>
+          {selectedVersionOfThisDataset?.size}
+        </TableCell>
       </TableRow>
     </>
   )
@@ -380,37 +337,54 @@ const CodeBlock = styled('pre')(({ theme }) => ({
   backgroundColor: theme.palette.customBackground,
   padding: theme.spacing(2),
   borderRadius: theme.shape.borderRadius,
-  minHeight: "5rem"
+  minHeight: "5rem",
+  fontFamily: "monospace !important"
+
 }));
 
 const PreviewDataset = (props) => {
   const { previewingDataset } = props;
-  const theme = useTheme();
-  const mediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const downloadDatasetName = `${previewingDataset?.name}-[${previewingDataset?.version}].csv`;
+
+  const downloadPreviewingDataset = () => {
+    if (!previewingDataset?.fetchedDataset) return;
+
+    const blob = new Blob([previewingDataset?.fetchedDataset], { type: 'application/octet-stream' }); // create a Blob with the raw data
+    const url = URL.createObjectURL(blob); // create a download link for the Blob
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = downloadDatasetName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click(); // simulate a click on the download link
+    URL.revokeObjectURL(url); // clean up by revoking the object URL
+    document.body.removeChild(downloadLink);
+  };
 
   return (
-    <Stack
-      direction={mediumScreen ? 'column-reverse' : 'column'}
-      sx={{
-        '& *': {
-          fontFamily: "monospace !important"
-        }
-      }}>
-      <Grid container spacing={1}>
-        <Grid item>
-          <Chip label={previewingDataset?.name} icon={<VisibilityIcon />} size="small" />
-        </Grid>
-        <Grid item>
-          <Chip label={previewingDataset?.version} icon={<HistoryIcon />} size="small" />
-        </Grid>
-        <Grid item>
-          <Chip label={previewingDataset?.size} icon={<InsertDriveFileIcon />} size="small" />
-        </Grid>
-      </Grid>
+    <Stack>
       <CodeBlock>
         {previewingDataset?.fetchedDataset}
       </CodeBlock>
-    </Stack>
+      <Stack alignItems="center">
+        <Button
+          variant="contained"
+          sx={{
+            textTransform: 'none',
+            textAlign: 'left',
+            lineHeight: 1.1,
+            px: 1.5,
+            py: 1
+          }}
+          onClick={() => {
+            // Tracking.sendEventAnalytics(Tracking.Events.rawDatasetButtonClicked);
+            downloadPreviewingDataset();
+          }}
+        >
+          <DownloadIcon sx={{ fontSize: '1.25rem' }} />&nbsp;
+          {downloadDatasetName} <Box sx={{ ml: 2 }}>({previewingDataset?.size})</Box>
+        </Button>
+      </Stack>
+    </Stack >
 
   )
 }

@@ -44,7 +44,8 @@ const CustomThemes = {
       },
       background: {
         paper: '#202020',
-        default: '#303030'
+        default: '#303030',
+        NYUpurpleLight: 'rgba(169, 71, 235, 0.3)'
       },
       customBackground: '#202020',
       customAlternateBackground: '#303030',
@@ -85,6 +86,9 @@ const CustomThemes = {
       mode: 'light',
       primary: {
         main: '#57068c'
+      },
+      background: {
+        NYUpurpleLight: 'rgba(87, 6, 140, 0.1)'
       },
       customBackground: '#f6f6f6',
       customAlternateBackground: '#ffffff',

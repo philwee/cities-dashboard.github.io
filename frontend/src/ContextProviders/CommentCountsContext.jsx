@@ -1,8 +1,11 @@
-// import libraries
 import React, { useState, useEffect, createContext, useMemo } from 'react';
+import { fetchDataFromURL } from '../Components/DatasetDownload/DatasetFetcher';
 import { WEBSITE_ID } from '../Components/CommentSection';
+
 // create context
 export const CommentCountsContext = createContext();
+
+const hyvorTalkApiUrl = `https://talk.hyvor.com/api/v1/pages?website_id=${WEBSITE_ID}`;
 
 // context provider
 export function CommentCountsProvider({ children }) {
@@ -12,12 +15,13 @@ export function CommentCountsProvider({ children }) {
   const fetchCommentCounts = async () => {
     const commentCountsForAllPages = {};
     try {
-      const response = await fetch(`https://talk.hyvor.com/api/v1/pages?website_id=${WEBSITE_ID}`);
-      const jsonData = await response.json();
-      // Simplify the json response into 1 object containing just the comments_count of each project
-      jsonData.data.forEach((item) => {
-        commentCountsForAllPages[item.page_identifier] = item.comments_count;
-      });
+      fetchDataFromURL(hyvorTalkApiUrl, 'json')
+        .then((jsonData) => {
+          // Simplify the response into 1 object containing just the comments_count of each project
+          jsonData.data.forEach((item) => {
+            commentCountsForAllPages[item.page_identifier] = item.comments_count;
+          });
+        });
       return commentCountsForAllPages;
     } catch (error) {
       console.log('Error fetching comment counts data:', error);

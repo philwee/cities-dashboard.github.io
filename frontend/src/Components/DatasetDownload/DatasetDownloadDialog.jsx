@@ -1,91 +1,30 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect } from 'react';
-import { Box, Typography, Stack, Select, FormControl, MenuItem, Grid, Chip, Dialog, Button, DialogActions, DialogContent, DialogTitle, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { useState, useEffect, useContext } from 'react';
+import { Box, Link, Typography, Stack, Select, FormControl, MenuItem, Grid, Chip, Dialog, Button, DialogActions, DialogContent, useMediaQuery, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+
+import { RawDatasetsMetadataContext } from '../../ContextProviders/RawDatasetsMetadataContext';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DownloadIcon from '@mui/icons-material/Download';
+import DataObjectIcon from '@mui/icons-material/DataObject';
 
 import * as Tracking from '../../Utils/Tracking';
 import { fetchDataFromURL } from './DatasetFetcher';
 
-const datasetMetadata = {
-  "athletic-facilities-check-in": [
-    {
-      id: "30903651",
-      versions: [
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-26",
-          "size": "0.24 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/7f6a0600091ecd87b8f2fb254e4aef8a61461eee/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-25",
-          "size": "0.16 KB"
-        },
-        {
-          "name": "_update-here_-by-month",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/027dfe06de674884ea832cec464e1c4e7f68ed53/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-month.csv",
-          "version": "2023-08-24",
-          "size": "0.24 KB"
-        }
-      ]
-    },
-    {
-      id: "948552227",
-      versions: [
-        {
-          "name": "super-long-name-name-nameafadvadvadaasdasdsadadadas",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-day.csv",
-          "version": "2023-08-24",
-          "size": "0.12 KB"
-        }
-      ]
-    },
-    {
-      id: "1993454060",
-      versions: [
-        {
-          "name": "_update-here_-by-hour",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/athletic-facilities-check-in/athletic-facilities-check-in-_update-here_-by-hour.csv",
-          "version": "2023-08-24",
-          "size": "0.26 KB"
-        }
-      ]
-    }
-  ],
-  "air-quality": [
-    {
-      id: "30903651",
-      versions: [
-        {
-          "name": "daily",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/air-quality/air-quality-daily.csv",
-          "version": "2023-08-24",
-          "size": "58.12 kB"
-        },
-        {
-          "name": "daily",
-          "rawLink": "https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/112d782ab553a5d2269fb487e5a8753ae5f5c15f/air-quality/air-quality-daily.csv",
-          "version": "2023-08-24-v2",
-          "size": "58.03 kB"
-        }
-      ]
-    }
-  ]
-};
+import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
 
 export default function DatasetDownloadDialog(props) {
   const { project } = props;
+  const rawDatasetsMetadata = useContext(RawDatasetsMetadataContext);
   const [datasets, setDatasets] = useState();
 
   useEffect(() => {
-    setDatasets(datasetMetadata[project?.id]); // get all the dataset(s) of this project
-  }, [project]);
+    if (!project || !rawDatasetsMetadata) return;
+    console.log(rawDatasetsMetadata);
+    setDatasets(rawDatasetsMetadata[project?.id]); // get all the dataset(s) of this project
+  }, [project, rawDatasetsMetadata]);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -105,7 +44,7 @@ export default function DatasetDownloadDialog(props) {
         }}
         variant="contained"
       >
-        Download Raw Dataset
+        <DataObjectIcon sx={{ fontSize: '1rem' }} />&nbsp;Raw Dataset
       </Button>
 
       <Dialog
@@ -121,15 +60,17 @@ export default function DatasetDownloadDialog(props) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'start',
           height: '100%'
         }}>
-          <Typography variant="h6" textAlign="left" width="100%" sx={{ mb: 3 }}>
-            <Chip label={project.title} size="small" />
-            <br />
+          <Chip label={project.title} size="small" sx={{ mb: 1 }} />
+          <Typography variant="h6" >
             Preview and download raw dataset(s)
           </Typography>
           <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} project={project} />
+          <Typography variant="caption" sx={{ mb: 3, fontStyle: 'italic' }} >
+            This dataset is provided by the CITIES Dashboard with the support of {project.owner}. Should you intend to utilize this dataset for your project, research, or publication, we kindly request that you notify us at <Link href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</Link> to discuss citation requirements.
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
@@ -151,7 +92,7 @@ const DatasetSelectorAndPreviewer = (props) => {
     if (datasets?.length > 0) {
       setPreviewingDataset(datasets[0]?.versions[0]);
       setPreviewingDatasetId(datasets[0]?.id);
-      fetchDataFromURL(datasets[0]?.versions[0]?.rawLink).then((data) => {
+      fetchDataFromURL(datasets[0]?.versions[0]?.rawLink, 'csv').then((data) => {
         setPreviewingDataset({ ...datasets[0]?.versions[0], fetchedDataset: data });
       });
     }
@@ -207,7 +148,7 @@ const DatasetsTable = (props) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {datasets.map((dataset) => (
+        {datasets?.map((dataset) => (
           <Dataset
             smallScreen={smallScreen}
             dataset={dataset}
@@ -246,7 +187,7 @@ const Dataset = (props) => {
     // If this dataset version hasn't been fetched yet,
     // fetch it and append it into the object fetchedDatasets
     if (!fetchedDatasets[selectedVersion.version]) {
-      fetchDataFromURL(selectedVersion.rawLink).then((data) => {
+      fetchDataFromURL(selectedVersion.rawLink, 'csv').then((data) => {
         const selectedVersionWithFetchedDataset = { ...selectedVersion, fetchedDataset: data };
         setPreviewingDataset(selectedVersionWithFetchedDataset);
         setFetchedDatasets({
@@ -308,7 +249,7 @@ const Dataset = (props) => {
           </FormControl>
         </TableCell>
         <TableCell sx={{ background: isPreviewing && theme.palette.background.NYUpurpleLight }}>
-          {selectedVersionOfThisDataset?.size}
+          {selectedVersionOfThisDataset?.size} KB
         </TableCell>
       </TableRow>
     </>
@@ -449,6 +390,5 @@ const PreviewDataset = (props) => {
         </Button>
       </Box>
     </Stack >
-
   )
 }

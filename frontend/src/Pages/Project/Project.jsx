@@ -187,7 +187,7 @@ const Project = ({ themePreference }) => {
 
               <DatasetDownloadDialog project={project} />
 
-              <ExpandableSection
+              {/* <ExpandableSection
                 title="Sample Data"
                 content={
                   <>
@@ -200,7 +200,7 @@ const Project = ({ themePreference }) => {
                     ))}
                   </>
                 }
-              />
+              /> */}
             </Container>
           </FullWidthBox>
 

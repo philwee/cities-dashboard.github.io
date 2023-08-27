@@ -1,8 +1,6 @@
 // disable eslint for this file
 /* eslint-disable */
-import { useState, useEffect } from 'react';
-
-export const fetchDataFromURL = async (url) => {
+export const fetchDataFromURL = async (url, extension) => {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -13,8 +11,6 @@ export const fetchDataFromURL = async (url) => {
     if (dotIndex === -1) {
       throw new Error('Unsupported format');
     }
-
-    const extension = url.substring(dotIndex + 1).toLowerCase();
 
     switch (extension) {
       case 'json':

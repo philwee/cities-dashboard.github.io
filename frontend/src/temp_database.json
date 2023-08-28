@@ -763,7 +763,6 @@
           {
             "subchartTitle": "All time average (2020-2022)",
             "subchartSubtitle": "As the typical workday draws to a close at around <b>5-6pm</b> for students, faculty, and staff, this time window is the busiest period for fitness activities. There is another relatively smaller peak in the morning from 8-9am; however, its magnitude doesn't usually surpass half of the afternoon rush's. For those who prefer a quieter workout, aim for <b>early-morning or midday</b> time slots where the occupancy rate is only a quarter of the busiest time.",
-            "query": "SELECT A, B, C, D, E, F, G, H, I, J",
             "columns": [
               0,
               1,
@@ -794,15 +793,21 @@
                 "sourceColumn": 9
               }
             ],
-            "options": {
-              "series": {
-                "0": {
-                  "type": "line",
-                  "lineWidth": 3
+            "control": {
+              "controlType": "CategoryFilter",
+              "options": {
+                "filterColumnIndex": 10,
+                "ui": {
+                  "label": "Filter by year:",
+                  "allowTyping": false,
+                  "allowMultiple": false,
+                  "allowNone": false
                 }
-              },
+              }
+            },
+            "options": {
               "intervals": {
-                "style": "area"
+                "style": "bars"
               }
             }
           }
@@ -810,7 +815,7 @@
         "title": "SeriesSelector Average Number of Facilities Check-in Throughout the Day",
         "gid": 1513362816,
         "headers": 1,
-        "chartType": "LineChart",
+        "chartType": "ColumnChart",
         "options": {
           "seriesSelector": "multiple",
           "vAxis": {

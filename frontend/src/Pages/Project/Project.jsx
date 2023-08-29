@@ -219,9 +219,7 @@ const Project = ({ themePreference }) => {
                   className={themePreference === ThemePreferences.dark ? 'dark' : ''}
                 >
                   <Typography variant="h6" color="text.primary">
-                    {index + 1}. {parse(element.title, {
-                      replace: replacePlainHTMLWithMuiComponents,
-                    })}
+                    {index + 1}. {element.title}
                   </Typography>
 
                   {/* Either display the regular ChartComponent, or substitute with a customized component in ../../Graphs/ChartSubstituteComponents/ (if specified) */}

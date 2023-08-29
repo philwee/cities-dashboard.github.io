@@ -18,7 +18,7 @@
     "charts": [
       {
         "title": "An Introduction of the US Air Quality Index (AQI)",
-        "subtitle": "CITIESair uses the <a href='https://www.airnow.gov/aqi/aqi-basics/'>Air Quality Index (AQI)</a> developed by the United States Environmental Protection Agency (EPA) to effectively communicate different levels of PM2.5 air pollution. To calculate the AQI from the raw measurement of PM2.5 concentration (µg/m<sup>3</sup>), different breakpoints and piecewise linear function are utilized (read more <a href='https://en.wikipedia.org/wiki/Air_quality_index#United_States'>here</a>). Higher AQI values correspond to poorer air quality and greater heath risks to humans.<br><br>The US EPA sets thresholds for PM2.5 concentration: <sup>[1]</sup><ul><li><b>Annual average</b>: 12.0 µg/m<sup>3</sup>, corresponding to US AQI <b>50</b></li><li><b>24-hour average</b>: 35.0 µg/m<sup>3</sup>, corresponding to US AQI <b>100</b></li></ul>In 2021, the World's Heath Organization (WHO) proposed a new guideline for PM2.5<sup>[2]</sup> with stricter thresholds than those of the US EPA:<ul><li><b>Annual average</b>: 5.0 µg/m<sup>3</sup>, corresponding to US AQI <b>21</b></li><li><b>24-hour average</b>: 15.0 µg/m<sup>3</sup>, corresponding to US AQI <b>56</b></li></ul>",
+        "subtitle": "CITIESair uses the <a href='https://www.airnow.gov/aqi/aqi-basics/'>Air Quality Index (AQI)</a> developed by the United States Environmental Protection Agency (EPA) to effectively communicate different levels of PM2.5 air pollution. To calculate the AQI from the raw measurement of PM2.5 concentration (µg/m³), different breakpoints and piecewise linear function are utilized (read more <a href='https://en.wikipedia.org/wiki/Air_quality_index#United_States'>here</a>). Higher AQI values correspond to poorer air quality and greater heath risks to humans.<br><br>The US EPA sets thresholds for PM2.5 concentration: <sup>[1]</sup><ul><li><b>Annual average</b>: 12.0 µg/m³, corresponding to US AQI <b>50</b></li><li><b>24-hour average</b>: 35.0 µg/m³, corresponding to US AQI <b>100</b></li></ul>In 2021, the World's Heath Organization (WHO) proposed a new guideline for PM2.5<sup>[2]</sup> with stricter thresholds than those of the US EPA:<ul><li><b>Annual average</b>: 5.0 µg/m³, corresponding to US AQI <b>21</b></li><li><b>24-hour average</b>: 15.0 µg/m³, corresponding to US AQI <b>56</b></li></ul>",
         "reference": "[1] \"National Ambient Air Quality Standards (NAAQS) for PM.\" EPA, Environmental Protection Agency, https://www.epa.gov/pm-pollution/national-ambient-air-quality-standards-naaqs-pm.<br>[2] World Health Organization. \"WHO global air quality guidelines: particulate matter (PM2. 5 and PM10), ozone, nitrogen dioxide, sulfur dioxide and carbon monoxide: executive summary.\" (2021).",
         "subchartTitle": "Explanation Table",
         "chartSubstituteComponentName": "AirQualityIndexTable"
@@ -220,7 +220,7 @@
         }
       },
       {
-        "title": "Yearly Average PM2.5 Concentration (µg/m<sup>3</sup>) by Day of the Week, with 1 Standard Deviation",
+        "title": "Yearly Average PM2.5 Concentration (µg/m³) by Day of the Week, with 1 Standard Deviation",
         "subcharts": [
           {
             "gid": 803236520,
@@ -308,7 +308,7 @@
         "options": {
           "colors": "monochromatic2Colors",
           "vAxis": {
-            "title": "PM2.5 Concentration (µg/m<sup>3</sup>)"
+            "title": "PM2.5 Concentration (µg/m³)"
           },
           "hAxis": {
             "title": "Day of the Week"
@@ -316,7 +316,7 @@
         }
       },
       {
-        "title": "Hourly Average PM2.5 Concentration (µg/m<sup>3</sup>) by Month",
+        "title": "Hourly Average PM2.5 Concentration (µg/m³) by Month",
         "query": "SELECT A, B, C, D, E, F, G, H, I, J, K, L, M, N",
         "subcharts": [
           {
@@ -362,7 +362,7 @@
         }
       },
       {
-        "title": "Correlation Between Daily Average Outdoor and Indoor PM2.5 Concentrations (µg/m<sup>3</sup>)",
+        "title": "Correlation Between Daily Average Outdoor and Indoor PM2.5 Concentrations (µg/m³)",
         "subcharts": [
           {
             "query": "SELECT A, B, G",
@@ -372,10 +372,10 @@
                 "viewWindow": {
                   "min": 0
                 },
-                "title": "Outdoor PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Outdoor PM2.5 Concentration (µg/m³)"
               },
               "vAxis": {
-                "title": "Campus Center PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Campus Center PM2.5 Concentration (µg/m³)"
               }
             }
           },
@@ -387,10 +387,10 @@
                 "viewWindow": {
                   "min": 0
                 },
-                "title": "Outdoor PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Outdoor PM2.5 Concentration (µg/m³)"
               },
               "vAxis": {
-                "title": "Dining Hall D2 PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Dining Hall D2 PM2.5 Concentration (µg/m³)"
               }
             }
           },
@@ -402,10 +402,10 @@
                 "viewWindow": {
                   "min": 0
                 },
-                "title": "Campus Center PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Campus Center PM2.5 Concentration (µg/m³)"
               },
               "vAxis": {
-                "title": "Dining Hall D2 PM2.5 Concentration (µg/m<sup>3</sup>)"
+                "title": "Dining Hall D2 PM2.5 Concentration (µg/m³)"
               }
             }
           }

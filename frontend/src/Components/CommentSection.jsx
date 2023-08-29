@@ -26,9 +26,6 @@ const StyledHyvorTalk = styled(Box)(({ theme }) => ({
 }));
 
 function CommentSection({ pageID }) {
-  // Get the current theme
-  const theme = useTheme();
-
   return (
     <Container>
       <UppercaseTitle text={capitalizePhrase(jsonData.commentSection.id)} />

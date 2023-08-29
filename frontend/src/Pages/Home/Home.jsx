@@ -83,7 +83,7 @@ function Home({ themePreference, title }) {
                     <Divider />
                     <CardContent>
                       <Grid container justifyContent="space-between" alignItems="end">
-                        <Grid item>
+                        <Grid item xs={10}>
                           <Typography
                             variant="body1"
                             component="div"
@@ -92,14 +92,24 @@ function Home({ themePreference, title }) {
                           >
                             {project.title}
                           </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {project.owner}
+                          <Typography
+                            component="div"
+                            variant="caption"
+                            color="text.secondary"
+                            sx={{
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              pr: 1
+                            }}
+                          >
+                            {project?.owners?.join(', ')}
                           </Typography>
                         </Grid>
                         {
                           project.isActive
                           && (
-                            <Grid item>
+                            <Grid item xs={2}>
                               <Stack direction="row" spacing={1.5}>
                                 <Tooltip title="Number of Charts">
                                   <Stack direction="row" spacing={0.2} alignItems="center">

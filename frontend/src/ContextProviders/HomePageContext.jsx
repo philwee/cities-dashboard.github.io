@@ -21,7 +21,7 @@ export function HomePageProvider({ children }) {
         isActive: item.isActive,
         id: item.id,
         title: item.title,
-        owner: item.owner,
+        owners: item.owners,
         chartCounts: item.charts?.length,
         graph: (item.isActive
           ? (

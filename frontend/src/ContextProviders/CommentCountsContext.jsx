@@ -15,13 +15,10 @@ export function CommentCountsProvider({ children }) {
   const fetchCommentCounts = async () => {
     const commentCountsForAllPages = {};
     try {
-      fetchDataFromURL(hyvorTalkApiUrl, 'json')
-        .then((jsonData) => {
-          // Simplify the response into 1 object containing just the comments_count of each project
-          jsonData.data.forEach((item) => {
-            commentCountsForAllPages[item.page_identifier] = item.comments_count;
-          });
-        });
+      const jsonData = await fetchDataFromURL(hyvorTalkApiUrl, 'json');
+      jsonData.data.forEach((item) => {
+        commentCountsForAllPages[item.page_identifier] = item.comments_count;
+      });
       return commentCountsForAllPages;
     } catch (error) {
       console.log('Error fetching comment counts data:', error);

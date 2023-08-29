@@ -5,11 +5,18 @@
     "title": "Air Quality",
     "sheetId": "157f6vu47RBEvnBnW24jGI7cz-ov1aSBUFPdkb5sDKDc",
     "description": "CITIESair is a network of air quality sensors that monitors the concentration of particulate matter PM2.5 at NYUAD and several schools in Abu Dhabi. The air quality network at NYUAD consists of three stations: an outdoor station between the A1 and A2 buildings, two indoor stations in the Campus Center (C2), and East Dining Hall (D2), respectively. <br><br> Real-time air quality data is displayed on banners on NYUAD's Student Portal and Intranet, <a href='https://citiesair.com/'>CITIESair website</a>, <a href='https://www.iqair.com/united-arab-emirates/abu-dhabi/cities@nyuad'>IQAir website</a> (only outdoor station), as well as dedicated physical air quality screens in C2 and D2. <br><br> <small><b>Note: </b>CITIESair was originally a part of a student <a href='http://dlib.nyu.edu/findingaids/html/nyuad/ad_mc_004/dscaspace_76b01eb87c7a80289e06bbdd3f316aa9.html'>Capstone project (NYUADAir)</a> in Spring 2021. It publicized, for the first time, air quality data around the NYUAD campus to the community. Recognizing the potential of this project, and to further raise awareness and encourage sustainable behaviors within and beyond the university community, CITIES decided to scale it up by equipping the network with higher-grade sensors and transferring technology to other schools in Abu Dhabi.</small>",
-    "owner": "CITIESair",
+    "owners": [
+      "CITIESair"
+    ],
     "contact": "cities.nyuad@nyu.edu",
     "rawDataTables": [
       {
         "gid": 584789045,
+        "headers": 1,
+        "query": "SELECT A, B, C, D ORDER BY A DESC LIMIT 10"
+      },
+      {
+        "gid": 19993990,
         "headers": 1,
         "query": "SELECT A, B, C, D ORDER BY A DESC LIMIT 10"
       }
@@ -453,13 +460,16 @@
     "title": "Athletics FABS Membership",
     "sheetId": "1mRberQXQI9uHCP_gGXgK8NfjbiA2DdQc-HH1c01eEDk",
     "description": "This dataset visualizes the number of unique active memberships registered in the Fitness and Athletics Booking system (FABS) by academic year (AY). For FABS, an AY starts from <b>August 1</b> of the first calendar year to <b>July 31</b> of the second calendar year. After <b>July 31</b>, all existing memberships expire and members need to register again for the next AY. FABS members can register for sport classes, reserve lockers, and book and access Athletic facilities.<br><br>While there are 11 different types of FABS accounts, our data visualizations simplify them into <b>four distinct demographic groups</b>: <ul style='margin-left: 1rem'><li>Undergraduate student</li><li>Graduate student and Alumni</li><li>Staff affiliation (consisting of faculty, staff, and family member)</li><li>External and Other (consiting of community, contract, external instructor, guest, and Tamkeen)</li></ul>",
-    "owner": "Department of Athletics",
+    "owners": [
+      "Department of Athletics"
+    ],
     "contact": "nyuad.athletics@nyu.edu",
     "rawDataTables": [
       {
-        "gid": 560722866,
-        "headers": 1,
-        "query": "SELECT * ORDER BY A OFFSET 1"
+        "gid": 560722866
+      },
+      {
+        "gid": 337720664
       }
     ],
     "charts": [
@@ -613,7 +623,9 @@
     "title": "Athletic Facilities Check-in",
     "sheetId": "1iomqWbAsG75KBxiXPn76DBVGTes1PUnmB5tA0bgG5Jw",
     "description": "This dataset visualizes the number of check-ins throughout different Athletic facilities on campus, such as the fitness center, women's-only gym, faculty pool, 50m pool, 400m track, and indoor track. This dataset can serve as a proxy for estimating the community's fitness level and physical activity. Temporal data visualizations can help the community avoid peak times in indoor spaces and spread exercises evenly throughout the day or the week.<br><br><small><b>Note: </b> We are working hard to collect 2023's data. Stay tuned!</small>",
-    "owner": "Department of Athletics",
+    "owners": [
+      "Department of Athletics"
+    ],
     "contact": "nyuad.athletics@nyu.edu",
     "rawDataTables": [
       {
@@ -889,7 +901,9 @@
     "title": "Food Waste",
     "sheetId": "1jQYr20b4c93RmIT4M014YY-qSC-n-qpNMysy6Oz3J6U",
     "description": "This dataset visualizes food waste in the East Dining Hall (D2). The amount of food waste is measured by weighing the <i>plate-waste</i> (leftover food from the customers) with calibrated scales operated by the Dining service provider. Past data visualizations, such as the calendar-style monthly food waste counter at the entrance of D2, have brought about awareness among the community. Not being constrained by the crowded space of the Dining Hall, this visualization allows for a more detailed and nuanced break-down of the dataset into timeline, monthly, by-meal statistics.<br><br>The data provided here is the absolute amount of food waste. The number of transactions per meal or the number of customers who eat in D2 at each meal still need to be considered to shed light on the food waste variability over time. We are currently working with the service provider to get this data. In more detail, we aim to collect aggregate, anonymized numbers of transactions to calculate per-transaction waste.",
-    "owner": "NYUAD Dining",
+    "owners": [
+      "NYUAD Dining"
+    ],
     "contact": "nyuad.dining@nyu.edu",
     "rawDataTables": [
       {
@@ -1288,7 +1302,10 @@
     "title": "Student Population",
     "sheetId": "1xRuDQem0jvTil1MfXXI4sptWU37Q53VkTwVunqdnSY0",
     "description": "This dataset provides a comprehensive view of the student population at NYUAD. It visualizes the number enrolled of students in each term since Fall 2010, including those visiting from other NYU campuses, those studying abroad, as well as the number of students registered for on-campus housing. It also presents data on student compositions based on education levels and countries of origin.<br><br>This dataset serves as a foundational for assessing the impact of the student population on various campus metrics such as the number of <a href='/project/athletics-fabs-membership'>Athletics FABS Memberships</a>, the number of <a href='/project/athletic-facilities-check-in'>Athletic Facilities Check-in</a>, and the amount of <a href='/project/food-waste'>Food Waste</a> in dining facilities. It is important to note, however, that the dataset estimates the theoretical maximum of on-campus students every semester and actual numbers may vary.<br><br>In a somewhat familiar vein, NYUAD also publish student enrollment data on its <a href='https://nyuad.nyu.edu/en/about/nyuad-at-a-glance/fast-facts.html'>Fast Fact</a> public page, albeit with less detailed historical statistics.",
-    "owner": "NYU Institutional Research",
+    "owners": [
+      "NYU Institutional Research",
+      "NYUAD Residential Education"
+    ],
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdate": null,
     "rawDataTables": [
@@ -1579,7 +1596,9 @@
     "title": "Noise Pollution",
     "sheetId": "",
     "description": "",
-    "owner": "CITIES Research",
+    "owners": [
+      "CITIES Research"
+    ],
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdate": null,
     "rawDataTables": [
@@ -1593,7 +1612,9 @@
     "title": "Weather Data at NYUAD",
     "sheetId": "",
     "description": "",
-    "owner": "CITIES Research",
+    "owners": [
+      "CITIES Research"
+    ],
     "contact": "cities.nyuad@nyu.edu",
     "lastUpdate": null,
     "rawDataTables": [

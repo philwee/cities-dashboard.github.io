@@ -111,12 +111,19 @@ const Project = ({ themePreference }) => {
               <UppercaseTitle text={project.title} />
 
               <Grid container spacing={1} sx={{ pb: 3, mt: -3 }}>
-                <Grid item>
-                  <CustomChip
-                    icon={<PersonIcon />}
-                    label={project.owner}
-                    tooltipTitle="Dataset Owner" />
-                </Grid>
+                {
+                  project.owners.map((owner, index) => (
+                    <Grid item>
+                      <CustomChip
+                        key={index}
+                        icon={<PersonIcon />}
+                        label={owner}
+                        tooltipTitle="Dataset Owner"
+                      />
+                    </Grid>
+                  ))
+                }
+
                 <Grid item>
                   <CustomChip
                     icon={<EmailIcon />}

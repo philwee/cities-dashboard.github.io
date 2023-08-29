@@ -11,11 +11,9 @@ const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
 export default function SeriesSelector(props) {
-  const { items: itemsFromChart, selectorID, selectorType = "multiple", onSeriesSelection, isPortrait } = props;
+  const { items: itemsFromChart, selectorID, allowMultiple, onSeriesSelection } = props;
 
   const theme = useTheme();
-
-  const isMultiSelect = selectorType === "multiple" ? true : false;
 
   const MenuProps = {
     PaperProps: {
@@ -37,7 +35,7 @@ export default function SeriesSelector(props) {
   };
 
   const [items, setItems] = useState(itemsFromChart);
-  const [selectAll, setSelectAll] = useState(isMultiSelect); // default: all is selected if multiSelect is true
+  const [selectAll, setSelectAll] = useState(allowMultiple); // default: all is selected if multiSelect is true
 
   useEffect(() => {
     setItems(itemsFromChart);
@@ -87,9 +85,9 @@ export default function SeriesSelector(props) {
       <Stack direction="row" alignItems="center" spacing={0.5}>
         <VisibilityIcon fontSize="1.5rem" sx={{ color: theme.palette.text.secondary }} />
         <Typography variant="caption" color="text.secondary">
-          { /* show # of series selected if multiSelect. show cur selected serie if singleSelect */ }
-          {isMultiSelect ? `${selected.length} series displayed${selectAll ? ` (all)` : ""}`
-          : selected
+          { /* show # of series selected if multiSelect. show cur selected serie if singleSelect */}
+          {allowMultiple ? `${selected.length} series displayed${selectAll ? ` (all)` : ""}`
+            : selected
           }
         </Typography>
       </Stack>
@@ -106,7 +104,7 @@ export default function SeriesSelector(props) {
         <Select
           labelId={`${selectorID}-label`}
           id={selectorID}
-          multiple={isMultiSelect}
+          multiple={allowMultiple}
           value={items.filter(item => item.selected).map(item => item.label)}
           onChange={handleChange}
           MenuProps={MenuProps}
@@ -132,23 +130,23 @@ export default function SeriesSelector(props) {
               }}
             >
               { /* checkboxes for MultiSelect, radioButtons for singleSelect*/}
-              {isMultiSelect ? <Checkbox
+              {allowMultiple ? <Checkbox
                 checked={item.selected}
                 onClick={() => handleItemToggle(item)}
 
                 sx={{ p: 0.25, transform: 'scale(0.8)' }} />
-              : <Radio
-                checked={item.selected}
-                onChange={() => handleChange(item)}
-                
-                sx={{ p: 0.25, transform: 'scale(0.8)' }} />
+                : <Radio
+                  checked={item.selected}
+                  onChange={() => handleChange(item)}
+
+                  sx={{ p: 0.25, transform: 'scale(0.8)' }} />
               }
               <Typography variant='caption'>{item.label}</Typography>
             </MenuItem>
           ))}
 
           {/* Show the option to select all if multiSelect is true*/}
-          {isMultiSelect && <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
+          {allowMultiple && <MenuItem key={SELECT_ALL} value={SELECT_ALL} sx={{
             borderTop: 'solid 0.5px', borderColor: theme.palette.text.secondary,
             position: 'sticky', bottom: 0, zIndex: 9999, marginBottom: theme.spacing(-1),
             background: theme.palette.customAlternateBackground,
@@ -164,13 +162,13 @@ export default function SeriesSelector(props) {
                 sx={{ transform: 'scale(0.8)' }}
               />
             </Stack>
-          </MenuItem> 
+          </MenuItem>
           }
         </Select>
       </FormControl>
 
       {/* Display only selected items in the Grids, and only in landscape mode and if multiSelect is true*/}
-      { isMultiSelect && <Grid container spacing={1}
+      {allowMultiple && <Grid container spacing={1}
         sx={{
           [theme.breakpoints.down('sm')]: {
             display: 'none'
@@ -186,7 +184,7 @@ export default function SeriesSelector(props) {
             />
           </Grid>
         ))}
-      </Grid> }
+      </Grid>}
 
 
     </Stack>

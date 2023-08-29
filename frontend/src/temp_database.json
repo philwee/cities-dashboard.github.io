@@ -66,7 +66,10 @@
         "headers": 1,
         "chartType": "ComboChart",
         "options": {
-          "seriesSelector": "multiple",
+          "seriesSelector": {
+            "allowMultiple": true,
+            "method": "toggleVisibility"
+          },
           "colors": "reverseAqi",
           "chartArea": {
             "backgroundColor": "#fff"
@@ -341,7 +344,10 @@
         "headers": 2,
         "chartType": "LineChart",
         "options": {
-          "seriesSelector": "multiple",
+          "seriesSelector": {
+            "allowMultiple": true,
+            "method": "toggleVisibility"
+          },
           "colors": "grayscale",
           "vAxis": {
             "title": "PM2.5 Concentration (µg/m3)"
@@ -559,7 +565,10 @@
           }
         ],
         "options": {
-          "seriesSelector": "single",
+          "seriesSelector": {
+            "allowMultiple": true,
+            "method": "setViewColumn"
+          },
           "curveType": "none",
           "hAxis": {
             "title": "Academic Year (Aug - Sep next year)"
@@ -817,7 +826,10 @@
         "headers": 1,
         "chartType": "ColumnChart",
         "options": {
-          "seriesSelector": "multiple",
+          "seriesSelector": {
+            "allowMultiple": true,
+            "method": "setViewColumn"
+          },
           "vAxis": {
             "title": "Average Hourly Number of Facilities Check-in"
           },

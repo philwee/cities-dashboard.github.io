@@ -69,7 +69,7 @@ export default function DatasetDownloadDialog(props) {
           </Typography>
           <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} project={project} />
           <Typography variant="caption" sx={{ mb: 3, fontStyle: 'italic' }} >
-            This dataset is provided by the CITIES Dashboard with the support of {project.owner}. Should you intend to utilize this dataset for your project, research, or publication, we kindly request that you notify us at <Link href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</Link> to discuss citation requirements.
+            This dataset is provided by the CITIES Dashboard with the support of {project.owners}. Should you intend to utilize this dataset for your project, research, or publication, we kindly request that you notify us at <Link href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</Link> to discuss citation requirements.
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -287,7 +287,7 @@ const PreviewDataset = (props) => {
     const lines = csvData.split('\n');
     const numRows = lines.length;
 
-    if (numRows <= numFirstLastRowsToPreview) {
+    if (numRows <= numFirstLastRowsToPreview * 2) {
       setFormattedData(csvData);
       setRowIndices(Array.from({ length: numRows }, (_, index) => index + 1).join('\n')); // +1 because rowNumber starts at 1 while index starts at 0
     } else {

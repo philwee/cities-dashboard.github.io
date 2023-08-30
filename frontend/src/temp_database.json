@@ -1204,7 +1204,7 @@
             "subchartTitle": "Dinner"
           }
         ],
-        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D LIMIT 2",
+        "query": "SELECT A, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, B, C, D LIMIT 3",
         "headers": 1,
         "chartType": "ColumnChart",
         "columns": [

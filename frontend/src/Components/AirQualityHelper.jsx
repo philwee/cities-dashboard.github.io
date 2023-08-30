@@ -1,4 +1,3 @@
-// disable eslint for this file
 import { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 

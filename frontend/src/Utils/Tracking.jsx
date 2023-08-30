@@ -1,7 +1,8 @@
 export const Events = {
   internalNavigation: 'internal_navigation',
   themeChange: 'theme_change',
-  getDataset: 'get_dataset',
+  rawDatasetButtonClicked: 'raw_dataset_button_clicked',
+  rawDatasetDownloaded: 'raw_dataset_downloaded',
   expandSampleData: 'expand_sample_data',
   collapseSampleData: 'collapse_sample_data',
   openContactFormInExternalTab: 'open_contact_form_in_external_tab',

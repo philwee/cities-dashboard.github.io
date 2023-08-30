@@ -9,11 +9,10 @@ import { RawDatasetsMetadataContext } from '../../ContextProviders/RawDatasetsMe
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DownloadIcon from '@mui/icons-material/Download';
 import DataObjectIcon from '@mui/icons-material/DataObject';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import * as Tracking from '../../Utils/Tracking';
 import { fetchDataFromURL } from './DatasetFetcher';
-
-import { replacePlainHTMLWithMuiComponents } from '../../Utils/Utils';
 
 export default function DatasetDownloadDialog(props) {
   const { project } = props;
@@ -70,6 +69,15 @@ export default function DatasetDownloadDialog(props) {
         fullScreen={smallScreen}
         keepMounted
       >
+        {(
+          smallScreen &&
+          <DialogActions justifyContent="flex-start">
+            <Button autoFocus onClick={handleClose}>
+              <ChevronLeftIcon sx={{ fontSize: '1rem' }} />Back
+            </Button>
+          </DialogActions>
+        )}
+
         <DialogContent sx={{
           px: smallScreen ? 2 : 3,
           display: 'flex',
@@ -83,15 +91,13 @@ export default function DatasetDownloadDialog(props) {
             Preview and download raw dataset(s)
           </Typography>
           <DatasetSelectorAndPreviewer datasets={datasets} smallScreen={smallScreen} project={project} />
-          <Typography variant="caption" sx={{ mb: 3, fontStyle: 'italic' }} >
-            This dataset is provided by the CITIES Dashboard with the support of {getOwnerString(project.owners)}. Should you intend to utilize this dataset for your project, research, or publication, we kindly request that you notify us at <Link href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</Link> to discuss citation requirements.
-          </Typography>
+          {
+            datasets &&
+            <Typography variant="caption" sx={{ mb: 3, fontStyle: 'italic' }} >
+              This dataset is provided by the CITIES Dashboard with the support of {getOwnerString(project.owners)}. Should you intend to utilize this dataset for your project, research, or publication, we kindly request that you notify us at <Link href='mailto:nyuad.cities@nyu.edu'>nyuad.cities@nyu.edu</Link> to discuss citation requirements.
+            </Typography>
+          }
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </>
   );
@@ -227,6 +233,16 @@ const Dataset = (props) => {
 
   const theme = useTheme();
 
+  const formatFileSize = (sizeInBytes) => {
+    if (!sizeInBytes) return;
+
+    if (sizeInBytes < 1024 * 1024) {
+      return (sizeInBytes / 1024).toFixed(1) + " KB";
+    } else {
+      return (sizeInBytes / (1024 * 1024)).toFixed(1) + " MB";
+    }
+  }
+
   return (
     <>
       <TableRow key={dataset.id}>
@@ -264,7 +280,7 @@ const Dataset = (props) => {
           </FormControl>
         </TableCell>
         <TableCell sx={{ background: isPreviewing && theme.palette.background.NYUpurpleLight }}>
-          {selectedVersionOfThisDataset?.size} KB
+          {formatFileSize(selectedVersionOfThisDataset?.sizeInBytes)}
         </TableCell>
       </TableRow>
     </>
@@ -399,9 +415,10 @@ const PreviewDataset = (props) => {
               dataset_version: previewingDataset.version
             });
           }}
+          disabled={!previewingDataset}
         >
           <DownloadIcon sx={{ fontSize: '1.25rem', mr: 0.5 }} />
-          {downloadDatasetName}
+          {previewingDataset ? downloadDatasetName : "No dataset available to download"}
         </Button>
       </Box>
     </Stack >

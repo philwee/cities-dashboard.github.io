@@ -14,6 +14,7 @@ import FullWidthBox from '../../Components/FullWidthBox';
 // import AtAGlance from './AtAGlance';
 import About from './About';
 import GetInTouch from './GetInTouch';
+import CalendarTest from './CalendarTest';
 
 import jsonData from '../../section_data.json';
 
@@ -144,6 +145,12 @@ function Home({ themePreference, title }) {
 
       <FullWidthBox id={jsonData.getInTouch.id} sx={{ pt: 3, pb: 4 }}>
         <GetInTouch />
+      </FullWidthBox>
+
+      <Divider />
+
+      <FullWidthBox sx={{ pt: 3, pb: 4 }}>
+        <CalendarTest />
       </FullWidthBox>
     </Box>
   );

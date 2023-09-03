@@ -111,7 +111,6 @@ export const returnGenericOptions = (props) => {
       showColorCode: false
     },
     legend: {
-      backgroundColor: '#fff',
       alignment: isPortrait ? 'center' : 'start',
       position:
         chartData.options?.legend?.position
@@ -244,13 +243,15 @@ export const returnGenericOptions = (props) => {
   if (isHomepage) {
     options = {
       ...options,
+      chartArea: {
+        ...options.chartArea,
+        width: '80%',
+        height: '80%'
+      },
       seriesSelector: false,
       pointSize: 0,
       enableInteractivity: false,
-      annotations: {
-        ...options.annotations,
-        ...hideAnnotations
-      },
+      annotations: hideAnnotations,
       legend: 'none',
       vAxis: {
         ...options.vAxis,
@@ -258,7 +259,9 @@ export const returnGenericOptions = (props) => {
         titleTextStyle: {
           ...options.vAxis.titleTextStyle,
           bold: false
-        }
+        },
+        gridlines: { color: 'transparent', count: 0 },
+        viewWindowMode: 'maximized'
       },
       hAxis: {
         ...options.hAxis,

@@ -1036,8 +1036,7 @@
             }
           },
           "vAxis": {
-            "title": "Food Waste (in Kilogram)",
-            "maxValue": 150
+            "title": "Food Waste (in Kilogram)"
           },
           "annotations": {
             "stem": {

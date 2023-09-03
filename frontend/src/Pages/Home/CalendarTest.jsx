@@ -52,6 +52,9 @@ export default function DateCalendarServerRequest() {
         slots={{
           day: ServerDay,
         }}
+        onChange={(value) => {
+          alert(`${dayjs(value).format('YYYY-MM-DD')} selected!`);
+        }}
         slotProps={{
           day: {
             validDates

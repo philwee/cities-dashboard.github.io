@@ -9,11 +9,13 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
+  // style for circle highlight
   '&': {
     borderRadius: '50%',
     border: '2px solid lightblue',
   },
 
+  // // styles for dot
   // '&:after': {
   //   content: '"."',
   //   fontSize: '1.5rem',

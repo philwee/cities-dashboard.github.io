@@ -775,37 +775,23 @@
             "columns": [
               0,
               1,
-              {
-                "role": "interval",
-                "sourceColumn": 2
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 3
-              },
+              2,
+              3,
               4,
-              {
-                "role": "interval",
-                "sourceColumn": 5
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 6
-              },
+              5,
+              6,
               7,
-              {
-                "role": "interval",
-                "sourceColumn": 8
-              },
-              {
-                "role": "interval",
-                "sourceColumn": 9
-              }
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
             ],
             "control": {
               "controlType": "CategoryFilter",
               "options": {
-                "filterColumnIndex": 10,
+                "filterColumnIndex": 14,
                 "ui": {
                   "label": "Filter by year:",
                   "allowTyping": false,
@@ -815,6 +801,14 @@
               }
             },
             "options": {
+              "seriesType": "bars",
+              "series": {
+                "0": {
+                  "type": "line",
+                  "lineWidth": 3,
+                  "pointSize": 5
+                }
+              },
               "intervals": {
                 "style": "bars"
               }
@@ -824,7 +818,7 @@
         "title": "SeriesSelector Average Number of Facilities Check-in Throughout the Day",
         "gid": 1513362816,
         "headers": 1,
-        "chartType": "ColumnChart",
+        "chartType": "ComboChart",
         "options": {
           "seriesSelector": {
             "allowMultiple": true,

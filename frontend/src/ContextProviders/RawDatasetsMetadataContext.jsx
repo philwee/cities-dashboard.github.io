@@ -3,7 +3,7 @@ import { fetchDataFromURL } from '../Components/DatasetDownload/DatasetFetcher';
 
 export const RawDatasetsMetadataContext = createContext();
 
-const url = 'https://raw.githubusercontent.com/RitinDev/CITIES-data-scraper-test/main/datasets_metadata.json';
+const url = 'https://raw.githubusercontent.com/CITIES-Dashboard/datasets/main/datasets_metadata.json';
 
 export function RawDatasetsMetadataProvider({ children }) {
   const [rawDatasetsMetadata, setRawDatasetsMetadata] = useState();

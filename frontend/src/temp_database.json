@@ -11,14 +11,14 @@
     "contact": "cities.nyuad@nyu.edu",
     "rawDataTables": [
       {
-        "gid": 584789045,
-        "headers": 1,
-        "query": "SELECT A, B, C, D ORDER BY A DESC LIMIT 10"
-      },
-      {
         "gid": 19993990,
         "headers": 1,
-        "query": "SELECT A, B, C, D ORDER BY A DESC LIMIT 10"
+        "query": "SELECT A, B, C, D, G, H , I, L, M, N"
+      },
+      {
+        "gid": 584789045,
+        "headers": 1,
+        "query": "SELECT A, B, C, D, G, H , I, L, M, N"
       }
     ],
     "homepageChartIndex": 1,

@@ -12,7 +12,7 @@
     "rawDataTables": [
       {
         "gid": 584789045,
-        "query": "SELECT A, B"
+        "query": "SELECT A, B, C, D, G, H , I, L, M, N"
       },
       {
         "gid": 19993990,

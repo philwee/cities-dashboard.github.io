@@ -360,7 +360,7 @@ const PreviewDataset = (props) => {
       <Box sx={{ '& *': { fontFamily: "monospace !important" } }}>
         <Chip
           icon={<VisibilityIcon />}
-          label="Preview"
+          label={`Previewing${previewingDataset && `: ${previewingDataset.name} (${previewingDataset?.version})`}`}
           size="small"
           sx={{
             backgroundColor: theme.palette.customBackground,
@@ -369,7 +369,6 @@ const PreviewDataset = (props) => {
             borderTopRightRadius: theme.spacing(1),
             p: 1,
             pb: 0,
-            mb: -1
           }}
         />
         <Box
@@ -379,6 +378,7 @@ const PreviewDataset = (props) => {
             color: theme.palette.text.secondary,
             backgroundColor: theme.palette.customBackground,
             p: 2,
+            pt: 1.5,
             borderRadius: theme.spacing(1),
             borderTopLeftRadius: 0,
             minHeight: "5rem",
@@ -386,7 +386,7 @@ const PreviewDataset = (props) => {
             marginTop: 0
           }}
         >
-          <Stack direction="row">
+          <Stack direction="row" sx={{ fontSize: smallScreen ? '0.625rem !important' : '0.8rem !important' }}>
             <Box sx={{ mr: 2, userSelect: 'none' }}>
               {rowIndices}
             </Box>

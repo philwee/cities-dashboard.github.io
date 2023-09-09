@@ -10,19 +10,17 @@ import Card from '@mui/material/Card';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 const HighlightedDay = styled(PickersDay)(({ theme }) => ({
-  // style for circle highlight
-  // '&': {
-  //   borderRadius: '50%',
-  //   border: '2px solid lightblue',
-  // },
-
   // styles for dot
-  '&:after': {
+  '&:after, :hover::after': {
     content: '"."',
     fontSize: '1.5rem',
     bottom: '-0.5rem',
     position: 'absolute',
-    color: 'lightblue'
+    color: theme.palette.primary.main,
+    opacity: 0.5
+  },
+  '&:hover::after': {
+    opacity: 1
   }
 }));
 
@@ -72,6 +70,7 @@ export default function DatasetCalendar(props) {
             }}
             // disable the date if its not a valid date
             shouldDisableDate={(day) => !isValidDate(day, versionDates)}
+            disableFuture
           />
         </LocalizationProvider>
       </Card>

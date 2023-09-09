@@ -229,7 +229,7 @@ const Dataset = (props) => {
       return
     }
 
-    handleVersionChange({ target: { value: event }});
+    handleVersionChange({ target: { value: event } });
   }
 
   const fetchThisDataset = (selectedVersion) => {
@@ -285,11 +285,11 @@ const Dataset = (props) => {
         </TableCell>
 
         <TableCell sx={{ position: 'relative', background: isPreviewing && theme.palette.background.NYUpurpleLight }}>
-          { showCalendar && <DatasetCalendar 
+          {showCalendar && <DatasetCalendar
             onChange={handleCalendarChange}
             versions={dataset?.versions}
           />}
-          
+
           {/* <Dialog
             open={showCalendar}
             onClose={() => setShowCalendar(false)}>
@@ -306,11 +306,15 @@ const Dataset = (props) => {
               variant="standard"
               MenuProps={{ disablePortal: true }}
             >
-              {visibleVersions.map((aDatasetVersion) => (
+              {visibleVersions.map((aDatasetVersion, index) => (
                 <MenuItem
                   key={aDatasetVersion.version}
                   value={aDatasetVersion.version}
-
+                  sx={
+                    (index === visibleVersions.length - 1) && {
+                      borderBottom: '0.5px solid',
+                      mb: 0.5
+                    }}
                 >
                   {aDatasetVersion.version}
                 </MenuItem>
@@ -318,9 +322,12 @@ const Dataset = (props) => {
               <MenuItem
                 key={"Calendar"}
                 value="Calendar"
+                sx={{ mb: -0.5 }}
               >
-                Older Versions
-                <EventIcon fontSize='small' sx={{ ml: 0.5 }}/>
+                <Stack direction="row" alignItems="center">
+                  Older Versions
+                  <EventIcon fontSize='small' sx={{ ml: 0.5 }} />
+                </Stack>
               </MenuItem>
             </Select>
           </FormControl>
